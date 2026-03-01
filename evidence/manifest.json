@@ -1,0 +1,23 @@
+{
+  "date": "2026-03-01",
+  "change": "Refonte en site personnel GitHub Pages avec navigation, sections et personnalisation",
+  "gates_satisfied": ["G0", "G1", "G2", "G3"],
+  "artifacts": [
+    "artifacts/pm-spec/2026-03-01/g0-spec-freeze-v2.md",
+    "artifacts/architect/2026-03-01/g1-arch-freeze-v2.md",
+    "artifacts/qa-test/2026-03-01/g2-implement-v2.md",
+    "artifacts/qa-test/2026-03-01/g3-verification-v2.md"
+  ],
+  "docs": [
+    "specs/site-github-pages-spec.md",
+    "architecture/site-github-pages-architecture.md",
+    "docs/github-pages-deploy.md"
+  ],
+  "implementation": [
+    "index.html",
+    "assets/styles.css"
+  ],
+  "notes": [
+    "TODO branding et liens réels maintenus dans la spec pour itération suivante"
+  ]
+}
