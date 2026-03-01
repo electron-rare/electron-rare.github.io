@@ -1,6 +1,7 @@
 # Déploiement GitHub Pages (Astro studio stack)
 
 ## Prérequis
+- Dépôt Git connecté à GitHub (`git remote -v` non vide).
 - Dépendances installées (`npm install`).
 - Build local OK (`npm run build`).
 - Workflow présent: `.github/workflows/deploy-pages.yml`.

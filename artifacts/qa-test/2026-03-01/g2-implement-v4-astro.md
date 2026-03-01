@@ -35,4 +35,5 @@ Date: 2026-03-01
 - `specs/site-github-pages-spec.md`
 
 ## Note
-- L'ancien socle statique (`index.html`, `assets/styles.css`) est conservé temporairement dans le repo pour transition contrôlée.
+- Le socle legacy root a ete retire de la source active et archive dans
+  `artifacts/legacy-snapshot/2026-03-01/`.
