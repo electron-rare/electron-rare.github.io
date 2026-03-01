@@ -1,0 +1,55 @@
+{
+  "date": "2026-03-01",
+  "change": "Migration foundation vers stack studio Astro/TS/Tailwind/Motion/Storybook avec workflow GitHub Pages Actions",
+  "gates_satisfied": ["G0", "G1", "G2", "G3"],
+  "artifacts": [
+    "artifacts/pm-spec/2026-03-01/g0-spec-freeze-v2.md",
+    "artifacts/architect/2026-03-01/g1-arch-freeze-v2.md",
+    "artifacts/qa-test/2026-03-01/g2-implement-v2.md",
+    "artifacts/qa-test/2026-03-01/g3-verification-v2.md",
+    "artifacts/qa-test/2026-03-01/g2-implement-v3.md",
+    "artifacts/qa-test/2026-03-01/g3-verification-v3.md",
+    "artifacts/qa-test/2026-03-01/g3-verification-v4.md",
+    "artifacts/qa-test/2026-03-01/g3-verification-v5.md",
+    "artifacts/qa-test/2026-03-01/g2-implement-v4-astro.md",
+    "artifacts/qa-test/2026-03-01/g3-verification-v6-astro.md",
+    "artifacts/qa-test/2026-03-01/lighthouse-home-mobile-v1.json",
+    "artifacts/qa-test/2026-03-01/lighthouse-home-desktop-v1.json"
+  ],
+  "docs": [
+    "specs/site-github-pages-spec.md",
+    "architecture/site-github-pages-architecture.md",
+    "docs/github-pages-deploy.md",
+    "docs/acquisition-seo-plan.md",
+    "docs/webdesign-responsive-modern.md"
+  ],
+  "implementation": [
+    "package.json",
+    "package-lock.json",
+    "astro.config.mjs",
+    "tsconfig.json",
+    ".storybook/main.ts",
+    ".storybook/preview.ts",
+    ".github/workflows/deploy-pages.yml",
+    "src/layouts/BaseLayout.astro",
+    "src/pages/index.astro",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/sections/Hero.tsx",
+    "src/components/sections/About.tsx",
+    "src/components/sections/Projects.tsx",
+    "src/components/sections/Contact.tsx",
+    "src/styles/global.css",
+    "public/robots.txt",
+    "public/sitemap.xml",
+    "public/assets/og-cover.jpg",
+    "index.html",
+    "assets/styles.css",
+    "robots.txt",
+    "sitemap.xml",
+    "assets/og-cover.jpg"
+  ],
+  "notes": [
+    "TODO externe restant: valider GA4 Realtime en production, debugger previews sociaux (LinkedIn/Facebook), puis basculer définitivement hors du socle statique legacy."
+  ]
+}

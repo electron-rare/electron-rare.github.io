@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --bg: #080812;
+  --surface: #121226;
+  --surface-soft: #1a1833;
+  --text: #f0ecff;
+  --muted: #b8afdb;
+  --primary: #35dcff;
+  --primary-strong: #18bfe5;
+  --accent: #ff3b99;
+  --accent-strong: #ff187f;
+  --signal: #b7ff5d;
+  --border: #3a3360;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Source Sans 3', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  background:
+    radial-gradient(1200px 720px at 88% -18%, color-mix(in oklab, var(--primary) 26%, transparent), transparent 62%),
+    radial-gradient(1000px 650px at -15% -8%, color-mix(in oklab, var(--accent) 24%, transparent), transparent 60%),
+    radial-gradient(540px 360px at 48% -16%, color-mix(in oklab, var(--signal) 18%, transparent), transparent 74%),
+    linear-gradient(180deg, #080812 0%, #090913 55%, #07070f 100%);
+  color: var(--text);
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.012) 0px,
+      rgba(255, 255, 255, 0.012) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  mix-blend-mode: soft-light;
+  z-index: -1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(94, 103, 145, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(94, 103, 145, 0.1) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle at 50% 18%, black 12%, transparent 72%);
+  z-index: -1;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'DM Serif Display', 'Times New Roman', serif;
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 65%, black 10%);
+  color: #fff;
+}
+
+.site-shell {
+  width: min(1120px, 92vw);
+  margin: 0 auto;
+}
+
+.section-anchor {
+  scroll-margin-top: 6rem;
+}
+
+.lab-kicker {
+  display: inline-flex;
+  min-height: 1.6rem;
+  align-items: center;
+  border: 1px solid rgba(183, 255, 93, 0.35);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  margin-right: 0.45rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--signal) 80%, #ffffff 20%);
+  background: color-mix(in oklab, var(--signal) 16%, transparent);
+}
+
+.lab-pill {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(53, 220, 255, 0.4);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--primary) 85%, #ffffff 15%);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--primary) 15%, transparent),
+      color-mix(in oklab, var(--accent) 10%, transparent)
+    );
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+}
+
+.lab-panel {
+  border: 1px solid rgba(53, 220, 255, 0.32);
+  background:
+    linear-gradient(180deg, rgba(53, 220, 255, 0.08), rgba(255, 59, 153, 0.06)),
+    radial-gradient(180px 120px at 85% -10%, rgba(183, 255, 93, 0.15), transparent 72%);
+  box-shadow:
+    0 16px 40px rgba(7, 6, 20, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+}
+
+.lab-metric {
+  border-radius: 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(7, 6, 20, 0.45);
+  padding: 0.5rem 0.6rem;
+}
+
+.lab-metric span {
+  display: block;
+  color: rgba(184, 175, 219, 0.9);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lab-metric strong {
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.84rem;
+  color: rgba(240, 236, 255, 0.95);
+}
+
+.lab-glow {
+  animation: labPulse 5.5s ease-in-out infinite;
+}
+
+@keyframes labPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(53, 220, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(53, 220, 255, 0.06);
+  }
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--primary) 85%, white 15%);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (max-width: 390px) {
+  .site-shell {
+    width: min(1120px, 94vw);
+  }
+
+  .lab-pill {
+    font-size: 0.66rem;
+    letter-spacing: 0.07em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .lab-glow {
+    animation: none !important;
+  }
+}

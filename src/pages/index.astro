@@ -1,0 +1,42 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@/styles/global.css';
+import { Hero } from '@/components/sections/Hero';
+import { About } from '@/components/sections/About';
+import { Projects } from '@/components/sections/Projects';
+import { Contact } from '@/components/sections/Contact';
+---
+
+<BaseLayout>
+  <header class="sticky top-0 z-30 border-b border-violet-200/20 bg-black/35 backdrop-blur-md">
+    <div class="site-shell flex items-center justify-between py-3 max-md:flex-col max-md:gap-3">
+      <a href="#top" class="font-semibold tracking-wide text-violet-100">
+        <span class="lab-kicker">Studio</span>
+        L'electron rare
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="m-0 flex list-none gap-2 p-0">
+          <li><a href="#a-propos" class="rounded-md px-3 py-2 text-violet-100/80 hover:bg-violet-100/10 hover:text-violet-100">À propos</a></li>
+          <li><a href="#projets" class="rounded-md px-3 py-2 text-violet-100/80 hover:bg-violet-100/10 hover:text-violet-100">Projets</a></li>
+          <li><a href="#contact" class="rounded-md px-3 py-2 text-violet-100/80 hover:bg-violet-100/10 hover:text-violet-100">Contact</a></li>
+        </ul>
+      </nav>
+      <span class="lab-pill lab-glow" aria-label="Etat du studio">
+        Lab mode actif
+      </span>
+    </div>
+  </header>
+
+  <main class="site-shell pb-10 pt-2">
+    <Hero client:load />
+    <About />
+    <Projects client:load />
+    <Contact />
+  </main>
+
+  <footer class="border-t border-violet-200/20 py-6 text-violet-100/60">
+    <div class="site-shell">
+      © 2026 Clement Saillant - L'electron rare. Studio de creation electronique et design systeme.
+    </div>
+  </footer>
+</BaseLayout>

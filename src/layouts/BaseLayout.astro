@@ -1,0 +1,113 @@
+---
+import { GTM_CONTAINER_ID_DEFAULT, SITE_META, SITE_OG_IMAGE_URL, SITE_URL } from '@/lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = SITE_META.title,
+  description = SITE_META.description
+} = Astro.props;
+
+const canonical = SITE_URL;
+const gtmId = import.meta.env.PUBLIC_GTM_CONTAINER_ID || GTM_CONTAINER_ID_DEFAULT;
+const personJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Clément Saillant',
+  alternateName: "L'électron rare",
+  url: canonical,
+  jobTitle: 'Concepteur en création électronique, design produit et systèmes expérimentaux',
+  description:
+    "Codeur créatif, itérateur IA et inventeur de systèmes : création électronique, performances audiovisuelles et collaborations studio sous l'identité L'électron rare.",
+  sameAs: [
+    'https://fr.linkedin.com/in/electron-rare',
+    'https://www.malt.com/profile/clementsaillant',
+    'https://lelectron-fou.bandcamp.com/'
+  ]
+});
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="theme-color" content={SITE_META.themeColor} />
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="L'électron rare" />
+    <meta property="og:title" content={title} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:description" content={SITE_META.ogDescription} />
+    <meta property="og:image" content={SITE_OG_IMAGE_URL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="L'électron rare - performances et créations audiovisuelles" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={SITE_META.twitterDescription} />
+    <meta name="twitter:image" content={SITE_OG_IMAGE_URL} />
+
+    <script is:inline define:vars={{ gtmId }}>
+      window.dataLayer = window.dataLayer || [];
+      if (gtmId) {
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l !== "dataLayer" ? "&l=" + l : "";
+          j.async = true;
+          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, "script", "dataLayer", gtmId);
+      }
+    </script>
+  </head>
+  <body>
+    {
+      gtmId && (
+        <noscript>
+          <iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+      )
+    }
+
+    <a class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-black focus:px-3 focus:py-2 focus:text-white" href="#top">
+      Aller au contenu
+    </a>
+
+    <slot />
+
+    <script is:inline type="application/ld+json" set:html={personJsonLd} />
+
+    <script is:inline>
+      (function () {
+        var links = document.querySelectorAll("[data-track]");
+        for (var i = 0; i < links.length; i += 1) {
+          links[i].addEventListener("click", function () {
+            var eventName = this.getAttribute("data-track");
+            var destination = this.getAttribute("data-destination") || this.getAttribute("href") || "unknown";
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: eventName,
+              event_category: "engagement",
+              event_label: eventName,
+              destination: destination
+            });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+# Internal private notes
+notes-interne/
+
+# Node / tooling
+node_modules/
+dist/
+storybook-static/
+.astro/
+.DS_Store
