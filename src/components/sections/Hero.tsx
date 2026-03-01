@@ -5,13 +5,13 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 
 const heroCtas: CtaLink[] = [
   {
-    label: 'Voir mes projets',
+    label: "Voir les cas d'usage",
     href: '#projets',
     event: TRACK_EVENTS.ctaHeroProjects,
     destination: '#projets'
   },
   {
-    label: 'Me contacter',
+    label: 'Lancer une mission',
     href: '#contact',
     event: TRACK_EVENTS.ctaHeroContact,
     destination: '#contact'
@@ -84,6 +84,29 @@ export function Hero() {
               </a>
             </Button>
           </div>
+
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-violet-100/76">
+            <span className="lab-kicker">Contact rapide</span>
+            <a
+              href="https://fr.linkedin.com/in/electron-rare"
+              target="_blank"
+              rel="noopener noreferrer"
+              {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
+              className="font-semibold text-cyan-300 underline-offset-4 hover:text-cyan-200 hover:underline"
+            >
+              LinkedIn DM
+            </a>
+            <span aria-hidden="true">•</span>
+            <a
+              href="https://www.malt.com/profile/clementsaillant"
+              target="_blank"
+              rel="noopener noreferrer"
+              {...trackAttrs(TRACK_EVENTS.outboundMaltContact, 'malt.com')}
+              className="font-semibold text-fuchsia-300 underline-offset-4 hover:text-fuchsia-200 hover:underline"
+            >
+              Malt
+            </a>
+          </div>
         </div>
 
         <motion.aside
@@ -113,8 +136,8 @@ export function Hero() {
               <strong>Astro + IA</strong>
             </div>
             <div className="lab-metric">
-              <span>Output</span>
-              <strong>Prototype live</strong>
+              <span>Reponse</span>
+              <strong>24-48h</strong>
             </div>
           </div>
           <a
