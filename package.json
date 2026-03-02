@@ -6,11 +6,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:external": "node scripts/build-astro-external.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "astro check",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "lab:dev": "npm --prefix apps/lab-interactif run dev",
+    "lab:build": "npm --prefix apps/lab-interactif run build",
+    "lab:preview": "npm --prefix apps/lab-interactif run preview",
+    "tracking:check": "node scripts/validate-tracking.mjs",
+    "preflight:pages": "npm run lab:build && npm run tracking:check && npm run storybook:build"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.1",

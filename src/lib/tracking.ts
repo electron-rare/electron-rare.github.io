@@ -6,7 +6,9 @@ export const TRACK_EVENTS = {
   outboundLinkedinContact: 'outbound_linkedin_contact',
   outboundMaltContact: 'outbound_malt_contact',
   outboundBandcampProject: 'outbound_bandcamp_project',
-  outboundBandcampContact: 'outbound_bandcamp_contact'
+  outboundBandcampContact: 'outbound_bandcamp_contact',
+  outboundGithubProject: 'outbound_github_project',
+  outboundGithubContact: 'outbound_github_contact'
 } as const;
 
 export type TrackEventName = (typeof TRACK_EVENTS)[keyof typeof TRACK_EVENTS];

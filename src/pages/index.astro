@@ -2,41 +2,155 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@/styles/global.css';
 import { Hero } from '@/components/sections/Hero';
+import { IdentityLab } from '@/components/sections/IdentityLab';
 import { About } from '@/components/sections/About';
 import { Projects } from '@/components/sections/Projects';
+import { FlowDiagram } from '@/components/sections/FlowDiagram';
+import { SystemPipeline } from '@/components/sections/SystemPipeline';
+import { ProjectsTimeline } from '@/components/sections/ProjectsTimeline';
+import { LabNotes } from '@/components/sections/LabNotes';
+import { TrustStrip } from '@/components/sections/TrustStrip';
 import { Contact } from '@/components/sections/Contact';
+import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 ---
 
 <BaseLayout>
-  <header class="sticky top-0 z-30 border-b border-violet-200/20 bg-black/35 backdrop-blur-md">
-    <div class="site-shell flex items-center justify-between py-3 max-md:flex-col max-md:gap-3">
-      <a href="#top" class="font-semibold tracking-wide text-violet-100">
+  <header class="sticky top-0 z-30 site-nav site-shell py-2">
+    <div class="site-shell nav-main-row py-3">
+      <a href="#top" class="site-brand font-semibold tracking-wide">
         <span class="lab-kicker">Studio</span>
         L'electron rare
       </a>
       <nav aria-label="Navigation principale">
         <ul class="m-0 flex list-none gap-2 p-0">
-          <li><a href="#a-propos" class="rounded-md px-3 py-2 text-violet-100/80 hover:bg-violet-100/10 hover:text-violet-100">À propos</a></li>
-          <li><a href="#projets" class="rounded-md px-3 py-2 text-violet-100/80 hover:bg-violet-100/10 hover:text-violet-100">Projets</a></li>
-          <li><a href="#contact" class="rounded-md px-3 py-2 text-violet-100/80 hover:bg-violet-100/10 hover:text-violet-100">Contact</a></li>
+          <li><a href="#a-propos" class="site-navlink rounded-md px-3 py-2">Profil</a></li>
+          <li><a href="#identite" class="site-navlink rounded-md px-3 py-2">Identite</a></li>
+          <li><a href="#projets" class="site-navlink rounded-md px-3 py-2">Projets</a></li>
+          <li><a href="#lab-notes" class="site-navlink rounded-md px-3 py-2">Lab</a></li>
+          <li><a href="#contact" class="site-navlink rounded-md px-3 py-2">Contact</a></li>
         </ul>
       </nav>
-      <span class="lab-pill lab-glow" aria-label="Etat du studio">
-        Lab mode actif
-      </span>
+      <div class="nav-tools">
+        <button class="site-contrast-toggle" data-theme-toggle type="button" aria-pressed="false">
+          Mode contraste
+        </button>
+        <span class="nav-status" aria-live="polite">
+          STATUS: LIVE EXPERIMENT
+        </span>
+        <span class="lab-pill lab-glow" aria-label="Etat du studio">
+          Lab mode actif
+        </span>
+      </div>
+    </div>
+    <div class="site-shell nav-sub-row" aria-label="Bus operationnel">
+      <span class="nav-sub-chip">creative coder</span>
+      <span class="nav-sub-chip">iterateur IA</span>
+      <span class="nav-sub-chip">design produit</span>
+      <span class="nav-sub-chip">automatisme studio</span>
     </div>
   </header>
 
-  <main class="site-shell pb-10 pt-2">
-    <Hero client:load />
-    <About />
-    <Projects client:load />
-    <Contact />
+  <main class="site-shell studio-structure pb-12 pt-3">
+    <section class="structure-grid structure-grid--hero">
+      <div class="structure-cell structure-cell--hero">
+        <Hero client:load />
+      </div>
+      <div class="structure-cell structure-cell--identity">
+        <IdentityLab client:visible />
+      </div>
+    </section>
+
+    <section class="structure-grid structure-grid--systems">
+      <div class="structure-cell structure-cell--flow">
+        <FlowDiagram client:visible />
+      </div>
+      <div class="structure-cell structure-cell--pipeline">
+        <SystemPipeline client:visible />
+      </div>
+      <div class="structure-cell structure-cell--about">
+        <About client:visible />
+      </div>
+    </section>
+
+    <section class="structure-grid structure-grid--production">
+      <div class="structure-cell structure-cell--projects">
+        <Projects client:visible />
+      </div>
+      <div class="structure-cell structure-cell--timeline">
+        <ProjectsTimeline client:visible />
+      </div>
+      <div class="structure-cell structure-cell--notes">
+        <LabNotes client:visible />
+      </div>
+    </section>
+
+    <section class="structure-grid structure-grid--conversion">
+      <div class="structure-cell structure-cell--trust">
+        <TrustStrip client:visible />
+      </div>
+      <div class="structure-cell structure-cell--contact">
+        <Contact client:visible />
+      </div>
+    </section>
   </main>
 
-  <footer class="border-t border-violet-200/20 py-6 text-violet-100/60">
-    <div class="site-shell">
-      © 2026 Clement Saillant - L'electron rare. Studio de creation electronique et design systeme.
+  <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
+    <div class="site-shell footer-grid">
+      <div class="footer-col footer-col--brand">
+        <p class="m-0 footer-title">L'electron rare</p>
+        <p class="mb-0 mt-1 footer-copy">
+          © 2026 Clement Saillant - studio de creation electronique, design systeme et automation creative.
+        </p>
+        <p class="mb-0 mt-2 footer-copy">
+          Positionnement: codeur creatif, iterateur IA, concepteur produit et inventeur de systemes.
+        </p>
+      </div>
+      <div class="footer-col footer-col--protocols">
+        <p class="m-0 footer-column-title">Protocoles actifs</p>
+        <ul class="footer-protocol-list">
+          <li><a href="#lab-notes" class="footer-link">Lab notes</a></li>
+          <li><a href="#projets" class="footer-link">Systemes</a></li>
+          <li><a href="#contact" class="footer-link">Mission</a></li>
+        </ul>
+      </div>
+      <nav aria-label="Ressources studio" class="footer-links">
+        <a
+          href="https://fr.linkedin.com/in/electron-rare"
+          target="_blank"
+          rel="noopener noreferrer"
+          {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
+          class="footer-link"
+        >
+          LinkedIn
+        </a>
+        <a
+          href="https://www.malt.com/profile/clementsaillant"
+          target="_blank"
+          rel="noopener noreferrer"
+          {...trackAttrs(TRACK_EVENTS.outboundMaltContact, 'malt.com')}
+          class="footer-link"
+        >
+          Malt
+        </a>
+        <a
+          href="https://lelectron-fou.bandcamp.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          {...trackAttrs(TRACK_EVENTS.outboundBandcampContact, 'bandcamp.com')}
+          class="footer-link"
+        >
+          Bandcamp
+        </a>
+        <a
+          href="https://github.com/electron-rare/"
+          target="_blank"
+          rel="noopener noreferrer"
+          {...trackAttrs(TRACK_EVENTS.outboundGithubContact, 'github.com')}
+          class="footer-link"
+        >
+          GitHub
+        </a>
+      </nav>
     </div>
   </footer>
 </BaseLayout>

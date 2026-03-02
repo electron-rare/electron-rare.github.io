@@ -1,72 +1,49 @@
-import { Button } from '@/components/ui/button';
+import { motion } from 'motion/react';
+import { CtaDualRail } from '@/components/ui/cta-dual-rail';
 import type { CtaLink } from '@/lib/types';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 
-const contactLinks: CtaLink[] = [
-  {
-    label: 'LinkedIn',
-    href: 'https://fr.linkedin.com/in/electron-rare',
-    event: TRACK_EVENTS.outboundLinkedinContact,
-    destination: 'linkedin.com',
-    external: true
-  },
-  {
-    label: 'Malt',
-    href: 'https://www.malt.com/profile/clementsaillant',
-    event: TRACK_EVENTS.outboundMaltContact,
-    destination: 'malt.com',
-    external: true
-  },
-  {
-    label: 'Bandcamp (Electron Fou)',
-    href: 'https://lelectron-fou.bandcamp.com/',
-    event: TRACK_EVENTS.outboundBandcampContact,
-    destination: 'bandcamp.com',
-    external: true
-  }
-];
+const tertiary: CtaLink = {
+  label: 'Bandcamp (Electron Fou)',
+  href: 'https://lelectron-fou.bandcamp.com/',
+  event: TRACK_EVENTS.outboundBandcampContact,
+  destination: 'bandcamp.com',
+  external: true
+};
 
 export function Contact() {
-  const primary = contactLinks[0];
-  const secondary = contactLinks[1];
-  const tertiary = contactLinks[2];
-
   return (
-    <section id="contact" aria-labelledby="contact-title" className="section-anchor mt-5">
-      <div className="rounded-2xl border border-cyan-300/25 bg-gradient-to-b from-cyan-300/7 to-violet-100/6 p-5 md:p-6">
-        <h2 id="contact-title" className="m-0 text-3xl md:text-4xl">
-          Demarrer une mission
-        </h2>
-        <p className="mb-0 mt-3 max-w-3xl text-violet-100/82">
-          Pour mission de conception, design produit, collaboration de creation electronique ou production
-          audiovisuelle, contactez-moi via les plateformes ci-dessous.
+    <motion.section
+      id="contact"
+      aria-labelledby="contact-title"
+      className="section-anchor mt-5"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.28 }}
+      transition={{ duration: 0.45, ease: 'easeOut' }}
+    >
+      <div className="circuit-board rounded-2xl p-5 md:p-6">
+        <div className="circuit-title-row">
+          <span className="circuit-node circuit-node--magenta" aria-hidden="true" />
+          <h2 id="contact-title" className="m-0 text-3xl md:text-4xl">
+            Demarrer une mission
+          </h2>
+          <span className="circuit-pinline" aria-hidden="true" />
+        </div>
+
+        <p className="section-lead mb-0 mt-3">
+          Point d&apos;entree conversion: cadrage mission, objectifs de systeme, planning et contraintes terrain.
         </p>
-        <p className="mb-0 mt-2 text-sm text-violet-100/70">
+
+        <p className="mb-0 mt-3 max-w-3xl studio-muted">
+          Pour mission de conception, design produit, collaboration de creation electronique ou production
+          audiovisuelle et automatisme de systemes, contactez-moi via les plateformes ci-dessous.
+        </p>
+        <p className="mb-0 mt-2 text-sm studio-muted">
           Canal prioritaire: LinkedIn DM. Option business/freelance: Malt.
         </p>
 
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <Button asChild size="lg">
-            <a
-              href={primary.href}
-              target={primary.external ? '_blank' : undefined}
-              rel={primary.external ? 'noopener noreferrer' : undefined}
-              {...trackAttrs(primary.event, primary.destination)}
-            >
-              {primary.label} (prioritaire)
-            </a>
-          </Button>
-          <Button asChild variant="secondary" size="lg">
-            <a
-              href={secondary.href}
-              target={secondary.external ? '_blank' : undefined}
-              rel={secondary.external ? 'noopener noreferrer' : undefined}
-              {...trackAttrs(secondary.event, secondary.destination)}
-            >
-              {secondary.label} (brief mission)
-            </a>
-          </Button>
-        </div>
+        <CtaDualRail className="mt-4" label="Canaux conversion (primaire puis secondaire)" />
 
         <p className="mb-0 mt-3">
           <a
@@ -74,19 +51,20 @@ export function Contact() {
             target={tertiary.external ? '_blank' : undefined}
             rel={tertiary.external ? 'noopener noreferrer' : undefined}
             {...trackAttrs(tertiary.event, tertiary.destination)}
-            className="inline-flex min-h-9 items-center font-semibold text-cyan-300 underline-offset-4 hover:text-cyan-200 hover:underline"
+            className="inline-flex min-h-9 items-center gap-2 font-semibold studio-link underline-offset-4"
           >
+            <span className="circuit-node circuit-node--magenta" aria-hidden="true" />
             {tertiary.label}
           </a>
         </p>
 
-        <ul aria-label="Repères de confiance" className="mb-0 mt-4 pl-5 text-violet-100/76">
-          <li>Positionnement verifiable: concepteur, creation electronique et iteration IA</li>
+        <ul aria-label="Repères de confiance" className="mb-0 mt-4 pl-5 studio-muted">
+          <li>Poste studio: conception electronique et design de systeme</li>
           <li>Presence professionnelle active sur LinkedIn et Malt</li>
           <li>Premier echange possible sous 24-48h selon disponibilite</li>
-          <li>Travaux publies et contact direct pour collaboration</li>
+          <li>Travaux publies et processus de co-conception vérifiables</li>
         </ul>
       </div>
-    </section>
+    </motion.section>
   );
 }

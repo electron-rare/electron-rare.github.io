@@ -31,13 +31,18 @@ const personJsonLd = JSON.stringify({
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="default">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="theme-color" content={SITE_META.themeColor} />
     <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
 
     <link rel="canonical" href={canonical} />
     <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -73,6 +78,7 @@ const personJsonLd = JSON.stringify({
         })(window, document, "script", "dataLayer", gtmId);
       }
     </script>
+
   </head>
   <body>
     {
@@ -107,6 +113,147 @@ const personJsonLd = JSON.stringify({
             });
           });
         }
+      })();
+    </script>
+
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var key = "lelectron-theme";
+        var defaultTheme = "default";
+        var lightTheme = 'light';
+        var highContrastTheme = 'high-contrast';
+        var themes = [defaultTheme, lightTheme, highContrastTheme];
+        // Prefer the atelier (light) theme by default; allow cycling to standard + high contrast.
+        var preferred = window.matchMedia && window.matchMedia('(prefers-contrast: more)').matches ? highContrastTheme : lightTheme;
+
+        var labelForTheme = function (theme) {
+          if (theme === lightTheme) {
+            return 'Mode contraste';
+          }
+          if (theme === highContrastTheme) {
+            return 'Mode standard';
+          }
+          return 'Mode clair';
+        };
+
+        var applyTheme = function (theme) {
+          root.setAttribute('data-theme', theme);
+          window.localStorage.setItem(key, theme);
+          var button = document.querySelector('[data-theme-toggle]');
+          if (!button) {
+            return;
+          }
+
+          button.textContent = labelForTheme(theme);
+          button.setAttribute('aria-pressed', theme === highContrastTheme ? 'true' : 'false');
+        };
+
+        var toggleTheme = function () {
+          var current = root.getAttribute('data-theme') || defaultTheme;
+          var index = themes.indexOf(current);
+          var nextTheme = themes[(index + 1) % themes.length];
+          applyTheme(nextTheme);
+        };
+
+        var stored = window.localStorage.getItem(key);
+        if (stored === defaultTheme || stored === lightTheme || stored === highContrastTheme) {
+          root.setAttribute('data-theme', stored);
+        } else {
+          root.setAttribute('data-theme', preferred);
+        }
+
+        var button = document.querySelector('[data-theme-toggle]');
+        if (button) {
+          button.addEventListener('click', toggleTheme);
+        }
+
+        applyTheme(root.getAttribute('data-theme') || defaultTheme);
+      })();
+    </script>
+
+    <script is:inline>
+      (function () {
+        var nav = document.querySelector('.site-nav');
+        if (!nav) {
+          return;
+        }
+
+        var links = Array.prototype.slice.call(document.querySelectorAll('.site-navlink[href^="#"]'));
+        if (!links.length) {
+          return;
+        }
+
+        var sections = links
+          .map(function (link) {
+            var href = link.getAttribute('href') || '';
+            var id = href.replace('#', '');
+            var target = id ? document.getElementById(id) : null;
+            return { id: id, link: link, target: target };
+          })
+          .filter(function (entry) {
+            return !!entry.target;
+          });
+
+        var setPressedState = function (link) {
+          link.classList.add('is-pressed');
+          window.setTimeout(function () {
+            link.classList.remove('is-pressed');
+          }, 340);
+        };
+
+        for (var i = 0; i < links.length; i += 1) {
+          links[i].addEventListener('click', function () {
+            setPressedState(this);
+          });
+        }
+
+        var ticking = false;
+        var updateNavState = function () {
+          ticking = false;
+          var scrollTop = window.scrollY || window.pageYOffset || 0;
+
+          nav.classList.toggle('is-compact', scrollTop > 18);
+
+          var doc = document.documentElement;
+          var maxScroll = doc.scrollHeight - window.innerHeight;
+          var progress = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+          nav.style.setProperty('--nav-progress', progress.toFixed(2) + '%');
+
+          var threshold = scrollTop + window.innerHeight * 0.32;
+          var activeId = '';
+
+          for (var s = 0; s < sections.length; s += 1) {
+            if (sections[s].target.offsetTop <= threshold) {
+              activeId = sections[s].id;
+            }
+          }
+
+          for (var l = 0; l < sections.length; l += 1) {
+            var isActive = activeId !== '' && sections[l].id === activeId;
+            sections[l].link.classList.toggle('is-active', isActive);
+            if (isActive) {
+              sections[l].link.setAttribute('aria-current', 'location');
+            } else {
+              sections[l].link.removeAttribute('aria-current');
+            }
+          }
+        };
+
+        var requestUpdate = function () {
+          if (ticking) {
+            return;
+          }
+
+          ticking = true;
+          window.requestAnimationFrame(updateNavState);
+        };
+
+        window.addEventListener('scroll', requestUpdate, { passive: true });
+        window.addEventListener('resize', requestUpdate);
+        window.addEventListener('hashchange', requestUpdate);
+
+        updateNavState();
       })();
     </script>
   </body>

@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
+import { CtaDualRail } from '@/components/ui/cta-dual-rail';
 import type { CtaLink } from '@/lib/types';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 
@@ -29,46 +29,54 @@ export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="section-anchor relative overflow-hidden pt-12 md:pt-20" id="top">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-64 bg-[radial-gradient(circle_at_20%_10%,rgba(255,58,137,0.26),transparent_52%),radial-gradient(circle_at_88%_0%,rgba(49,211,255,0.28),transparent_55%)]" />
+      <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[rgba(8,247,255,0.25)] blur-2xl" />
 
       <div className="grid items-end gap-5 md:grid-cols-[1.2fr_0.8fr]">
         <div>
-          <p className="m-0 text-xs font-bold uppercase tracking-[0.16em] text-fuchsia-300">
+          <p className="m-0 text-xs font-bold uppercase tracking-[0.16em] text-[var(--accent)]">
             Pro • Codeur creatif • Iterateur IA • Savant fou
           </p>
 
-          <motion.h1
+          <h1
             id="hero-title"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="mb-4 mt-3 max-w-[17ch] text-4xl leading-[1.04] md:text-6xl"
+            className="site-shell-title mb-4 mt-3 text-4xl leading-[1.04] md:text-6xl"
           >
             Clement Saillant, alias L&apos;electron rare.
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.08, ease: 'easeOut' }}
-            className="max-w-2xl text-base text-violet-100/82 md:text-lg"
-          >
-            Creation electronique, design de produit et invention de systemes audiovisuels.
-            J&apos;assemble code, IA, materiaux sonores et narration visuelle pour concevoir des experiences
-            qui passent du prototype au live.
-          </motion.p>
+          <p className="max-w-2xl text-base studio-muted md:text-lg">
+            Laboratoire electronique et automatisme creatif: design produit, invention de systemes audiovisuels,
+            architecture de flux et calibration operationnelle.
+            J&apos;assemble code, IA et protocoles de controle pour faire passer une idee du schema au live.
+          </p>
+
+          <div className="hero-manifest mt-4">
+            <p className="hero-manifest-row">
+              <span className="hero-manifest-node" aria-hidden="true" />
+              Creation electronique orientee usage et robustesse terrain.
+            </p>
+            <p className="hero-manifest-row">
+              <span className="hero-manifest-node hero-manifest-node--magenta" aria-hidden="true" />
+              Invention de systemes: du schema de controle a l interface operable.
+            </p>
+            <p className="hero-manifest-row">
+              <span className="hero-manifest-node hero-manifest-node--green" aria-hidden="true" />
+              Design produit: iterateur IA + execution codeur creatif.
+            </p>
+          </div>
 
           <ul aria-label="Axes artistiques" className="mb-6 mt-5 flex flex-wrap gap-2 p-0">
-            <li className="list-none rounded-full border border-fuchsia-300/30 bg-fuchsia-100/10 px-3 py-1 text-sm text-fuchsia-100">
-              Creation electronique
+            <li className="list-none studio-chip studio-chip--cyan">
+              Lab electronique
             </li>
-            <li className="list-none rounded-full border border-cyan-300/35 bg-cyan-100/10 px-3 py-1 text-sm text-cyan-100">
-              Invention de systemes
+            <li className="list-none studio-chip studio-chip--vio">
+              Bus de controle
             </li>
-            <li className="list-none rounded-full border border-violet-200/30 bg-violet-100/10 px-3 py-1 text-sm text-violet-100">
-              Design produit
+            <li className="list-none studio-chip studio-chip--pink">
+              Automatisme creatif
             </li>
-            <li className="list-none rounded-full border border-lime-200/30 bg-lime-100/10 px-3 py-1 text-sm text-lime-100">
-              Lab IA
+            <li className="list-none studio-chip studio-chip--emerald">
+              Boucle IA
             </li>
           </ul>
 
@@ -85,43 +93,29 @@ export function Hero() {
             </Button>
           </div>
 
-          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-violet-100/76">
-            <span className="lab-kicker">Contact rapide</span>
-            <a
-              href="https://fr.linkedin.com/in/electron-rare"
-              target="_blank"
-              rel="noopener noreferrer"
-              {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
-              className="font-semibold text-cyan-300 underline-offset-4 hover:text-cyan-200 hover:underline"
-            >
-              LinkedIn DM
-            </a>
-            <span aria-hidden="true">•</span>
-            <a
-              href="https://www.malt.com/profile/clementsaillant"
-              target="_blank"
-              rel="noopener noreferrer"
-              {...trackAttrs(TRACK_EVENTS.outboundMaltContact, 'malt.com')}
-              className="font-semibold text-fuchsia-300 underline-offset-4 hover:text-fuchsia-200 hover:underline"
-            >
-              Malt
-            </a>
-          </div>
+          <CtaDualRail className="mt-4" label="Canaux mission (priorite conversion)" />
         </div>
 
-        <motion.aside
-          initial={{ opacity: 0, x: 24, scale: 0.97 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.62, delay: 0.12, ease: 'easeOut' }}
-          aria-label="Carte studio"
-          className="lab-panel relative overflow-hidden rounded-2xl p-5"
-        >
-          <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-fuchsia-400/25 blur-2xl" />
-          <p className="m-0 text-[11px] uppercase tracking-[0.16em] text-cyan-200">Carte rapide</p>
-          <h2 className="mb-2 mt-2 text-3xl">L&apos;electron rare</h2>
-          <p className="mt-0 text-violet-100/82">
+        <aside aria-label="Carte studio" className="circuit-board relative overflow-hidden rounded-2xl p-5">
+          <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[rgba(8,247,255,0.25)] blur-2xl" />
+          <div className="circuit-title-row">
+            <span className="circuit-node" aria-hidden="true" />
+            <p className="m-0 text-[11px] uppercase tracking-[0.16em] text-[var(--electric)]">Carte rapide</p>
+            <span className="circuit-pinline" aria-hidden="true" />
+          </div>
+
+          <h2 className="mb-2 mt-1 text-3xl">L&apos;electron rare</h2>
+          <p className="mt-0 studio-muted">
             Studio personnel: conception, experimentation, iteration IA et execution de projets electroniques.
           </p>
+
+          <div className="circuit-board-rail mt-4">
+            <p className="m-0 text-sm font-semibold">Nœud actif</p>
+            <p className="mb-0 text-sm studio-muted">
+              Le schema relie entree signal, logique de controle et execution visuelle vers des livrables operables.
+            </p>
+          </div>
+
           <div className="mt-4 grid grid-cols-2 gap-2">
             <div className="lab-metric">
               <span>Mode</span>
@@ -140,14 +134,18 @@ export function Hero() {
               <strong>24-48h</strong>
             </div>
           </div>
-          <a
-            href={profileCta.href}
-            {...trackAttrs(profileCta.event, profileCta.destination)}
-            className="mt-4 inline-block font-semibold text-cyan-300 underline-offset-4 hover:text-cyan-200 hover:underline"
-          >
-            {profileCta.label}
-          </a>
-        </motion.aside>
+
+          <div className="mt-4">
+            <a
+              href={profileCta.href}
+              {...trackAttrs(profileCta.event, profileCta.destination)}
+              className="inline-flex items-center gap-2 studio-link font-semibold"
+            >
+              <span className="circuit-node circuit-node--magenta" aria-hidden="true" />
+              {profileCta.label}
+            </a>
+          </div>
+        </aside>
       </div>
     </section>
   );

@@ -7,3 +7,12 @@ dist/
 storybook-static/
 .astro/
 .DS_Store
+
+# GH Pages / builds locaux (sorties CI ou previews locales)
+.pages-dist/
+
+# Artefacts locaux de workflow / QA
+output/
+tmp/
+.tmp/
+.playwright-cli/

@@ -1,4 +1,4 @@
-name: Deploy Astro to GitHub Pages
+name: Deploy Static Site + Lab to GitHub Pages
 
 on:
   push:
@@ -26,14 +26,35 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            apps/lab-interactif/package-lock.json
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
-        env:
-          PUBLIC_GTM_CONTAINER_ID: GTM-5SLM67QF
+      - name: Install lab dependencies
+        run: npm ci --prefix apps/lab-interactif
+
+      - name: Build lab module
+        run: npm run lab:build
+
+      - name: Prepare pages artifact
+        run: |
+          mkdir -p .pages-dist
+          cp index.html .pages-dist/
+          cp styles.css .pages-dist/
+          cp script.js .pages-dist/
+          cp robots.txt .pages-dist/
+          cp sitemap.xml .pages-dist/
+          cp favicon.svg .pages-dist/
+          cp favicon.ico .pages-dist/
+          cp favicon-32x32.png .pages-dist/
+          cp favicon-16x16.png .pages-dist/
+          cp apple-touch-icon.png .pages-dist/
+          cp -R assets .pages-dist/assets
+          cp -R lab .pages-dist/lab
+          if [ -f CNAME ]; then cp CNAME .pages-dist/; fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -41,7 +62,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./.pages-dist
 
   deploy:
     needs: build

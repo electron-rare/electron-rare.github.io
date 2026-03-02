@@ -1,10 +1,11 @@
 # Plan d'avancement Acquisition/SEO (7 jours + 30 jours)
 
-Date de mise à jour: 2026-03-01
-Périmètre: site statique GitHub Pages (`index.html`, `assets/styles.css`)
+Date de mise à jour: 2026-03-02
+Perimetre: site statique GitHub Pages (`index.html`, `styles.css`, `script.js`) + module interactif `/lab/` (Vite + React Router hash)
+Référence priorités globale: `docs/project-master-todos.md`
 
 ## Objectif
-Transformer le site en base d'acquisition mesurable, sans ajouter de backend ni pipeline build.
+Transformer le site en base d'acquisition mesurable, sans backend, avec une home legere et un module interactif isole.
 
 ## Avancement immédiat (P0/P1)
 
@@ -12,6 +13,7 @@ Transformer le site en base d'acquisition mesurable, sans ajouter de backend ni 
 - [x] URL canonique fixée (`https://electron-rare.github.io/`)
 - [x] `robots.txt` à la racine
 - [x] `sitemap.xml` à la racine
+- [x] `sitemap.xml` inclut `/` + `/lab/`
 - [x] Contrat d'événements tracking implémenté (`data-track` + `dataLayer` enrichi)
 - [x] Remplacer `GTM-REPLACE_ME` par l'ID GTM réel (`GTM-5SLM67QF`)
 - [ ] Valider événements en GA4 Realtime
@@ -21,7 +23,9 @@ Transformer le site en base d'acquisition mesurable, sans ajouter de backend ni 
 - [x] Asset social `assets/og-cover.jpg` créé (1200x630)
 - [x] Copy contact orientée booking/collaboration + éléments de confiance
 - [x] Ajustement responsive <=390px
+- [x] Passe responsive complete 390/768/1024/1440 (home + lab)
 - [x] Exécuter audit Lighthouse mobile/desktop et archiver résultats
+- [x] Storybook build coverage P2 execute
 - [ ] Vérifier aperçus sociaux en production (LinkedIn/Facebook debugger)
 
 ### P2 (mois)
@@ -80,11 +84,19 @@ Transformer le site en base d'acquisition mesurable, sans ajouter de backend ni 
 - `cta_hero_projets`
 - `cta_hero_contact`
 - `cta_hero_profile`
-- `outbound_linkedin_project`
 - `outbound_linkedin_contact`
 - `outbound_malt_contact`
-- `outbound_bandcamp_project`
 - `outbound_bandcamp_contact`
+- `outbound_github_contact`
+- `outbound_github_project_rtc_bl_phone`
+- `outbound_github_project_zacus`
+- `outbound_github_project_site`
+- `outbound_github_lab_more`
+- `cta_lab_interactif_open`
+
+Compat legacy:
+- `outbound_github_project`
+- `outbound_github_contact`
 
 Paramètres:
 - `event_category=engagement`

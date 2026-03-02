@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "buildCommand": "npm run build:external",
+  "outputDirectory": "dist",
+  "installCommand": "npm ci && npm ci --prefix apps/lab-interactif",
+  "framework": "astro"
+}

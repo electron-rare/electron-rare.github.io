@@ -1,10 +1,12 @@
 import { motion } from 'motion/react';
 import { Card } from '@/components/ui/card';
+import { CtaDualRail } from '@/components/ui/cta-dual-rail';
 import type { CtaLink } from '@/lib/types';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 
 type ProjectItem = {
   title: string;
+  stage: string;
   description: string;
   link?: CtaLink;
 };
@@ -12,6 +14,7 @@ type ProjectItem = {
 const projects: ProjectItem[] = [
   {
     title: "L'électron rare",
+    stage: 'Studio core',
     description:
       'Studio principal: creation electronique, prototypes d interactions audiovisuelles et systemes experimentaux.',
     link: {
@@ -24,11 +27,13 @@ const projects: ProjectItem[] = [
   },
   {
     title: 'Bureau conception produit/systeme',
+    stage: 'Design produit',
     description:
       "Conception de dispositifs et parcours d'usage: du concept au prototype fonctionnel, avec approche studio et iteration rapide."
   },
   {
     title: 'Electron Fou (noise)',
+    stage: 'R&D sonore',
     description:
       'Volet noise: R&D sonore, textures radicales et sorties publiees sur plateformes audio.',
     link: {
@@ -38,16 +43,39 @@ const projects: ProjectItem[] = [
       destination: 'bandcamp.com',
       external: true
     }
+  },
+  {
+    title: 'Hardware/Firmware references',
+    stage: 'Open source',
+    description:
+      'Stack de references terrain: ESP32, STM32, LED curtain, energie batterie et automatisme de flux.'
   }
 ];
+
+const topReferences = [
+  'https://github.com/KomplexKapharnaum/KXKM_ESP32_Audio_Battery_hardware',
+  'https://github.com/KomplexKapharnaum/LEDcurtain_hardware',
+  'https://github.com/KomplexKapharnaum/kxkm_Ve.direct'
+] as const;
+
+const referencesHub = 'https://github.com/electron-rare/?tab=repositories';
 
 export function Projects() {
   return (
     <section id="projets" aria-labelledby="projects-title" className="section-anchor mt-5">
-      <div className="rounded-2xl border border-fuchsia-300/25 bg-gradient-to-b from-fuchsia-300/7 to-violet-100/6 p-5 md:p-6">
-        <h2 id="projects-title" className="m-0 text-3xl md:text-4xl">
-          Projets
-        </h2>
+      <div className="circuit-board rounded-2xl p-5 md:p-6">
+        <div className="circuit-title-row">
+          <span className="circuit-node circuit-node--green" aria-hidden="true" />
+          <h2 id="projects-title" className="m-0 text-3xl md:text-4xl">
+            Systemes & references terrain
+          </h2>
+          <span className="circuit-pinline" aria-hidden="true" />
+        </div>
+
+        <p className="section-lead mb-0 mt-3">
+          Bloc projets oriente execution: conception systeme, preuve publique et references hardware/firmware reliees
+          au positionnement studio.
+        </p>
 
         <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, index) => (
@@ -59,9 +87,13 @@ export function Projects() {
               transition={{ duration: 0.42, delay: index * 0.06 }}
               whileHover={{ y: -5 }}
             >
-              <Card className="h-full border-cyan-300/25 bg-violet-950/28">
-                <h3 className="m-0 text-xl">{project.title}</h3>
-                <p className="mb-0 mt-2 text-violet-100/82">{project.description}</p>
+              <Card className="h-full">
+                <p className="project-stage">{project.stage}</p>
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="circuit-node" aria-hidden="true" />
+                  <h3 className="m-0 text-xl">{project.title}</h3>
+                </div>
+                <p className="mb-0 mt-2 studio-muted">{project.description}</p>
                 {project.link && (
                   <p className="mb-0 mt-3">
                     <a
@@ -69,7 +101,7 @@ export function Projects() {
                       target={project.link.external ? '_blank' : undefined}
                       rel={project.link.external ? 'noopener noreferrer' : undefined}
                       {...trackAttrs(project.link.event, project.link.destination)}
-                      className="font-semibold text-cyan-300 underline-offset-4 hover:text-cyan-200 hover:underline"
+                      className="font-semibold studio-link"
                     >
                       {project.link.label}
                     </a>
@@ -79,6 +111,38 @@ export function Projects() {
             </motion.div>
           ))}
         </div>
+
+        <div className="project-reference-panel mt-5">
+          <p className="project-reference-title">References GitHub (stack source)</p>
+          <ul className="project-reference-list">
+            {topReferences.map((href) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  {...trackAttrs(TRACK_EVENTS.outboundGithubProject, 'github.com')}
+                  className="project-reference-link"
+                >
+                  {href.replace('https://github.com/', '')}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mb-0 mt-3">
+            <a
+              href={referencesHub}
+              target="_blank"
+              rel="noopener noreferrer"
+              {...trackAttrs(TRACK_EVENTS.outboundGithubProject, 'github.com')}
+              className="project-reference-more"
+            >
+              Voir plus sur GitHub
+            </a>
+          </p>
+        </div>
+
+        <CtaDualRail className="mt-5" label="Convertir un projet en mission" />
       </div>
     </section>
   );

@@ -1,4 +1,6 @@
-export const SITE_URL = 'https://electron-rare.github.io/';
+const normalizeUrl = (value: string) => (value.endsWith('/') ? value : `${value}/`);
+
+export const SITE_URL = normalizeUrl(import.meta.env.PUBLIC_SITE_URL || 'https://electron-rare.github.io/');
 
 export const SITE_META = {
   title: "Clément Saillant — L'électron rare",
@@ -9,9 +11,14 @@ export const SITE_META = {
   twitterDescription:
     "Creation electronique, invention de systemes et design produit sous l'identite L'electron rare.",
   ogImagePath: 'assets/og-cover.jpg',
-  themeColor: '#0f0e17'
+  themeColor: '#f4eee3'
 } as const;
 
 export const SITE_OG_IMAGE_URL = `${SITE_URL}${SITE_META.ogImagePath}`;
 
 export const GTM_CONTAINER_ID_DEFAULT = 'GTM-5SLM67QF';
+
+export const BRAND_ASSETS = {
+  markPath: 'assets/brand/logo-mark.png',
+  lockupPath: 'assets/brand/logo-lockup.png'
+} as const;

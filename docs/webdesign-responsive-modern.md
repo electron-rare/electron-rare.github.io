@@ -8,7 +8,8 @@ Améliorer le rendu visuel, la lisibilité mobile et l'ergonomie moderne sans ca
 ## Améliorations déjà appliquées
 - `scroll-margin-top` sur sections ancrées (menu sticky plus propre).
 - Cibles tactiles renforcées sur navigation, boutons et liens contact.
-- Mode `prefers-contrast: more` ajouté pour meilleure lisibilité.
+- Pass de style studio électrique appliquée (`src/styles/global.css` + `src/components/*`).
+- `prefers-reduced-motion` maintenu pour réduire les animations.
 
 ## Priorités prochaines itérations
 1. Typographie
