@@ -17,14 +17,14 @@ const timeline: TimelineItem[] = [
   {
     year: '2010',
     title: 'VJ Clearscreen',
-    category: 'Video live / scenographie',
-    summary: 'Performances video et experimentations de diffusion autour du langage ecran.'
+    category: 'Contexte',
+    summary: 'Point de depart: production visuelle live et exigences de robustesse en condition reelle.'
   },
   {
     year: '2016',
     title: 'Electron Fou',
-    category: 'Noise / creation sonore',
-    summary: 'R&D de textures noise et sorties en ligne sur plateformes audio.',
+    category: 'Intervention',
+    summary: 'Construction d une chaine R&D sonore instrumentee, puis publication comme preuve de methode.',
     href: 'https://lelectron-fou.bandcamp.com/',
     event: TRACK_EVENTS.outboundBandcampProject,
     destination: 'bandcamp.com',
@@ -33,8 +33,8 @@ const timeline: TimelineItem[] = [
   {
     year: '2021',
     title: "L'electron rare",
-    category: 'Design produit / systemes',
-    summary: 'Conception de dispositifs, automation creative et methodes studio.',
+    category: 'Structuration',
+    summary: 'Passage a un modele studio: conception produit, architecture systeme et delivery par iterations.',
     href: 'https://fr.linkedin.com/in/electron-rare',
     event: TRACK_EVENTS.outboundLinkedinProject,
     destination: 'linkedin.com',
@@ -43,8 +43,8 @@ const timeline: TimelineItem[] = [
   {
     year: '2026',
     title: 'Open repos references',
-    category: 'Hardware/Firmware',
-    summary: 'References GitHub: ESP32, STM32, LED, energie batterie et systemes de controle.',
+    category: 'Preuve ouverte',
+    summary: 'Publication de references hardware/firmware pour qualifier la maitrise technique en transparence.',
     href: 'https://github.com/electron-rare/',
     event: TRACK_EVENTS.outboundGithubProject,
     destination: 'github.com',
@@ -53,8 +53,8 @@ const timeline: TimelineItem[] = [
   {
     year: '2026',
     title: 'Studio acquisition',
-    category: 'SEO / CRO / tracking',
-    summary: 'Pipeline mesuree: CTA, analytics, indexation et iteration continue.',
+    category: 'Impact business',
+    summary: 'Pipeline acquisition mesure: CTA, analytics et optimisation continue pour soutenir la conversion.',
     href: '#contact',
     event: TRACK_EVENTS.ctaHeroContact,
     destination: '#contact'
@@ -68,13 +68,13 @@ export function ProjectsTimeline() {
         <div className="circuit-title-row">
           <span className="circuit-node circuit-node--magenta" aria-hidden="true" />
           <h2 id="timeline-title" className="m-0 text-3xl md:text-4xl">
-            Timeline projets
+            Timeline preuve - decision - impact
           </h2>
           <span className="circuit-pinline" aria-hidden="true" />
         </div>
 
         <p className="section-lead mb-0 mt-3">
-          Chronologie orientee preuves: evolution video/noise, design systeme puis references open source.
+          Lecture rapide pour CTO: evolution des methodes, decisions techniques, puis impact operationnel.
         </p>
 
         <ol className="projects-timeline mt-4" aria-label="Chronologie projets">

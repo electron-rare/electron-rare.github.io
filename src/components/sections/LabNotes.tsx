@@ -19,36 +19,36 @@ type LabEntry = {
 const entries: LabEntry[] = [
   {
     date: '2026-02-25',
-    title: 'Automatisme de navigation active',
-    intent: 'Rendre la lecture de section instantanee pendant le scroll.',
-    system: 'Signal scroll -> section active -> etat nav.',
-    build: 'Header sticky + progress line + jitter controle.',
-    test: 'Verification 390/768/1024/1440 + clavier.',
-    result: 'Navigation plus lisible sans perte de contraste.',
+    title: 'Sprint 01 - Navigation et lisibilite commerciale',
+    intent: 'Reduire la friction de lecture pour un decideur en scan rapide.',
+    system: 'Signal scroll -> section active -> priorite CTA.',
+    build: 'Header sticky, progress line et hierarchie copy mobile/desktop.',
+    test: 'Verification 390/768/1024/1440, clavier et focus-visible.',
+    result: 'Temps de comprehension hero/nav reduit, parcours de contact clarifie.',
     href: '#top',
     event: TRACK_EVENTS.ctaHeroProfile,
     destination: '#top'
   },
   {
     date: '2026-02-27',
-    title: 'Boucle conversion dual CTA',
-    intent: 'Clarifier le chemin de contact professionnel.',
-    system: 'CTA primaire LinkedIn, secondaire Malt.',
-    build: 'Module CTA reutilisable sur sections cles.',
-    test: 'Controle tracking GA4 + focus visible.',
-    result: 'Parcours contact plus direct et mesurable.',
+    title: 'Sprint 02 - Boucle conversion mission',
+    intent: 'Rendre explicite la proposition sur mesure et la methode agile.',
+    system: 'CTA profil expert -> mission -> cas d usage.',
+    build: 'Micro-copy de preuves, labels actionnables et sequence commerciale.',
+    test: 'Controle tracking GA4/GTM + consistence des labels de sections.',
+    result: 'Decision de prise de contact mieux guidee sans changer le contrat events.',
     href: '#contact',
     event: TRACK_EVENTS.ctaHeroContact,
     destination: '#contact'
   },
   {
     date: '2026-03-01',
-    title: 'Research noise / Electron Fou',
-    intent: 'Connecter les travaux sonores au studio systeme.',
-    system: 'Carte projet + timeline + lien plateforme.',
-    build: 'Integration Bandcamp dans axe portfolio.',
-    test: 'Sortants verifies + ouverture nouvel onglet.',
-    result: 'Preuve publique du versant noise experimental.',
+    title: 'Sprint 03 - Preuves publiques et qualification',
+    intent: 'Renforcer la credibilite avant premier echange commercial.',
+    system: 'Cas d usage + timeline + references externes verifiables.',
+    build: 'Integration Bandcamp, GitHub et liens experts dans le parcours.',
+    test: 'Sortants verifies, conformite nofollow/noopener et UX mobile.',
+    result: 'Bloc confiance plus robuste pour qualifier une mission premium.',
     href: 'https://lelectron-fou.bandcamp.com/',
     event: TRACK_EVENTS.outboundBandcampProject,
     destination: 'bandcamp.com',
@@ -63,17 +63,17 @@ export function LabNotes() {
         <div className="circuit-title-row">
           <span className="circuit-node circuit-node--green" aria-hidden="true" />
           <h2 id="lab-notes-title" className="m-0 text-3xl md:text-4xl">
-            Lab notes
+            Lab notes / journal d'execution
           </h2>
           <span className="circuit-pinline" aria-hidden="true" />
         </div>
 
         <p className="section-lead mb-0 mt-3">
-          Debrief technique de sprint: hypotheses, implémentation, verification et impact operationnel.
+          Debrief sprint par sprint: faits techniques, decisions prises et impact sur la mission.
         </p>
 
         <p className="mb-0 mt-3 max-w-3xl studio-muted">
-          Journal de fabrication: chaque note suit le meme protocole
+          Journal de fabrication: chaque note suit le protocole
           <code> Intent -&gt; System -&gt; Build -&gt; Test -&gt; Result</code>.
         </p>
 
@@ -116,7 +116,7 @@ export function LabNotes() {
           ))}
         </div>
 
-        <CtaDualRail className="mt-5" label="Transformer une note en mission active" />
+        <CtaDualRail className="mt-5" label="Passer du journal a une mission active" />
       </div>
     </section>
   );

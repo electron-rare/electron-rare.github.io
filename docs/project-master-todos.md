@@ -8,7 +8,7 @@ Source of truth: this file
 - Référence d'intégration UI/logicielle: `src/pages/index.astro`, `src/styles/global.css`, `src/components/*`
 - Option web hors GitHub (en parallèle, si exigée): build Astro `dist/` publié sur autre host
 - Module C interactif: `apps/lab-interactif` -> publication `lab/`
-- Direction artistique active: `editorial-premium`, `warm-artistic`, `balanced`
+- Direction artistique active: `experimental-noise`, `electric-contrast`, `clarity-first` (reset 2026-03-02)
 - Acquisition: SEO + tracking GTM/GA4 + conversion CTA
 
 ## Decision Log DA (2026-03-02)
@@ -18,7 +18,7 @@ Source of truth: this file
 - [ ] Action nécessaire: aligner chaque évolution UI avec un `artifact` d'avancement daté (captures + preuve QA) pour éviter la dérive.
 
 ## Base DA / architecture
-- [x] Brief DA v2.0.0 verrouille (`notes-interne/creative-direction-brief.md`)
+- [x] Brief DA v2.2.0 verrouille le reset innovant (`notes-interne/creative-direction-brief.md`)
 - [x] Home reconstruite de zero en statique
 - [x] Top 3 GitHub en section Projets + bouton "Voir plus" en section dediee
 - [x] Module C "Lab interactif" implemente (React Router)
@@ -61,6 +61,7 @@ Source of truth: this file
 - [x] Preflight local complété (2026-03-02): `npm run preflight:pages`
 - [x] Build Astro vérifié (2026-03-02): `npm run build`
 - [ ] Déploiement GH Pages post-lock (validation public URL + ancres + OG/robots/sitemap)
+- [x] Déploiement OVH mutualise en SFTP valide (2026-03-02): `npm run deploy:web:sftp` + verification remote bundles (`index.html`, `Hero.D8ngAjmO.js`, `index.DrEuSoRX.css`)
 
 ## Rituels de verification
 - Avant merge: `npm run preflight:pages`

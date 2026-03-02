@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#122b40"/>
+      <stop offset="1" stop-color="#0a1c2b"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#152f17"/>
+      <stop offset="1" stop-color="#1e4f25"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="900" fill="url(#bg)"/>
+
+  <!-- oscilloscope body -->
+  <rect x="90" y="120" width="760" height="510" rx="28" fill="#1f3547" stroke="#5f8eb3" stroke-width="8"/>
+  <rect x="150" y="180" width="470" height="300" rx="16" fill="url(#screen)" stroke="#7ce68f" stroke-width="4"/>
+
+  <!-- waveform -->
+  <path d="M160 330 C220 220,280 440,340 320 C400 200,460 470,520 320 C560 250,600 260,610 330" fill="none" stroke="#8cff9f" stroke-width="6"/>
+  <g stroke="#2f6d39" stroke-width="1" opacity="0.7">
+    <path d="M150 210H620"/><path d="M150 250H620"/><path d="M150 290H620"/><path d="M150 370H620"/><path d="M150 410H620"/><path d="M210 180V480"/><path d="M280 180V480"/><path d="M350 180V480"/><path d="M420 180V480"/><path d="M490 180V480"/><path d="M560 180V480"/>
+  </g>
+
+  <!-- knobs -->
+  <g fill="#f1c27d" stroke="#be8d4a" stroke-width="3">
+    <circle cx="705" cy="235" r="24"/><circle cx="770" cy="235" r="24"/>
+    <circle cx="705" cy="305" r="24"/><circle cx="770" cy="305" r="24"/>
+    <circle cx="705" cy="375" r="24"/><circle cx="770" cy="375" r="24"/>
+    <circle cx="770" cy="445" r="24"/>
+  </g>
+
+  <!-- multimeter -->
+  <rect x="930" y="220" width="320" height="420" rx="26" fill="#263741" stroke="#89afc4" stroke-width="7"/>
+  <rect x="980" y="270" width="220" height="90" rx="10" fill="#173224" stroke="#88e29b" stroke-width="3"/>
+  <text x="1005" y="330" font-size="54" fill="#95ffb0" font-family="monospace">12.47</text>
+  <circle cx="1040" cy="430" r="38" fill="#e8be7f" stroke="#be8b3f" stroke-width="4"/>
+  <circle cx="1140" cy="430" r="38" fill="#e8be7f" stroke="#be8b3f" stroke-width="4"/>
+  <circle cx="1090" cy="530" r="56" fill="#f0c986" stroke="#be8b3f" stroke-width="5"/>
+
+  <!-- probes -->
+  <path d="M1040 650 C980 730,930 780,840 830" stroke="#dd4b4b" stroke-width="6" fill="none"/>
+  <path d="M1140 650 C1180 730,1220 790,1320 840" stroke="#4ea3ff" stroke-width="6" fill="none"/>
+
+  <text x="110" y="92" font-size="34" fill="#b9daef" font-family="monospace">LAB MEASUREMENT RIG / OSC + DMM</text>
+</svg>

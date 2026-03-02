@@ -3,19 +3,19 @@ import { CtaDualRail } from '@/components/ui/cta-dual-rail';
 
 const proofItems = [
   {
-    label: 'Collaborations',
-    value: 'Studio / design / audiovisuel',
-    detail: 'Approche orientee systeme et livraison.'
+    label: 'Execution',
+    value: 'Audit, prototype, delivery',
+    detail: 'Methode agile en sprints de 2 semaines.'
   },
   {
-    label: 'Projets actifs',
-    value: 'R&D electronique + UX conversion',
-    detail: 'Chaîne complete: idee, prototype, QA, publication.'
+    label: 'Rigueur technique',
+    value: 'Faits, mesures, arbitrages',
+    detail: 'Trajectoire documentee pour CTO et metier.'
   },
   {
-    label: 'Liens verifiables',
+    label: 'References verifiables',
     value: 'LinkedIn, Malt, Bandcamp, GitHub',
-    detail: 'References hardware/firmware consultables.'
+    detail: 'Cas et stacks consultables avant prise de contact.'
   }
 ];
 
@@ -32,13 +32,13 @@ export function TrustStrip() {
         <div className="circuit-title-row">
           <span className="circuit-node" aria-hidden="true" />
           <h2 id="proof-title" className="m-0 text-2xl md:text-3xl">
-            Signaux de confiance
+            Signaux de confiance pour decider
           </h2>
           <span className="circuit-pinline" aria-hidden="true" />
         </div>
 
         <p className="section-lead mb-0 mt-3">
-          Preuves de credibilite avant contact: execution, references publiques et capacite d&apos;iteration.
+          Vous obtenez les preuves utiles avant decision: execution, methode et references publiques.
         </p>
 
         <div className="trust-strip mt-4" role="list" aria-label="Preuves studio">
@@ -52,10 +52,10 @@ export function TrustStrip() {
         </div>
 
         <p className="mb-0 mt-4 text-sm studio-muted">
-          Bloc preuves place avant contact pour reduire la friction de decision.
+          Ces preuves reduisent la friction commerciale sans surpromesse.
         </p>
 
-        <CtaDualRail className="mt-4" label="Declencher le premier echange" />
+        <CtaDualRail className="mt-4" label="Declencher un premier echange cadre" />
       </motion.div>
     </section>
   );

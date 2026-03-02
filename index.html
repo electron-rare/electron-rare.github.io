@@ -72,7 +72,44 @@
         ]
       }
     </script>
-
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var raw = params.get('da') || params.get('variant') || params.get('da-variant') || '';
+        var normalized = (raw || '').toLowerCase().replace(/^v/, 'v');
+        var allowed = {
+          v1: 1,
+          v2: 1,
+          v3: 1,
+          v4: 1,
+          v5: 1,
+          v6: 1,
+          v7: 1,
+          v8: 1,
+          v9: 1,
+          v10: 1,
+          v11: 1,
+          v12: 1,
+          '1': 1,
+          '2': 1,
+          '3': 1,
+          '4': 1,
+          '5': 1,
+          '6': 1,
+          '7': 1,
+          '8': 1,
+          '9': 1,
+          '10': 1,
+          '11': 1,
+          '12': 1
+        };
+        var requested = normalized in allowed ? normalized : 'v12';
+        if (requested && requested.length === 1) {
+          requested = 'v' + requested;
+        }
+        document.documentElement.setAttribute('data-da-variant', requested || 'v12');
+      })();
+    </script>
     <link rel="stylesheet" href="/styles.css" />
 
   </head>
@@ -111,45 +148,68 @@
 
     <main id="main">
       <section class="hero shell reveal" data-reveal>
-        <p class="eyebrow">Creative systems studio</p>
-        <h1>
-          Je construis des experiences <span>electroniques</span> qui connectent design, code et IA.
-        </h1>
-        <p class="hero-copy">
-          De l'idee au prototype live: direction produit, architecture technique et execution visuelle pour
-          lancements, installations et projets experimentaux.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#projets" data-track="cta_hero_projets" data-destination="#projets">
-            Voir les projets
-          </a>
-          <a class="btn btn-secondary" href="#contact" data-track="cta_hero_contact" data-destination="#contact">
-            Demarrer une mission
-          </a>
-          <a
-            class="btn btn-ghost"
-            href="https://fr.linkedin.com/in/electron-rare"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-track="cta_hero_profile"
-            data-destination="linkedin.com/in/electron-rare">
-            Voir le profil
-          </a>
+        <div class="hero-layout">
+          <div class="hero-copy-stack">
+            <p class="eyebrow">Electronique lab studio</p>
+            <h1>
+              Carnet de labo vivant: <span>traces</span>, mesures et production systeme.
+            </h1>
+            <p class="hero-copy">
+              Je documente chaque mission comme un bench electronique: hypotheses, tests instrumentes, revision de
+              cartes et mise en production.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#projets" data-track="cta_hero_projets" data-destination="#projets">
+                Voir les projets
+              </a>
+              <a class="btn btn-secondary" href="#contact" data-track="cta_hero_contact" data-destination="#contact">
+                Demarrer une mission
+              </a>
+              <a
+                class="btn btn-ghost"
+                href="https://fr.linkedin.com/in/electron-rare"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-track="cta_hero_profile"
+                data-destination="linkedin.com/in/electron-rare">
+                Voir le profil
+              </a>
+            </div>
+            <ul class="hero-metrics" aria-label="Signaux studio">
+              <li>
+                <strong>Bench mesure</strong>
+                <span>oscilloscope, multimetre, verification terrain</span>
+              </li>
+              <li>
+                <strong>PCB engineering</strong>
+                <span>traces, vias, revision et production</span>
+              </li>
+              <li>
+                <strong>Impact</strong>
+                <span>prototype utile, lisible, deployable</span>
+              </li>
+            </ul>
+          </div>
+
+          <aside class="hero-lab-visual" aria-label="Assets labo electronique">
+            <figure class="lab-asset lab-asset-pcb" data-hero-asset="primary">
+              <img
+                src="/assets/da/openai/hero-pcb-routing-map.png"
+                alt="Plan de routage PCB avec traces et vias"
+                loading="eager"
+                data-hero-image />
+              <figcaption>Plan de routage vivant — trace / via / bus</figcaption>
+            </figure>
+            <figure class="lab-asset lab-asset-measure" data-hero-asset="secondary">
+              <img
+                src="/assets/da/openai/hero-measurement-rig.png"
+                alt="Planche de mesure pour validation électronique"
+                loading="lazy"
+                data-hero-image />
+              <figcaption>Notebook labo — validation terrain & protocole</figcaption>
+            </figure>
+          </aside>
         </div>
-        <ul class="hero-metrics" aria-label="Signaux studio">
-          <li>
-            <strong>Systemes</strong>
-            <span>UX, hardware et logiciel alignes</span>
-          </li>
-          <li>
-            <strong>IA appliquee</strong>
-            <span>prototypage rapide et pipelines intelligents</span>
-          </li>
-          <li>
-            <strong>Production</strong>
-            <span>execution propre, mesurable, deployable</span>
-          </li>
-        </ul>
       </section>
 
       <section id="a-propos" class="panel shell reveal" data-reveal>

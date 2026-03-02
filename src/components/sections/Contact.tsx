@@ -32,18 +32,18 @@ export function Contact() {
         </div>
 
         <p className="section-lead mb-0 mt-3">
-          Point d&apos;entree conversion: cadrage mission, objectifs de systeme, planning et contraintes terrain.
+          Point d&apos;entree mission: perimetre, contraintes et priorites de delivery.
         </p>
 
         <p className="mb-0 mt-3 max-w-3xl studio-muted">
-          Pour mission de conception, design produit, collaboration de creation electronique ou production
-          audiovisuelle et automatisme de systemes, contactez-moi via les plateformes ci-dessous.
+          Missions ciblees: architecture electronique, prototype sur mesure, optimisation systeme et accompagnement
+          produit. Le cadrage initial valide objectifs, risques et temporalite.
         </p>
         <p className="mb-0 mt-2 text-sm studio-muted">
-          Canal prioritaire: LinkedIn DM. Option business/freelance: Malt.
+          Canal prioritaire: LinkedIn DM. Option achat/prestation: Malt. Premier retour sous 24-48h selon charge.
         </p>
 
-        <CtaDualRail className="mt-4" label="Canaux conversion (primaire puis secondaire)" />
+        <CtaDualRail className="mt-4" label="Choisir le canal de contact mission" />
 
         <p className="mb-0 mt-3">
           <a
@@ -59,10 +59,10 @@ export function Contact() {
         </p>
 
         <ul aria-label="Repères de confiance" className="mb-0 mt-4 pl-5 studio-muted">
-          <li>Poste studio: conception electronique et design de systeme</li>
-          <li>Presence professionnelle active sur LinkedIn et Malt</li>
-          <li>Premier echange possible sous 24-48h selon disponibilite</li>
-          <li>Travaux publies et processus de co-conception vérifiables</li>
+          <li>Prerequis mission: objectif cible, contexte technique, contrainte principale</li>
+          <li>Mode operatoire: sprint de 2 semaines avec jalons de validation</li>
+          <li>Livrables: note de cadrage, priorisation et plan de delivery</li>
+          <li>References publiques disponibles pour pre-qualification</li>
         </ul>
       </div>
     </motion.section>

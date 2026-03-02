@@ -186,6 +186,6 @@ Type logique:
 
 ## 9) Definition of done DA-01
 1. Structure cible implementee en code.
-2. DA conforme au brief v2.0.0.
+2. DA conforme au brief v2.2.0 (reset innovant).
 3. Contrats publics preserves.
 4. Tests passes et evidence mise a jour.

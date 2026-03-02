@@ -42,6 +42,7 @@ export function CtaDualRail({ label = 'Canaux mission', className }: CtaDualRail
           </a>
         </Button>
       </div>
+      <p className="dual-cta-helper">LinkedIn pour un echange direct. Malt pour un brief mission formel.</p>
     </div>
   );
 }

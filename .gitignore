@@ -7,6 +7,7 @@ dist/
 storybook-static/
 .astro/
 .DS_Store
+.env.ftp
 
 # GH Pages / builds locaux (sorties CI ou previews locales)
 .pages-dist/
@@ -16,3 +17,17 @@ output/
 tmp/
 .tmp/
 .playwright-cli/
+
+# Fichiers de duplications locales (conflits Finder/éditeur)
+* 2
+* 2.*
+
+# Captures HTML locales Figma
+.figma-*.html
+
+# Dumps locaux de QA/preview (non source)
+artifacts/da-qa/
+artifacts/previews/
+artifacts/imagegen/
+artifacts/qa-test/*/responsive-v12-pass2/
+artifacts/qa-test/*/deploy-sftp-dryrun.txt

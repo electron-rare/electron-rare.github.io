@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@/styles/global.css';
 import { Hero } from '@/components/sections/Hero';
+import { GraphicSprints } from '@/components/sections/GraphicSprints';
 import { IdentityLab } from '@/components/sections/IdentityLab';
 import { About } from '@/components/sections/About';
 import { Projects } from '@/components/sections/Projects';
@@ -15,43 +16,24 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 ---
 
 <BaseLayout>
-  <header class="sticky top-0 z-30 site-nav site-shell py-2">
-    <div class="site-shell nav-main-row py-3">
-      <a href="#top" class="site-brand font-semibold tracking-wide">
-        <span class="lab-kicker">Studio</span>
-        L'electron rare
-      </a>
+  <header class="sticky top-0 z-30 site-nav">
+    <div class="site-shell figma-lab-nav-row">
+      <a href="#top" class="figma-lab-nav-title">ELECTRONICS MISSION STUDIO</a>
       <nav aria-label="Navigation principale">
-        <ul class="m-0 flex list-none gap-2 p-0">
-          <li><a href="#a-propos" class="site-navlink rounded-md px-3 py-2">Profil</a></li>
-          <li><a href="#identite" class="site-navlink rounded-md px-3 py-2">Identite</a></li>
-          <li><a href="#projets" class="site-navlink rounded-md px-3 py-2">Projets</a></li>
-          <li><a href="#lab-notes" class="site-navlink rounded-md px-3 py-2">Lab</a></li>
-          <li><a href="#contact" class="site-navlink rounded-md px-3 py-2">Contact</a></li>
+        <ul class="figma-lab-nav-list">
+          <li><a href="#a-propos" class="figma-lab-nav-link site-navlink">#a-propos</a></li>
+          <li><a href="#projets" class="figma-lab-nav-link site-navlink">#projets</a></li>
+          <li><a href="#contact" class="figma-lab-nav-link site-navlink">#contact</a></li>
         </ul>
       </nav>
-      <div class="nav-tools">
-        <button class="site-contrast-toggle" data-theme-toggle type="button" aria-pressed="false">
-          Mode contraste
-        </button>
-        <span class="nav-status" aria-live="polite">
-          STATUS: LIVE EXPERIMENT
-        </span>
-        <span class="lab-pill lab-glow" aria-label="Etat du studio">
-          Lab mode actif
-        </span>
-      </div>
-    </div>
-    <div class="site-shell nav-sub-row" aria-label="Bus operationnel">
-      <span class="nav-sub-chip">creative coder</span>
-      <span class="nav-sub-chip">iterateur IA</span>
-      <span class="nav-sub-chip">design produit</span>
-      <span class="nav-sub-chip">automatisme studio</span>
+      <button class="site-contrast-toggle" data-theme-toggle type="button" aria-pressed="false">
+        Mode contraste
+      </button>
     </div>
   </header>
 
   <main class="site-shell studio-structure pb-12 pt-3">
-    <section class="structure-grid structure-grid--hero">
+    <section class="structure-grid structure-grid--hero" data-reveal>
       <div class="structure-cell structure-cell--hero">
         <Hero client:load />
       </div>
@@ -60,7 +42,29 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--systems">
+    <section aria-label="Cartographie sections Figma" class="figma-lab-bottom-map" data-reveal>
+      <div class="figma-lab-bottom-grid">
+        <a href="#a-propos" class="figma-lab-map-card figma-lab-map-card--cream">Process / cadrage</a>
+        <a href="#identite" class="figma-lab-map-card figma-lab-map-card--blue">Architecture / cible</a>
+        <a href="#projets" class="figma-lab-map-card figma-lab-map-card--green">Production / prototype</a>
+
+        <a href="#projets" class="figma-lab-map-card figma-lab-map-card--green">Impact / risque</a>
+        <a href="#lab-notes" class="figma-lab-map-card figma-lab-map-card--blue">Conversion / preuve</a>
+        <a href="#lab-notes" class="figma-lab-map-card figma-lab-map-card--cream">Handoff / delivery</a>
+
+        <a href="#contact" class="figma-lab-map-card figma-lab-map-card--cream">Process / sprint</a>
+        <a href="#contact" class="figma-lab-map-card figma-lab-map-card--blue">Architecture / interfaces</a>
+        <a href="#contact" class="figma-lab-map-card figma-lab-map-card--green">Production / sur mesure</a>
+      </div>
+    </section>
+
+    <section class="structure-grid structure-grid--sprints" data-reveal>
+      <div class="structure-cell structure-cell--sprints">
+        <GraphicSprints client:visible />
+      </div>
+    </section>
+
+    <section class="structure-grid structure-grid--systems" data-reveal>
       <div class="structure-cell structure-cell--flow">
         <FlowDiagram client:visible />
       </div>
@@ -72,7 +76,7 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--production">
+    <section class="structure-grid structure-grid--production" data-reveal>
       <div class="structure-cell structure-cell--projects">
         <Projects client:visible />
       </div>
@@ -84,7 +88,7 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--conversion">
+    <section class="structure-grid structure-grid--conversion" data-reveal>
       <div class="structure-cell structure-cell--trust">
         <TrustStrip client:visible />
       </div>
@@ -99,17 +103,17 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
       <div class="footer-col footer-col--brand">
         <p class="m-0 footer-title">L'electron rare</p>
         <p class="mb-0 mt-1 footer-copy">
-          © 2026 Clement Saillant - studio de creation electronique, design systeme et automation creative.
+          © 2026 Clement Saillant - studio premium de conception electronique, architecture systeme et delivery sur mesure.
         </p>
         <p class="mb-0 mt-2 footer-copy">
-          Positionnement: codeur creatif, iterateur IA, concepteur produit et inventeur de systemes.
+          Positionnement: execution technique exigeante, pilotage agile et accompagnement mission pour decideurs produit.
         </p>
       </div>
       <div class="footer-col footer-col--protocols">
         <p class="m-0 footer-column-title">Protocoles actifs</p>
         <ul class="footer-protocol-list">
           <li><a href="#lab-notes" class="footer-link">Lab notes</a></li>
-          <li><a href="#projets" class="footer-link">Systemes</a></li>
+          <li><a href="#projets" class="footer-link">Cas d'usage</a></li>
           <li><a href="#contact" class="footer-link">Mission</a></li>
         </ul>
       </div>

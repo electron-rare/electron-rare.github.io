@@ -16,33 +16,33 @@ export function About() {
         <div className="circuit-title-row">
           <span className="circuit-node" aria-hidden="true" />
           <h2 id="about-title" className="m-0 text-3xl md:text-4xl">
-            Profil systeme
+            A propos / cadre d'intervention
           </h2>
           <span className="circuit-pinline" aria-hidden="true" />
         </div>
         <p className="section-lead mb-0 mt-3">
-          Positionnement: studio pro, codeur creatif, iterateur IA et concepteur de systemes electroniques.
+          Vous sollicitez un expert quand un produit electronique demande une execution sur mesure, rapide et fiable.
         </p>
         <p className="mb-0 mt-3 max-w-3xl studio-muted">
-          Je suis <strong>Clement Saillant</strong>, createur sous le nom <strong>L&apos;electron rare</strong>.
-          Mon terrain: creation electronique, invention de systemes, design de produit et conception
-          d&apos;objets/experiences hybrides entre code, son et image.
+          Je suis <strong>Clement Saillant</strong>, fondateur de <strong>L&apos;electron rare</strong>. J'accompagne
+          des equipes produit sur des enjeux a forte contrainte: architecture systeme, prototype fonctionnel et
+          passage en production.
         </p>
         <p className="mb-0 mt-3 max-w-3xl studio-muted">
-          Posture de travail: rigueur pro, execution creative, iteration IA continue et esprit
-          laboratoire pour transformer une intuition en systeme utilisable, automatise et maintenable.
+          La methode combine pilotage agile en sprints de 2 semaines, arbitrages techniques documentes et
+          synchronisation business pour tenir vos delais sans sacrifier la robustesse.
         </p>
 
         <div className="mt-4 rounded-xl border border-[color:var(--line)] p-3">
           <ul className="m-0 grid gap-2 p-0 md:grid-cols-2">
-            <li className="list-none studio-chip studio-chip--cyan">Architecture modulaire</li>
-            <li className="list-none studio-chip studio-chip--vio">Rituel de prototypage</li>
-            <li className="list-none studio-chip studio-chip--pink">Livraison orientée expérimentation</li>
-            <li className="list-none studio-chip studio-chip--emerald">Contrôle qualité des parcours</li>
+            <li className="list-none studio-chip studio-chip--cyan">Quand: cadrage techno sous contrainte delai.</li>
+            <li className="list-none studio-chip studio-chip--vio">Livrable: audit - prototype - delivery.</li>
+            <li className="list-none studio-chip studio-chip--pink">Decision: backlog priorise par impact et risque.</li>
+            <li className="list-none studio-chip studio-chip--emerald">Resultat: trajectoire lisible pour CTO et metier.</li>
           </ul>
         </div>
 
-        <CtaDualRail className="mt-4" label="Activer une collaboration studio" />
+        <CtaDualRail className="mt-4" label="Cadrer votre mission sur mesure" />
       </div>
     </motion.section>
   );

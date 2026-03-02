@@ -14,11 +14,11 @@ type ProjectItem = {
 const projects: ProjectItem[] = [
   {
     title: "L'électron rare",
-    stage: 'Studio core',
+    stage: 'Cas 01 - Studio core',
     description:
-      'Studio principal: creation electronique, prototypes d interactions audiovisuelles et systemes experimentaux.',
+      'Contexte: besoin de plateforme R&D transverse. Intervention: architecture electronique et prototypage iteratif. Resultat: base systeme reutilisable pour nouvelles missions.',
     link: {
-      label: 'Profil LinkedIn',
+      label: 'Voir profil LinkedIn',
       href: 'https://fr.linkedin.com/in/electron-rare',
       event: TRACK_EVENTS.outboundLinkedinProject,
       destination: 'linkedin.com',
@@ -27,17 +27,17 @@ const projects: ProjectItem[] = [
   },
   {
     title: 'Bureau conception produit/systeme',
-    stage: 'Design produit',
+    stage: 'Cas 02 - Design produit',
     description:
-      "Conception de dispositifs et parcours d'usage: du concept au prototype fonctionnel, avec approche studio et iteration rapide."
+      "Contexte: idee produit sous contrainte planning. Intervention: cadrage, maquette fonctionnelle et plan d'industrialisation. Resultat: decisions rapides cote CTO et business."
   },
   {
     title: 'Electron Fou (noise)',
-    stage: 'R&D sonore',
+    stage: 'Cas 03 - R&D sonore',
     description:
-      'Volet noise: R&D sonore, textures radicales et sorties publiees sur plateformes audio.',
+      'Contexte: experimentation artistique et diffusion publique. Intervention: pipeline de production son + outillage. Resultat: preuves publiees et processus reproduisible.',
     link: {
-      label: 'Bandcamp',
+      label: 'Ecouter sur Bandcamp',
       href: 'https://lelectron-fou.bandcamp.com/',
       event: TRACK_EVENTS.outboundBandcampProject,
       destination: 'bandcamp.com',
@@ -46,9 +46,9 @@ const projects: ProjectItem[] = [
   },
   {
     title: 'Hardware/Firmware references',
-    stage: 'Open source',
+    stage: 'Cas 04 - Open source',
     description:
-      'Stack de references terrain: ESP32, STM32, LED curtain, energie batterie et automatisme de flux.'
+      'Contexte: besoin de credibilite technique ouverte. Intervention: publication de stacks hardware/firmware terrain. Resultat: base de preuve consultable pour qualification mission.'
   }
 ];
 
@@ -67,14 +67,16 @@ export function Projects() {
         <div className="circuit-title-row">
           <span className="circuit-node circuit-node--green" aria-hidden="true" />
           <h2 id="projects-title" className="m-0 text-3xl md:text-4xl">
-            Systemes & references terrain
+            Cas d'usage et preuves d'execution
           </h2>
           <span className="circuit-pinline" aria-hidden="true" />
         </div>
 
         <p className="section-lead mb-0 mt-3">
-          Bloc projets oriente execution: conception systeme, preuve publique et references hardware/firmware reliees
-          au positionnement studio.
+          Chaque cas suit la meme logique: contexte, intervention technique, impact sur delai, risque ou fiabilite.
+        </p>
+        <p className="mb-0 mt-2 text-sm studio-muted">
+          Choisissez le cas le plus proche de votre contexte puis ouvrez les references associees.
         </p>
 
         <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -113,7 +115,7 @@ export function Projects() {
         </div>
 
         <div className="project-reference-panel mt-5">
-          <p className="project-reference-title">References GitHub (stack source)</p>
+          <p className="project-reference-title">References GitHub (preuves techniques)</p>
           <ul className="project-reference-list">
             {topReferences.map((href) => (
               <li key={href}>
@@ -142,7 +144,7 @@ export function Projects() {
           </p>
         </div>
 
-        <CtaDualRail className="mt-5" label="Convertir un projet en mission" />
+        <CtaDualRail className="mt-5" label="Transformer un cas en plan de mission" />
       </div>
     </section>
   );

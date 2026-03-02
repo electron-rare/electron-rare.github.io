@@ -13,32 +13,32 @@ type FlowStep = {
 
 const steps: FlowStep[] = [
   {
-    label: 'Signal d’entrée',
-    description: 'Mesure du besoin, contraintes techniques et points de controle',
+    label: 'Brief mission',
+    description: 'Besoin, contexte metier et contraintes critiques formalises',
     href: '#top',
     icon: 'pad',
     event: TRACK_EVENTS.ctaHeroProfile,
     destination: '#top'
   },
   {
-    label: 'Bus de contrôle',
-    description: 'Architecture systeme, mapping des flux et logique d automatisme',
+    label: 'Sprint 01',
+    description: 'Architecture cible, interfaces et plan de mitigation des risques',
     href: '#a-propos',
     icon: 'hub',
     event: TRACK_EVENTS.ctaHeroProjects,
     destination: '#a-propos'
   },
   {
-    label: 'Automatisme',
-    description: 'Prototype operationnel, boucle test -> calibrage -> validation',
+    label: 'Sprint 02',
+    description: 'Prototype operationnel, tests terrain et arbitrages de delivery',
     href: '#projets',
     icon: 'cable',
     event: TRACK_EVENTS.ctaHeroContact,
     destination: '#projets'
   },
   {
-    label: 'Lancement mission',
-    description: 'Activation de collaboration avec objectifs, delais et livrables',
+    label: 'Activation',
+    description: 'Decision de mission avec objectifs, delais et livrables valides',
     href: '#contact',
     icon: 'hub',
     event: TRACK_EVENTS.outboundLinkedinContact,
@@ -55,18 +55,18 @@ export function FlowDiagram() {
         <div className="flow-title-row">
           <span className="studio-icon studio-icon--connector" aria-hidden="true" />
           <h2 id="flow-title" className="m-0 text-xl md:text-2xl">
-            Chemin visuel: de l’idée à la mission
+            Process agile: de l'opportunite a la mission
           </h2>
         </div>
 
         <p className="section-lead mb-0 mt-3">
-          Sequence de pilotage studio: lecture du signal, architecture, automatisme puis activation collaboration.
+          Sequence de pilotage pour decideurs techniques: cadrer vite, prototyper juste, activer avec preuves.
         </p>
 
         <div className="section-signal-row mt-3" aria-label="Signaux flux">
           <span className="section-signal-chip">idee -&gt; systeme</span>
-          <span className="section-signal-chip">schema -&gt; prototype</span>
-          <span className="section-signal-chip">preuve -&gt; mission</span>
+          <span className="section-signal-chip">risque -&gt; decision</span>
+          <span className="section-signal-chip">preuve -&gt; conversion</span>
         </div>
 
         <ol className="flow-diagram mt-3" aria-label="Flux studio">

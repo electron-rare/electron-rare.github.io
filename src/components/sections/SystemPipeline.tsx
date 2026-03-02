@@ -11,29 +11,29 @@ type PipelineStep = {
 
 const steps: PipelineStep[] = [
   {
-    label: 'Audit terrain',
-    detail: 'Contexte, objectifs, contraintes et signaux critiques',
+    label: 'Audit cible',
+    detail: 'Objectifs business, contraintes techniques et priorites de livraison',
     href: '#a-propos',
     event: TRACK_EVENTS.ctaHeroProfile,
     destination: '#a-propos'
   },
   {
-    label: 'Schema bus',
-    detail: 'Architecture systeme, flux, interfaces et points de mesure',
+    label: 'Architecture',
+    detail: 'Flux, interfaces, points de mesure et hypotheses a valider',
     href: '#projets',
     event: TRACK_EVENTS.ctaHeroProjects,
     destination: '#projets'
   },
   {
-    label: 'Prototype runtime',
-    detail: 'Calibration des automatismes, boucles test et QA',
+    label: 'Prototype sprint',
+    detail: 'Execution en cycle court: build, test, calibration et feedback',
     href: '#projets',
     event: TRACK_EVENTS.ctaHeroProjects,
     destination: '#projets'
   },
   {
-    label: 'Activation mission',
-    detail: 'Mise en production, suivi conversion et optimisation continue',
+    label: 'Delivery',
+    detail: 'Handoff lisible, plan de deploiement et gouvernance des iterations',
     href: '#contact',
     event: TRACK_EVENTS.ctaHeroContact,
     destination: '#contact'
@@ -49,20 +49,19 @@ export function SystemPipeline() {
         <div className="circuit-title-row">
           <span className="circuit-node circuit-node--green" aria-hidden="true" />
           <h2 id="pipeline-title" className="m-0 text-2xl md:text-3xl">
-            Pipeline systeme
+            Systeme de delivery sur mesure
           </h2>
           <span className="circuit-pinline" aria-hidden="true" />
         </div>
 
         <p className="section-lead mb-0 mt-3">
-          Pipeline d&apos;execution studio: chaque etape garde une logique operationnelle mesurable, du cadrage a
-          l&apos;activation mission.
+          Chaque etape transforme un fait technique en decision exploitable, puis en impact business mesurable.
         </p>
 
         <div className="section-signal-row mt-3" aria-label="Signaux pipeline">
-          <span className="section-signal-chip">process orienté preuve</span>
-          <span className="section-signal-chip">automatisme calibré</span>
-          <span className="section-signal-chip">conversion traçable</span>
+          <span className="section-signal-chip">audit - prototype - delivery</span>
+          <span className="section-signal-chip">sprints de 2 semaines</span>
+          <span className="section-signal-chip">decisions tracees</span>
         </div>
 
         <ol className="system-pipeline mt-4" aria-label="Pipeline studio">

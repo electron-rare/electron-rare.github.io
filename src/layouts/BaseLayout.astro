@@ -13,19 +13,47 @@ const {
 
 const canonical = SITE_URL;
 const gtmId = import.meta.env.PUBLIC_GTM_CONTAINER_ID || GTM_CONTAINER_ID_DEFAULT;
-const personJsonLd = JSON.stringify({
+const structuredDataJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Clément Saillant',
-  alternateName: "L'électron rare",
-  url: canonical,
-  jobTitle: 'Concepteur en création électronique, design produit et systèmes expérimentaux',
-  description:
-    "Codeur créatif, itérateur IA et inventeur de systèmes : création électronique, performances audiovisuelles et collaborations studio sous l'identité L'électron rare.",
-  sameAs: [
-    'https://fr.linkedin.com/in/electron-rare',
-    'https://www.malt.com/profile/clementsaillant',
-    'https://lelectron-fou.bandcamp.com/'
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${canonical}#website`,
+      url: canonical,
+      name: "L'électron rare",
+      inLanguage: 'fr-FR',
+      description: SITE_META.description
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${canonical}#organization`,
+      name: "L'électron rare",
+      url: canonical,
+      logo: `${canonical}assets/brand/logo-mark.png`,
+      sameAs: [
+        'https://fr.linkedin.com/in/electron-rare',
+        'https://www.malt.com/profile/clementsaillant',
+        'https://lelectron-fou.bandcamp.com/'
+      ]
+    },
+    {
+      '@type': 'Person',
+      '@id': `${canonical}#person`,
+      name: 'Clément Saillant',
+      alternateName: "L'électron rare",
+      url: canonical,
+      jobTitle: 'Concepteur en création électronique, design produit et systèmes expérimentaux',
+      description:
+        "Codeur créatif, itérateur IA et inventeur de systèmes : création électronique, performances audiovisuelles et collaborations studio sous l'identité L'électron rare.",
+      worksFor: {
+        '@id': `${canonical}#organization`
+      },
+      sameAs: [
+        'https://fr.linkedin.com/in/electron-rare',
+        'https://www.malt.com/profile/clementsaillant',
+        'https://lelectron-fou.bandcamp.com/'
+      ]
+    }
   ]
 });
 ---
@@ -63,6 +91,18 @@ const personJsonLd = JSON.stringify({
     <meta name="twitter:description" content={SITE_META.twitterDescription} />
     <meta name="twitter:image" content={SITE_OG_IMAGE_URL} />
 
+    <script is:inline>
+      (function () {
+        if (!window.location.hash || window.location.hash.indexOf('figmacapture=') === -1) {
+          return;
+        }
+        var captureScript = document.createElement('script');
+        captureScript.src = 'https://mcp.figma.com/mcp/html-to-design/capture.js';
+        captureScript.async = true;
+        document.head.appendChild(captureScript);
+      })();
+    </script>
+
     <script is:inline define:vars={{ gtmId }}>
       window.dataLayer = window.dataLayer || [];
       if (gtmId) {
@@ -79,8 +119,58 @@ const personJsonLd = JSON.stringify({
       }
     </script>
 
-  </head>
-  <body>
+</head>
+<body>
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var params = new URLSearchParams(window.location.search);
+        var raw = params.get('da') || params.get('variant') || params.get('da-variant') || '';
+        var uiRaw = params.get('ui') || params.get('sprint') || '';
+        var normalized = (raw || '').toLowerCase().trim();
+        var uiNormalized = (uiRaw || '').toLowerCase().trim();
+        var allowed = {
+          v1: 1,
+          v2: 1,
+          v3: 1,
+          v4: 1,
+          v5: 1,
+          v6: 1,
+          v7: 1,
+          v8: 1,
+          v9: 1,
+          v10: 1,
+          v11: 1,
+          v12: 1,
+          '1': 1,
+          '2': 1,
+          '3': 1,
+          '4': 1,
+          '5': 1,
+          '6': 1,
+          '7': 1,
+          '8': 1,
+          '9': 1,
+          '10': 1,
+          '11': 1,
+          '12': 1
+        };
+
+        var requested = normalized in allowed ? normalized : '';
+        var fallbackVariant = 'v12';
+
+        if (requested && /^[1-9]([0-9])?$/.test(requested) && requested.length <= 2) {
+          requested = 'v' + requested;
+        }
+
+        var uiAllowed = { a: 1, b: 1 };
+        var uiSprint = uiNormalized in uiAllowed ? uiNormalized : 'b';
+
+        root.setAttribute('data-da-variant', requested || fallbackVariant);
+        root.setAttribute('data-ui-sprint', uiSprint);
+      })();
+    </script>
+
     {
       gtmId && (
         <noscript>
@@ -95,23 +185,230 @@ const personJsonLd = JSON.stringify({
 
     <slot />
 
-    <script is:inline type="application/ld+json" set:html={personJsonLd} />
+    <script is:inline type="application/ld+json" set:html={structuredDataJsonLd} />
 
     <script is:inline>
       (function () {
+        var daVariant = document.documentElement.getAttribute('data-da-variant') || 'v12';
+        var pagePath = window.location.pathname || '/';
+        var pageTitle = document.title || '';
+
+        var pushTrackingEvent = function (eventName, payload) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(
+            Object.assign(
+              {
+                event: eventName,
+                event_category: 'engagement',
+                event_label: eventName,
+                page_path: pagePath,
+                page_title: pageTitle,
+                da_variant: daVariant
+              },
+              payload || {}
+            )
+          );
+        };
+
+        window['__erTrackEvent'] = pushTrackingEvent;
+
         var links = document.querySelectorAll("[data-track]");
         for (var i = 0; i < links.length; i += 1) {
           links[i].addEventListener("click", function () {
             var eventName = this.getAttribute("data-track");
             var destination = this.getAttribute("data-destination") || this.getAttribute("href") || "unknown";
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-              event: eventName,
-              event_category: "engagement",
-              event_label: eventName,
-              destination: destination
+            pushTrackingEvent(eventName, {
+              destination: destination,
+              link_text: (this.textContent || '').trim().slice(0, 80)
             });
           });
+        }
+
+        pushTrackingEvent('experiment_variant_exposed', {
+          destination: pagePath
+        });
+      })();
+    </script>
+
+    <script is:inline>
+      (function () {
+        var pushTrackingEvent = window['__erTrackEvent'];
+        if (typeof pushTrackingEvent !== 'function') {
+          return;
+        }
+
+        var firedDepths = {};
+        var scrollDepths = [25, 50, 75, 100];
+        var onScroll = function () {
+          var doc = document.documentElement;
+          var maxScroll = doc.scrollHeight - window.innerHeight;
+          if (maxScroll <= 0) {
+            return;
+          }
+          var percent = Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100));
+          for (var i = 0; i < scrollDepths.length; i += 1) {
+            var depth = scrollDepths[i];
+            if (percent >= depth && !firedDepths[depth]) {
+              firedDepths[depth] = true;
+              pushTrackingEvent('engagement_scroll_depth', {
+                destination: window.location.pathname || '/',
+                scroll_depth: depth
+              });
+            }
+          }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        if ('IntersectionObserver' in window) {
+          var sectionIds = ['a-propos', 'projets', 'lab-notes', 'contact'];
+          var seenSections = {};
+          var sectionObserver = new IntersectionObserver(
+            function (entries, observer) {
+              for (var e = 0; e < entries.length; e += 1) {
+                if (!entries[e].isIntersecting) {
+                  continue;
+                }
+                var id = entries[e].target.id;
+                if (!id || seenSections[id]) {
+                  continue;
+                }
+                seenSections[id] = true;
+                pushTrackingEvent('engagement_section_view', {
+                  destination: '#' + id,
+                  section_id: id
+                });
+                observer.unobserve(entries[e].target);
+              }
+            },
+            { threshold: 0.42 }
+          );
+
+          for (var s = 0; s < sectionIds.length; s += 1) {
+            var node = document.getElementById(sectionIds[s]);
+            if (node) {
+              sectionObserver.observe(node);
+            }
+          }
+        }
+
+        if (!('PerformanceObserver' in window)) {
+          return;
+        }
+
+        var getMetricRating = function (metricName, value) {
+          if (metricName === 'LCP') {
+            if (value <= 2500) return 'good';
+            if (value <= 4000) return 'needs_improvement';
+            return 'poor';
+          }
+          if (metricName === 'CLS') {
+            if (value <= 0.1) return 'good';
+            if (value <= 0.25) return 'needs_improvement';
+            return 'poor';
+          }
+          if (metricName === 'INP') {
+            if (value <= 200) return 'good';
+            if (value <= 500) return 'needs_improvement';
+            return 'poor';
+          }
+          return 'unknown';
+        };
+
+        var supports = PerformanceObserver.supportedEntryTypes || [];
+        var lcpValue = 0;
+        var clsValue = 0;
+        var inpValue = 0;
+        var lcpSent = false;
+        var clsSent = false;
+        var inpSent = false;
+
+        var sendMetric = function (metricName, metricValue) {
+          pushTrackingEvent('cwv_metric', {
+            destination: window.location.pathname || '/',
+            metric_name: metricName,
+            metric_value: metricValue,
+            metric_rating: getMetricRating(metricName, metricValue)
+          });
+        };
+
+        if (supports.indexOf('largest-contentful-paint') !== -1) {
+          var lcpObserver = new PerformanceObserver(function (entryList) {
+            var entries = entryList.getEntries();
+            var last = entries[entries.length - 1];
+            if (last) {
+              lcpValue = Math.round(last.startTime);
+            }
+          });
+          lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+
+          var flushLcp = function () {
+            if (lcpSent || lcpValue <= 0) {
+              return;
+            }
+            lcpSent = true;
+            sendMetric('LCP', lcpValue);
+          };
+          document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'hidden') {
+              flushLcp();
+            }
+          });
+          window.addEventListener('pagehide', flushLcp);
+        }
+
+        if (supports.indexOf('layout-shift') !== -1) {
+          var clsObserver = new PerformanceObserver(function (entryList) {
+            var entries = entryList.getEntries();
+            for (var i = 0; i < entries.length; i += 1) {
+              if (!entries[i].hadRecentInput) {
+                clsValue += entries[i].value;
+              }
+            }
+          });
+          clsObserver.observe({ type: 'layout-shift', buffered: true });
+
+          var flushCls = function () {
+            if (clsSent) {
+              return;
+            }
+            clsSent = true;
+            sendMetric('CLS', Number(clsValue.toFixed(3)));
+          };
+          document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'hidden') {
+              flushCls();
+            }
+          });
+          window.addEventListener('pagehide', flushCls);
+        }
+
+        if (supports.indexOf('event') !== -1) {
+          var inpObserver = new PerformanceObserver(function (entryList) {
+            var entries = entryList.getEntries();
+            for (var i = 0; i < entries.length; i += 1) {
+              var duration = entries[i].duration || 0;
+              if (duration > inpValue) {
+                inpValue = Math.round(duration);
+              }
+            }
+          });
+          inpObserver.observe({ type: 'event', buffered: true, durationThreshold: 40 });
+
+          var flushInp = function () {
+            if (inpSent || inpValue <= 0) {
+              return;
+            }
+            inpSent = true;
+            sendMetric('INP', inpValue);
+          };
+          document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'hidden') {
+              flushInp();
+            }
+          });
+          window.addEventListener('pagehide', flushInp);
         }
       })();
     </script>
@@ -179,10 +476,14 @@ const personJsonLd = JSON.stringify({
           return;
         }
 
-        var links = Array.prototype.slice.call(document.querySelectorAll('.site-navlink[href^="#"]'));
+        var links = Array.prototype.slice.call(
+          document.querySelectorAll('.site-navlink[href^="#"], .figma-lab-nav-link[href^="#"]')
+        );
         if (!links.length) {
           return;
         }
+
+        var mapCards = Array.prototype.slice.call(document.querySelectorAll('.figma-lab-map-card[href^="#"]'));
 
         var sections = links
           .map(function (link) {
@@ -204,6 +505,12 @@ const personJsonLd = JSON.stringify({
 
         for (var i = 0; i < links.length; i += 1) {
           links[i].addEventListener('click', function () {
+            setPressedState(this);
+          });
+        }
+
+        for (var m = 0; m < mapCards.length; m += 1) {
+          mapCards[m].addEventListener('click', function () {
             setPressedState(this);
           });
         }
@@ -238,6 +545,17 @@ const personJsonLd = JSON.stringify({
               sections[l].link.removeAttribute('aria-current');
             }
           }
+
+          for (var mc = 0; mc < mapCards.length; mc += 1) {
+            var cardId = (mapCards[mc].getAttribute('href') || '').replace('#', '');
+            var isCardActive = cardId !== '' && cardId === activeId;
+            mapCards[mc].classList.toggle('is-active', isCardActive);
+            if (isCardActive) {
+              mapCards[mc].setAttribute('aria-current', 'location');
+            } else {
+              mapCards[mc].removeAttribute('aria-current');
+            }
+          }
         };
 
         var requestUpdate = function () {
@@ -254,6 +572,106 @@ const personJsonLd = JSON.stringify({
         window.addEventListener('hashchange', requestUpdate);
 
         updateNavState();
+      })();
+    </script>
+
+    <script is:inline>
+      (function () {
+        var items = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+        if (!items.length) {
+          return;
+        }
+
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+          for (var i = 0; i < items.length; i += 1) {
+            items[i].classList.add('is-revealed');
+          }
+          return;
+        }
+
+        var io = new IntersectionObserver(
+          function (entries, observer) {
+            for (var e = 0; e < entries.length; e += 1) {
+              if (!entries[e].isIntersecting) {
+                continue;
+              }
+              entries[e].target.classList.add('is-revealed');
+              observer.unobserve(entries[e].target);
+            }
+          },
+          { threshold: 0.18, rootMargin: '0px 0px -8% 0px' }
+        );
+
+        for (var j = 0; j < items.length; j += 1) {
+          io.observe(items[j]);
+        }
+      })();
+    </script>
+
+    <script is:inline>
+      (function () {
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        var sprintCards = Array.prototype.slice.call(document.querySelectorAll('.graphic-sprint-card'));
+        if (sprintCards.length) {
+          if (reduceMotion || !('IntersectionObserver' in window)) {
+            for (var i = 0; i < sprintCards.length; i += 1) {
+              sprintCards[i].classList.add('is-live');
+            }
+          } else {
+            var sprintObserver = new IntersectionObserver(
+              function (entries, observer) {
+                for (var e = 0; e < entries.length; e += 1) {
+                  if (!entries[e].isIntersecting) {
+                    continue;
+                  }
+                  entries[e].target.classList.add('is-live');
+                  observer.unobserve(entries[e].target);
+                }
+              },
+              { threshold: 0.26, rootMargin: '0px 0px -10% 0px' }
+            );
+
+            for (var s = 0; s < sprintCards.length; s += 1) {
+              sprintObserver.observe(sprintCards[s]);
+            }
+          }
+        }
+
+        var finePointer = window.matchMedia && window.matchMedia('(pointer:fine)').matches;
+        if (reduceMotion || !finePointer) {
+          return;
+        }
+
+        var interactiveCards = Array.prototype.slice.call(
+          document.querySelectorAll('.figma-lab-map-card, .projects-timeline-item, .circuit-card')
+        );
+
+        var bindTilt = function (node) {
+          node.classList.add('dynamic-card');
+
+          var onMove = function (event) {
+            var rect = node.getBoundingClientRect();
+            var x = (event.clientX - rect.left) / rect.width;
+            var y = (event.clientY - rect.top) / rect.height;
+            var tiltX = (0.5 - y) * 5.2;
+            var tiltY = (x - 0.5) * 6;
+            node.style.transform = 'translateY(-2px) rotateX(' + tiltX.toFixed(2) + 'deg) rotateY(' + tiltY.toFixed(2) + 'deg)';
+          };
+
+          var onLeave = function () {
+            node.style.transform = '';
+          };
+
+          node.addEventListener('mousemove', onMove);
+          node.addEventListener('mouseleave', onLeave);
+          node.addEventListener('blur', onLeave, true);
+        };
+
+        for (var c = 0; c < interactiveCards.length; c += 1) {
+          bindTilt(interactiveCards[c]);
+        }
       })();
     </script>
   </body>

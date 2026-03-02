@@ -16,7 +16,11 @@
     "lab:build": "npm --prefix apps/lab-interactif run build",
     "lab:preview": "npm --prefix apps/lab-interactif run preview",
     "tracking:check": "node scripts/validate-tracking.mjs",
-    "preflight:pages": "npm run lab:build && npm run tracking:check && npm run storybook:build"
+    "image:budget": "node scripts/check-image-budget.mjs",
+    "preflight:pages": "npm run lab:build && npm run tracking:check && npm run image:budget && npm run storybook:build",
+    "deploy:ftp": "bash scripts/deploy-ovh-ftp.sh dist",
+    "deploy:web:ftp": "npm run build:external && npm run deploy:ftp",
+    "deploy:web:sftp": "npm run build:external && bash scripts/deploy-ovh-sftp.sh dist"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.1",

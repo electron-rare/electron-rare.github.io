@@ -29,11 +29,13 @@ Note: `notes-interne/` est un dossier local prive (gitignore). Les liens vers ce
 - [logo-integration-runbook.md](./logo-integration-runbook.md) - procedure d'integration (formats, paths, verifs)
 - [logo-prompts-electron-rare-v2-github.md](../notes-interne/logo-prompts-electron-rare-v2-github.md) - prompts pack v2 (reference)
 - [logo-prompts-electron-rare.md](../notes-interne/logo-prompts-electron-rare.md) - prompts pack historique (archive)
+- [asset-prompts-carnet-labo-electronique-v1.md](../notes-interne/asset-prompts-carnet-labo-electronique-v1.md) - prompts pack assets DA (labo electronique)
 
 ## Acquisition / SEO / Tracking
 
 - [acquisition-seo-plan.md](./acquisition-seo-plan.md) - plan P0/P1 + roadmap 7j/30j
 - [github-pages-deploy.md](./github-pages-deploy.md) - checklist post-deploy + tracking contract
+- [ga4-gtm-setup-sprint-c-2026-03-02.md](./ga4-gtm-setup-sprint-c-2026-03-02.md) - mapping GTM/GA4 exact des nouveaux events Sprint C
 - `scripts/validate-tracking.mjs` - validation contrat tracking (CLI)
 - `src/lib/tracking.ts` - source de verite implementation events
 
@@ -41,6 +43,7 @@ Note: `notes-interne/` est un dossier local prive (gitignore). Les liens vers ce
 
 - [ui-ux-da-research-2026-03-02.md](../notes-interne/ui-ux-da-research-2026-03-02.md) - constats + gates UX (anti-blocage)
 - [references-web-da-maker-ux-2026-03-01.md](../notes-interne/references-web-da-maker-ux-2026-03-01.md) - references creatives + UX (maker/studio)
+- [da-benchmark-industrie-creative-2026-03-02.md](./da-benchmark-industrie-creative-2026-03-02.md) - benchmark studios electronique/industrie/innovation (FR + international)
 - [recherche-web-clement-saillant.md](../notes-interne/recherche-web-clement-saillant.md) - recoupements web public (identites/URLs)
 - [stack-studio-open-source-2026-03-01.md](../notes-interne/stack-studio-open-source-2026-03-01.md) - choix stack + arbitrages
 - [top8-ui-reference-todos.md](./top8-ui-reference-todos.md) - TODOs UI references (historique utile)

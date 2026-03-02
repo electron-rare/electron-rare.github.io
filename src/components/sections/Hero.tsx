@@ -1,150 +1,180 @@
-import { Button } from '@/components/ui/button';
-import { CtaDualRail } from '@/components/ui/cta-dual-rail';
+import * as React from 'react';
 import type { CtaLink } from '@/lib/types';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 
 const heroCtas: CtaLink[] = [
   {
+    label: 'Profil expert',
+    href: '#a-propos',
+    event: TRACK_EVENTS.ctaHeroProfile,
+    destination: '#a-propos'
+  },
+  {
+    label: 'Demarrer mission',
+    href: '#contact',
+    event: TRACK_EVENTS.ctaHeroContact,
+    destination: '#contact'
+  },
+  {
     label: "Voir les cas d'usage",
     href: '#projets',
     event: TRACK_EVENTS.ctaHeroProjects,
     destination: '#projets'
-  },
-  {
-    label: 'Lancer une mission',
-    href: '#contact',
-    event: TRACK_EVENTS.ctaHeroContact,
-    destination: '#contact'
   }
 ];
 
-const profileCta: CtaLink = {
-  label: 'Explorer le profil',
-  href: '#a-propos',
-  event: TRACK_EVENTS.ctaHeroProfile,
-  destination: '#a-propos'
+const HERO_TITLE_WORDS = ['Conception', 'electronique', 'sur mesure'];
+
+const HERO_VARIANT_ASSETS: Record<
+  string,
+  {
+    routingDesktopWebp: string;
+    routingMobileWebp: string;
+    routingDesktop: string;
+    routingMobile: string;
+    instrumentDesktopWebp: string;
+    instrumentMobileWebp: string;
+    instrumentDesktop: string;
+    instrumentMobile: string;
+    notebookDesktopWebp: string;
+    notebookMobileWebp: string;
+    notebookDesktop: string;
+    notebookMobile: string;
+    routingCaption: string;
+    instrumentCaption: string;
+  }
+> = {
+  v12: {
+    routingDesktopWebp: '/assets/da/openai/hero-pcb-routing-map-v2.webp',
+    routingMobileWebp: '/assets/da/openai/hero-pcb-routing-map-mobile-low-noise-v2.webp',
+    routingDesktop: '/assets/da/openai/hero-pcb-routing-map-v2.png',
+    routingMobile: '/assets/da/openai/hero-pcb-routing-map-mobile-low-noise-v2.png',
+    instrumentDesktopWebp: '/assets/da/openai/hero-instrument-panel-v2.webp',
+    instrumentMobileWebp: '/assets/da/openai/hero-instrument-panel-mobile-low-noise-v2.webp',
+    instrumentDesktop: '/assets/da/openai/hero-instrument-panel-v2.png',
+    instrumentMobile: '/assets/da/openai/hero-instrument-panel-mobile-low-noise-v2.png',
+    notebookDesktopWebp: '/assets/da/openai/hero-carnet-labo-open-v2.webp',
+    notebookMobileWebp: '/assets/da/openai/carnet-labo-ouvert.webp',
+    notebookDesktop: '/assets/da/openai/hero-carnet-labo-open-v2.png',
+    notebookMobile: '/assets/da/openai/carnet-labo-ouvert.png',
+    routingCaption: 'Architecture pcb',
+    instrumentCaption: 'Appareil de mesure (asset)'
+  }
 };
 
+function resolveDaVariant() {
+  if (typeof window === 'undefined') {
+    return 'v12';
+  }
+
+  const rootVariant = document.documentElement.getAttribute('data-da-variant') || '';
+  if (HERO_VARIANT_ASSETS[rootVariant]) {
+    return rootVariant;
+  }
+
+  return 'v12';
+}
+
 export function Hero() {
+  const [assets, setAssets] = React.useState(HERO_VARIANT_ASSETS.v12);
+
+  React.useEffect(() => {
+    const variant = resolveDaVariant();
+    setAssets(HERO_VARIANT_ASSETS[variant] || HERO_VARIANT_ASSETS.v12);
+  }, []);
+
   return (
-    <section aria-labelledby="hero-title" className="section-anchor relative overflow-hidden pt-12 md:pt-20" id="top">
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-64 bg-[radial-gradient(circle_at_20%_10%,rgba(255,58,137,0.26),transparent_52%),radial-gradient(circle_at_88%_0%,rgba(49,211,255,0.28),transparent_55%)]" />
-      <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[rgba(8,247,255,0.25)] blur-2xl" />
-
-      <div className="grid items-end gap-5 md:grid-cols-[1.2fr_0.8fr]">
-        <div>
-          <p className="m-0 text-xs font-bold uppercase tracking-[0.16em] text-[var(--accent)]">
-            Pro • Codeur creatif • Iterateur IA • Savant fou
-          </p>
-
-          <h1
-            id="hero-title"
-            className="site-shell-title mb-4 mt-3 text-4xl leading-[1.04] md:text-6xl"
-          >
-            Clement Saillant, alias L&apos;electron rare.
+    <section aria-labelledby="hero-title" className="section-anchor relative overflow-hidden pt-4 md:pt-6" id="top">
+      <div className="figma-lab-hero-grid">
+        <article className="figma-lab-left">
+          <h1 id="hero-title" className="figma-lab-title">
+            {HERO_TITLE_WORDS.map((word, index) => (
+              <span key={word} className="hero-title-word" style={{ ['--word-index' as string]: String(index) }}>
+                {word}
+              </span>
+            ))}
           </h1>
 
-          <p className="max-w-2xl text-base studio-muted md:text-lg">
-            Laboratoire electronique et automatisme creatif: design produit, invention de systemes audiovisuels,
-            architecture de flux et calibration operationnelle.
-            J&apos;assemble code, IA et protocoles de controle pour faire passer une idee du schema au live.
+          <p className="figma-lab-copy hero-copy-reveal">
+            Studio premium: cadrage, prototype, validation terrain et delivery en sprints de 2 semaines.
+          </p>
+          <p className="figma-lab-copy figma-lab-copy--mono hero-console-line">
+            CH1 business / CH2 architecture / DMM risque / REV sprint 02
           </p>
 
-          <div className="hero-manifest mt-4">
-            <p className="hero-manifest-row">
-              <span className="hero-manifest-node" aria-hidden="true" />
-              Creation electronique orientee usage et robustesse terrain.
-            </p>
-            <p className="hero-manifest-row">
-              <span className="hero-manifest-node hero-manifest-node--magenta" aria-hidden="true" />
-              Invention de systemes: du schema de controle a l interface operable.
-            </p>
-            <p className="hero-manifest-row">
-              <span className="hero-manifest-node hero-manifest-node--green" aria-hidden="true" />
-              Design produit: iterateur IA + execution codeur creatif.
-            </p>
-          </div>
-
-          <ul aria-label="Axes artistiques" className="mb-6 mt-5 flex flex-wrap gap-2 p-0">
-            <li className="list-none studio-chip studio-chip--cyan">
-              Lab electronique
-            </li>
-            <li className="list-none studio-chip studio-chip--vio">
-              Bus de controle
-            </li>
-            <li className="list-none studio-chip studio-chip--pink">
-              Automatisme creatif
-            </li>
-            <li className="list-none studio-chip studio-chip--emerald">
-              Boucle IA
-            </li>
-          </ul>
-
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg">
-              <a href={heroCtas[0].href} {...trackAttrs(heroCtas[0].event, heroCtas[0].destination)}>
-                {heroCtas[0].label}
-              </a>
-            </Button>
-            <Button asChild variant="secondary" size="lg">
-              <a href={heroCtas[1].href} {...trackAttrs(heroCtas[1].event, heroCtas[1].destination)}>
-                {heroCtas[1].label}
-              </a>
-            </Button>
-          </div>
-
-          <CtaDualRail className="mt-4" label="Canaux mission (priorite conversion)" />
-        </div>
-
-        <aside aria-label="Carte studio" className="circuit-board relative overflow-hidden rounded-2xl p-5">
-          <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[rgba(8,247,255,0.25)] blur-2xl" />
-          <div className="circuit-title-row">
-            <span className="circuit-node" aria-hidden="true" />
-            <p className="m-0 text-[11px] uppercase tracking-[0.16em] text-[var(--electric)]">Carte rapide</p>
-            <span className="circuit-pinline" aria-hidden="true" />
-          </div>
-
-          <h2 className="mb-2 mt-1 text-3xl">L&apos;electron rare</h2>
-          <p className="mt-0 studio-muted">
-            Studio personnel: conception, experimentation, iteration IA et execution de projets electroniques.
-          </p>
-
-          <div className="circuit-board-rail mt-4">
-            <p className="m-0 text-sm font-semibold">Nœud actif</p>
-            <p className="mb-0 text-sm studio-muted">
-              Le schema relie entree signal, logique de controle et execution visuelle vers des livrables operables.
-            </p>
-          </div>
-
-          <div className="mt-4 grid grid-cols-2 gap-2">
-            <div className="lab-metric">
-              <span>Mode</span>
-              <strong>R&D active</strong>
-            </div>
-            <div className="lab-metric">
-              <span>Focus</span>
-              <strong>Design produit</strong>
-            </div>
-            <div className="lab-metric">
-              <span>Stack</span>
-              <strong>Astro + IA</strong>
-            </div>
-            <div className="lab-metric">
-              <span>Reponse</span>
-              <strong>24-48h</strong>
-            </div>
-          </div>
-
-          <div className="mt-4">
-            <a
-              href={profileCta.href}
-              {...trackAttrs(profileCta.event, profileCta.destination)}
-              className="inline-flex items-center gap-2 studio-link font-semibold"
-            >
-              <span className="circuit-node circuit-node--magenta" aria-hidden="true" />
-              {profileCta.label}
+          <div className="figma-lab-cta-row">
+            <a href={heroCtas[0].href} {...trackAttrs(heroCtas[0].event, heroCtas[0].destination)} className="figma-lab-pill">
+              {heroCtas[0].label}
+            </a>
+            <a href={heroCtas[1].href} {...trackAttrs(heroCtas[1].event, heroCtas[1].destination)} className="figma-lab-pill">
+              {heroCtas[1].label}
+            </a>
+            <a href={heroCtas[2].href} {...trackAttrs(heroCtas[2].event, heroCtas[2].destination)} className="figma-lab-pill">
+              {heroCtas[2].label}
             </a>
           </div>
+          <p className="figma-lab-cta-help">Parcours recommande: profil, cas d&apos;usage, puis mission.</p>
+
+          <section aria-label="Notes de bench" className="figma-lab-notes">
+            <p className="figma-lab-notes-title">Notes de bench & valeur business</p>
+            <ul className="figma-lab-notes-list">
+              <li>Fait: contraintes I/O et EMI mesurees. Decision: architecture cible verrouillee.</li>
+              <li>Fait: prototype sprint 01 stable. Decision: backlog priorise par valeur client.</li>
+              <li>Fait: validation terrain sprint 02. Impact: reduction du risque planning delivery.</li>
+            </ul>
+          </section>
+
+          <figure className="figma-lab-notebook">
+            <picture>
+              <source media="(max-width: 767px)" type="image/webp" srcSet={assets.notebookMobileWebp} />
+              <source media="(max-width: 767px)" srcSet={assets.notebookMobile} />
+              <source type="image/webp" srcSet={assets.notebookDesktopWebp} />
+              <img
+                src={assets.notebookDesktop}
+                alt="Carnet de laboratoire electronique avec schema et mesures"
+                loading="lazy"
+                decoding="async"
+                width={1200}
+                height={800}
+              />
+            </picture>
+          </figure>
+        </article>
+
+        <aside className="figma-lab-right" aria-label="Assets labo electronique">
+          <figure className="figma-lab-asset-card">
+            <picture>
+              <source media="(max-width: 767px)" type="image/webp" srcSet={assets.routingMobileWebp} />
+              <source media="(max-width: 767px)" srcSet={assets.routingMobile} />
+              <source type="image/webp" srcSet={assets.routingDesktopWebp} />
+              <img
+                src={assets.routingDesktop}
+                alt="Routing PCB avec traces et vias"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                width={1200}
+                height={700}
+              />
+            </picture>
+            <figcaption>{assets.routingCaption}</figcaption>
+          </figure>
+          <figure className="figma-lab-asset-card">
+            <picture>
+              <source media="(max-width: 767px)" type="image/webp" srcSet={assets.instrumentMobileWebp} />
+              <source media="(max-width: 767px)" srcSet={assets.instrumentMobile} />
+              <source type="image/webp" srcSet={assets.instrumentDesktopWebp} />
+              <img
+                src={assets.instrumentDesktop}
+                alt="Affichage oscilloscope de mesure"
+                loading="lazy"
+                decoding="async"
+                width={1200}
+                height={700}
+              />
+            </picture>
+            <figcaption>{assets.instrumentCaption}</figcaption>
+          </figure>
         </aside>
       </div>
     </section>

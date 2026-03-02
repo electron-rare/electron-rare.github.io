@@ -9,19 +9,19 @@ export function IdentityLab() {
         <div className="circuit-title-row">
           <span className="circuit-node circuit-node--magenta" aria-hidden="true" />
           <h2 id="identity-title" className="m-0 text-3xl md:text-4xl">
-            Identite laboratoire (preview code)
+            Systemes et identite de marque
           </h2>
           <span className="circuit-pinline" aria-hidden="true" />
         </div>
 
         <p className="mb-0 mt-3 max-w-3xl studio-muted">
-          Direction provisoire en pur code: signatures visuelles electronics/automatisme avant integration des
-          variantes image_gen.
+          Cette section expose la grammaire visuelle du studio: signal technique, lisibilite commerciale et signature
+          premium orientee mission.
         </p>
 
         <div className="identity-lab-grid mt-4">
           <article className="logo-lab-card">
-            <p className="logo-lab-kicker">Option 01</p>
+            <p className="logo-lab-kicker">Marque 01</p>
             <h3 className="logo-lab-title">ER monogramme PCB</h3>
             <svg viewBox="0 0 360 140" className="logo-lab-svg" role="img" aria-label="Electron rare monogramme PCB">
               <rect x="8" y="8" width="344" height="124" rx="14" className="logo-lab-bg" />
@@ -34,11 +34,11 @@ export function IdentityLab() {
                 ELECTRON RARE
               </text>
             </svg>
-            <p className="logo-lab-meta">Unstable by design</p>
+            <p className="logo-lab-meta">Positionnement: precision technique</p>
           </article>
 
           <article className="logo-lab-card">
-            <p className="logo-lab-kicker">Option 02</p>
+            <p className="logo-lab-kicker">Marque 02</p>
             <h3 className="logo-lab-title">Boucle de controle</h3>
             <svg viewBox="0 0 360 140" className="logo-lab-svg" role="img" aria-label="Electron rare boucle de controle">
               <rect x="8" y="8" width="344" height="124" rx="14" className="logo-lab-bg" />
@@ -52,11 +52,11 @@ export function IdentityLab() {
                 ELECTRON RARE
               </text>
             </svg>
-            <p className="logo-lab-meta">Control signal / feedback / mission</p>
+            <p className="logo-lab-meta">Positionnement: pilotage par feedback</p>
           </article>
 
           <article className="logo-lab-card">
-            <p className="logo-lab-kicker">Option 03</p>
+            <p className="logo-lab-kicker">Marque 03</p>
             <h3 className="logo-lab-title">Stamp technique</h3>
             <svg viewBox="0 0 360 140" className="logo-lab-svg" role="img" aria-label="Electron rare stamp technique">
               <rect x="8" y="8" width="344" height="124" rx="14" className="logo-lab-bg" />
@@ -69,7 +69,7 @@ export function IdentityLab() {
               </text>
               <circle cx="294" cy="70" r="7" className="logo-lab-node logo-lab-node--amber" />
             </svg>
-            <p className="logo-lab-meta">Label industriel / protocole studio</p>
+            <p className="logo-lab-meta">Positionnement: label industriel sur mesure</p>
           </article>
         </div>
       </div>

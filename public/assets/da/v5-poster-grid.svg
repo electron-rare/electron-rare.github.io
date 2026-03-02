@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210" height="210" viewBox="0 0 210 210" fill="none">
+  <defs>
+    <pattern id="v5-poster" width="30" height="30" patternUnits="userSpaceOnUse">
+      <rect width="30" height="30" fill="none" />
+      <path d="M0 0L30 0L30 6L6 6L6 30L0 30Z" stroke="black" stroke-opacity="0.16" stroke-width="0.9" fill="none" />
+      <path d="M30 24L6 24" stroke="black" stroke-opacity="0.1" stroke-width="0.65" />
+      <path d="M24 30L24 6" stroke="black" stroke-opacity="0.1" stroke-width="0.65" />
+      <circle cx="14" cy="14" r="0.95" fill="black" fill-opacity="0.11" />
+      <circle cx="4" cy="26" r="0.7" fill="black" fill-opacity="0.13" />
+      <circle cx="26" cy="4" r="0.7" fill="black" fill-opacity="0.13" />
+    </pattern>
+  </defs>
+  <rect width="210" height="210" fill="url(#v5-poster)" />
+</svg>

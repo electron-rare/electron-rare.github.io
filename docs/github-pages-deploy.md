@@ -34,6 +34,7 @@ Le job build:
 - Lab dev: `npm run lab:dev`
 - Lab build: `npm run lab:build`
 - Tracking contract: `npm run tracking:check`
+- Budget images critiques: `npm run image:budget`
 - Storybook build: `npm run storybook:build`
 - Preflight complet pages: `npm run preflight:pages`
 - Build externe Astro (avec `/lab` inclus): `npm run build:external`
@@ -45,13 +46,14 @@ Objectif: publier `dist/` généré par Astro pour une version hors GitHub Pages
 - Préparer les variables d’environnement:
   - `PUBLIC_SITE_URL=https://<votre-domaine-vercel-ou-netlify>/` (canonical + OG)
   - éventuellement `EXTERNAL_SITE_URL` comme alias pratique
+- Note: `npm run build:external` échoue volontairement si aucune de ces variables n'est définie (protection anti-canonical erroné).
 - Exécuter: `npm run build:external`
 - GitLab/Netlify et Vercel détectent automatiquement `vercel.json` / `netlify.toml` :
   - `vercel`: `npm run build:external`
   - `netlify`: `npm run build:external`
 - Le build externe inclut:
   - page Astro Home: `dist/index.html`
-  - page `dist/robots.txt` et `dist/sitemap.xml`
+  - page `dist/robots.txt` et `dist/sitemap.xml` (générés selon `PUBLIC_SITE_URL`)
   - bundle Astro `_astro/`
   - `dist/lab/` (copié après `lab:build`) si `lab/` existe
 
@@ -61,6 +63,51 @@ Objectif: publier `dist/` généré par Astro pour une version hors GitHub Pages
 - Vérifier que `canonical` correspond bien à `PUBLIC_SITE_URL`.
 - Vérifier OG/Twitter preview via cache buster si nécessaire.
 - Vérifier la présence de `/lab/` selon la stratégie produit.
+
+## Déploiement externe FTP (OVH)
+
+Hôte cible: `ftp://ecobsoleiq@ftp.cluster129.hosting.ovh.net:21/`
+Utilisateur: `ecobsoleiq`
+
+1. Build externe:
+   - `PUBLIC_SITE_URL=https://<ton-domaine-externe>/ npm run build:external`
+2. Préparer les identifiants (hors repo):
+   - Copier `.env.ftp.example` vers `.env.ftp`
+   - Remplacer `FTP_PASS=...` par le vrai mot de passe
+   - Garder `FTP_REMOTE_DIR=/www` (recommandé OVH mutualisé)
+   - `source .env.ftp` (ou exporter `FTP_PASS` / `FTP_HOST` en variable d'env)
+3. Déploiement via script:
+   - `FTP_PASS='<ton_mot_de_passe>' FTP_REMOTE_DIR='/www' npm run deploy:ftp`
+   - ou, via fichier local: `source .env.ftp && npm run deploy:ftp`
+   - version one-shot avec build externe: `npm run deploy:web:ftp`
+3. Vérifier:
+   - `https://<ton-domaine-externe>/`
+   - `https://<ton-domaine-externe>/#a-propos`
+   - `https://<ton-domaine-externe>/#projets`
+   - `https://<ton-domaine-externe>/#contact`
+
+Notes:
+- Le script utilise `lftp`; installe-le si absent: `brew install lftp` ou `apt-get install lftp`.
+- Le script refuse de synchroniser vers `/` par sécurité (utiliser `/www`).
+- Si ton host pointe vers un sous-répertoire, ajuste `FTP_REMOTE_DIR` (ex: `/www/`).
+- Aucune donnée sensible n’est hardcodée dans le script (mot de passe via `FTP_PASS` uniquement).
+
+Exemple 1-liner (via fichier local `.env.ftp`):
+
+```bash
+PUBLIC_SITE_URL='https://example.com/' \
+FTP_URL='ftp://ecobsoleiq@ftp.cluster129.hosting.ovh.net:21/' \
+npm run build:external && source .env.ftp && npm run deploy:ftp
+```
+
+Exemple 1-liner (sans `.env.ftp`):
+```bash
+FTP_PASS='***' \
+PUBLIC_SITE_URL='https://example.com/' \
+FTP_HOST=ftp.cluster129.hosting.ovh.net \
+FTP_USER=ecobsoleiq \
+npm run build:external && npm run deploy:ftp
+```
 
 ## Stratégie de déploiement duale (si besoin business)
 - Production: GitHub Pages reste la version publiée courante (`index.html`, `styles.css`, `script.js`, `/lab/`).

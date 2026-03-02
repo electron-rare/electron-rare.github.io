@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" fill="none">
+  <defs>
+    <pattern id="v4-minimal" width="32" height="32" patternUnits="userSpaceOnUse">
+      <rect width="32" height="32" fill="none" />
+      <path d="M-4 10H36M-4 20H36" stroke="black" stroke-opacity="0.08" stroke-width="0.45" />
+      <path d="M10 -4V36M20 -4V36" stroke="black" stroke-opacity="0.06" stroke-width="0.3" />
+      <path d="M0 0L32 32" stroke="black" stroke-opacity="0.05" stroke-width="0.35" />
+    </pattern>
+  </defs>
+  <rect width="240" height="240" fill="url(#v4-minimal)" />
+</svg>

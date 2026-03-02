@@ -4,6 +4,106 @@
     year.textContent = String(new Date().getFullYear());
   }
 
+  var heroAssetByVariant = {
+    v1: {
+      primary: '/assets/da/openai/hero-pcb-routing-map.png',
+      secondary: '/assets/da/openai/hero-measurement-rig.png',
+      primaryCaption: 'Routage PCB actif — voie signal, couche signal, décision',
+      secondaryCaption: 'Banc de mesure — timing, calibration, signal utile'
+    },
+    v2: {
+      primary: '/assets/da/openai/proof-prototype-bench.png',
+      secondary: '/assets/da/openai/proof-soldering-macro.png',
+      primaryCaption: 'Prototype prêt à valider — preuve de terrain',
+      secondaryCaption: 'Contrôle local — soudures, continuité, stabilité'
+    },
+    v3: {
+      primary: '/assets/da/openai/hero-pcb-routing-map.png',
+      secondary: '/assets/da/openai/oscilloscope-waveform-panel.png',
+      primaryCaption: 'Routage multi-couches, topologie mesurable',
+      secondaryCaption: 'Fenêtre waveform — signature de validation'
+    },
+    v4: {
+      primary: '/assets/da/openai/control-rack-detail.png',
+      secondary: '/assets/da/openai/hero-measurement-rig.png',
+      primaryCaption: 'Infrastructure labo en situation réelle',
+      secondaryCaption: 'Mesure instrumentée — rétention et fiabilité'
+    },
+    v5: {
+      primary: '/assets/da/openai/impact-montage-prototype-test-deploy.png',
+      secondary: '/assets/da/openai/hands-calibrating-board.png',
+      primaryCaption: 'Montage preuve d’impact — passage bench à scène',
+      secondaryCaption: 'Main d’atelier, calibration, ajustements'
+    },
+    v6: {
+      primary: '/assets/da/openai/texture-pcb-seamless-tile.png',
+      secondary: '/assets/da/openai/overlay-via-glow-particles.png',
+      primaryCaption: 'Texture technique — signal, route, densité visuelle',
+      secondaryCaption: 'Particle overlay — détails vias et micro-défauts'
+    },
+    v7: {
+      primary: '/assets/da/openai/proof-prototype-bench.png',
+      secondary: '/assets/da/openai/control-rack-detail.png',
+      primaryCaption: 'Cadence production — preuve de bench réelle',
+      secondaryCaption: 'Pointes de route technique et instrumentation'
+    },
+    v8: {
+      primary: '/assets/da/openai/overlay-blueprint-grid.png',
+      secondary: '/assets/da/openai/proof-soldering-macro.png',
+      primaryCaption: 'Fond blueprint — cadre d’industrial design',
+      secondaryCaption: 'Soudures macro — détail d’assemblage'
+    },
+    v9: {
+      primary: '/assets/da/openai/hero-pcb-routing-map.png',
+      secondary: '/assets/da/openai/hands-calibrating-board.png',
+      primaryCaption: 'Bus de traces et architecture signal',
+      secondaryCaption: 'Ajustement terrain — boucle de calibration'
+    },
+    v10: {
+      primary: '/assets/da/openai/hero-measurement-rig.png',
+      secondary: '/assets/da/openai/oscilloscope-waveform-panel.png',
+      primaryCaption: 'Mesure visuelle instantanée',
+      secondaryCaption: 'Courbe et métrique — validation signal'
+    },
+    v11: {
+      primary: '/assets/da/openai/overlay-via-glow-particles.png',
+      secondary: '/assets/da/openai/hero-pcb-routing-map.png',
+      primaryCaption: 'Vias glow — lecture micro-électrique',
+      secondaryCaption: 'Routage principal avec repères visuels'
+    },
+    v12: {
+      primary: '/assets/da/openai/hero-pcb-routing-map.png',
+      secondary: '/assets/da/openai/proof-prototype-bench.png',
+      primaryCaption: 'Carnet de labo actuel — traces, vias, direction',
+      secondaryCaption: 'Test terrain et preuve de résultat'
+    }
+  };
+
+  var variant = document.documentElement && document.documentElement.getAttribute('data-da-variant');
+  var heroAssets = heroAssetByVariant[variant] || heroAssetByVariant.v12;
+  var heroPrimaryFigure = document.querySelector('[data-hero-asset="primary"]');
+  var heroSecondaryFigure = document.querySelector('[data-hero-asset="secondary"]');
+
+  if (heroPrimaryFigure && heroSecondaryFigure) {
+    var heroPrimaryImage = heroPrimaryFigure.querySelector('[data-hero-image]');
+    var heroSecondaryImage = heroSecondaryFigure.querySelector('[data-hero-image]');
+    var heroPrimaryCaption = heroPrimaryFigure.querySelector('figcaption');
+    var heroSecondaryCaption = heroSecondaryFigure.querySelector('figcaption');
+
+    if (heroPrimaryImage) {
+      heroPrimaryImage.src = heroAssets.primary;
+    }
+    if (heroSecondaryImage) {
+      heroSecondaryImage.src = heroAssets.secondary;
+    }
+    if (heroPrimaryCaption) {
+      heroPrimaryCaption.textContent = heroAssets.primaryCaption || 'Vue planifiée';
+    }
+    if (heroSecondaryCaption) {
+      heroSecondaryCaption.textContent = heroAssets.secondaryCaption || 'Vue labo';
+    }
+  }
+
   var revealEls = document.querySelectorAll('[data-reveal]');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(
