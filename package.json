@@ -43,5 +43,14 @@
     "@tailwindcss/vite": "^4.1.13",
     "storybook": "^9.1.5",
     "typescript": "^5.9.2"
+  },
+  "overrides": {
+    "@astrojs/language-server": {
+      "volar-service-yaml": "0.0.70"
+    },
+    "volar-service-yaml": {
+      "yaml-language-server": "1.21.0"
+    },
+    "lodash": "4.17.23"
   }
 }
