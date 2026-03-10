@@ -20,16 +20,16 @@ const steps: PipelineStep[] = [
   {
     label: 'Architecture',
     detail: 'Flux, interfaces, points de mesure et hypotheses a valider',
-    href: '#projets',
+    href: '#lab-notes',
     event: TRACK_EVENTS.ctaHeroProjects,
-    destination: '#projets'
+    destination: '#lab-notes'
   },
   {
     label: 'Prototype sprint',
     detail: 'Execution en cycle court: build, test, calibration et feedback',
-    href: '#projets',
+    href: '#lab-notes',
     event: TRACK_EVENTS.ctaHeroProjects,
-    destination: '#projets'
+    destination: '#lab-notes'
   },
   {
     label: 'Delivery',

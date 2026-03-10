@@ -3,54 +3,46 @@ import { Card } from '@/components/ui/card';
 import { CtaDualRail } from '@/components/ui/cta-dual-rail';
 import type { CtaLink } from '@/lib/types';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
+import { CASE_STUDIES } from '@/content/caseStudies';
 
 type ProjectItem = {
   title: string;
   stage: string;
   description: string;
+  trace: string;
   link?: CtaLink;
 };
 
-const projects: ProjectItem[] = [
-  {
-    title: "L'électron rare",
-    stage: 'Cas 01 - Studio core',
-    description:
-      'Contexte: besoin de plateforme R&D transverse. Intervention: architecture electronique et prototypage iteratif. Resultat: base systeme reutilisable pour nouvelles missions.',
-    link: {
-      label: 'Voir profil LinkedIn',
-      href: 'https://fr.linkedin.com/in/electron-rare',
-      event: TRACK_EVENTS.outboundLinkedinProject,
-      destination: 'linkedin.com',
-      external: true
-    }
+const STAGE_LABELS: Record<string, string> = {
+  'studio-core': 'Studio core',
+  'design-produit': 'Design produit',
+  'rd-sonore': 'R&D sonore'
+};
+
+const EXTERNAL_LINKS: Record<string, CtaLink> = {
+  'studio-core': {
+    label: 'Voir profil LinkedIn',
+    href: 'https://fr.linkedin.com/in/electron-rare',
+    event: TRACK_EVENTS.outboundLinkedinProject,
+    destination: 'linkedin.com',
+    external: true
   },
-  {
-    title: 'Bureau conception produit/systeme',
-    stage: 'Cas 02 - Design produit',
-    description:
-      "Contexte: idee produit sous contrainte planning. Intervention: cadrage, maquette fonctionnelle et plan d'industrialisation. Resultat: decisions rapides cote CTO et business."
-  },
-  {
-    title: 'Electron Fou (noise)',
-    stage: 'Cas 03 - R&D sonore',
-    description:
-      'Contexte: experimentation artistique et diffusion publique. Intervention: pipeline de production son + outillage. Resultat: preuves publiees et processus reproduisible.',
-    link: {
-      label: 'Ecouter sur Bandcamp',
-      href: 'https://lelectron-fou.bandcamp.com/',
-      event: TRACK_EVENTS.outboundBandcampProject,
-      destination: 'bandcamp.com',
-      external: true
-    }
-  },
-  {
-    title: 'Hardware/Firmware references',
-    stage: 'Cas 04 - Open source',
-    description:
-      'Contexte: besoin de credibilite technique ouverte. Intervention: publication de stacks hardware/firmware terrain. Resultat: base de preuve consultable pour qualification mission.'
+  'rd-sonore': {
+    label: 'Ecouter sur Bandcamp',
+    href: 'https://lelectron-fou.bandcamp.com/',
+    event: TRACK_EVENTS.outboundBandcampProject,
+    destination: 'bandcamp.com',
+    external: true
   }
-];
+};
+
+const projects: ProjectItem[] = CASE_STUDIES.map((study, index) => ({
+  title: study.title,
+  stage: `Cas 0${index + 1} - ${STAGE_LABELS[study.slug] ?? study.slug}`,
+  trace: study.trace,
+  description: `Contexte: ${study.context} Intervention: ${study.intervention} Resultat: ${study.result}`,
+  link: EXTERNAL_LINKS[study.slug]
+}));
 
 const topReferences = [
   'https://github.com/KomplexKapharnaum/KXKM_ESP32_Audio_Battery_hardware',
@@ -91,6 +83,7 @@ export function Projects() {
             >
               <Card className="h-full">
                 <p className="project-stage">{project.stage}</p>
+                <p className="project-trace">{project.trace}</p>
                 <div className="mb-2 flex items-center gap-2">
                   <span className="circuit-node" aria-hidden="true" />
                   <h3 className="m-0 text-xl">{project.title}</h3>

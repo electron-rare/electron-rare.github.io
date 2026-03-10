@@ -4,14 +4,26 @@ import { GTM_CONTAINER_ID_DEFAULT, SITE_META, SITE_OG_IMAGE_URL, SITE_URL } from
 interface Props {
   title?: string;
   description?: string;
+  canonicalPath?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  twitterDescription?: string;
+  extraJsonLd?: string;
 }
 
 const {
   title = SITE_META.title,
-  description = SITE_META.description
+  description = SITE_META.description,
+  canonicalPath = '/',
+  ogTitle = title,
+  ogDescription = SITE_META.ogDescription,
+  ogImage = SITE_OG_IMAGE_URL,
+  twitterDescription = SITE_META.twitterDescription,
+  extraJsonLd
 } = Astro.props;
 
-const canonical = SITE_URL;
+const canonical = `${SITE_URL}${canonicalPath.replace(/^\//, '')}`;
 const gtmId = import.meta.env.PUBLIC_GTM_CONTAINER_ID || GTM_CONTAINER_ID_DEFAULT;
 const structuredDataJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
@@ -32,7 +44,6 @@ const structuredDataJsonLd = JSON.stringify({
       logo: `${canonical}assets/brand/logo-mark.png`,
       sameAs: [
         'https://fr.linkedin.com/in/electron-rare',
-        'https://www.malt.com/profile/clementsaillant',
         'https://lelectron-fou.bandcamp.com/'
       ]
     },
@@ -50,7 +61,6 @@ const structuredDataJsonLd = JSON.stringify({
       },
       sameAs: [
         'https://fr.linkedin.com/in/electron-rare',
-        'https://www.malt.com/profile/clementsaillant',
         'https://lelectron-fou.bandcamp.com/'
       ]
     }
@@ -78,18 +88,18 @@ const structuredDataJsonLd = JSON.stringify({
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="L'électron rare" />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={ogTitle} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:description" content={SITE_META.ogDescription} />
-    <meta property="og:image" content={SITE_OG_IMAGE_URL} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="L'électron rare - performances et créations audiovisuelles" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={SITE_META.twitterDescription} />
-    <meta name="twitter:image" content={SITE_OG_IMAGE_URL} />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={twitterDescription} />
+    <meta name="twitter:image" content={ogImage} />
 
     <script is:inline>
       (function () {
@@ -125,49 +135,41 @@ const structuredDataJsonLd = JSON.stringify({
       (function () {
         var root = document.documentElement;
         var params = new URLSearchParams(window.location.search);
-        var raw = params.get('da') || params.get('variant') || params.get('da-variant') || '';
         var uiRaw = params.get('ui') || params.get('sprint') || '';
-        var normalized = (raw || '').toLowerCase().trim();
+        var copyRaw = params.get('copy') || '';
         var uiNormalized = (uiRaw || '').toLowerCase().trim();
-        var allowed = {
-          v1: 1,
-          v2: 1,
-          v3: 1,
-          v4: 1,
-          v5: 1,
-          v6: 1,
-          v7: 1,
-          v8: 1,
-          v9: 1,
-          v10: 1,
-          v11: 1,
-          v12: 1,
-          '1': 1,
-          '2': 1,
-          '3': 1,
-          '4': 1,
-          '5': 1,
-          '6': 1,
-          '7': 1,
-          '8': 1,
-          '9': 1,
-          '10': 1,
-          '11': 1,
-          '12': 1
-        };
-
-        var requested = normalized in allowed ? normalized : '';
-        var fallbackVariant = 'v12';
-
-        if (requested && /^[1-9]([0-9])?$/.test(requested) && requested.length <= 2) {
-          requested = 'v' + requested;
-        }
+        var copyNormalized = (copyRaw || '').toLowerCase().trim();
+        var lockedVariant = 'v12';
 
         var uiAllowed = { a: 1, b: 1 };
         var uiSprint = uiNormalized in uiAllowed ? uiNormalized : 'b';
+        var copyAllowed = { public: 1, cto: 1 };
+        var copyFromStorage = '';
+        try {
+          copyFromStorage = (window.localStorage.getItem('er_copy_variant') || '').toLowerCase().trim();
+        } catch (_error) {
+          copyFromStorage = '';
+        }
+        var copyVariant = 'public';
+        var copyAssignmentSource = 'default';
+        if (copyNormalized in copyAllowed) {
+          copyVariant = copyNormalized;
+          copyAssignmentSource = 'query';
+        } else if (copyFromStorage in copyAllowed) {
+          copyVariant = copyFromStorage;
+          copyAssignmentSource = 'storage';
+        }
 
-        root.setAttribute('data-da-variant', requested || fallbackVariant);
+        root.setAttribute('data-da-variant', lockedVariant);
         root.setAttribute('data-ui-sprint', uiSprint);
+        root.setAttribute('data-copy-variant', copyVariant);
+        root.setAttribute('data-copy-source', copyAssignmentSource);
+        root.setAttribute('data-audience-mode', 'discover');
+        try {
+          window.localStorage.setItem('er_copy_variant', copyVariant);
+        } catch (_error) {
+          // Ignore localStorage failures.
+        }
       })();
     </script>
 
@@ -186,14 +188,26 @@ const structuredDataJsonLd = JSON.stringify({
     <slot />
 
     <script is:inline type="application/ld+json" set:html={structuredDataJsonLd} />
+    {extraJsonLd ? <script is:inline type="application/ld+json" set:html={extraJsonLd} /> : null}
 
     <script is:inline>
       (function () {
-        var daVariant = document.documentElement.getAttribute('data-da-variant') || 'v12';
         var pagePath = window.location.pathname || '/';
         var pageTitle = document.title || '';
 
+        var getPageContext = function () {
+          var root = document.documentElement;
+          return {
+            da_variant: root.getAttribute('data-da-variant') || 'v12',
+            ui_sprint: root.getAttribute('data-ui-sprint') || 'b',
+            copy_variant: root.getAttribute('data-copy-variant') || 'public',
+            copy_source: root.getAttribute('data-copy-source') || 'default',
+            audience_mode: root.getAttribute('data-audience-mode') || 'discover'
+          };
+        };
+
         var pushTrackingEvent = function (eventName, payload) {
+          var context = getPageContext();
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push(
             Object.assign(
@@ -203,7 +217,11 @@ const structuredDataJsonLd = JSON.stringify({
                 event_label: eventName,
                 page_path: pagePath,
                 page_title: pageTitle,
-                da_variant: daVariant
+                da_variant: context.da_variant,
+                ui_sprint: context.ui_sprint,
+                copy_variant: context.copy_variant,
+                copy_source: context.copy_source,
+                audience_mode: context.audience_mode
               },
               payload || {}
             )
@@ -262,7 +280,7 @@ const structuredDataJsonLd = JSON.stringify({
         onScroll();
 
         if ('IntersectionObserver' in window) {
-          var sectionIds = ['a-propos', 'projets', 'lab-notes', 'contact'];
+          var sectionIds = ['audience', 'offre-systeme', 'process-etats', 'cas', 'lab-notes', 'a-propos', 'mission-config', 'contact', 'sprints-graphiques'];
           var seenSections = {};
           var sectionObserver = new IntersectionObserver(
             function (entries, observer) {
@@ -672,6 +690,36 @@ const structuredDataJsonLd = JSON.stringify({
         for (var c = 0; c < interactiveCards.length; c += 1) {
           bindTilt(interactiveCards[c]);
         }
+
+        var root = document.documentElement;
+        var ticking = false;
+        var updateScroll3D = function () {
+          ticking = false;
+          var scrollTop = window.scrollY || window.pageYOffset || 0;
+          var maxScroll = Math.max(1, window.innerHeight * 1.6);
+          var ratio = Math.max(0, Math.min(1, scrollTop / maxScroll));
+          var rotateX = 7 - ratio * 8.5;
+          var rotateY = -6 + ratio * 7.2;
+          var zoom = 1 + ratio * 0.06;
+          var shift = ratio * 14;
+
+          root.style.setProperty('--scroll-3d-rx', rotateX.toFixed(2) + 'deg');
+          root.style.setProperty('--scroll-3d-ry', rotateY.toFixed(2) + 'deg');
+          root.style.setProperty('--scroll-3d-zoom', zoom.toFixed(4));
+          root.style.setProperty('--scroll-3d-shift', shift.toFixed(2) + 'px');
+        };
+
+        var request3D = function () {
+          if (ticking) {
+            return;
+          }
+          ticking = true;
+          window.requestAnimationFrame(updateScroll3D);
+        };
+
+        window.addEventListener('scroll', request3D, { passive: true });
+        window.addEventListener('resize', request3D);
+        updateScroll3D();
       })();
     </script>
   </body>

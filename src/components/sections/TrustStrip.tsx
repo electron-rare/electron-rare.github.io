@@ -14,7 +14,7 @@ const proofItems = [
   },
   {
     label: 'References verifiables',
-    value: 'LinkedIn, Malt, Bandcamp, GitHub',
+    value: 'LinkedIn, Bandcamp, GitHub',
     detail: 'Cas et stacks consultables avant prise de contact.'
   }
 ];

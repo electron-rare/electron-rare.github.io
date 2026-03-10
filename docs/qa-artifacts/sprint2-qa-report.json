@@ -1,0 +1,173 @@
+{
+  "generatedAt": "2026-03-02T21:20:15.542Z",
+  "baseUrl": "http://127.0.0.1:4323/",
+  "responsive": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "name": "390x844"
+      },
+      "heroVisible": true,
+      "contactVisible": true,
+      "diagramScrollableMobile": null,
+      "screenshot": "docs/qa-artifacts/responsive-390x844.png"
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024,
+        "name": "768x1024"
+      },
+      "heroVisible": true,
+      "contactVisible": true,
+      "diagramScrollableMobile": null,
+      "screenshot": "docs/qa-artifacts/responsive-768x1024.png"
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768,
+        "name": "1024x768"
+      },
+      "heroVisible": true,
+      "contactVisible": true,
+      "diagramScrollableMobile": null,
+      "screenshot": "docs/qa-artifacts/responsive-1024x768.png"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "name": "1440x900"
+      },
+      "heroVisible": true,
+      "contactVisible": true,
+      "diagramScrollableMobile": null,
+      "screenshot": "docs/qa-artifacts/responsive-1440x900.png"
+    }
+  ],
+  "accessibility": {
+    "keyboardFocusSteps": [
+      {
+        "tag": "A",
+        "id": null,
+        "className": "sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:",
+        "text": "Aller au contenu"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "className": "figma-lab-nav-title",
+        "text": "ELECTRONICS MISSION STUDIO"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "className": "figma-lab-nav-link site-navlink",
+        "text": "#a-propos"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "className": "figma-lab-nav-link site-navlink",
+        "text": "#preuves"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "className": "figma-lab-nav-link site-navlink is-active",
+        "text": "#contact"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "className": "site-contrast-toggle",
+        "text": "Mode contraste"
+      },
+      {
+        "tag": "g",
+        "id": null,
+        "className": null,
+        "text": "Power"
+      },
+      {
+        "tag": "g",
+        "id": null,
+        "className": null,
+        "text": "MCU"
+      },
+      {
+        "tag": "g",
+        "id": null,
+        "className": null,
+        "text": "RF"
+      },
+      {
+        "tag": "g",
+        "id": null,
+        "className": null,
+        "text": "Audio"
+      },
+      {
+        "tag": "g",
+        "id": null,
+        "className": null,
+        "text": "Test"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "className": "figma-lab-pill figma-lab-pill--primary",
+        "text": "Envoyer un brief"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "className": "figma-lab-pill figma-lab-pill--secondary",
+        "text": "Voir les preuves"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "className": "hero-domain-tag is-active",
+        "text": "Power"
+      }
+    ],
+    "audienceTabCount": 6,
+    "reducedMotionSignalsHidden": true
+  },
+  "tracking": {
+    "requiredEvents": [
+      "experiment_variant_exposed",
+      "funnel_brief_generated",
+      "funnel_brief_copied",
+      "funnel_contact_submitted"
+    ],
+    "present": [
+      "experiment_variant_exposed",
+      "funnel_brief_generated",
+      "funnel_brief_copied",
+      "funnel_contact_submitted"
+    ],
+    "missing": [],
+    "counts": {
+      "gtm.js": 1,
+      "experiment_variant_exposed": 1,
+      "gtm.dom": 1,
+      "gtm.load": 1,
+      "engagement_scroll_depth": 3,
+      "engagement_section_view": 2,
+      "funnel_brief_generated": 1,
+      "cta_hero_contact": 1,
+      "funnel_contact_submitted": 2,
+      "contact_mode_selected": 1,
+      "funnel_brief_copied": 1
+    }
+  },
+  "copyVariants": {
+    "queryCto": "cto",
+    "storageFallback": "cto",
+    "defaultWithoutQueryOrStorage": "public"
+  }
+}

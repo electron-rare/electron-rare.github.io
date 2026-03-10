@@ -1,0 +1,192 @@
+{
+  "generatedAt": "2026-03-03T08:15:15.122Z",
+  "lotA": {
+    "hasScrollContainer": true,
+    "horizontalOverflow": false,
+    "svgMinWidth": "420px",
+    "minNodeHitArea": true,
+    "overlapsCount": 0,
+    "screenshot": "docs/qa-artifacts/p2-lot-a-mobile-390.png",
+    "keyboard": {
+      "tabRoleCount": 3,
+      "focusLog": [
+        {
+          "tag": "A",
+          "role": null,
+          "aria": null,
+          "text": "Aller au contenu"
+        },
+        {
+          "tag": "A",
+          "role": null,
+          "aria": null,
+          "text": "ELECTRONICS MISSION STUDIO"
+        },
+        {
+          "tag": "A",
+          "role": null,
+          "aria": null,
+          "text": "#a-propos"
+        },
+        {
+          "tag": "A",
+          "role": null,
+          "aria": null,
+          "text": "#preuves"
+        },
+        {
+          "tag": "A",
+          "role": null,
+          "aria": null,
+          "text": "#contact"
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "aria": null,
+          "text": "Mode contraste"
+        },
+        {
+          "tag": "g",
+          "role": "button",
+          "aria": "Bloc Power",
+          "text": "Power"
+        },
+        {
+          "tag": "g",
+          "role": "button",
+          "aria": "Bloc MCU",
+          "text": "MCU"
+        },
+        {
+          "tag": "g",
+          "role": "button",
+          "aria": "Bloc RF",
+          "text": "RF"
+        },
+        {
+          "tag": "g",
+          "role": "button",
+          "aria": "Bloc Audio",
+          "text": "Audio"
+        },
+        {
+          "tag": "g",
+          "role": "button",
+          "aria": "Bloc Test",
+          "text": "Test"
+        },
+        {
+          "tag": "A",
+          "role": null,
+          "aria": null,
+          "text": "Envoyer un brief"
+        },
+        {
+          "tag": "A",
+          "role": null,
+          "aria": null,
+          "text": "Voir les preuves"
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "aria": null,
+          "text": "Power"
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "aria": null,
+          "text": "MCU"
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "aria": null,
+          "text": "RF"
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "aria": null,
+          "text": "Audio"
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "aria": null,
+          "text": "Test"
+        },
+        {
+          "tag": "BUTTON",
+          "role": "tab",
+          "aria": null,
+          "text": "JE DECOUVRE"
+        },
+        {
+          "tag": "BUTTON",
+          "role": "tab",
+          "aria": null,
+          "text": "JE SUIS PRO"
+        },
+        {
+          "tag": "BUTTON",
+          "role": null,
+          "aria": null,
+          "text": "Suivant"
+        },
+        {
+          "tag": "A",
+          "role": null,
+          "aria": null,
+          "text": "Decrire votre idee (2 minutes)"
+        }
+      ]
+    }
+  },
+  "lotB": {
+    "reducedMotion": {
+      "available": true,
+      "waveTransition": "0.001s",
+      "markerTransition": "0.001s"
+    }
+  },
+  "lotC": {
+    "pages": [
+      {
+        "slug": "studio-core",
+        "hasTitle": true,
+        "hasDesc": true,
+        "hasOgTitle": true,
+        "hasOgDesc": true,
+        "hasCanonical": true,
+        "hasSchemaCreativeWork": true,
+        "hasContactLink": true
+      },
+      {
+        "slug": "design-produit",
+        "hasTitle": true,
+        "hasDesc": true,
+        "hasOgTitle": true,
+        "hasOgDesc": true,
+        "hasCanonical": true,
+        "hasSchemaCreativeWork": true,
+        "hasContactLink": true
+      },
+      {
+        "slug": "rd-sonore",
+        "hasTitle": true,
+        "hasDesc": true,
+        "hasOgTitle": true,
+        "hasOgDesc": true,
+        "hasCanonical": true,
+        "hasSchemaCreativeWork": true,
+        "hasContactLink": true
+      }
+    ]
+  },
+  "tracking": {
+    "hasCaseOpenedContractInDom": true
+  }
+}

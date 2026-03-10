@@ -2,15 +2,14 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@/styles/global.css';
 import { Hero } from '@/components/sections/Hero';
+import { AudienceModeSwitch } from '@/components/sections/AudienceModeSwitch';
+import { OfferDeliverables } from '@/components/sections/OfferDeliverables';
+import { CaseProofs } from '@/components/sections/CaseProofs';
 import { GraphicSprints } from '@/components/sections/GraphicSprints';
-import { IdentityLab } from '@/components/sections/IdentityLab';
+import { MissionConfigurator } from '@/components/sections/MissionConfigurator';
 import { About } from '@/components/sections/About';
-import { Projects } from '@/components/sections/Projects';
-import { FlowDiagram } from '@/components/sections/FlowDiagram';
-import { SystemPipeline } from '@/components/sections/SystemPipeline';
-import { ProjectsTimeline } from '@/components/sections/ProjectsTimeline';
+import { ProcessStateMachine } from '@/components/sections/ProcessStateMachine';
 import { LabNotes } from '@/components/sections/LabNotes';
-import { TrustStrip } from '@/components/sections/TrustStrip';
 import { Contact } from '@/components/sections/Contact';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 ---
@@ -22,7 +21,7 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
       <nav aria-label="Navigation principale">
         <ul class="figma-lab-nav-list">
           <li><a href="#a-propos" class="figma-lab-nav-link site-navlink">#a-propos</a></li>
-          <li><a href="#projets" class="figma-lab-nav-link site-navlink">#projets</a></li>
+          <li><a href="#lab-notes" class="figma-lab-nav-link site-navlink">#preuves</a></li>
           <li><a href="#contact" class="figma-lab-nav-link site-navlink">#contact</a></li>
         </ul>
       </nav>
@@ -37,63 +36,59 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
       <div class="structure-cell structure-cell--hero">
         <Hero client:load />
       </div>
-      <div class="structure-cell structure-cell--identity">
-        <IdentityLab client:visible />
+    </section>
+
+    <section class="structure-grid structure-grid--audience" data-reveal>
+      <div class="structure-cell structure-cell--audience">
+        <AudienceModeSwitch client:visible />
       </div>
     </section>
 
-    <section aria-label="Cartographie sections Figma" class="figma-lab-bottom-map" data-reveal>
-      <div class="figma-lab-bottom-grid">
-        <a href="#a-propos" class="figma-lab-map-card figma-lab-map-card--cream">Process / cadrage</a>
-        <a href="#identite" class="figma-lab-map-card figma-lab-map-card--blue">Architecture / cible</a>
-        <a href="#projets" class="figma-lab-map-card figma-lab-map-card--green">Production / prototype</a>
-
-        <a href="#projets" class="figma-lab-map-card figma-lab-map-card--green">Impact / risque</a>
-        <a href="#lab-notes" class="figma-lab-map-card figma-lab-map-card--blue">Conversion / preuve</a>
-        <a href="#lab-notes" class="figma-lab-map-card figma-lab-map-card--cream">Handoff / delivery</a>
-
-        <a href="#contact" class="figma-lab-map-card figma-lab-map-card--cream">Process / sprint</a>
-        <a href="#contact" class="figma-lab-map-card figma-lab-map-card--blue">Architecture / interfaces</a>
-        <a href="#contact" class="figma-lab-map-card figma-lab-map-card--green">Production / sur mesure</a>
+    <section class="structure-grid structure-grid--offer" data-reveal>
+      <div class="structure-cell structure-cell--offer">
+        <OfferDeliverables client:visible />
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--sprints" data-reveal>
-      <div class="structure-cell structure-cell--sprints">
-        <GraphicSprints client:visible />
+    <section class="structure-grid structure-grid--method" data-reveal>
+      <div class="structure-cell structure-cell--process">
+        <ProcessStateMachine client:visible />
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--systems" data-reveal>
-      <div class="structure-cell structure-cell--flow">
-        <FlowDiagram client:visible />
-      </div>
-      <div class="structure-cell structure-cell--pipeline">
-        <SystemPipeline client:visible />
-      </div>
-      <div class="structure-cell structure-cell--about">
-        <About client:visible />
+    <section class="structure-grid structure-grid--cases" data-reveal>
+      <div class="structure-cell structure-cell--cases">
+        <CaseProofs client:visible />
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--production" data-reveal>
-      <div class="structure-cell structure-cell--projects">
-        <Projects client:visible />
-      </div>
-      <div class="structure-cell structure-cell--timeline">
-        <ProjectsTimeline client:visible />
-      </div>
+    <section class="structure-grid structure-grid--proofs" data-reveal>
       <div class="structure-cell structure-cell--notes">
         <LabNotes client:visible />
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--conversion" data-reveal>
-      <div class="structure-cell structure-cell--trust">
-        <TrustStrip client:visible />
+    <section class="structure-grid structure-grid--about" data-reveal>
+      <div class="structure-cell structure-cell--about">
+        <About client:visible />
       </div>
+    </section>
+
+    <section class="structure-grid structure-grid--config" data-reveal>
+      <div class="structure-cell structure-cell--config">
+        <MissionConfigurator client:visible />
+      </div>
+    </section>
+
+    <section class="structure-grid structure-grid--conversion" data-reveal>
       <div class="structure-cell structure-cell--contact">
         <Contact client:visible />
+      </div>
+    </section>
+
+    <section class="structure-grid structure-grid--journal" data-reveal>
+      <div class="structure-cell structure-cell--sprints">
+        <GraphicSprints client:visible />
       </div>
     </section>
   </main>
@@ -112,8 +107,9 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
       <div class="footer-col footer-col--protocols">
         <p class="m-0 footer-column-title">Protocoles actifs</p>
         <ul class="footer-protocol-list">
-          <li><a href="#lab-notes" class="footer-link">Lab notes</a></li>
-          <li><a href="#projets" class="footer-link">Cas d'usage</a></li>
+          <li><a href="#lab-notes" class="footer-link">Preuves</a></li>
+          <li><a href="#a-propos" class="footer-link">A propos</a></li>
+          <li><a href="#sprints-graphiques" class="footer-link">Journal</a></li>
           <li><a href="#contact" class="footer-link">Mission</a></li>
         </ul>
       </div>
@@ -126,33 +122,6 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
           class="footer-link"
         >
           LinkedIn
-        </a>
-        <a
-          href="https://www.malt.com/profile/clementsaillant"
-          target="_blank"
-          rel="noopener noreferrer"
-          {...trackAttrs(TRACK_EVENTS.outboundMaltContact, 'malt.com')}
-          class="footer-link"
-        >
-          Malt
-        </a>
-        <a
-          href="https://lelectron-fou.bandcamp.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          {...trackAttrs(TRACK_EVENTS.outboundBandcampContact, 'bandcamp.com')}
-          class="footer-link"
-        >
-          Bandcamp
-        </a>
-        <a
-          href="https://github.com/electron-rare/"
-          target="_blank"
-          rel="noopener noreferrer"
-          {...trackAttrs(TRACK_EVENTS.outboundGithubContact, 'github.com')}
-          class="footer-link"
-        >
-          GitHub
         </a>
       </nav>
     </div>

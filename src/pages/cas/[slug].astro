@@ -1,0 +1,102 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@/styles/global.css';
+import { CASE_STUDIES, getCaseBySlug } from '@/content/caseStudies';
+import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
+
+export function getStaticPaths() {
+  return CASE_STUDIES.map((item) => ({
+    params: { slug: item.slug }
+  }));
+}
+
+const slug = Astro.params.slug || '';
+const study = getCaseBySlug(slug);
+
+if (!study) {
+  return Astro.redirect('/');
+}
+
+const pageTitle = `${study.title} — Cas d'execution | L'electron rare`;
+const pageDescription = `${study.context} ${study.intervention} ${study.result}`;
+const canonicalPath = `/cas/${study.slug}/`;
+const contactHref = study.ctaHref.startsWith('#') ? `/${study.ctaHref}` : study.ctaHref;
+const extraJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: `${study.title} - cas d'execution`,
+  description: `${study.context} ${study.result}`,
+  url: `https://electron-rare.github.io${canonicalPath}`,
+  inLanguage: 'fr-FR',
+  author: {
+    '@type': 'Person',
+    name: 'Clement Saillant'
+  },
+  about: ['electronique', 'prototype', 'validation']
+});
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath={canonicalPath}
+  ogTitle={pageTitle}
+  ogDescription={pageDescription}
+  twitterDescription={pageDescription}
+  extraJsonLd={extraJsonLd}
+>
+  <main class="site-shell pb-12 pt-5">
+    <section class="section-anchor case-page" aria-labelledby="case-page-title">
+      <div class="circuit-board rounded-2xl p-5 md:p-6">
+        <p class="case-page-kicker">CAS D'EXECUTION</p>
+        <h1 id="case-page-title" class="m-0 text-3xl md:text-4xl">{study.title}</h1>
+        <p class="case-trace mt-3">{study.trace}</p>
+
+        <div class="case-page-grid mt-4">
+          <article class="case-page-card">
+            <h2 class="case-page-heading">Contexte</h2>
+            <p class="mb-0">{study.context}</p>
+          </article>
+          <article class="case-page-card">
+            <h2 class="case-page-heading">Intervention technique</h2>
+            <p class="mb-0">{study.intervention}</p>
+          </article>
+          <article class="case-page-card">
+            <h2 class="case-page-heading">Impact</h2>
+            <p class="mb-0">
+              <strong>{study.impactLabel}:</strong> {study.impactValue}
+            </p>
+            <p class="mb-0 mt-2">{study.result}</p>
+          </article>
+        </div>
+
+        <article class="case-page-proof mt-4">
+          <h2 class="case-page-heading m-0">Preuve</h2>
+          <p class="mb-0 mt-2">
+            <strong>{study.proofTitle}</strong>
+          </p>
+          <p class="mb-0 mt-2">{study.proofBody}</p>
+          <figure class="case-proof-figure mt-3">
+            <img
+              src={study.proofAsset}
+              alt={`Preuve visuelle - ${study.title}`}
+              loading="lazy"
+              decoding="async"
+              width={1200}
+              height={780}
+            />
+          </figure>
+        </article>
+
+        <div class="case-page-actions mt-4">
+          <a href={contactHref} class="figma-lab-pill figma-lab-pill--primary" {...trackAttrs(TRACK_EVENTS.ctaHeroContact, '/#contact')}>
+            {study.ctaLabel}
+          </a>
+          <a href="/" class="figma-lab-pill figma-lab-pill--secondary" {...trackAttrs(TRACK_EVENTS.engagementCaseOpened, '/')}>
+            Retour landing
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

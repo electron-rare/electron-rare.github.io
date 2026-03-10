@@ -1,0 +1,354 @@
+.root {
+  isolation: isolate;
+}
+
+.oscilloscope {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.72;
+}
+
+.oscilloscopeSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.oscTrack {
+  transform: translateX(1480px);
+  animation: scopeTrackSweep 12s linear infinite;
+  will-change: transform;
+}
+
+.oscWave {
+  fill: none;
+  stroke: rgba(120, 255, 166, 0.5);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.oscCore {
+  fill: none;
+  stroke: rgba(173, 255, 200, 0.98);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.heroGrid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.heroCard {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(14px, 2.4vw, 28px);
+  border-radius: 1rem;
+  border: 1px solid rgba(121, 255, 206, 0.48);
+  background:
+    linear-gradient(180deg, rgba(5, 20, 15, 0.88), rgba(6, 18, 14, 0.92)),
+    url('/assets/da/openai/hero-carnet-labo-open-v2.webp') center/cover no-repeat,
+    linear-gradient(180deg, rgba(6, 29, 20, 0.94), rgba(5, 22, 16, 0.94));
+  box-shadow:
+    inset 0 0 0 1px rgba(145, 255, 215, 0.12),
+    0 20px 52px rgba(3, 11, 8, 0.42);
+}
+
+.kicker {
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.66rem;
+  color: #97e6c0;
+}
+
+.title {
+  margin: 0.55rem 0 0;
+  text-align: center;
+  font-size: clamp(1.8rem, 4.6vw, 3.15rem);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.copy {
+  margin: 0.78rem auto 0;
+  max-width: 78ch;
+  text-align: justify;
+  text-justify: inter-word;
+  font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+  line-height: 1.58;
+  color: #dbffee;
+  padding: 0.62rem 0.72rem;
+  border-radius: 0.68rem;
+  border: 1px solid rgba(124, 255, 203, 0.26);
+  background: linear-gradient(180deg, rgba(6, 24, 18, 0.82), rgba(5, 18, 14, 0.86));
+}
+
+.schema {
+  margin-top: 0.84rem;
+  border-radius: 0.78rem;
+  border: 1px solid rgba(163, 255, 224, 0.42);
+  background:
+    radial-gradient(640px 280px at 12% 14%, rgba(96, 216, 255, 0.1), transparent 62%),
+    linear-gradient(180deg, rgba(6, 15, 19, 0.9), rgba(5, 11, 15, 0.94));
+  padding: 0.5rem;
+}
+
+.schemaScroll {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.62rem;
+}
+
+.schemaScroll::before,
+.schemaScroll::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 22px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.schemaScroll::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(4, 10, 15, 0.9), transparent);
+}
+
+.schemaScroll::after {
+  right: 0;
+  background: linear-gradient(270deg, rgba(4, 10, 15, 0.9), transparent);
+}
+
+.schemaSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.path {
+  fill: none;
+  stroke: rgba(136, 255, 188, 0.34);
+  stroke-width: 2.9;
+  stroke-linecap: round;
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: traceDraw 900ms ease forwards;
+}
+
+.pathActive {
+  stroke: rgba(156, 255, 192, 0.96);
+  filter: drop-shadow(0 0 10px rgba(117, 255, 166, 0.58));
+}
+
+.signalDot {
+  fill: #a6ffc3;
+  filter:
+    drop-shadow(0 0 7px rgba(118, 255, 168, 0.72))
+    drop-shadow(0 0 16px rgba(118, 255, 168, 0.38));
+}
+
+.nodeRect {
+  stroke-width: 1.8;
+  fill: rgba(16, 38, 28, 0.9);
+  stroke: rgba(128, 255, 181, 0.5);
+  transition: 170ms ease;
+}
+
+.nodeActive {
+  filter:
+    drop-shadow(0 0 11px rgba(118, 255, 166, 0.42))
+    drop-shadow(0 0 24px rgba(118, 255, 166, 0.2));
+}
+
+.nodeMagic {
+  stroke-width: 2.4;
+}
+
+.nodeLabel {
+  fill: #deffe9;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.014em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+.nodeLabelLarge {
+  fill: #ecfff3;
+  font-size: 18px;
+  font-weight: 800;
+  text-shadow:
+    0 0 8px rgba(126, 255, 173, 0.52),
+    0 0 18px rgba(126, 255, 173, 0.22);
+}
+
+.nodeButton {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.nodeButton:focus-visible {
+  outline: 2px solid rgba(180, 255, 213, 0.95);
+  outline-offset: -2px;
+  border-radius: 12px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.scrollHint {
+  margin: 0.36rem 0 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #b8eaff;
+  text-align: center;
+}
+
+.meta {
+  margin-top: 0.42rem;
+  border-top: 1px solid rgba(145, 255, 215, 0.24);
+  padding-top: 0.38rem;
+  text-align: center;
+}
+
+.metaKicker {
+  margin: 0;
+  color: #95e6bf;
+  font-size: 0.66rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.metaLine {
+  margin: 0.18rem 0 0;
+  font-size: 0.73rem;
+  color: #d7ffe8;
+}
+
+.valueRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.42rem;
+  margin-top: 0.65rem;
+}
+
+.valuePill {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(123, 255, 188, 0.32);
+  border-radius: 999px;
+  padding: 0.14rem 0.66rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  background: rgba(7, 28, 20, 0.74);
+}
+
+.ctaRow {
+  margin-top: 0.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.48rem;
+}
+
+.cta {
+  min-height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.84rem;
+  border: 1px solid rgba(128, 255, 191, 0.34);
+  color: #dfffee;
+  background: rgba(5, 25, 18, 0.68);
+}
+
+.ctaPrimary {
+  border-color: rgba(139, 255, 197, 0.74);
+  background: linear-gradient(180deg, rgba(13, 55, 38, 0.94), rgba(10, 45, 31, 0.92));
+  color: #ecfff6;
+}
+
+@media (max-width: 767px) {
+  .schemaSvg {
+    min-width: 1040px;
+  }
+}
+
+@media (min-width: 768px) {
+  .scrollHint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oscTrack,
+  .path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .signalDot,
+  .oscilloscope {
+    display: none;
+  }
+}
+
+@keyframes scopeTrackSweep {
+  0% {
+    transform: translateX(1480px);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.82;
+  }
+  90% {
+    opacity: 0.76;
+  }
+  100% {
+    transform: translateX(-700px);
+    opacity: 0;
+  }
+}
+
+@keyframes traceDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

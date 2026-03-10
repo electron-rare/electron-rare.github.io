@@ -8,7 +8,6 @@ type CtaDualRailProps = {
 };
 
 const LINKEDIN_HREF = 'https://fr.linkedin.com/in/electron-rare';
-const MALT_HREF = 'https://www.malt.com/profile/clementsaillant';
 
 export function CtaDualRail({ label = 'Canaux mission', className }: CtaDualRailProps) {
   return (
@@ -30,19 +29,17 @@ export function CtaDualRail({ label = 'Canaux mission', className }: CtaDualRail
         </Button>
         <Button asChild variant="secondary" size="md" className="dual-cta-btn dual-cta-btn--secondary">
           <a
-            href={MALT_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            {...trackAttrs(TRACK_EVENTS.outboundMaltContact, 'malt.com')}
+            href="#contact"
+            {...trackAttrs(TRACK_EVENTS.ctaHeroContact, '#contact')}
           >
             <span className="inline-flex items-center gap-2">
               <span className="circuit-node circuit-node--green" aria-hidden="true" />
-              Malt brief mission
+              Form brief mission
             </span>
           </a>
         </Button>
       </div>
-      <p className="dual-cta-helper">LinkedIn pour un echange direct. Malt pour un brief mission formel.</p>
+      <p className="dual-cta-helper">LinkedIn pour un echange direct. Form brief pour cadrer la mission.</p>
     </div>
   );
 }

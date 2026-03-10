@@ -31,10 +31,10 @@ const steps: FlowStep[] = [
   {
     label: 'Sprint 02',
     description: 'Prototype operationnel, tests terrain et arbitrages de delivery',
-    href: '#projets',
+    href: '#lab-notes',
     icon: 'cable',
     event: TRACK_EVENTS.ctaHeroContact,
-    destination: '#projets'
+    destination: '#lab-notes'
   },
   {
     label: 'Activation',
