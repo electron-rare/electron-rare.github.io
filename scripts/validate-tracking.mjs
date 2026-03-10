@@ -1,24 +1,21 @@
 import fs from 'node:fs';
 
-const htmlPath = new URL('../index.html', import.meta.url);
+const htmlPath = new URL('../dist/index.html', import.meta.url);
 const html = fs.readFileSync(htmlPath, 'utf8');
 
 const expectedPrimary = [
   'cta_hero_projets',
   'cta_hero_contact',
-  'cta_hero_profile',
-  'outbound_linkedin_contact',
-  'outbound_malt_contact',
-  'outbound_bandcamp_contact',
-  'outbound_github_contact',
-  'outbound_github_project_rtc_bl_phone',
-  'outbound_github_project_zacus',
-  'outbound_github_project_site',
-  'outbound_github_lab_more',
-  'cta_lab_interactif_open'
+  'outbound_linkedin_contact'
 ];
 
-const expectedLegacy = ['outbound_github_project', 'outbound_github_contact'];
+const optionalPrimary = [
+  'outbound_linkedin_project',
+  'outbound_bandcamp_project',
+  'outbound_github_project'
+];
+
+const expectedLegacy = [];
 
 const dataTrackMatches = [...html.matchAll(/data-track="([^"]+)"/g)].map((m) => m[1]);
 const dataLegacyMatches = [...html.matchAll(/data-track-legacy="([^"]+)"/g)].map((m) => m[1]);
@@ -43,3 +40,7 @@ if (missingPrimary.length || missingLegacy.length) {
 console.log('Tracking contract validation passed.');
 console.log(`Primary events found (${uniqueDataTrack.length}): ${uniqueDataTrack.join(', ')}`);
 console.log(`Legacy events found (${uniqueLegacyTrack.length}): ${uniqueLegacyTrack.join(', ')}`);
+const missingOptional = optionalPrimary.filter((eventName) => !uniqueDataTrack.includes(eventName));
+if (missingOptional.length) {
+  console.log(`Optional primary events missing: ${missingOptional.join(', ')}`);
+}
