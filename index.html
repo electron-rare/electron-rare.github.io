@@ -193,19 +193,26 @@
 
           <aside class="hero-lab-visual" aria-label="Assets labo electronique">
             <figure class="lab-asset lab-asset-pcb" data-hero-asset="primary">
-              <img
-                src="/assets/da/openai/hero-pcb-routing-map.png"
-                alt="Plan de routage PCB avec traces et vias"
-                loading="eager"
-                data-hero-image />
+              <picture>
+                <source srcset="/assets/da/openai/hero-pcb-routing-map.webp" type="image/webp" />
+                <img
+                  src="/assets/da/openai/hero-pcb-routing-map.png"
+                  alt="Plan de routage PCB avec traces et vias"
+                  loading="eager"
+                  fetchpriority="high"
+                  data-hero-image />
+              </picture>
               <figcaption>Plan de routage vivant — trace / via / bus</figcaption>
             </figure>
             <figure class="lab-asset lab-asset-measure" data-hero-asset="secondary">
-              <img
-                src="/assets/da/openai/hero-measurement-rig.png"
-                alt="Planche de mesure pour validation électronique"
-                loading="lazy"
-                data-hero-image />
+              <picture>
+                <source srcset="/assets/da/openai/hero-measurement-rig.webp" type="image/webp" />
+                <img
+                  src="/assets/da/openai/hero-measurement-rig.png"
+                  alt="Planche de mesure pour validation électronique"
+                  loading="lazy"
+                  data-hero-image />
+              </picture>
               <figcaption>Notebook labo — validation terrain & protocole</figcaption>
             </figure>
           </aside>
