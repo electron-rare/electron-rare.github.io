@@ -42,6 +42,7 @@ PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
 - workflow GitHub Actions: `deploy-ovh-ftp.yml`
 - target: `preview`
 - remote attendu: `/www/preview`
+- verification publique automatique post-deploy via `scripts/verify-public-target.mjs`
 
 ### B3 - Verification preview
 ```bash
@@ -61,6 +62,7 @@ curl -fsSI https://www.lelectronrare.fr/preview/mentions-legales/
 - workflow GitHub Actions: `deploy-ovh-ftp.yml`
 - target: `production`
 - remote attendu: `/www`
+- verification publique automatique post-deploy via `scripts/verify-public-target.mjs`
 
 ### C3 - Verification production
 ```bash

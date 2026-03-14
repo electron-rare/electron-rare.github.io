@@ -59,3 +59,6 @@ jobs:
         env:
           DEPLOY_TARGET_SKIP_BUILD: "0"
         run: bash scripts/deploy-ovh-ftp-target.sh "${{ inputs.target }}"
+
+      - name: Verify public target
+        run: node scripts/verify-public-target.mjs "${{ inputs.target }}"

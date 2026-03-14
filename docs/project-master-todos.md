@@ -25,6 +25,7 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Reliquats CSS `.site-contrast-toggle` supprimes du source actif.
 - [x] Build preview local `PUBLIC_SITE_URL=/preview/` repasse propre.
 - [x] Validation tracking recalee sur le contrat Astro actif.
+- [x] Workflow OVH enrichi avec verification HTTP publique post-deploiement.
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 
