@@ -63,6 +63,13 @@ main() {
     echo "[deploy-ovh-ftp-target] Skipping build:external (already built)."
   fi
 
+  # The root .htaccess contains root-scoped Apache rules (`/index.html`, `/_astro/`)
+  # that break the preview when uploaded inside `/preview`.
+  if [[ "$TARGET" == "preview" && -f "${LOCAL_DIR}/.htaccess" ]]; then
+    echo "[deploy-ovh-ftp-target] Removing .htaccess from preview payload."
+    rm -f "${LOCAL_DIR}/.htaccess"
+  fi
+
   bash scripts/deploy-ovh-ftp.sh "$LOCAL_DIR"
 }
 

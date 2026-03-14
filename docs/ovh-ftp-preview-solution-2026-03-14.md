@@ -47,6 +47,19 @@ Fichier :
 Script cible :
 - `scripts/deploy-ovh-ftp-target.sh`
 
+## Note preview
+
+Le preview ne doit pas embarquer le `.htaccess` de la racine.
+
+Raison :
+- ce fichier contient des regles Apache pensees pour `/`
+- notamment des chemins absolus comme `/index.html` et `/_astro/`
+- dans `/preview`, ces regles peuvent provoquer un `403 Forbidden`
+
+Decision :
+- la cible `preview` retire `dist/.htaccess` avant synchronisation FTP
+- la cible `production` conserve le `.htaccess` pour la racine publique
+
 ## Usage
 
 ### Preview
