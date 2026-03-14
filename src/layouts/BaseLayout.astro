@@ -590,13 +590,34 @@ const structuredDataJsonLd = JSON.stringify({
           }
         });
 
+        var syncRootOpenState = function () {
+          var isCompactViewport = window.innerWidth < 960;
+          var hasOpenMenu = false;
+
+          for (var i = 0; i < menus.length; i += 1) {
+            if (menus[i].hasAttribute('open')) {
+              hasOpenMenu = true;
+              break;
+            }
+          }
+
+          document.documentElement.classList.toggle('site-nav-open', isCompactViewport && hasOpenMenu);
+        };
+
         window.addEventListener('resize', function () {
-          if (window.innerWidth >= 768) {
+          if (window.innerWidth >= 960) {
             for (var i = 0; i < menus.length; i += 1) {
               closeMenu(menus[i]);
             }
           }
+          syncRootOpenState();
         });
+
+        for (var j = 0; j < menus.length; j += 1) {
+          menus[j].addEventListener('toggle', syncRootOpenState);
+        }
+
+        syncRootOpenState();
       })();
     </script>
 
