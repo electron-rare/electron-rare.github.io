@@ -1,5 +1,8 @@
 # Figma ↔ Web Parity Checklist — Home Carnet de labo
 
+> Statut 2026-03-14: document historique.
+> La parite Figma de cette phase ne pilote plus la homepage active.
+
 Date: 2026-03-02  
 Figma file: `Wzk5HhOqRHMhflwz0rpv7w`  
 Statut Figma MCP: quota atteint sur seat (verification manuelle requise pour capture exacte)

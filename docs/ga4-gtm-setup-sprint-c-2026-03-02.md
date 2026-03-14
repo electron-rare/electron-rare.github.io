@@ -1,5 +1,8 @@
 # GA4 + GTM setup — Sprint C
 
+> Statut 2026-03-14: document historique.
+> Le tracking actif doit etre relu dans `src/lib/tracking.ts`, `docs/acquisition-seo-plan.md` et `docs/project-master-todos.md`.
+
 Date: 2026-03-02
 Scope: web container GTM + propriété GA4 pour exploiter les nouveaux events instrumentés.
 

@@ -1,5 +1,8 @@
 # Runbook - Integration logo (post generation)
 
+> Statut 2026-03-14: runbook secondaire.
+> Utilisable si un nouveau logo est reintegre, mais ne fait pas partie des priorites actives.
+
 Date: 2026-03-02
 
 ## Objectif

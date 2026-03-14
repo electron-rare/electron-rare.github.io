@@ -1,5 +1,8 @@
 # Index - Recherche documentaire
 
+> Statut 2026-03-14: index historique de recherche.
+> Le point d'entree documentaire actif est `docs/README.md`.
+
 Date: 2026-03-02
 But: point d'entree unique pour retrouver la doc (DA, UX, tracking, SEO, deploy, evidence).
 

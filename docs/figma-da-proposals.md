@@ -1,5 +1,9 @@
 # Propositions DA pour Figma (Home) — 3 directions
 
+> Statut 2026-03-14: document historique.
+> Les propositions Figma restent utiles en archive, mais les hypotheses d'ancres et de CTA ne sont plus toutes valides.
+> Backlog actif: `docs/da-01-implementation-backlog.md`.
+
 Source de base: `Home_ElectronRare_DA00_2026-03-02_Final`
 Lien source: [Home_ElectronRare_DA00_2026-03-02_Final](https://www.figma.com/design/fnqOdDOU97v7E27LxkV7cn/Home_ElectronRare_DA00_2026-03-02_Final)
 
@@ -113,4 +117,3 @@ Lien source: [Home_ElectronRare_DA00_2026-03-02_Final](https://www.figma.com/des
   - Zoning stable: Header / Hero / Systèmes / Production / Conversion / Footer.
 - Sauvegarde recommandée:
   - Exporter un PDF par proposition après validation visuelle (`390/768/1024/1440`).
-

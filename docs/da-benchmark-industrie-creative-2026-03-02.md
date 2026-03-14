@@ -1,5 +1,9 @@
 # Benchmark DA — Industries, Interactive, Creative Tech, Maker (2026-03-02)
 
+> Statut 2026-03-14: document historique de references.
+> Les hypotheses GitHub Pages, ancres legacy et contrats anciens ne sont plus actifs.
+> Utiliser ce document comme reservoir d'inspiration, pas comme consigne produit.
+
 Objectif: alimenter la direction artistique avec des references "industrie + creation + installations interactives + hardware learning" pour les variantes web (GitHub Pages + Astro externe), sans changer le contrat fonctionnel du site.
 
 ## A) Installations interactives / culture creative

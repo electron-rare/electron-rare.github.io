@@ -1,5 +1,9 @@
 # Webdesign Responsive Moderne - Checklist Actionnable
 
+> Statut 2026-03-14: document historique.
+> Le site n'est plus un site statique GitHub Pages.
+> Le referentiel responsive actif est le code Astro en `src/` et `docs/da-01-implementation-backlog.md`.
+
 Date: 2026-03-01
 
 ## Objectif

@@ -1,5 +1,8 @@
 # Asset Production Backlog — Carnet de labo electronique (V2)
 
+> Statut 2026-03-14: backlog historique d'assets.
+> Le langage visuel public actuel est plus sobre et plus blanc contraste que cette phase "carnet de labo".
+
 Date: 2026-03-02  
 Sprint: Assets visuels avances  
 Scope: Home uniquement (`hero`, zone preuves, textures de fond)

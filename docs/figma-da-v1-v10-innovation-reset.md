@@ -1,5 +1,9 @@
 # DA Reset — V1→V10 (version visuelle radicale)
 
+> Statut 2026-03-14: document historique d'exploration DA.
+> Il ne pilote plus la version publique active.
+> Memoire active: `docs/design-memory-2026-03-14-white-contrast.md`.
+
 Je remets la piste à zéro avec 10 directions distinctes.  
 But: rupture visuelle réelle + identité électronique forte + conversion non cassée.
 
