@@ -1,5 +1,8 @@
 # README — Audit & Amélioration Documents
 
+> Statut 2026-03-14: index historique d'une ancienne passe d'audit.
+> Le point d'entree actif est maintenant `docs/README.md`.
+
 **Generated**: 2 mars 2026  
 **Status**: Ready for execution  
 **Owner**: Audit technique  

@@ -1,5 +1,9 @@
 # Top 8 UI Reference TODOs - Electron Rare
 
+> Statut 2026-03-14: document historique.
+> Certaines hypotheses de CTA et d'ancres ne sont plus valides.
+> Backlog actif: `docs/da-01-implementation-backlog.md`.
+
 Date: 2026-03-01
 Scope: `src/pages/index.astro` + `src/styles/global.css`
 DA lock: `editorial-premium` + `subtle-precise` + `warm-artistic`

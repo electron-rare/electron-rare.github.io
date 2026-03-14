@@ -1,5 +1,9 @@
 # Audit Complet & Plan d'Amélioration — electron-rare.github.io
 
+> Statut 2026-03-14: document historique.
+> Ne plus l'utiliser comme plan d'execution actif.
+> Remplacements: `docs/README.md`, `docs/project-master-todos.md`, `docs/SPRINT-PLAYBOOK-2026-03-02.md`.
+
 **Date** : 2026-03-02  
 **Responsable** : Audit technique  
 **État** : Actif — Exécution immédiate recommandée

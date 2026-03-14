@@ -1,5 +1,9 @@
 # DA Progress Log — 2026-03-02
 
+> Statut 2026-03-14: journal historique.
+> Conserver comme archive de transition, pas comme memo de pilotage actif.
+> Memoire active: `docs/design-memory-2026-03-14-white-contrast.md`.
+
 ## Contexte de la passe
 - Refonte UI majeure engagée sur la home (DA-00).
 - Objectif immédiat: fixer la stratégie de publication sans casser les contrats (tracking, ancres, SEO).

@@ -1,5 +1,9 @@
 # Sprint C — KPI instrumentation + expérimentation CTA
 
+> Statut 2026-03-14: document historique.
+> Les hypotheses CTA et KPI doivent etre relues avant reutilisation.
+> Reference tracking actuelle: `docs/acquisition-seo-plan.md` et `src/lib/tracking.ts`.
+
 Date: 2026-03-02
 Objectif: rendre l'amélioration conversion mesurable avec un cadre d'expérimentation simple.
 
@@ -60,4 +64,3 @@ Objectif: rendre l'amélioration conversion mesurable avec un cadre d'expérimen
 - [ ] Construire un dashboard simple (Looker Studio ou GA4 explorations)
 - [ ] Marquer les périodes d'expérience (annotation)
 - [ ] Décider rollout/revert à la fin de chaque test
-

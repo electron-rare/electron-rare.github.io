@@ -1,5 +1,9 @@
 # Audit approfondi — Webdesign, conversion, SEO, performance, accessibilité
 
+> Statut 2026-03-14: document historique.
+> Le contexte de production a change depuis sa redaction: Astro + OVH FTP, plus de lab public, nouveau positionnement.
+> Remplacements: `docs/README.md`, `docs/project-master-todos.md`, `docs/acquisition-seo-plan.md`.
+
 Date: 2026-03-02
 Repo: electron-rare.github.io
 Périmètre: home Astro (`src/**`), publication statique (`dist/`), tracking, SEO, préflight CI local.

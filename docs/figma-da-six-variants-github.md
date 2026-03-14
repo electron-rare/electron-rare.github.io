@@ -1,5 +1,9 @@
 # DA Variants — Index de référence (Reset v1)
 
+> Statut 2026-03-14: document historique.
+> Les variantes Figma/GitHub Pages ne pilotent plus le produit public actuel.
+> Memoire active: `docs/design-memory-2026-03-14-white-contrast.md`.
+
 Ce document centralise les 10 variantes prêtes à arbitrer après reset DA.
 
 Référence brute: [figma-da-v1-v10-innovation-reset.md](./figma-da-v1-v10-innovation-reset.md)

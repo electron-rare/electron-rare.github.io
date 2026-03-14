@@ -54,6 +54,15 @@ Repo: `/home/zacus/electron-rare-preview-ovh`
 - `dual-deployment-execution-plan.md`
 - `implementation-plan-dual-hosting-2026-03-02.md`
 - `da-progress-log-2026-03-02.md`
+- `audit-plan-amelioration-2026-03-02.md`
+- `audit-approfondi-webdesign-webmarketing-2026-03-02.md`
+- `QUICK-REFERENCE-2026-03-02.md`
+- `README-AUDIT-2026-03-02.md`
+- `home-copy-sheet-v1-2026-03-02.md`
+- `figma-da-six-variants-github.md`
+- `top8-ui-reference-todos.md`
+- `wireflow-conversion-da00.md`
+- `sprint-c-kpi-experiments-2026-03-02.md`
 
 Ces documents restent utiles comme archive de contexte, mais ils ont ete ecrits a un moment ou:
 - GitHub Pages etait encore traite comme prod active

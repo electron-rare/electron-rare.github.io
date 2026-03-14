@@ -1,5 +1,9 @@
 # Plan d'implémentation — Double hébergement (GitHub Pages + Web externe)
 
+> Statut 2026-03-14: plan historique.
+> Le double hebergement n'est plus la strategie active.
+> Remplacements: `docs/README.md`, `docs/ovh-ftp-preview-solution-2026-03-14.md`, `docs/SPRINT-PLAYBOOK-2026-03-02.md`.
+
 Date: 2026-03-02
 Statut: En cours
 Pilote: Codex

@@ -1,5 +1,9 @@
 # Copy Sheet V1 - Home Premium Technique + Commercial
 
+> Statut 2026-03-14: document historique.
+> Le copy actif du site est celui du code dans `src/` et des memoires actives.
+> Point d'entree: `docs/README.md`.
+
 Date: 2026-03-02  
 Perimetre: textes home uniquement (sans changement anchors/tracking/API)
 

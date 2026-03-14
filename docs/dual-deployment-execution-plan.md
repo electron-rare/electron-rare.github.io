@@ -1,5 +1,9 @@
 # Plan d’exécution — Double version (GitHub Pages + web externe)
 
+> Statut 2026-03-14: plan historique.
+> La strategie "double version GitHub Pages + web externe" n'est plus active.
+> Reference actuelle: Astro sur OVH via GitHub Actions FTP.
+
 Date: 2026-03-02
 Objectif: activer proprement une variante web hors GitHub sans casser la version stable GitHub Pages.
 

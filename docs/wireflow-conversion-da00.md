@@ -1,5 +1,9 @@
 # Wireflow Conversion — Sprint DA-00
 
+> Statut 2026-03-14: document historique.
+> Il decrit un wireflow et des CTA d'une phase precedente.
+> Le site public est maintenant pilote par le code Astro actif et `docs/design-memory-2026-03-14-white-contrast.md`.
+
 Date: 2026-03-02
 Statut: READY FOR FIGMA EXECUTION
 

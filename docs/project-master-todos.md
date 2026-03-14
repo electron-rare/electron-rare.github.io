@@ -41,6 +41,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - [x] `https://www.lelectronrare.fr/lab/` et `https://www.lelectronrare.fr/preview/lab/` repondent maintenant `404`.
 - [x] `docs/README.md` cree comme point d'entree et source de verite documentaire.
 - [x] Runbooks et plans legacy les plus confus recales en mode historique ou remplaces par des versions actives.
+- [x] Les gros audits et plans de transition restants sont maintenant bannieres comme historiques pour eviter les faux redemarrages.
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 - [ ] Confirmer visuellement depuis un navigateur humain que `www` sert bien la nouvelle home sur tous les points d'acces.
@@ -81,7 +82,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 ## P3 - Nettoyage et consolidation
 - [x] Supprimer les blocs CSS morts `.site-contrast-toggle` encore presents dans `src/styles/global.css`.
 - [x] Mettre en place un point d'entree documentaire actif et reclasser les runbooks les plus critiques.
-- [ ] Nettoyer le reste des archives qui parlent encore de GitHub Pages static root, `#projets`, Malt, ou du toggle contraste.
+- [ ] Nettoyer le reste des archives secondaires qui parlent encore de GitHub Pages static root, `#projets`, Malt, ou du toggle contraste.
 - [ ] Mesurer LCP et budget media de la variante blanche en conditions reelles.
 - [ ] Archiver les plans anterieurs devenus purement historiques.
 

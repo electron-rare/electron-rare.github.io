@@ -1,5 +1,9 @@
 # QUICK REFERENCE CARD — Audit & Plan 2026-03-02
 
+> Statut 2026-03-14: fiche historique.
+> Le snapshot ci-dessous ne reflete plus l'etat public actuel.
+> Voir `docs/README.md` et `docs/project-master-todos.md` pour l'etat reel.
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ ELECTRON-RARE.GITHUB.IO — STATUS SNAPSHOT                                  │
