@@ -94,18 +94,19 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
   - contact direct
 
 ## Backlog P0
-- [ ] Forcer la cascade sur la DA blanche dans `BaseLayout.astro`, `site.ts`, `global.css`, `home-workbench.css`.
-- [ ] Relever les derniers blocs sombres restants: `hero-bg-photo`, `photo-strip`, `video-strip`, `contact-minitel`, FAQ focus.
+- [x] Forcer la cascade sur la DA blanche dans `BaseLayout.astro`, `site.ts`, `global.css`, `home-workbench.css`.
+- [x] Relever les derniers blocs sombres restants: `hero-bg-photo`, `photo-strip`, `video-strip`, `contact-minitel`, FAQ focus.
 - [ ] Verifier la lisibilite des CTA sur blanc.
-- [ ] Verifier que la home et `formation` partagent bien le meme socle visuel.
+- [ ] Verifier que la home et `formation` partagent bien le meme socle visuel en preview live.
 
 ## Backlog P1
 - [ ] Supprimer les references documentaires a `#projets`, Malt, GitHub Pages static prod, dual-rail hero, contrast toggle.
 - [ ] Verifier les events `data-track` sur les CTA actifs uniquement.
+- [x] Recaler `tracking:check` sur le contrat Astro actif pour sortir des faux positifs legacy.
 - [ ] Valider preview OVH puis prod.
 
 ## Backlog P2
-- [ ] Supprimer les reliquats `.site-contrast-toggle` du CSS global.
+- [x] Supprimer les reliquats `.site-contrast-toggle` du CSS global.
 - [ ] Evaluer si un vrai theme secondaire doit exister plus tard ou si le mode blanc reste la seule version publique.
 - [ ] Consolider une archive explicite des anciens artefacts DA pour eviter toute reintroduction.
 

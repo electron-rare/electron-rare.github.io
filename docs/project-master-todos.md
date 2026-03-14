@@ -22,11 +22,14 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Ancienne variante `studio/figma` sortie du runtime actif.
 - [x] Bouton contraste retire du markup.
 - [x] Theme blanc contraste force par defaut dans le layout source.
+- [x] Reliquats CSS `.site-contrast-toggle` supprimes du source actif.
+- [x] Build preview local `PUBLIC_SITE_URL=/preview/` repasse propre.
+- [x] Validation tracking recalee sur le contrat Astro actif.
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 
 ## P0 - Bloc de sortie immediate
-- [ ] Builder le preview avec le theme blanc contraste (`PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external`).
+- [x] Builder le preview avec le theme blanc contraste (`PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external`).
 - [ ] Verifier le rendu de la home: nav, hero, approche, cas clients, missions, FAQ, footer.
 - [ ] Verifier les surfaces medias: hero photo, photo strip, video strip.
 - [ ] Verifier la section contact en version claire: tabs, textarea, formulaire, focus clavier, messages d'etat.
@@ -55,7 +58,7 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [ ] Soumettre ou recontroler Search Console sur la base de la prod actuelle OVH.
 
 ## P3 - Nettoyage et consolidation
-- [ ] Supprimer les blocs CSS morts `.site-contrast-toggle` encore presents dans `src/styles/global.css`.
+- [x] Supprimer les blocs CSS morts `.site-contrast-toggle` encore presents dans `src/styles/global.css`.
 - [ ] Nettoyer les docs qui parlent encore de GitHub Pages static root, `#projets`, Malt, ou du toggle contraste.
 - [ ] Mesurer LCP et budget media de la variante blanche en conditions reelles.
 - [ ] Archiver les plans anterieurs devenus purement historiques.

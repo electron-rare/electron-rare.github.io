@@ -1,45 +1,96 @@
 import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const htmlPath = new URL('../index.html', import.meta.url);
-const html = fs.readFileSync(htmlPath, 'utf8');
-
-const expectedPrimary = [
-  'cta_hero_projets',
-  'cta_hero_contact',
-  'cta_hero_profile',
-  'outbound_linkedin_contact',
-  'outbound_malt_contact',
-  'outbound_bandcamp_contact',
-  'outbound_github_contact',
-  'outbound_github_project_rtc_bl_phone',
-  'outbound_github_project_zacus',
-  'outbound_github_project_site',
-  'outbound_github_lab_more',
-  'cta_lab_interactif_open'
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(__dirname, '..');
+const trackingFile = path.join(repoRoot, 'src/lib/tracking.ts');
+const sourceRoots = [
+  path.join(repoRoot, 'src/pages'),
+  path.join(repoRoot, 'src/components'),
+  path.join(repoRoot, 'src/content')
 ];
 
-const expectedLegacy = ['outbound_github_project', 'outbound_github_contact'];
+function walk(dir) {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      return walk(fullPath);
+    }
+    if (/\.(astro|tsx|ts|jsx|js)$/.test(entry.name)) {
+      return [fullPath];
+    }
+    return [];
+  });
+}
 
-const dataTrackMatches = [...html.matchAll(/data-track="([^"]+)"/g)].map((m) => m[1]);
-const dataLegacyMatches = [...html.matchAll(/data-track-legacy="([^"]+)"/g)].map((m) => m[1]);
-
-const uniqueDataTrack = [...new Set(dataTrackMatches)];
-const uniqueLegacyTrack = [...new Set(dataLegacyMatches)];
-
-const missingPrimary = expectedPrimary.filter((eventName) => !uniqueDataTrack.includes(eventName));
-const missingLegacy = expectedLegacy.filter((eventName) => !uniqueLegacyTrack.includes(eventName));
-
-if (missingPrimary.length || missingLegacy.length) {
-  console.error('Tracking contract validation failed.');
-  if (missingPrimary.length) {
-    console.error(`Missing primary events: ${missingPrimary.join(', ')}`);
+function readTrackEvents() {
+  const source = fs.readFileSync(trackingFile, 'utf8');
+  const objectMatch = source.match(/TRACK_EVENTS\s*=\s*\{([\s\S]*?)\}\s*as const/);
+  if (!objectMatch) {
+    throw new Error('Unable to parse TRACK_EVENTS from src/lib/tracking.ts');
   }
-  if (missingLegacy.length) {
-    console.error(`Missing legacy events: ${missingLegacy.join(', ')}`);
+
+  const entries = [...objectMatch[1].matchAll(/(\w+)\s*:\s*'([^']+)'/g)].map((match) => ({
+    key: match[1],
+    value: match[2]
+  }));
+
+  return new Map(entries.map(({ key, value }) => [key, value]));
+}
+
+const knownEvents = readTrackEvents();
+const usedEventKeys = new Set();
+const usedRawEvents = new Set();
+const legacyAttrs = [];
+
+for (const sourceRoot of sourceRoots) {
+  for (const filePath of walk(sourceRoot)) {
+    const content = fs.readFileSync(filePath, 'utf8');
+
+    for (const match of content.matchAll(/TRACK_EVENTS\.(\w+)/g)) {
+      usedEventKeys.add(match[1]);
+    }
+
+    for (const match of content.matchAll(/data-track="([^"]+)"/g)) {
+      usedRawEvents.add(match[1]);
+    }
+
+    if (content.includes('data-track-legacy=')) {
+      legacyAttrs.push(path.relative(repoRoot, filePath));
+    }
+  }
+}
+
+const usedEvents = new Set(
+  [...usedEventKeys]
+    .filter((key) => knownEvents.has(key))
+    .map((key) => knownEvents.get(key))
+    .concat([...usedRawEvents])
+);
+
+const missingEvents = [...knownEvents.entries()]
+  .filter(([_, value]) => !usedEvents.has(value))
+  .map(([key, value]) => `${key}=${value}`);
+
+const unexpectedEvents = [...usedEvents].filter(
+  (value) => ![...knownEvents.values()].includes(value)
+);
+
+if (legacyAttrs.length || missingEvents.length || unexpectedEvents.length) {
+  console.error('Tracking contract validation failed.');
+  if (legacyAttrs.length) {
+    console.error(`Legacy tracking attrs found in: ${legacyAttrs.join(', ')}`);
+  }
+  if (missingEvents.length) {
+    console.error(`Known events missing from active source: ${missingEvents.join(', ')}`);
+  }
+  if (unexpectedEvents.length) {
+    console.error(`Unknown tracking events found in active source: ${unexpectedEvents.join(', ')}`);
   }
   process.exit(1);
 }
 
 console.log('Tracking contract validation passed.');
-console.log(`Primary events found (${uniqueDataTrack.length}): ${uniqueDataTrack.join(', ')}`);
-console.log(`Legacy events found (${uniqueLegacyTrack.length}): ${uniqueLegacyTrack.join(', ')}`);
+console.log(`Known events (${knownEvents.size}): ${[...knownEvents.values()].join(', ')}`);
+console.log(`Active events used (${usedEvents.size}): ${[...usedEvents].join(', ')}`);

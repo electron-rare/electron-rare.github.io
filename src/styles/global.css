@@ -786,32 +786,6 @@ h3 {
     color: color-mix(in oklab, var(--electric) 82%, var(--text) 18%);
   }
 
-  .site-contrast-toggle {
-    border: 1px solid color-mix(in oklab, var(--trace-cyan) 48%, transparent);
-  }
-
-  .site-contrast-toggle {
-    background: color-mix(in oklab, var(--surface-soft) 74%, transparent);
-  }
-
-  .site-contrast-toggle {
-    color: color-mix(in oklab, var(--electric) 90%, var(--text) 10%);
-  }
-
-  .site-contrast-toggle:hover,
-  .site-contrast-toggle:focus-visible {
-    border-color: color-mix(in oklab, var(--electric) 70%, transparent);
-  }
-
-  .site-contrast-toggle:hover,
-  .site-contrast-toggle:focus-visible {
-    background: color-mix(in oklab, var(--electric) 12%, transparent);
-  }
-
-  .site-contrast-toggle:before {
-    border: 1px solid color-mix(in oklab, var(--text) 70%, transparent);
-  }
-
   .projects-timeline-item:before {
     border: 1px solid color-mix(in oklab, var(--trace-cyan) 44%, transparent);
   }
@@ -999,57 +973,6 @@ h3 {
 .studio-muted {
   color: var(--text-muted);
 }
-.site-contrast-toggle {
-  border: 1px solid var(--trace-cyan);
-  border-radius: 999px;
-  align-items: center;
-  gap: 0.45rem;
-  min-height: 2rem;
-  padding: 0 0.88rem;
-  display: inline-flex;
-}
-.site-contrast-toggle {
-  background: var(--surface-soft);
-}
-.site-contrast-toggle {
-  color: var(--electric);
-}
-.site-contrast-toggle {
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  cursor: pointer;
-  font-size: 0.78rem;
-  font-weight: 600;
-  transition:
-    background 0.2s,
-    border-color 0.2s,
-    transform 0.2s;
-}
-.site-contrast-toggle:hover,
-.site-contrast-toggle:focus-visible {
-  border-color: var(--electric);
-}
-.site-contrast-toggle:hover,
-.site-contrast-toggle:focus-visible {
-  background: var(--electric);
-}
-.site-contrast-toggle:active {
-  transform: translateY(1px);
-}
-.site-contrast-toggle:before {
-  content: "";
-  border: 1px solid var(--text);
-  border-radius: 999px;
-  width: 0.55rem;
-  height: 0.55rem;
-}
-.site-contrast-toggle:before {
-  background: radial-gradient(
-    circle at 35% 35%,
-    var(--trace-cyan),
-    transparent 58%
-  );
-}
 .projects-timeline-item {
   grid-template-columns: 4.5rem 1fr;
   gap: 0.32rem;
@@ -1223,11 +1146,6 @@ button:focus-visible {
   .site-nav nav ul {
     flex-wrap: wrap;
     justify-content: center;
-  }
-  .site-contrast-toggle {
-    justify-content: center;
-    width: 100%;
-    max-width: 14rem;
   }
   .site-shell-title {
     max-width: 12ch;
@@ -1426,7 +1344,6 @@ li {
     sans-serif;
 }
 .site-navlink,
-.site-contrast-toggle,
 .lab-kicker,
 .lab-pill,
 .studio-chip {
@@ -1571,16 +1488,6 @@ li {
   letter-spacing: 0.13em;
   border-radius: 0.3rem;
   font-size: 0.61rem;
-}
-.site-contrast-toggle {
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-radius: 0.28rem;
-  min-height: 1.95rem;
-  font-size: 0.66rem;
-}
-.site-contrast-toggle:before {
-  border-radius: 1px;
 }
 .circuit-board,
 .lab-panel,
@@ -3178,25 +3085,6 @@ footer:before {
   color: #3a2e22;
 }
 
-/* HIGH-CONTRAST: contrast toggle */
-:root[data-da-variant="v12"][data-theme="high-contrast"] .site-contrast-toggle {
-  background: #ffffff;
-  border-color: #333;
-  color: #1a1a1a;
-  box-shadow: none;
-}
-
-:root[data-da-variant="v12"][data-theme="high-contrast"] .site-contrast-toggle:hover,
-:root[data-da-variant="v12"][data-theme="high-contrast"] .site-contrast-toggle:focus-visible {
-  background: #f0e8dd;
-  border-color: #1a1a1a;
-  box-shadow: 0 0 0 2px #1a1a1a;
-}
-
-:root[data-da-variant="v12"][data-theme="high-contrast"] .site-contrast-toggle::before {
-  background: none;
-}
-
 /* HIGH-CONTRAST: pills / CTAs */
 :root[data-da-variant="v12"][data-theme="high-contrast"] .figma-lab-pill--secondary,
 :root[data-da-variant="v12"][data-theme="high-contrast"] .graphic-sprints-cta {
@@ -3479,25 +3367,6 @@ footer:before {
 
 :root[data-da-variant="v12"] .site-nav::after {
   display: none;
-}
-
-:root[data-da-variant="v12"] .site-contrast-toggle {
-  min-height: 2.5rem;
-  border-color: rgba(120, 94, 73, 0.18);
-  background: rgba(255, 250, 243, 0.86);
-  color: #4d3a30;
-  box-shadow: 0 8px 20px rgba(99, 74, 54, 0.08);
-}
-
-:root[data-da-variant="v12"] .site-contrast-toggle:hover,
-:root[data-da-variant="v12"] .site-contrast-toggle:focus-visible {
-  background: rgba(255, 253, 249, 0.98);
-  border-color: rgba(120, 94, 73, 0.28);
-  box-shadow: 0 12px 24px rgba(99, 74, 54, 0.12);
-}
-
-:root[data-da-variant="v12"] .site-contrast-toggle::before {
-  background: linear-gradient(90deg, rgba(183, 86, 44, 0.18), rgba(47, 104, 118, 0.18));
 }
 
 :root[data-da-variant="v12"] .figma-lab-nav-row {
@@ -4351,8 +4220,7 @@ details[open] > .faq-question .faq-chevron::after {
   gap: 0.5rem;
 }
 
-:root[data-da-variant="v12"] .figma-lab-nav-link,
-:root[data-da-variant="v12"] .site-contrast-toggle {
+:root[data-da-variant="v12"] .figma-lab-nav-link {
   min-height: 2.2rem;
   display: inline-flex;
   align-items: center;
@@ -4376,9 +4244,7 @@ details[open] > .faq-question .faq-chevron::after {
 :root[data-da-variant="v12"] .figma-lab-nav-link:hover,
 :root[data-da-variant="v12"] .figma-lab-nav-link:focus-visible,
 :root[data-da-variant="v12"] .figma-lab-nav-link.is-active,
-:root[data-da-variant="v12"] .figma-lab-nav-link[aria-current="location"],
-:root[data-da-variant="v12"] .site-contrast-toggle:hover,
-:root[data-da-variant="v12"] .site-contrast-toggle:focus-visible {
+:root[data-da-variant="v12"] .figma-lab-nav-link[aria-current="location"] {
   color: #cbffd0;
   border-color: rgba(51, 255, 255, 0.3);
   background:
@@ -4388,10 +4254,6 @@ details[open] > .faq-question .faq-chevron::after {
     inset 0 0 0 1px rgba(51, 255, 255, 0.12),
     0 0 18px rgba(51, 255, 255, 0.08);
   text-shadow: 0 0 10px rgba(51, 255, 51, 0.22);
-}
-
-:root[data-da-variant="v12"] .site-contrast-toggle::before {
-  background: linear-gradient(90deg, rgba(51, 255, 255, 0.16), rgba(51, 255, 51, 0.16));
 }
 
 :root[data-da-variant="v12"] .figma-lab-left,
@@ -4737,7 +4599,6 @@ details[open] > .faq-question .faq-chevron::after {
 @media (max-width: 767px) {
 
 :root[data-da-variant="v12"] .figma-lab-nav-link,
-:root[data-da-variant="v12"] .site-contrast-toggle,
 :root[data-da-variant="v12"] .figma-lab-pill,
 :root[data-da-variant="v12"] .graphic-sprints-cta {
     width: 100%;
@@ -4756,10 +4617,6 @@ details[open] > .faq-question .faq-chevron::after {
   min-height: 2.75rem; /* 44px */
   display: inline-flex;
   align-items: center;
-}
-
-.site-contrast-toggle {
-  min-height: 2.75rem; /* 44px */
 }
 
 /* About section photo integration */
