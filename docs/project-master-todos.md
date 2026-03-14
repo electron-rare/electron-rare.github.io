@@ -26,6 +26,7 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Build preview local `PUBLIC_SITE_URL=/preview/` repasse propre.
 - [x] Validation tracking recalee sur le contrat Astro actif.
 - [x] Workflow OVH enrichi avec verification HTTP publique post-deploiement.
+- [x] Preview OVH publie et valide publiquement via GitHub Actions (`23094884980`).
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 
@@ -35,7 +36,7 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [ ] Verifier les surfaces medias: hero photo, photo strip, video strip.
 - [ ] Verifier la section contact en version claire: tabs, textarea, formulaire, focus clavier, messages d'etat.
 - [ ] Verifier `/formation/` et `/mentions-legales/` avec le meme theme clair.
-- [ ] Deployer le preview OVH et valider `https://www.lelectronrare.fr/preview/`.
+- [x] Deployer le preview OVH et valider `https://www.lelectronrare.fr/preview/`.
 
 ## P1 - Validation live
 - [ ] Si preview valide, deployer la production a la racine.
