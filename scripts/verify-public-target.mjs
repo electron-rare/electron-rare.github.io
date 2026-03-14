@@ -29,8 +29,8 @@ const legalUrl = new URL('mentions-legales/', rootUrl).href;
 const checks = [
   {
     url: rootUrl,
-    includes: ['data-theme="high-contrast"', 'Électronique embarquée du signal au produit'],
-    excludes: ['Mode contraste']
+    includes: ['data-theme="high-contrast"', 'Systèmes électroniques spécifiques, du besoin au livrable fiable'],
+    excludes: ['Mode contraste', '/lab/']
   },
   {
     url: formationUrl,
