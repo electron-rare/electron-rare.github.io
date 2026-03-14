@@ -1,0 +1,61 @@
+name: Deploy External Site to OVH FTP
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Deployment target
+        required: true
+        default: preview
+        type: choice
+        options:
+          - preview
+          - production
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ovh-ftp-${{ inputs.target }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FTP_HOST: ${{ secrets.OVH_FTP_HOST }}
+      FTP_USER: ${{ secrets.OVH_FTP_USER }}
+      FTP_PASS: ${{ secrets.OVH_FTP_PASS }}
+      FTP_PORT: ${{ secrets.OVH_FTP_PORT }}
+      FTP_REMOTE_DIR: ${{ secrets.OVH_FTP_REMOTE_DIR }}
+      PUBLIC_SITE_URL_PROD: ${{ vars.PUBLIC_SITE_URL_PROD }}
+      PUBLIC_SITE_URL_PREVIEW: ${{ vars.PUBLIC_SITE_URL_PREVIEW }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            apps/lab-interactif/package-lock.json
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install lab dependencies
+        run: npm ci --prefix apps/lab-interactif
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Deploy target
+        env:
+          DEPLOY_TARGET_SKIP_BUILD: "0"
+        run: bash scripts/deploy-ovh-ftp-target.sh "${{ inputs.target }}"
