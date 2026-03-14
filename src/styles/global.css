@@ -5464,9 +5464,13 @@ input.contact-minitel-textarea:focus {
     gap: 0.42rem;
   }
 
+  .site-header-menu {
+    position: static;
+  }
+
   .site-header-quick-link {
-    min-height: 2.75rem;
-    height: 2.75rem;
+    min-height: 2.875rem;
+    height: 2.875rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -5477,8 +5481,8 @@ input.contact-minitel-textarea:focus {
   }
 
   .site-header-menu-toggle {
-    min-height: 2.75rem;
-    height: 2.75rem;
+    min-height: 2.875rem;
+    height: 2.875rem;
     padding-inline: 0.78rem;
   }
 
@@ -5493,7 +5497,9 @@ input.contact-minitel-textarea:focus {
 
   .site-header-list .figma-lab-nav-link,
   .site-header-list .site-navlink {
-    min-height: 2.75rem;
+    min-height: 2.875rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
     padding-inline: 0.95rem;
     font-size: 0.69rem;
   }
@@ -5515,8 +5521,8 @@ input.contact-minitel-textarea:focus {
 
   .site-header-quick-link,
   .site-header-menu-toggle {
-    min-height: 2.55rem;
-    height: 2.55rem;
+    min-height: 2.7rem;
+    height: 2.7rem;
   }
 
   .site-header-quick-link {
