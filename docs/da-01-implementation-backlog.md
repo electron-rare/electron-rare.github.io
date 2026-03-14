@@ -110,6 +110,7 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 ## Backlog P1
 - [ ] Supprimer les references documentaires a `#projets`, Malt, GitHub Pages static prod, dual-rail hero, contrast toggle.
 - [x] Supprimer les references documentaires actives a `/lab/` comme surface publique produit.
+- [x] Poser un index documentaire actif (`docs/README.md`) pour separer docs actives et docs historiques.
 - [ ] Verifier les events `data-track` sur les CTA actifs uniquement.
 - [x] Recaler `tracking:check` sur le contrat Astro actif pour sortir des faux positifs legacy.
 - [x] Valider preview OVH.

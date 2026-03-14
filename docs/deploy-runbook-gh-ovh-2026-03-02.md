@@ -1,45 +1,27 @@
-# Deploy Runbook — GH Pages + OVH SFTP (Home Carnet labo)
+# Deploy Runbook - Historical Snapshot
 
-Date: 2026-03-02
+Updated: 2026-03-14
+Status: historical / replaced
 
-## Préflight
-1. `npm run tracking:check`
-2. `npm run build`
-3. `npm run build:external` (inclut `/lab/`)
+## Pourquoi ce fichier reste
 
-## GH Pages
-1. Vérifier branche de publication (repo settings Pages).
-2. Pousser le commit de release.
-3. Attendre pipeline GitHub Actions Pages.
-4. Smoke test:
-- `/`
-- `/#a-propos`
-- `/#projets`
-- `/#contact`
-- `/lab/`
+Il documentait un ancien flux transitoire melangeant:
+- GitHub Pages
+- OVH
+- references au `lab`
+- anciennes ancres et anciennes hypotheses produit
 
-## OVH mutualisé (SFTP)
-1. Configurer secrets hors repo:
-- `OVH_SFTP_HOST`
-- `OVH_SFTP_USER`
-- `OVH_SFTP_PORT` (défaut 22)
-- `OVH_SFTP_PATH`
-- mot de passe via prompt sécurisé
-2. Déploiement:
-- `npm run deploy:web:sftp`
-3. Smoke test domaine OVH:
-- home
-- ancres
-- assets hero
-- `/lab/`
+## Remplacement actif
 
-## Checklist post-release
-1. Aucun 404 sur assets `public/assets/da/openai/*`
-2. CTA tracks présents (`data-track-event`)
-3. Aucun overflow horizontal mobile
-4. Contraste CTA conforme en mode normal + contraste
+Utiliser maintenant:
+- `docs/ovh-ftp-preview-solution-2026-03-14.md`
+- `docs/SPRINT-PLAYBOOK-2026-03-02.md`
+- `docs/project-master-todos.md`
 
-## Rollback rapide
-1. Re-déployer le dernier `dist` stable.
-2. Revenir au commit précédent et repush.
-3. Purger cache CDN/hébergement si nécessaire.
+## Etat courant a retenir
+
+- deploy preview: GitHub Actions `deploy-ovh-ftp.yml` avec `target=preview`
+- deploy production: GitHub Actions `deploy-ovh-ftp.yml` avec `target=production`
+- verification publique via `scripts/verify-public-target.mjs`
+- `lab` non public
+- source active du produit: `src/` Astro

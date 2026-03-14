@@ -1,7 +1,7 @@
 # Master TODO - Electron Rare OVH/Astro
 
 Updated: 2026-03-14
-Source of truth: this file for execution priorities, plus the current code in `src/`
+Source of truth: this file for execution priorities, plus [docs/README.md](./README.md) and the current code in `src/`
 
 ## Scope actif
 - Site Astro publie sur OVH via GitHub Actions FTP.
@@ -12,6 +12,7 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - Surface a maintenir: Hero, Approche, Cas concrets, photo strip, video strip, Missions, FAQ, Contact, footer.
 
 ## Verites de reference
+- Point d'entree documentaire: `docs/README.md`
 - Structure de page: `src/pages/index.astro`
 - Header partage: `src/components/SiteHeader.astro`
 - Sections actives: `src/components/sections/Hero.tsx`, `About.tsx`, `CaseStudies.tsx`, `GraphicSprints.tsx`, `Faq.astro`, `Contact.astro`
@@ -38,6 +39,8 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Preview OVH republie avec le positionnement `electronique · automatisme · energie · stockage · optimisation` (`23098262445`).
 - [x] Production OVH republiee avec le meme positionnement (`23098335508`).
 - [x] `https://www.lelectronrare.fr/lab/` et `https://www.lelectronrare.fr/preview/lab/` repondent maintenant `404`.
+- [x] `docs/README.md` cree comme point d'entree et source de verite documentaire.
+- [x] Runbooks et plans legacy les plus confus recales en mode historique ou remplaces par des versions actives.
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 - [ ] Confirmer visuellement depuis un navigateur humain que `www` sert bien la nouvelle home sur tous les points d'acces.
@@ -77,7 +80,8 @@ Source of truth: this file for execution priorities, plus the current code in `s
 
 ## P3 - Nettoyage et consolidation
 - [x] Supprimer les blocs CSS morts `.site-contrast-toggle` encore presents dans `src/styles/global.css`.
-- [ ] Nettoyer les docs qui parlent encore de GitHub Pages static root, `#projets`, Malt, ou du toggle contraste.
+- [x] Mettre en place un point d'entree documentaire actif et reclasser les runbooks les plus critiques.
+- [ ] Nettoyer le reste des archives qui parlent encore de GitHub Pages static root, `#projets`, Malt, ou du toggle contraste.
 - [ ] Mesurer LCP et budget media de la variante blanche en conditions reelles.
 - [ ] Archiver les plans anterieurs devenus purement historiques.
 

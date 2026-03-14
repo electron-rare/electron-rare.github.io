@@ -2,6 +2,24 @@
 
 Updated: 2026-03-14
 Repo: `/home/zacus/electron-rare-preview-ovh`
+Status: active
+
+## Source de vérité
+
+- index docs: `docs/README.md`
+- pilotage: `docs/project-master-todos.md`
+- memoire DA: `docs/design-memory-2026-03-14-white-contrast.md`
+- deploy: `docs/ovh-ftp-preview-solution-2026-03-14.md`
+
+## Etat de référence
+
+- preview active: `https://www.lelectronrare.fr/preview/`
+- production active: `https://www.lelectronrare.fr/`
+- pages publiques: `/`, `/formation/`, `/mentions-legales/`
+- `lab` non public: attendu en `404` sur `/preview/lab/` et `/lab/`
+- positionnement actif:
+  - systemes electroniques specifiques
+  - electronique, automatisme, energie, stockage, optimisation
 
 ## Sprint A - Theme clair
 
@@ -28,6 +46,7 @@ PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
 - pas de `Mode contraste`
 - pas de retour a l'ancienne DA sombre
 - pas d'ancre legacy `#projets`
+- pas de route publique `/lab/`
 - focus visible sur FAQ et formulaire
 - top bar mobile compacte, sans wrap sur plusieurs lignes au chargement
 - CTA `Contact` visible hors menu sur mobile
@@ -52,11 +71,13 @@ PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
 curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview/
 curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview/formation/
 curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview/mentions-legales/
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview/lab/
 ```
 
 ### B4 - Etat courant
 - white-contrast preview valide: `23094884980`
 - top bar mobile preview validee publiquement: `23095540371`
+- preview repositionne electronique/automatisme/energie et purge du lab public: `23098262445`
 
 ## Sprint C - Production
 
@@ -77,12 +98,14 @@ curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview
 curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/
 curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/formation/
 curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/mentions-legales/
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/lab/
 curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/robots.txt
 curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/sitemap.xml
 ```
 
 ### C4 - Etat courant
 - production republiee avec le lot `Modernize Electron Rare mobile header`: `23096174775`
+- production repositionnee electronique/automatisme/energie et purge du lab public: `23098335508`
 - verification publique du workflow: OK
 - verification locale `curl` avec `User-Agent` workflow: `200` sur `www`, `formation`, `mentions-legales`
 - controle navigateur humain encore requis pour la validation UX finale
@@ -94,7 +117,6 @@ curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/sitemap
 - `outbound_linkedin_contact`
 - `outbound_email_contact`
 - `outbound_github_contact`
-- `cta_lab_interactif_open`
 - `experiment_variant_exposed`
 - `engagement_scroll_depth`
 - `engagement_section_view`
@@ -106,6 +128,13 @@ curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/sitemap
 - sitemap
 - OG/Twitter
 - `theme-color`
+
+## Prochaines validations manuelles
+
+- rendu visuel white-contrast sur home, formation, mentions
+- ancres: `#a-propos`, `#graphic-sprints-title`, `#faq`, `#contact`
+- header mobile en 390px et 768px
+- absence de retour cache vers une ancienne homepage
 
 ## Definition de done
 - preview publie et valide
