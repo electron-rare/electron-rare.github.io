@@ -1,0 +1,274 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@/styles/global.css';
+import '@/styles/home-workbench.css';
+import { withSiteBase } from '@/lib/site';
+import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
+
+const title = "Formation embarquée | L'électron rare";
+const description = "Formations sur mesure : électronique embarquée, PCB, IoT, automatisme. 1 jour, 3 jours ou programme dédié. Écoles, entreprises.";
+const homeHref = withSiteBase('/');
+const homeAboutHref = withSiteBase('/#a-propos');
+const homeMissionsHref = withSiteBase('/#graphic-sprints-title');
+const formationHref = withSiteBase('/formation/');
+const contactHref = withSiteBase('/#contact');
+const labHref = withSiteBase('/lab/');
+const mentionsHref = withSiteBase('/mentions-legales/');
+---
+
+<BaseLayout title={title} description={description} ogDescription="Formations sur mesure en électronique embarquée : PCB, IoT, automatisme industriel. 1 jour, 3 jours ou programme dédié. Écoles, entreprises, centres de formation.">
+  <header class="sticky top-0 z-30 site-nav">
+    <div class="site-shell figma-lab-nav-row">
+      <a href={homeHref} class="figma-lab-nav-title">
+        <span>L'électron rare</span>
+        <span class="figma-lab-nav-kicker">Design électronique · Consulting · Formation</span>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="figma-lab-nav-list">
+          <li><a href={homeAboutHref} class="figma-lab-nav-link site-navlink">Approche</a></li>
+          <li><a href={homeMissionsHref} class="figma-lab-nav-link site-navlink">Missions</a></li>
+          <li><a href={formationHref} class="figma-lab-nav-link site-navlink is-active" aria-current="page">Formation</a></li>
+          <li><a href={contactHref} class="figma-lab-nav-link site-navlink">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-4" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node" aria-hidden="true"></span>
+        <h1 class="m-0 text-3xl md:text-4xl">Formation électronique embarquée</h1>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+
+      <p class="section-lead mb-0 mt-3">
+        Des formations pratiques, ancrées dans le terrain, pour monter en compétences sur l'électronique embarquée, la conception PCB, l'IoT et l'automatisme industriel.
+      </p>
+      <p class="mb-0 mt-3 studio-muted">
+        Chaque formation est construite sur mesure à partir de votre contexte réel : vos projets, vos équipes, vos contraintes. Pas de slides génériques — du bench, du schéma et du livrable.
+      </p>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Publics cibles</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+
+      <div class="mt-4 rounded-xl border border-[color:var(--line)] p-3">
+        <ul class="m-0 grid grid-cols-1 gap-2 p-0">
+          <li class="list-none studio-chip studio-chip--cyan">
+            <strong>Entreprises industrielles</strong> — équipes R&D, bureaux d'études, techniciens de maintenance qui veulent intégrer l'embarqué dans leurs produits ou process.
+          </li>
+          <li class="list-none studio-chip studio-chip--vio">
+            <strong>Écoles et universités</strong> — BTS, IUT, grandes écoles : TP encadrés, projets tutorés, modules spécialisés en électronique embarquée.
+          </li>
+          <li class="list-none studio-chip studio-chip--pink">
+            <strong>Centres de formation</strong> — organismes souhaitant intégrer des modules électronique embarquée, IoT ou automatisme à leur catalogue.
+          </li>
+          <li class="list-none studio-chip studio-chip--emerald">
+            <strong>Studios créatifs et compagnies</strong> — équipes techniques du spectacle vivant, de l'événementiel ou des arts numériques qui veulent gagner en autonomie.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="mt-5" data-reveal>
+      <div class="graphic-sprints-panel graphic-sprints-panel--routing">
+        <div class="graphic-sprints-head">
+          <p class="graphic-sprints-kicker">Formats</p>
+          <h2 class="graphic-sprints-title">Trois formats, un principe : le concret d'abord</h2>
+          <p class="graphic-sprints-copy">
+            Chaque format inclut un support de cours, des exercices pratiques sur matériel réel et un livrable que les participants repartent avec.
+          </p>
+        </div>
+
+        <div class="graphic-sprints-grid">
+          <article class="graphic-sprint-card" style="--sprint-progress-target: 33%">
+            <header class="graphic-sprint-card-head">
+              <p class="graphic-sprint-status graphic-sprint-status--trace">Initiation</p>
+              <p class="graphic-sprint-window">1 jour (7h)</p>
+            </header>
+            <h3 class="graphic-sprint-title">Découverte</h3>
+            <p class="graphic-sprint-objective">
+              Comprendre les fondamentaux d'un domaine technique. Idéal pour une première prise en main ou une mise à niveau rapide.
+            </p>
+            <div class="graphic-sprint-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33">
+              <span class="graphic-sprint-progress-fill"></span>
+            </div>
+            <ul class="graphic-sprint-deliverables">
+              <li>Théorie appliquée + démos live</li>
+              <li>TP sur matériel réel</li>
+              <li>Support de cours PDF</li>
+            </ul>
+          </article>
+
+          <article class="graphic-sprint-card" style="--sprint-progress-target: 66%">
+            <header class="graphic-sprint-card-head">
+              <p class="graphic-sprint-status graphic-sprint-status--bench">Approfondissement</p>
+              <p class="graphic-sprint-window">3 jours (21h)</p>
+            </header>
+            <h3 class="graphic-sprint-title">Pratique</h3>
+            <p class="graphic-sprint-objective">
+              Maîtriser un sujet de bout en bout avec un projet fil rouge. Les participants repartent avec un prototype fonctionnel.
+            </p>
+            <div class="graphic-sprint-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66">
+              <span class="graphic-sprint-progress-fill"></span>
+            </div>
+            <ul class="graphic-sprint-deliverables">
+              <li>Projet fil rouge réalisé</li>
+              <li>Prototype fonctionnel</li>
+              <li>Documentation technique complète</li>
+            </ul>
+          </article>
+
+          <article class="graphic-sprint-card" style="--sprint-progress-target: 100%">
+            <header class="graphic-sprint-card-head">
+              <p class="graphic-sprint-status graphic-sprint-status--run">Sur mesure</p>
+              <p class="graphic-sprint-window">Durée adaptée</p>
+            </header>
+            <h3 class="graphic-sprint-title">Programme dédié</h3>
+            <p class="graphic-sprint-objective">
+              Formation construite intégralement autour de votre projet, vos équipements et vos objectifs. Accompagnement post-formation inclus.
+            </p>
+            <div class="graphic-sprint-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+              <span class="graphic-sprint-progress-fill"></span>
+            </div>
+            <ul class="graphic-sprint-deliverables">
+              <li>Programme sur mesure</li>
+              <li>Matériel adapté à votre contexte</li>
+              <li>Suivi post-formation</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Sujets de formation</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h3 class="m-0 text-lg font-semibold">Électronique embarquée</h3>
+          <p class="mt-2 mb-0 studio-muted">
+            Architecture matérielle, microcontrôleurs (STM32, ESP32, Teensy), alimentation, lecture de datasheet, debug sur bench. Conformité IPC-A-610 et CEM.
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h3 class="m-0 text-lg font-semibold">Conception PCB</h3>
+          <p class="mt-2 mb-0 studio-muted">
+            De la schématique au routage avec KiCad. Règles de design, stackup, vérification DRC/ERC, préparation des fichiers de fabrication (Gerber, BOM, pick & place).
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h3 class="m-0 text-lg font-semibold">IoT et protocoles</h3>
+          <p class="mt-2 mb-0 studio-muted">
+            Capteurs, télémétrie, protocoles terrain (MQTT, HTTP, VE.Direct), connectivité (WiFi, BLE, LoRa), TinyML et IA embarquée. Du capteur au dashboard.
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h3 class="m-0 text-lg font-semibold">Automatisme industriel</h3>
+          <p class="mt-2 mb-0 studio-muted">
+            Automates Siemens (S7) et Schneider, câblage d'armoires, variateurs, mise en service. Conformité IEC 60204-1, IEC 61439, NFC 13-200. Lecture de schémas électriques industriels.
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h3 class="m-0 text-lg font-semibold">Contrôle LED et scénographie</h3>
+          <p class="mt-2 mb-0 studio-muted">
+            Protocoles DMX, Art-Net, DANTE. Pilotage LED, topologies multi-cartes, intégration dans des dispositifs scéniques et événementiels.
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h3 class="m-0 text-lg font-semibold">Firmware et programmation</h3>
+          <p class="mt-2 mb-0 studio-muted">
+            C/C++ embarqué, Python pour l'instrumentation, debug série, gestion mémoire, interruptions, RTOS. Du code qui tourne sur le terrain.
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h3 class="m-0 text-lg font-semibold">Workflows agentiques et IA appliquée</h3>
+          <p class="mt-2 mb-0 studio-muted">
+            Intégrer l'IA et les agents autonomes dans vos flux de travail : génération de code embarqué, revue automatisée, documentation technique, analyse de datasheets et tests assistés par IA. Productivité et qualité augmentées.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Demander un programme</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+
+      <p class="section-lead mb-0 mt-3">
+        Décrivez votre besoin en quelques lignes. Je vous propose un programme adapté sous 48h.
+      </p>
+      <p class="mb-0 mt-3 studio-muted">
+        Précisez le public, le niveau, le sujet visé et le format souhaité. Même une idée vague suffit pour démarrer.
+      </p>
+
+      <div class="mt-4 flex flex-wrap gap-3">
+        <a
+          href="mailto:contact@lelectronrare.fr?subject=Demande%20de%20formation&body=Bonjour%20Cl%C3%A9ment%2C%0A%0AJe%20suis%20int%C3%A9ress%C3%A9%20par%20une%20formation.%0A%0AContexte%20(entreprise%2C%20%C3%A9cole%2C%20centre%20de%20formation)%20%3A%0ASujet%20vis%C3%A9%20%3A%0APublic%20concern%C3%A9%20%3A%0AFormat%20souhait%C3%A9%20(dur%C3%A9e%2C%20pr%C3%A9sentiel%2Fdistanciel)%20%3A"
+          class="figma-lab-pill figma-lab-pill--primary"
+          {...trackAttrs(TRACK_EVENTS.outboundEmailContact, 'mailto:contact@lelectronrare.fr')}
+        >
+          Envoyer par mail
+        </a>
+        <a
+          href="https://fr.linkedin.com/in/electron-rare"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="figma-lab-pill figma-lab-pill--secondary"
+          {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
+        >
+          Contacter sur LinkedIn
+        </a>
+      </div>
+
+      <ul aria-label="Repères" class="mb-0 mt-4 pl-5 studio-muted">
+        <li>Intervention en présentiel (France entière) ou en distanciel</li>
+        <li>Matériel de TP fourni ou adapté à votre parc existant</li>
+        <li>Convention de formation et programme détaillé sur demande</li>
+        <li>Intervention possible via un organisme certifié Qualiopi pour le financement OPCO</li>
+        <li>Assuré RC Pro · NDA sur demande</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
+    <div class="site-shell footer-grid footer-grid--enhanced">
+      <div class="footer-col footer-col--brand">
+        <p class="m-0 footer-title">L'électron rare</p>
+        <div class="footer-brand-meta">
+          <p class="mb-0 footer-copy">
+            © 2026 Clément Saillant - design électronique embarquée, consulting, formation — industries créatives et industrie.
+          </p>
+        </div>
+      </div>
+      <nav aria-label="Ressources" class="footer-links footer-links--single-rail">
+        <a href={homeHref} class="footer-link">Accueil</a>
+        <a href={formationHref} class="footer-link">Formation</a>
+        <a href={labHref} class="footer-link">Lab</a>
+        <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener noreferrer me" class="footer-link">LinkedIn</a>
+        <a href="mailto:contact@lelectronrare.fr" class="footer-link">contact@lelectronrare.fr</a>
+        <a href="https://github.com/electron-rare/" target="_blank" rel="noopener noreferrer me" class="footer-link">GitHub</a>
+        <a href={mentionsHref} class="footer-link">Mentions légales</a>
+      </nav>
+    </div>
+  </footer>
+</BaseLayout>

@@ -1,0 +1,91 @@
+---
+const faqItems = [
+  {
+    question: "Quels types de projets prenez-vous en charge ?",
+    answer: "J'interviens sur des projets d'électronique embarquée, d'automatisme industriel, de prototypage hardware et d'instrumentation. Cela va du design de cartes PCB sur mesure à l'intégration de systèmes complets — pour le spectacle vivant, les installations artistiques, l'industrie ou l'IoT."
+  },
+  {
+    question: "Comment se déroule une mission type ?",
+    answer: "Chaque mission commence par un échange pour cadrer le besoin et le cahier des charges. Ensuite : étude de faisabilité, conception (schéma, PCB, firmware), prototypage, tests et validation. Je livre une solution documentée et prête à être industrialisée ou déployée sur le terrain."
+  },
+  {
+    question: "Travaillez-vous avec des industriels ou uniquement le spectacle vivant ?",
+    answer: "Les deux. Mon parcours a démarré dans les industries créatives (spectacle vivant, installations, arts de rue avec KompleX KapharnaüM), mais j'interviens aussi pour des clients industriels : transport (CBTC), énergie, IoT, audio professionnel. Le point commun : des projets où l'électronique embarquée croise plusieurs disciplines."
+  },
+  {
+    question: "Proposez-vous des formations ?",
+    answer: "Oui, je propose des formations en électronique embarquée, prototypage et conception PCB — en entreprise, en école ou à distance. Les programmes sont adaptables à votre contexte. Consultez la page Formation pour le catalogue, ou contactez-moi pour un programme sur mesure."
+  },
+  {
+    question: "Quelles technologies maîtrisez-vous ?",
+    answer: "Conception PCB (KiCad), microcontrôleurs (STM32, ESP32, Teensy, Arduino), automates industriels (Siemens S7, Schneider), instrumentation (oscilloscopes, analyseurs), firmware C/C++ et Python, protocoles terrain (MQTT, Modbus, DMX, Art-Net, OSC). Je m'adapte aussi à des stacks spécifiques selon le projet."
+  },
+  {
+    question: "Quel est le délai pour un prototype ?",
+    answer: "Cela dépend de la complexité du projet. Un prototype simple (carte capteur, interface LED) peut être livré en 2 à 4 semaines. Un système embarqué complet avec firmware et boîtier prend généralement 6 à 10 semaines. Un premier échange permet de cadrer le planning précis."
+  },
+  {
+    question: "Intervenez-vous partout en France ?",
+    answer: "Oui. Je suis basé dans le sud de la France mais j'interviens sur tout le territoire — sur site pour les phases d'installation, de mise en service et de formation, et à distance pour la conception, le développement firmware et le consulting."
+  },
+  {
+    question: "Comment financer une formation (OPCO, CPF) ?",
+    answer: "Les formations peuvent être prises en charge par votre OPCO ou via d'autres dispositifs de financement professionnel. Je vous accompagne dans le montage du dossier et la rédaction du programme pédagogique adapté aux exigences de votre organisme financeur. Contactez-moi pour en discuter."
+  },
+  {
+    question: "Qu'est-ce qu'un workflow agentique et comment ça s'applique à l'embarqué ?",
+    answer: "Un workflow agentique utilise des agents IA autonomes pour accélérer les tâches répétitives ou complexes : génération de code firmware, revue de schémas, analyse de datasheets, documentation automatique, tests de régression. Ce n'est pas un remplacement de l'expertise humaine — c'est un multiplicateur de productivité. Je forme les équipes à intégrer ces outils dans leur chaîne de développement existante."
+  },
+  {
+    question: "Êtes-vous assuré ?",
+    answer: "Oui. L'électron rare dispose d'une assurance Responsabilité Civile Professionnelle (RC Pro) couvrant l'ensemble des prestations : conception, consulting, formation et intervention sur site. Un accord de confidentialité (NDA) peut également être mis en place sur demande avant tout échange technique."
+  }
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+};
+---
+
+<section id="faq" aria-labelledby="faq-title" class="section-anchor mt-5">
+  <div class="circuit-board faq-panel rounded-2xl p-5 md:p-6">
+    <div class="circuit-title-row">
+      <span class="circuit-node" aria-hidden="true"></span>
+      <h2 id="faq-title" class="m-0 text-3xl md:text-4xl">
+        Questions fréquentes
+      </h2>
+      <span class="circuit-pinline" aria-hidden="true"></span>
+    </div>
+
+    <div class="circuit-board-rail">
+      <p class="studio-muted">
+        Les réponses aux questions les plus courantes sur mes prestations, mon fonctionnement et mes tarifs.
+      </p>
+    </div>
+
+    <div class="faq-list mt-4">
+      {faqItems.map((item, index) => (
+        <details class="faq-item" data-faq-index={index}>
+          <summary class="faq-question">
+            <span class="faq-question-text">{item.question}</span>
+            <span class="faq-chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-answer studio-muted">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</section>

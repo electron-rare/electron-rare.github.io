@@ -1,6 +1,10 @@
 const normalizeUrl = (value: string) => (value.endsWith('/') ? value : `${value}/`);
 
-const resolvedSiteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://electron-rare.github.io/';
+const resolvedSiteUrl =
+  import.meta.env.PUBLIC_SITE_URL ||
+  process.env.PUBLIC_SITE_URL ||
+  process.env.EXTERNAL_SITE_URL ||
+  'https://electron-rare.github.io/';
 
 const parsedSiteUrl = new URL(normalizeUrl(resolvedSiteUrl));
 const resolvedBasePath = parsedSiteUrl.pathname === '/' ? '' : parsedSiteUrl.pathname.replace(/\/$/, '');
@@ -50,15 +54,15 @@ export function stripSiteBase(pathname: string) {
 }
 
 export const SITE_META = {
-  title: "Clément Saillant — L'électron rare",
+  title: "Électronique embarquée freelance | L'électron rare",
   description:
-    "Studio de Clément Saillant (L'électron rare) : création électronique, invention de systèmes, design produit et projets audiovisuels.",
+    "Design électronique embarquée freelance : prototype, consulting, formation, automatisme industriel, IoT. Du cahier des charges au produit testé.",
   ogDescription:
-    "Codeur créatif, itérateur IA et concepteur : création électronique, design produit, systèmes expérimentaux et collaborations visuelles.",
+    "Design électronique embarquée freelance : prototype, consulting, formation. Industries créatives et industrie. Du diagnostic au produit fini.",
   twitterDescription:
-    "Creation electronique, invention de systemes et design produit sous l'identite L'electron rare.",
+    "Designer électronique embarquée freelance : prototype hardware, consulting & formation. Industries créatives · industrie · IoT.",
   ogImagePath: 'assets/og-cover.jpg',
-  themeColor: '#f4eee3'
+  themeColor: '#0b0d0c'
 } as const;
 
 export const SITE_OG_IMAGE_URL = new URL(SITE_META.ogImagePath, PUBLIC_SITE_ROOT_URL).href;

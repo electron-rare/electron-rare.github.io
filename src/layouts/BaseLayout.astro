@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import {
   CANONICAL_URL,
   GTM_CONTAINER_ID_DEFAULT,
@@ -9,15 +10,18 @@ import {
   stripSiteBase,
   withSiteBase
 } from '@/lib/site';
+import '@/styles/fonts.css';
 
 interface Props {
   title?: string;
   description?: string;
+  ogDescription?: string;
 }
 
 const {
   title = SITE_META.title,
-  description = SITE_META.description
+  description = SITE_META.description,
+  ogDescription = SITE_META.ogDescription
 } = Astro.props;
 
 const pagePath = stripSiteBase(Astro.url.pathname);
@@ -42,10 +46,28 @@ const structuredDataJsonLd = JSON.stringify({
       name: "L'électron rare",
       url: CANONICAL_URL,
       logo: new URL('assets/brand/logo-mark.png', CANONICAL_URL).href,
+      knowsAbout: [
+        'design électronique embarquée',
+        'électronique embarquée',
+        'systèmes embarqués',
+        'consulting électronique',
+        'formation électronique embarquée',
+        'prototype hardware',
+        'automatisme industriel',
+        'développement IoT',
+        'microcontrôleur',
+        'instrumentation',
+        'télémétrie',
+        'contrôle LED',
+        'PCB KiCad',
+        'conception selon IPC-A-610',
+        'compatibilité électromagnétique CEM',
+        'DMX Art-Net DANTE'
+      ],
       sameAs: [
         'https://fr.linkedin.com/in/electron-rare',
-        'https://www.malt.com/profile/clementsaillant',
-        'https://lelectron-fou.bandcamp.com/'
+        'https://blog.saillant.cc',
+        'https://github.com/electron-rare'
       ]
     },
     {
@@ -54,17 +76,45 @@ const structuredDataJsonLd = JSON.stringify({
       name: 'Clément Saillant',
       alternateName: "L'électron rare",
       url: CANONICAL_URL,
-      jobTitle: 'Concepteur en création électronique, design produit et systèmes expérimentaux',
+      jobTitle: 'Designer electronique embarquee, consultant et formateur',
       description:
-        "Codeur créatif, itérateur IA et inventeur de systèmes : création électronique, performances audiovisuelles et collaborations studio sous l'identité L'électron rare.",
+        "Designer electronique embarquee freelance, consultant et formateur. Prototype hardware, automatisme industriel, IoT, instrumentation et formation. Industries creatives et industrie sous l'identite L'electron rare.",
+      knowsAbout: [
+        'embedded electronics designer',
+        'electronics consultant',
+        'electronics trainer',
+        'embedded systems developer',
+        'IoT developer',
+        'electronique embarquee',
+        'consulting electronique',
+        'formation electronique',
+        'prototype hardware',
+        'automatisme industriel',
+        'microcontroleur',
+        'instrumentation',
+        'PCB design KiCad',
+        'IPC-A-610',
+        'CEM EMC',
+        'DMX Art-Net DANTE'
+      ],
       worksFor: {
         '@id': `${CANONICAL_URL}#organization`
       },
       sameAs: [
         'https://fr.linkedin.com/in/electron-rare',
-        'https://www.malt.com/profile/clementsaillant',
-        'https://lelectron-fou.bandcamp.com/'
+        'https://blog.saillant.cc',
+        'https://github.com/electron-rare'
       ]
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${canonical}#service`,
+      name: "L'électron rare",
+      url: canonical,
+      provider: { '@id': `${CANONICAL_URL}#person` },
+      serviceType: ['Design électronique embarquée', 'Prototype hardware', 'Automatisme industriel', 'Consulting électronique', 'Formation électronique embarquée', 'Développement IoT'],
+      areaServed: { '@type': 'Country', name: 'France' },
+      description: 'Design électronique embarquée freelance : prototype, consulting, formation. Industries créatives et industrie. Du diagnostic au produit fini.'
     }
   ]
 });
@@ -75,6 +125,7 @@ const structuredDataJsonLd = JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Fonts self-hosted — see src/styles/fonts.css -->
     <title>{title}</title>
     <meta name="theme-color" content={SITE_META.themeColor} />
     <meta name="description" content={description} />
@@ -84,6 +135,7 @@ const structuredDataJsonLd = JSON.stringify({
     <link rel="apple-touch-icon" sizes="180x180" href={withSiteBase('/apple-touch-icon.png')} />
     <link rel="shortcut icon" href={withSiteBase('/favicon.ico')} />
 
+    <ViewTransitions />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={robotsContent} />
 
@@ -92,11 +144,11 @@ const structuredDataJsonLd = JSON.stringify({
     <meta property="og:site_name" content="L'électron rare" />
     <meta property="og:title" content={title} />
     <meta property="og:url" content={pageUrl} />
-    <meta property="og:description" content={SITE_META.ogDescription} />
+    <meta property="og:description" content={ogDescription} />
     <meta property="og:image" content={SITE_OG_IMAGE_URL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="L'électron rare - performances et créations audiovisuelles" />
+    <meta property="og:image:alt" content="L'electron rare - design electronique embarquee, consulting et formation - industries creatives et industrie" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -105,13 +157,27 @@ const structuredDataJsonLd = JSON.stringify({
 
     <script is:inline>
       (function () {
-        if (!window.location.hash || window.location.hash.indexOf('figmacapture=') === -1) {
-          return;
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
         }
-        var captureScript = document.createElement('script');
-        captureScript.src = 'https://mcp.figma.com/mcp/html-to-design/capture.js';
-        captureScript.async = true;
-        document.head.appendChild(captureScript);
+
+        if (!window.location.hash) {
+          window.scrollTo(0, 0);
+        }
+
+        var resetToTop = function () {
+          if (window.location.hash) {
+            return;
+          }
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        };
+
+        window.addEventListener('pageshow', resetToTop);
+        window.addEventListener('load', resetToTop);
+        window.addEventListener('beforeunload', resetToTop);
+        window.addEventListener('pagehide', resetToTop);
       })();
     </script>
 
@@ -137,48 +203,11 @@ const structuredDataJsonLd = JSON.stringify({
       (function () {
         var root = document.documentElement;
         var params = new URLSearchParams(window.location.search);
-        var raw = params.get('da') || params.get('variant') || params.get('da-variant') || '';
         var uiRaw = params.get('ui') || params.get('sprint') || '';
-        var normalized = (raw || '').toLowerCase().trim();
-        var uiNormalized = (uiRaw || '').toLowerCase().trim();
-        var allowed = {
-          v1: 1,
-          v2: 1,
-          v3: 1,
-          v4: 1,
-          v5: 1,
-          v6: 1,
-          v7: 1,
-          v8: 1,
-          v9: 1,
-          v10: 1,
-          v11: 1,
-          v12: 1,
-          '1': 1,
-          '2': 1,
-          '3': 1,
-          '4': 1,
-          '5': 1,
-          '6': 1,
-          '7': 1,
-          '8': 1,
-          '9': 1,
-          '10': 1,
-          '11': 1,
-          '12': 1
-        };
-
-        var requested = normalized in allowed ? normalized : '';
-        var fallbackVariant = 'v12';
-
-        if (requested && /^[1-9]([0-9])?$/.test(requested) && requested.length <= 2) {
-          requested = 'v' + requested;
-        }
-
         var uiAllowed = { a: 1, b: 1 };
-        var uiSprint = uiNormalized in uiAllowed ? uiNormalized : 'b';
+        var uiSprint = uiRaw.toLowerCase().trim() in uiAllowed ? uiRaw.toLowerCase().trim() : 'b';
 
-        root.setAttribute('data-da-variant', requested || fallbackVariant);
+        root.setAttribute('data-da-variant', 'v12');
         root.setAttribute('data-ui-sprint', uiSprint);
       })();
     </script>
@@ -191,7 +220,7 @@ const structuredDataJsonLd = JSON.stringify({
       )
     }
 
-    <a class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-black focus:px-3 focus:py-2 focus:text-white" href="#top">
+    <a class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-black focus:px-3 focus:py-2 focus:text-white" href="#main-content">
       Aller au contenu
     </a>
 
@@ -222,8 +251,6 @@ const structuredDataJsonLd = JSON.stringify({
           );
         };
 
-        window['__erTrackEvent'] = pushTrackingEvent;
-
         var links = document.querySelectorAll("[data-track]");
         for (var i = 0; i < links.length; i += 1) {
           links[i].addEventListener("click", function () {
@@ -239,15 +266,6 @@ const structuredDataJsonLd = JSON.stringify({
         pushTrackingEvent('experiment_variant_exposed', {
           destination: pagePath
         });
-      })();
-    </script>
-
-    <script is:inline>
-      (function () {
-        var pushTrackingEvent = window['__erTrackEvent'];
-        if (typeof pushTrackingEvent !== 'function') {
-          return;
-        }
 
         var firedDepths = {};
         var scrollDepths = [25, 50, 75, 100];
@@ -274,7 +292,7 @@ const structuredDataJsonLd = JSON.stringify({
         onScroll();
 
         if ('IntersectionObserver' in window) {
-          var sectionIds = ['a-propos', 'projets', 'lab-notes', 'contact'];
+          var sectionIds = ['a-propos', 'cas-clients', 'sprints-graphiques', 'contact'];
           var seenSections = {};
           var sectionObserver = new IntersectionObserver(
             function (entries, observer) {
@@ -439,8 +457,6 @@ const structuredDataJsonLd = JSON.stringify({
           return;
         }
 
-        var mapCards = Array.prototype.slice.call(document.querySelectorAll('.figma-lab-map-card[href^="#"]'));
-
         var sections = links
           .map(function (link) {
             var href = link.getAttribute('href') || '';
@@ -461,12 +477,6 @@ const structuredDataJsonLd = JSON.stringify({
 
         for (var i = 0; i < links.length; i += 1) {
           links[i].addEventListener('click', function () {
-            setPressedState(this);
-          });
-        }
-
-        for (var m = 0; m < mapCards.length; m += 1) {
-          mapCards[m].addEventListener('click', function () {
             setPressedState(this);
           });
         }
@@ -499,17 +509,6 @@ const structuredDataJsonLd = JSON.stringify({
               sections[l].link.setAttribute('aria-current', 'location');
             } else {
               sections[l].link.removeAttribute('aria-current');
-            }
-          }
-
-          for (var mc = 0; mc < mapCards.length; mc += 1) {
-            var cardId = (mapCards[mc].getAttribute('href') || '').replace('#', '');
-            var isCardActive = cardId !== '' && cardId === activeId;
-            mapCards[mc].classList.toggle('is-active', isCardActive);
-            if (isCardActive) {
-              mapCards[mc].setAttribute('aria-current', 'location');
-            } else {
-              mapCards[mc].removeAttribute('aria-current');
             }
           }
         };
@@ -567,6 +566,17 @@ const structuredDataJsonLd = JSON.stringify({
 
     <script is:inline>
       (function () {
+        var clips = Array.prototype.slice.call(document.querySelectorAll('.video-strip-clip'));
+        for (var v = 0; v < clips.length; v++) {
+          (function (clip) {
+            clip.addEventListener('mouseenter', function () { clip.play(); });
+            clip.addEventListener('mouseleave', function () { clip.pause(); clip.currentTime = 0; });
+            clip.addEventListener('touchstart', function () {
+              if (clip.paused) { clip.play(); } else { clip.pause(); clip.currentTime = 0; }
+            }, { passive: true });
+          })(clips[v]);
+        }
+
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         var sprintCards = Array.prototype.slice.call(document.querySelectorAll('.graphic-sprint-card'));
@@ -600,34 +610,6 @@ const structuredDataJsonLd = JSON.stringify({
           return;
         }
 
-        var interactiveCards = Array.prototype.slice.call(
-          document.querySelectorAll('.figma-lab-map-card, .projects-timeline-item, .circuit-card')
-        );
-
-        var bindTilt = function (node) {
-          node.classList.add('dynamic-card');
-
-          var onMove = function (event) {
-            var rect = node.getBoundingClientRect();
-            var x = (event.clientX - rect.left) / rect.width;
-            var y = (event.clientY - rect.top) / rect.height;
-            var tiltX = (0.5 - y) * 5.2;
-            var tiltY = (x - 0.5) * 6;
-            node.style.transform = 'translateY(-2px) rotateX(' + tiltX.toFixed(2) + 'deg) rotateY(' + tiltY.toFixed(2) + 'deg)';
-          };
-
-          var onLeave = function () {
-            node.style.transform = '';
-          };
-
-          node.addEventListener('mousemove', onMove);
-          node.addEventListener('mouseleave', onLeave);
-          node.addEventListener('blur', onLeave, true);
-        };
-
-        for (var c = 0; c < interactiveCards.length; c += 1) {
-          bindTilt(interactiveCards[c]);
-        }
       })();
     </script>
   </body>

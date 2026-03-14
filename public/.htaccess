@@ -1,0 +1,118 @@
+# =============================================================================
+# .htaccess — L'Électron Rare (www.lelectronrare.fr)
+# Hébergement mutualisé OVH (Apache)
+# =============================================================================
+
+# ----------------------------------------------------------------------
+# 1. Redirections HTTPS et www
+# ----------------------------------------------------------------------
+
+RewriteEngine On
+
+# Forcer HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Rediriger non-www vers www
+RewriteCond %{HTTP_HOST} ^lelectronrare\.fr$ [NC]
+RewriteRule ^ https://www.lelectronrare.fr%{REQUEST_URI} [L,R=301]
+
+# ----------------------------------------------------------------------
+# 2. En-têtes de sécurité
+# ----------------------------------------------------------------------
+
+<IfModule mod_headers.c>
+    # HSTS — forcer HTTPS pendant 1 an, inclure les sous-domaines
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # Empêcher le sniffing MIME
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Interdire l'affichage dans une iframe (protection clickjacking)
+    Header always set X-Frame-Options "DENY"
+
+    # Politique de référent
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Politique de permissions — désactiver géolocalisation, caméra, micro
+    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 3. Compression (gzip / deflate)
+#    OVH active souvent mod_deflate, mais on s'assure que c'est bien là
+# ----------------------------------------------------------------------
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE application/font-woff
+    AddOutputFilterByType DEFLATE application/font-woff2
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 4. Mise en cache des ressources statiques
+# ----------------------------------------------------------------------
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Par défaut : 1 heure
+    ExpiresDefault "access plus 1 hour"
+
+    # Ressources Astro hachées (/_astro/) — cache très long, immutable
+    # Géré via la directive FilesMatch ci-dessous
+
+    # Images — 1 mois
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/avif "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Polices — 1 an
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+
+    # CSS et JS — 1 semaine (hors _astro)
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 week"
+</IfModule>
+
+# Fichiers Astro hachés — cache immutable 1 an
+# Les noms de fichiers contiennent un hash, donc le cache long est sûr
+<IfModule mod_headers.c>
+    <If "%{REQUEST_URI} =~ m#^/_astro/#">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 5. Page d'erreur 404
+#    Redirige vers index.html (comportement SPA)
+# ----------------------------------------------------------------------
+
+ErrorDocument 404 /index.html
+
+# ----------------------------------------------------------------------
+# 6. Divers
+# ----------------------------------------------------------------------
+
+# Désactiver la signature du serveur
+ServerSignature Off
+
+# Empêcher le listage des répertoires
+Options -Indexes

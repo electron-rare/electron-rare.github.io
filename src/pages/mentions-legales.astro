@@ -1,0 +1,186 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@/styles/global.css';
+import '@/styles/home-workbench.css';
+import { withSiteBase } from '@/lib/site';
+
+const title = "Mentions légales — L'électron rare";
+const description = "Mentions légales du site lelectronrare.fr — éditeur, hébergeur, propriété intellectuelle, données personnelles et RGPD.";
+const homeHref = withSiteBase('/');
+const homeAboutHref = withSiteBase('/#a-propos');
+const homeMissionsHref = withSiteBase('/#graphic-sprints-title');
+const formationHref = withSiteBase('/formation/');
+const contactHref = withSiteBase('/#contact');
+const labHref = withSiteBase('/lab/');
+const mentionsHref = withSiteBase('/mentions-legales/');
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="sticky top-0 z-30 site-nav">
+    <div class="site-shell figma-lab-nav-row">
+      <a href={homeHref} class="figma-lab-nav-title">
+        <span>L'électron rare</span>
+        <span class="figma-lab-nav-kicker">Design électronique · Consulting · Formation</span>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="figma-lab-nav-list">
+          <li><a href={homeAboutHref} class="figma-lab-nav-link site-navlink">Approche</a></li>
+          <li><a href={homeMissionsHref} class="figma-lab-nav-link site-navlink">Missions</a></li>
+          <li><a href={formationHref} class="figma-lab-nav-link site-navlink">Formation</a></li>
+          <li><a href={contactHref} class="figma-lab-nav-link site-navlink">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-4" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node" aria-hidden="true"></span>
+        <h1 class="m-0 text-3xl md:text-4xl">Mentions légales</h1>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+      <p class="section-lead mb-0 mt-3">
+        Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN), il est porté à la connaissance des utilisateurs et visiteurs du site lelectronrare.fr les présentes mentions légales.
+      </p>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Éditeur du site</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+      <div class="mt-4 rounded-xl border border-[color:var(--line)] p-4">
+        <ul class="m-0 p-0" style="list-style: none;">
+          <li><strong>Nom :</strong> Clément Saillant</li>
+          <li><strong>Statut :</strong> Entrepreneur individuel</li>
+          <li><strong>Nom commercial :</strong> L'Électron Rare</li>
+          <li><strong>SIRET :</strong> <em class="studio-muted">en cours de mise à jour</em></li>
+          <li><strong>Adresse :</strong> <em class="studio-muted">en cours de mise à jour</em></li>
+          <li><strong>Téléphone :</strong> <em class="studio-muted">en cours de mise à jour</em></li>
+          <li><strong>Email :</strong> <a href="mailto:contact@lelectronrare.fr">contact@lelectronrare.fr</a></li>
+          <li><strong>Directeur de la publication :</strong> Clément Saillant</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Hébergeur</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+      <div class="mt-4 rounded-xl border border-[color:var(--line)] p-4">
+        <ul class="m-0 p-0" style="list-style: none;">
+          <li><strong>Raison sociale :</strong> OVH SAS</li>
+          <li><strong>Adresse :</strong> 2 rue Kellermann, 59100 Roubaix, France</li>
+          <li><strong>Téléphone :</strong> 1007</li>
+          <li><strong>Site web :</strong> <a href="https://www.ovhcloud.com" target="_blank" rel="noopener noreferrer">www.ovhcloud.com</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Propriété intellectuelle</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+      <p class="mt-3 mb-0 studio-muted">
+        L'ensemble du contenu de ce site (textes, images, photographies, illustrations, vidéos, structure, mise en page, logos) est la propriété exclusive de Clément Saillant / L'Électron Rare, sauf mention contraire explicite.
+      </p>
+      <p class="mt-3 mb-0 studio-muted">
+        Toute reproduction, représentation, modification, publication, adaptation, totale ou partielle, de l'un quelconque de ces éléments, par quelque moyen ou procédé que ce soit, est interdite sans l'autorisation écrite préalable de Clément Saillant.
+      </p>
+      <p class="mt-3 mb-0 studio-muted">
+        Toute exploitation non autorisée du site ou de l'un quelconque des éléments qu'il contient sera considérée comme constitutive d'une contrefaçon et poursuivie conformément aux dispositions des articles L.335-2 et suivants du Code de la propriété intellectuelle.
+      </p>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Données personnelles et RGPD</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+      <p class="mt-3 mb-0 studio-muted">
+        Conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition aux données personnelles vous concernant.
+      </p>
+      <p class="mt-3 mb-0 studio-muted">
+        Pour exercer ces droits, vous pouvez contacter : <a href="mailto:contact@lelectronrare.fr">contact@lelectronrare.fr</a>
+      </p>
+
+      <h3 class="mt-4 mb-0 text-lg font-semibold">Cookies et mesure d'audience</h3>
+      <p class="mt-2 mb-0 studio-muted">
+        Ce site utilise Google Tag Manager (identifiant : GTM-5SLM67QF) et Google Analytics à des fins de mesure d'audience et d'amélioration du site. Ces outils peuvent déposer des cookies sur votre navigateur afin de collecter des données anonymisées sur votre navigation (pages visitées, durée de visite, type d'appareil).
+      </p>
+      <p class="mt-2 mb-0 studio-muted">
+        Aucun cookie à finalité publicitaire ou de marketing direct n'est déposé par ce site. Les données collectées ne sont pas revendues ni transmises à des tiers à des fins commerciales.
+      </p>
+      <p class="mt-2 mb-0 studio-muted">
+        Vous pouvez à tout moment désactiver les cookies via les paramètres de votre navigateur ou en utilisant un outil de blocage tel que <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out</a>.
+      </p>
+
+      <h3 class="mt-4 mb-0 text-lg font-semibold">Formulaire de contact</h3>
+      <p class="mt-2 mb-0 studio-muted">
+        Les informations recueillies via le formulaire de contact (nom, email, message) sont uniquement utilisées pour répondre à votre demande. Elles ne sont ni stockées dans une base de données, ni transmises à des tiers. La base légale du traitement est votre consentement (article 6.1.a du RGPD).
+      </p>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Responsabilité</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+      <p class="mt-3 mb-0 studio-muted">
+        L'éditeur du site s'efforce de fournir des informations aussi précises que possible. Toutefois, il ne pourra être tenu responsable des omissions, des inexactitudes ou des carences dans la mise à jour, qu'elles soient de son fait ou du fait de tiers partenaires qui lui fournissent ces informations.
+      </p>
+      <p class="mt-3 mb-0 studio-muted">
+        L'éditeur du site décline toute responsabilité en cas de difficulté d'accès au site ou d'interruptions de service, de virus informatiques ou de tout dommage résultant de l'utilisation du site.
+      </p>
+      <p class="mt-3 mb-0 studio-muted">
+        Les liens hypertextes présents sur le site peuvent renvoyer vers d'autres sites internet. L'éditeur ne saurait être tenu responsable du contenu de ces sites tiers.
+      </p>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Droit applicable</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+      <p class="mt-3 mb-0 studio-muted">
+        Le présent site et ses mentions légales sont régis par le droit français. En cas de litige, et après tentative de résolution amiable, compétence est attribuée aux tribunaux français compétents.
+      </p>
+      <p class="mt-3 mb-0 studio-muted">
+        Dernière mise à jour : mars 2026.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
+    <div class="site-shell footer-grid footer-grid--enhanced">
+      <div class="footer-col footer-col--brand">
+        <p class="m-0 footer-title">L'électron rare</p>
+        <div class="footer-brand-meta">
+          <p class="mb-0 footer-copy">
+            © 2026 Clément Saillant - design électronique embarquée, consulting, formation — industries créatives et industrie.
+          </p>
+        </div>
+      </div>
+      <nav aria-label="Ressources" class="footer-links footer-links--single-rail">
+        <a href={homeHref} class="footer-link">Accueil</a>
+        <a href={formationHref} class="footer-link">Formation</a>
+        <a href={labHref} class="footer-link">Lab</a>
+        <a href={mentionsHref} class="footer-link" aria-current="page">Mentions légales</a>
+        <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener noreferrer me" class="footer-link">LinkedIn</a>
+        <a href="mailto:contact@lelectronrare.fr" class="footer-link">contact@lelectronrare.fr</a>
+        <a href="https://github.com/electron-rare/" target="_blank" rel="noopener noreferrer me" class="footer-link">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+</BaseLayout>

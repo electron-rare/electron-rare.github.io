@@ -1,0 +1,293 @@
+---
+/**
+ * Contact section — Minitel-themed, vanilla JS (no React runtime).
+ */
+import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
+
+const DEFAULT_MESSAGE = `Bonjour Clément,
+
+J'ai un projet / besoin en électronique embarquée.
+
+Contexte :
+Ce que j'attends :
+Contraintes (délai, budget) :`;
+
+const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURIComponent("Contact L'Électron Rare")}&body=${encodeURIComponent(DEFAULT_MESSAGE)}`;
+---
+
+<section
+  id="contact"
+  aria-labelledby="contact-title"
+  class="section-anchor mt-5"
+  data-reveal
+>
+  <div class="contact-minitel">
+    <div class="contact-minitel-header">
+      <span class="contact-minitel-dot" aria-hidden="true"></span>
+      <span class="contact-minitel-dot contact-minitel-dot--amber" aria-hidden="true"></span>
+      <span class="contact-minitel-dot contact-minitel-dot--green" aria-hidden="true"></span>
+      <span class="contact-minitel-title-bar">ÉLECTRON RARE — CONTACT</span>
+    </div>
+
+    <div class="contact-minitel-screen">
+      <h2 id="contact-title" class="contact-minitel-h2">
+        &gt; Parlons de votre projet_
+      </h2>
+
+      <p class="contact-minitel-line">
+        Décrivez votre besoin en quelques lignes.
+      </p>
+      <p class="contact-minitel-line contact-minitel-line--dim">
+        Réponse sous 48h avec un premier retour technique.
+      </p>
+
+      <!-- Tab switcher -->
+      <div class="contact-minitel-tabs">
+        <button
+          type="button"
+          class="contact-minitel-tab contact-minitel-tab--active"
+          data-contact-tab="email"
+        >
+          [1] Via e-mail
+        </button>
+        <button
+          type="button"
+          class="contact-minitel-tab"
+          data-contact-tab="form"
+        >
+          [2] Formulaire direct
+        </button>
+      </div>
+
+      <!-- Tab: mailto draft -->
+      <div data-contact-panel="email">
+        <div class="contact-minitel-textarea-wrap">
+          <label for="contact-draft" class="contact-minitel-label">&gt; MESSAGE :</label>
+          <textarea
+            id="contact-draft"
+            class="contact-minitel-textarea"
+            spellcheck="true"
+            rows="8"
+          >{DEFAULT_MESSAGE}</textarea>
+        </div>
+
+        <div class="contact-minitel-actions">
+          <a
+            id="contact-mailto-link"
+            href={defaultMailtoHref}
+            {...trackAttrs(TRACK_EVENTS.outboundEmailContact, 'mailto:contact@lelectronrare.fr')}
+            class="contact-minitel-btn contact-minitel-btn--primary"
+          >
+            [ENVOI] Envoyer par mail
+          </a>
+          <button
+            type="button"
+            class="contact-minitel-btn"
+            id="contact-copy-btn"
+          >
+            [COPIE] Copier le message
+          </button>
+          <a
+            href="https://fr.linkedin.com/in/electron-rare"
+            target="_blank"
+            rel="noopener noreferrer"
+            {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
+            class="contact-minitel-btn"
+          >
+            [LINKEDIN] Envoyer via LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- Tab: Web3Forms contact form -->
+      <div data-contact-panel="form" style="display:none;">
+        <!-- Form (idle/sending/error states) -->
+        <div id="contact-form-container">
+          <form id="contact-web3form">
+            <div class="contact-minitel-textarea-wrap">
+              <label for="contact-form-name" class="contact-minitel-label">&gt; NOM :</label>
+              <input
+                id="contact-form-name"
+                type="text"
+                required
+                class="contact-minitel-textarea"
+                style="height:auto;min-height:2.4em;resize:none"
+                placeholder="Votre nom"
+              />
+            </div>
+            <div class="contact-minitel-textarea-wrap">
+              <label for="contact-form-email" class="contact-minitel-label">&gt; EMAIL :</label>
+              <input
+                id="contact-form-email"
+                type="email"
+                required
+                class="contact-minitel-textarea"
+                style="height:auto;min-height:2.4em;resize:none"
+                placeholder="votre@email.com"
+              />
+            </div>
+            <div class="contact-minitel-textarea-wrap">
+              <label for="contact-form-message" class="contact-minitel-label">&gt; MESSAGE :</label>
+              <textarea
+                id="contact-form-message"
+                class="contact-minitel-textarea"
+                required
+                spellcheck="true"
+                rows="8"
+              >{DEFAULT_MESSAGE}</textarea>
+            </div>
+            <div class="contact-minitel-actions">
+              <button
+                type="submit"
+                id="contact-form-submit"
+                class="contact-minitel-btn contact-minitel-btn--primary"
+              >
+                [ENVOI] Envoyer le message
+              </button>
+            </div>
+            <p
+              id="contact-form-error"
+              class="contact-minitel-line"
+              style="color:var(--accent-warn, #f59e0b);margin-top:0.5rem;display:none"
+            >
+              &gt; Erreur d'envoi. Essayez via l'onglet [1] ou par mail direct.
+            </p>
+          </form>
+        </div>
+
+        <!-- Success state -->
+        <div id="contact-form-success" style="display:none;">
+          <p class="contact-minitel-line" style="text-align:center;padding:2rem 0">
+            &gt; MESSAGE ENVOYÉ ✓
+          </p>
+          <p class="contact-minitel-line contact-minitel-line--dim" style="text-align:center">
+            Merci ! Je reviens vers vous sous 48h.
+          </p>
+          <div class="contact-minitel-actions" style="justify-content:center;margin-top:1rem">
+            <button
+              type="button"
+              id="contact-form-reset"
+              class="contact-minitel-btn"
+            >
+              [NOUVEAU] Envoyer un autre message
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-minitel-footer">
+        <p class="contact-minitel-line contact-minitel-line--dim">
+          ─────────────────────────────────────────
+        </p>
+        <p class="contact-minitel-line contact-minitel-line--dim">
+          Prototype · carte · diagnostic · automatisme · formation
+        </p>
+        <p class="contact-minitel-line">
+          Mail direct : <a href="mailto:contact@lelectronrare.fr" class="contact-minitel-link">contact@lelectronrare.fr</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
+  const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+  const DEFAULT_MESSAGE = `Bonjour Clément,
+
+J'ai un projet / besoin en électronique embarquée.
+
+Contexte :
+Ce que j'attends :
+Contraintes (délai, budget) :`;
+
+  // --- Tab switching ---
+  const tabButtons = document.querySelectorAll<HTMLButtonElement>('[data-contact-tab]');
+  const panels = document.querySelectorAll<HTMLElement>('[data-contact-panel]');
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.contactTab!;
+      tabButtons.forEach((b) => b.classList.toggle('contact-minitel-tab--active', b.dataset.contactTab === target));
+      panels.forEach((p) => { p.style.display = p.dataset.contactPanel === target ? '' : 'none'; });
+    });
+  });
+
+  // --- Mailto draft ---
+  const draftArea = document.getElementById('contact-draft') as HTMLTextAreaElement;
+  const mailtoLink = document.getElementById('contact-mailto-link') as HTMLAnchorElement;
+
+  function updateMailtoHref() {
+    const subject = encodeURIComponent("Contact L'Électron Rare");
+    const body = encodeURIComponent(draftArea.value);
+    mailtoLink.href = `mailto:contact@lelectronrare.fr?subject=${subject}&body=${body}`;
+  }
+
+  draftArea.addEventListener('input', updateMailtoHref);
+
+  // --- Clipboard copy ---
+  const copyBtn = document.getElementById('contact-copy-btn') as HTMLButtonElement;
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(draftArea.value);
+      copyBtn.textContent = '[OK] Message copié ✓';
+      setTimeout(() => { copyBtn.textContent = '[COPIE] Copier le message'; }, 1800);
+    } catch {
+      // Silently fail — clipboard API may not be available
+    }
+  });
+
+  // --- Web3Forms submission ---
+  const form = document.getElementById('contact-web3form') as HTMLFormElement;
+  const formContainer = document.getElementById('contact-form-container') as HTMLElement;
+  const formSuccess = document.getElementById('contact-form-success') as HTMLElement;
+  const formError = document.getElementById('contact-form-error') as HTMLElement;
+  const submitBtn = document.getElementById('contact-form-submit') as HTMLButtonElement;
+  const nameInput = document.getElementById('contact-form-name') as HTMLInputElement;
+  const emailInput = document.getElementById('contact-form-email') as HTMLInputElement;
+  const messageArea = document.getElementById('contact-form-message') as HTMLTextAreaElement;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = '[...] Envoi en cours...';
+
+    try {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `Contact lelectronrare.fr — ${nameInput.value}`,
+          from_name: nameInput.value,
+          email: emailInput.value,
+          message: messageArea.value,
+        }),
+      });
+
+      if (res.ok) {
+        formContainer.style.display = 'none';
+        formSuccess.style.display = '';
+        // Reset fields for next use
+        nameInput.value = '';
+        emailInput.value = '';
+        messageArea.value = DEFAULT_MESSAGE;
+      } else {
+        formError.style.display = '';
+      }
+    } catch {
+      formError.style.display = '';
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = '[ENVOI] Envoyer le message';
+  });
+
+  // --- Reset form (back from success) ---
+  const resetBtn = document.getElementById('contact-form-reset') as HTMLButtonElement;
+  resetBtn.addEventListener('click', () => {
+    formSuccess.style.display = 'none';
+    formContainer.style.display = '';
+  });
+</script>
