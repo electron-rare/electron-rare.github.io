@@ -27,6 +27,7 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Validation tracking recalee sur le contrat Astro actif.
 - [x] Workflow OVH enrichi avec verification HTTP publique post-deploiement.
 - [x] Preview OVH publie et valide publiquement via GitHub Actions (`23094884980`).
+- [x] Production OVH publiee et validee publiquement via GitHub Actions (`23095014692`).
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 
@@ -39,8 +40,8 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Deployer le preview OVH et valider `https://www.lelectronrare.fr/preview/`.
 
 ## P1 - Validation live
-- [ ] Si preview valide, deployer la production a la racine.
-- [ ] Verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/lab/`, `/robots.txt`, `/sitemap.xml`.
+- [x] Si preview valide, deployer la production a la racine.
+- [x] Verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/lab/`, `/robots.txt`, `/sitemap.xml`.
 - [ ] Verifier l'absence de retour vers l'ancienne homepage ou d'elements sombres residuels.
 - [ ] Verifier les ancres actives: `#a-propos`, `#cas-clients`, `#graphic-sprints-title`, `#faq`, `#contact`.
 

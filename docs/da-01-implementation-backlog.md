@@ -104,7 +104,7 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 - [ ] Verifier les events `data-track` sur les CTA actifs uniquement.
 - [x] Recaler `tracking:check` sur le contrat Astro actif pour sortir des faux positifs legacy.
 - [x] Valider preview OVH.
-- [ ] Valider prod OVH.
+- [x] Valider prod OVH.
 
 ## Backlog P2
 - [x] Supprimer les reliquats `.site-contrast-toggle` du CSS global.
