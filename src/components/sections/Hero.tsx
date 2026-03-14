@@ -9,7 +9,7 @@ export function Hero() {
     <section aria-labelledby="hero-title" className="section-anchor relative overflow-hidden pt-4 md:pt-6" id="top">
       <div className="hero-bg-photo" aria-hidden="true">
         <img
-          src={withSiteBase('/assets/photos/workspace-dev-tektronix.webp')}
+          src={withSiteBase('/assets/photos/atelier-oscilloscope-bench.webp')}
           alt=""
           width={1200}
           height={900}
