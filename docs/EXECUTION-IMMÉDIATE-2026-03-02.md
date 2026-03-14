@@ -33,11 +33,16 @@ Action:
 Etat:
 - preview top bar publie et valide publiquement via GitHub Actions `23095540371`
 
-### 3. Republier la production apres validation humaine
+### 3. Verifier la production reellement servie
 Action:
-- lancer le workflow prod depuis `preview-ovh-ftp`
-- revalider `/`, `/formation/`, `/mentions-legales/`, `/lab/`
-- confirmer que la prod embarque bien la nouvelle top bar mobile
+- confirmer dans un navigateur humain que `www` sert bien la nouvelle home et le nouveau header
+- verifier localement avec le meme `User-Agent` que le workflow quand on utilise `curl`
+- finaliser la validation UX mobile humaine
+
+Etat:
+- production top bar republiee via GitHub Actions `23096174775`
+- verification publique du workflow: OK
+- verification locale `curl` OK avec `-A 'electron-rare-gh-verify/1.0'`
 
 Routes a verifier:
 - `/`

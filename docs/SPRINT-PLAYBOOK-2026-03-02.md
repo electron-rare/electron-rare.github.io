@@ -49,9 +49,9 @@ PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
 
 ### B3 - Verification preview
 ```bash
-curl -fsSI https://www.lelectronrare.fr/preview/
-curl -fsSI https://www.lelectronrare.fr/preview/formation/
-curl -fsSI https://www.lelectronrare.fr/preview/mentions-legales/
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview/
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview/formation/
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview/mentions-legales/
 ```
 
 ### B4 - Etat courant
@@ -74,15 +74,18 @@ curl -fsSI https://www.lelectronrare.fr/preview/mentions-legales/
 
 ### C3 - Verification production
 ```bash
-curl -fsSI https://www.lelectronrare.fr/
-curl -fsSI https://www.lelectronrare.fr/formation/
-curl -fsSI https://www.lelectronrare.fr/mentions-legales/
-curl -fsSI https://www.lelectronrare.fr/robots.txt
-curl -fsSI https://www.lelectronrare.fr/sitemap.xml
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/formation/
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/mentions-legales/
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/robots.txt
+curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/sitemap.xml
 ```
 
-### C4 - Action en attente
-- republier la prod avec le lot `Modernize Electron Rare mobile header`
+### C4 - Etat courant
+- production republiee avec le lot `Modernize Electron Rare mobile header`: `23096174775`
+- verification publique du workflow: OK
+- verification locale `curl` avec `User-Agent` workflow: `200` sur `www`, `formation`, `mentions-legales`
+- controle navigateur humain encore requis pour la validation UX finale
 
 ## Sprint D - Tracking / SEO
 

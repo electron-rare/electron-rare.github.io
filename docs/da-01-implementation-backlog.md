@@ -109,7 +109,9 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 - [x] Recaler `tracking:check` sur le contrat Astro actif pour sortir des faux positifs legacy.
 - [x] Valider preview OVH.
 - [x] Valider preview OVH avec la nouvelle top bar mobile (`23095540371`).
-- [ ] Revalider prod OVH avec la nouvelle top bar mobile.
+- [x] Revalider prod OVH avec la nouvelle top bar mobile via le check public GitHub Actions (`23096174775`).
+- [ ] Confirmer le rendu prod depuis un navigateur humain hors de la machine locale.
+- [x] Etablir la methode locale de verification: reutiliser le `User-Agent` `electron-rare-gh-verify/1.0` pour eviter le `403` OVH sur cette machine.
 
 ## Backlog P2
 - [x] Supprimer les reliquats `.site-contrast-toggle` du CSS global.
