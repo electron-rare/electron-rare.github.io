@@ -109,12 +109,14 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 
 ## Backlog P1
 - [ ] Supprimer les references documentaires a `#projets`, Malt, GitHub Pages static prod, dual-rail hero, contrast toggle.
-- [ ] Supprimer les references documentaires actives a `/lab/` comme surface publique produit.
+- [x] Supprimer les references documentaires actives a `/lab/` comme surface publique produit.
 - [ ] Verifier les events `data-track` sur les CTA actifs uniquement.
 - [x] Recaler `tracking:check` sur le contrat Astro actif pour sortir des faux positifs legacy.
 - [x] Valider preview OVH.
 - [x] Valider preview OVH avec la nouvelle top bar mobile (`23095540371`).
+- [x] Revalider preview OVH avec le nouveau positionnement et la disparition du lab public (`23098262445`).
 - [x] Revalider prod OVH avec la nouvelle top bar mobile via le check public GitHub Actions (`23096174775`).
+- [x] Revalider prod OVH avec le nouveau positionnement et la disparition du lab public (`23098335508`).
 - [ ] Confirmer le rendu prod depuis un navigateur humain hors de la machine locale.
 - [x] Etablir la methode locale de verification: reutiliser le `User-Agent` `electron-rare-gh-verify/1.0` pour eviter le `403` OVH sur cette machine.
 

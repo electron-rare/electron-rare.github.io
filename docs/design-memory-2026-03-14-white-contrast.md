@@ -63,6 +63,9 @@ Le positionnement public de reference devient : systemes electroniques specifiqu
 - production white-contrast valide
 - top bar mobile modernisee en preview
 - production republee avec la top bar mobile via GitHub Actions `23096174775`
+- preview republie avec le positionnement electronique/automatisme/energie/stockage/optimisation via `23098262445`
+- production republiee avec le meme positionnement via `23098335508`
+- le lab n'est plus publie sur preview ni sur production (`404` sur `/preview/lab/` et `/lab/`)
 - verification locale reproductible avec le `User-Agent` du workflow
 - controle navigateur humain encore requis pour la validation UX finale
 

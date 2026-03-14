@@ -35,6 +35,9 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Production OVH republiee avec la nouvelle top bar mobile et validee publiquement via GitHub Actions (`23096174775`).
 - [x] Hero, about, footer et FAQ recales sur le positionnement `systemes electroniques specifiques`.
 - [x] Signaux publics `disponible`, `freelance · France`, `UNSTABLE BY DESIGN` et exposition publique du lab retires du site.
+- [x] Preview OVH republie avec le positionnement `electronique · automatisme · energie · stockage · optimisation` (`23098262445`).
+- [x] Production OVH republiee avec le meme positionnement (`23098335508`).
+- [x] `https://www.lelectronrare.fr/lab/` et `https://www.lelectronrare.fr/preview/lab/` repondent maintenant `404`.
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 - [ ] Confirmer visuellement depuis un navigateur humain que `www` sert bien la nouvelle home sur tous les points d'acces.
@@ -50,9 +53,9 @@ Source of truth: this file for execution priorities, plus the current code in `s
 
 ## P1 - Validation live
 - [x] Deployer la production a la racine avec la top bar mobile modernisee.
-- [ ] Republier preview et production avec le nouveau positionnement et suppression effective du repertoire `/lab/`.
-- [ ] Re-verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/robots.txt`, `/sitemap.xml` via le check public GitHub Actions apres redeploiement.
-- [ ] Verifier que `https://www.lelectronrare.fr/lab/` ne fait plus partie de la surface publique servie.
+- [x] Republier preview et production avec le nouveau positionnement et suppression effective du repertoire `/lab/`.
+- [x] Re-verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/robots.txt`, `/sitemap.xml` via le check public GitHub Actions apres redeploiement.
+- [x] Verifier que `https://www.lelectronrare.fr/lab/` ne fait plus partie de la surface publique servie.
 - [ ] Verifier l'absence de retour vers l'ancienne homepage ou d'elements sombres residuels.
 - [ ] Verifier les ancres actives: `#a-propos`, `#graphic-sprints-title`, `#faq`, `#contact`.
 - [ ] Verifier la top bar mobile sur 390px et 768px: une seule ligne visible fermee, CTA `Contact` direct, menu stable, fermeture sur clic/Escape.
