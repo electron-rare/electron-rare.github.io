@@ -23,22 +23,10 @@ const run = (command) => {
 
 console.log(`[build-astro-external] Using PUBLIC_SITE_URL=${process.env.PUBLIC_SITE_URL}`);
 
-run('npm run lab:build');
 run('npm run build');
 
-const labSource = path.resolve(process.cwd(), 'lab');
-const labDestination = path.resolve(process.cwd(), 'dist', 'lab');
-
-if (fs.existsSync(labSource)) {
-  fs.rmSync(labDestination, { recursive: true, force: true });
-  fs.cpSync(labSource, labDestination, { recursive: true });
-  console.log('[build-astro-external] Included lab/ output in dist/lab.');
-} else {
-  console.warn('[build-astro-external] Warning: lab/ not found; skipping lab route packaging.');
-}
-
 const robotsContent = `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}sitemap.xml\n`;
-const sitemapContent = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url>\n    <loc>${siteUrl}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>${siteUrl}lab/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n</urlset>\n`;
+const sitemapContent = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url>\n    <loc>${siteUrl}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>${siteUrl}formation/</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>${siteUrl}mentions-legales/</loc>\n    <changefreq>yearly</changefreq>\n    <priority>0.3</priority>\n  </url>\n</urlset>\n`;
 
 fs.writeFileSync(path.resolve(process.cwd(), 'dist', 'robots.txt'), robotsContent, 'utf8');
 fs.writeFileSync(path.resolve(process.cwd(), 'dist', 'sitemap.xml'), sitemapContent, 'utf8');

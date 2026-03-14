@@ -6,7 +6,6 @@ export const GET: APIRoute = () => {
   const pages = [
     { path: '', priority: '1.0', changefreq: 'weekly' },
     { path: 'formation/', priority: '0.9', changefreq: 'monthly' },
-    { path: 'lab/', priority: '0.8', changefreq: 'weekly' },
     { path: 'mentions-legales/', priority: '0.3', changefreq: 'yearly' }
   ];
 

@@ -3,8 +3,7 @@ export const TRACK_EVENTS = {
   outboundLinkedinContact: 'outbound_linkedin_contact',
   outboundEmailContact: 'outbound_email_contact',
   outboundGithubContact: 'outbound_github_contact',
-  outboundGithubProjectAudioBattery: 'outbound_github_project_audio_battery',
-  ctaLabInteractifOpen: 'cta_lab_interactif_open'
+  outboundGithubProjectAudioBattery: 'outbound_github_project_audio_battery'
 } as const;
 
 export type TrackEventName = (typeof TRACK_EVENTS)[keyof typeof TRACK_EVENTS];

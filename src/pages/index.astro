@@ -13,13 +13,11 @@ import { withSiteBase } from '@/lib/site';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 
 const formationHref = withSiteBase('/formation/');
-const labHref = withSiteBase('/lab/');
 const mentionsHref = withSiteBase('/mentions-legales/');
 const headerItems = [
   { href: '#a-propos', label: 'Approche' },
   { href: '#graphic-sprints-title', label: 'Missions' },
   { href: formationHref, label: 'Formation' },
-  { href: labHref, label: 'Lab', attrs: trackAttrs(TRACK_EVENTS.ctaLabInteractifOpen, labHref) },
   { href: '#faq', label: 'FAQ' },
   { href: '#contact', label: 'Contact', desktopOnly: true }
 ];
@@ -106,7 +104,6 @@ const headerItems = [
         <a href="#a-propos" class="footer-link">Approche</a>
         <a href="#graphic-sprints-title" class="footer-link">Missions</a>
         <a href={formationHref} class="footer-link">Formation</a>
-        <a href={labHref} class="footer-link" {...trackAttrs(TRACK_EVENTS.ctaLabInteractifOpen, labHref)}>Lab</a>
         <a href="#faq" class="footer-link">FAQ</a>
         <a href="#contact" class="footer-link">Contact</a>
         <a

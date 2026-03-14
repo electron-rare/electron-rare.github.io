@@ -22,10 +22,6 @@ export function Hero() {
         <article className="figma-lab-left hero-panel-image">
           <div className="hero-panel-head">
             <p className="hero-eyebrow hero-eyebrow--image">Design électronique · Consulting · Formation</p>
-            <div className="hero-status-stack" aria-label="Cadre d'intervention">
-              <span className="hero-status-badge">disponible</span>
-              <span className="hero-status-note">freelance · France</span>
-            </div>
           </div>
 
           <h1 id="hero-title" className="figma-lab-title">
