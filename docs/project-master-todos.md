@@ -12,6 +12,7 @@ Source of truth: this file for execution priorities, plus the current code in `s
 
 ## Verites de reference
 - Structure de page: `src/pages/index.astro`
+- Header partage: `src/components/SiteHeader.astro`
 - Sections actives: `src/components/sections/Hero.tsx`, `About.tsx`, `CaseStudies.tsx`, `GraphicSprints.tsx`, `Faq.astro`, `Contact.astro`
 - Theme/layout: `src/layouts/BaseLayout.astro`, `src/styles/global.css`, `src/styles/home-workbench.css`
 - Canonical/base/deploiement: `src/lib/site.ts`, `scripts/build-astro-external.mjs`, `docs/ovh-ftp-preview-solution-2026-03-14.md`
@@ -28,22 +29,26 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Workflow OVH enrichi avec verification HTTP publique post-deploiement.
 - [x] Preview OVH publie et valide publiquement via GitHub Actions (`23094884980`).
 - [x] Production OVH publiee et validee publiquement via GitHub Actions (`23095014692`).
+- [x] Top bar mobile refondue via header partage + menu compact (`a3ccc1c`).
+- [x] Preview OVH mis a jour avec la nouvelle top bar mobile et valide publiquement (`23095540371`).
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
+- [ ] Republier la production avec la nouvelle top bar mobile.
 
 ## P0 - Bloc de sortie immediate
 - [x] Builder le preview avec le theme blanc contraste (`PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external`).
-- [ ] Verifier le rendu de la home: nav, hero, approche, cas clients, missions, FAQ, footer.
+- [ ] Verifier le rendu de la home: top bar mobile, hero, approche, cas clients, missions, FAQ, footer.
 - [ ] Verifier les surfaces medias: hero photo, photo strip, video strip.
 - [ ] Verifier la section contact en version claire: tabs, textarea, formulaire, focus clavier, messages d'etat.
 - [ ] Verifier `/formation/` et `/mentions-legales/` avec le meme theme clair.
 - [x] Deployer le preview OVH et valider `https://www.lelectronrare.fr/preview/`.
 
 ## P1 - Validation live
-- [x] Si preview valide, deployer la production a la racine.
-- [x] Verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/lab/`, `/robots.txt`, `/sitemap.xml`.
+- [ ] Deployer la production a la racine avec la top bar mobile modernisee.
+- [ ] Re-verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/lab/`, `/robots.txt`, `/sitemap.xml` apres redeploiement.
 - [ ] Verifier l'absence de retour vers l'ancienne homepage ou d'elements sombres residuels.
-- [ ] Verifier les ancres actives: `#a-propos`, `#cas-clients`, `#graphic-sprints-title`, `#faq`, `#contact`.
+- [ ] Verifier les ancres actives: `#a-propos`, `#graphic-sprints-title`, `#faq`, `#contact`.
+- [ ] Verifier la top bar mobile sur 390px et 768px: une seule ligne visible fermee, CTA `Contact` direct, menu stable, fermeture sur clic/Escape.
 
 ## P2 - Tracking / SEO
 - [ ] Valider GA4 Realtime et DebugView pour les events actuels:

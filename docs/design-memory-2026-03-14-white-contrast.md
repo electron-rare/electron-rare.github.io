@@ -27,6 +27,14 @@ La version publique de L'Electron Rare repart sur une base claire, contraste bla
 - typography mono sur certains labels et statuts
 - accents rust/teal sur CTA, badges, progression et reperes
 
+## Regles header 2026
+- desktop: navigation inline, stable, sans bruit inutile
+- mobile: header compact, une seule ligne utile a l'ouverture de page
+- mobile: kicker masque, marque raccourcie visuellement, pas de wrap multi-lignes par defaut
+- mobile: un acces direct `Contact` reste visible hors menu
+- mobile: le reste de la navigation passe dans un menu repliable, scrollable, refermable au clic et a `Escape`
+- la top bar ne doit plus ressembler a une nav desktop compressee
+
 ## Ce qui est interdit
 - retour a la home `studio/figma`
 - bouton contraste sans vraie fonctionnalite produit
@@ -38,6 +46,14 @@ La version publique de L'Electron Rare repart sur une base claire, contraste bla
 - meta navigateur claire: `themeColor` blanc dans `src/lib/site.ts`
 - socle visuel: `src/styles/global.css`
 - overrides DA v12: `src/styles/home-workbench.css`
+- header partage: `src/components/SiteHeader.astro`
+- fermeture et sync du menu mobile: script inline dans `src/layouts/BaseLayout.astro`
+
+## Etat courant
+- preview white-contrast valide
+- production white-contrast valide
+- top bar mobile modernisee en preview
+- repush production encore requis pour ce lot header
 
 ## QA minimum
 - nav

@@ -1,49 +1,43 @@
-# EXECUTION IMMEDIATE - White Contrast Rollout
+# EXECUTION IMMEDIATE - White Contrast + Mobile Header
 
 Updated: 2026-03-14
 Severite: critique pour coherence visuelle et lisibilite
 
 ## 3 actions prioritaires
 
-### 1. Basculer tout le site sur une DA blanche par defaut
+### 1. Finaliser la top bar mobile compacte
 Probleme:
-- la home synchronisee OVH est la bonne base, mais une partie du CSS reste encore oriente sombre
-- le runtime pointait encore vers `data-theme="default"`
+- la top bar historique etait trop haute sur mobile
+- elle reprenait une logique desktop qui wrap, au lieu d'une navigation mobile compacte
 
 Action:
-- passer le layout sur un theme clair par defaut
-- reposer les surfaces principales sur blanc/ivoire
-- reprendre les accents en teal/rust
-- traiter explicitement les ilots a risque:
-  - hero photo
-  - photo strip
-  - video strip
-  - `contact-minitel`
-  - FAQ focus
+- un header partage pour home, formation et mentions
+- un acces direct `Contact` visible hors menu
+- un menu repliable pour le reste de la navigation
+- fermeture automatique apres clic, `Escape`, ou retour desktop
 
 Fichiers cle:
+- `src/components/SiteHeader.astro`
 - `src/layouts/BaseLayout.astro`
-- `src/lib/site.ts`
 - `src/styles/global.css`
-- `src/styles/home-workbench.css`
+- `src/pages/index.astro`
+- `src/pages/formation.astro`
+- `src/pages/mentions-legales.astro`
 
-### 2. Rebuilder et verifier le preview OVH
+### 2. Verifier visuellement le preview OVH
 Action:
-- builder la variante preview avec le bon `PUBLIC_SITE_URL`
-- verifier que tous les liens et assets sortent en `/preview/`
-- publier sur OVH seulement apres build propre
+- controler la top bar sur mobile reel
+- verifier qu'elle reste compacte fermee
+- verifier que le menu est lisible et stable ouvert
 
-Commande de base:
-```bash
-cd /home/zacus/electron-rare-preview-ovh
-PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
-```
+Etat:
+- preview top bar publie et valide publiquement via GitHub Actions `23095540371`
 
-### 3. Revalider la production actuelle apres preview
+### 3. Republier la production apres validation humaine
 Action:
-- tester les pages et ancres reelles du site
-- verifier la suppression du contraste sombre sur les surfaces critiques
-- confirmer tracking et meta minimums
+- lancer le workflow prod depuis `preview-ovh-ftp`
+- revalider `/`, `/formation/`, `/mentions-legales/`, `/lab/`
+- confirmer que la prod embarque bien la nouvelle top bar mobile
 
 Routes a verifier:
 - `/`
@@ -55,6 +49,7 @@ Routes a verifier:
 
 ## Cible de sortie
 - theme blanc contraste par defaut
+- top bar mobile compacte et state-of-art
 - contact lisible et clavier-friendly
 - preview valide avant push prod
 - docs alignees sur Astro + OVH + GitHub Actions FTP

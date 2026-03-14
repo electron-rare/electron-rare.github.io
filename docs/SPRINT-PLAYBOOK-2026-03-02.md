@@ -15,7 +15,7 @@ PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
 ```
 
 ### A2 - Zones a verifier dans le build
-- nav et hero
+- top bar desktop/mobile et hero
 - approche et cas concrets
 - photo strip et video strip
 - formats de mission
@@ -29,6 +29,9 @@ PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
 - pas de retour a l'ancienne DA sombre
 - pas d'ancre legacy `#projets`
 - focus visible sur FAQ et formulaire
+- top bar mobile compacte, sans wrap sur plusieurs lignes au chargement
+- CTA `Contact` visible hors menu sur mobile
+- fermeture du menu au clic, a `Escape` et au resize desktop
 
 ## Sprint B - Preview OVH
 
@@ -51,12 +54,17 @@ curl -fsSI https://www.lelectronrare.fr/preview/formation/
 curl -fsSI https://www.lelectronrare.fr/preview/mentions-legales/
 ```
 
+### B4 - Etat courant
+- white-contrast preview valide: `23094884980`
+- top bar mobile preview validee publiquement: `23095540371`
+
 ## Sprint C - Production
 
 ### C1 - Preconditions
 - preview valide visuellement
 - build propre
 - pas de regression tracking evidente
+- validation humaine du header mobile
 
 ### C2 - Deploy production
 - workflow GitHub Actions: `deploy-ovh-ftp.yml`
@@ -72,6 +80,9 @@ curl -fsSI https://www.lelectronrare.fr/mentions-legales/
 curl -fsSI https://www.lelectronrare.fr/robots.txt
 curl -fsSI https://www.lelectronrare.fr/sitemap.xml
 ```
+
+### C4 - Action en attente
+- republier la prod avec le lot `Modernize Electron Rare mobile header`
 
 ## Sprint D - Tracking / SEO
 

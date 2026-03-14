@@ -8,6 +8,7 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 
 ## Sources de verite
 - Structure homepage: `src/pages/index.astro`
+- Header partage: `src/components/SiteHeader.astro`
 - Sections actives: `Hero`, `About`, `CaseStudies`, `GraphicSprints`, `Faq`, `Contact`
 - Copy et donnees: `src/content/home-content.ts`
 - Theme et layout: `src/layouts/BaseLayout.astro`, `src/styles/global.css`, `src/styles/home-workbench.css`
@@ -30,11 +31,13 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 
 ## Mapping section -> composants reels
 1. `Header_Navigation`
-- Cible: `src/pages/index.astro` + `src/layouts/BaseLayout.astro`
+- Cible: `src/components/SiteHeader.astro` + `src/layouts/BaseLayout.astro`
 - Elements:
   - marque
-  - nav anchors
-  - acces direct formation, lab, FAQ, contact
+  - top bar compacte
+  - CTA direct `Contact`
+  - menu mobile repliable
+  - anchors et liens de pages internes
 
 2. `Hero_Conversion`
 - Cible: `src/components/sections/Hero.tsx`
@@ -96,15 +99,17 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 ## Backlog P0
 - [x] Forcer la cascade sur la DA blanche dans `BaseLayout.astro`, `site.ts`, `global.css`, `home-workbench.css`.
 - [x] Relever les derniers blocs sombres restants: `hero-bg-photo`, `photo-strip`, `video-strip`, `contact-minitel`, FAQ focus.
+- [x] Remplacer la nav mobile "desktop qui wrap" par une top bar compacte state-of-art 2026.
 - [ ] Verifier la lisibilite des CTA sur blanc.
-- [ ] Verifier que la home et `formation` partagent bien le meme socle visuel en preview live.
+- [ ] Verifier que la home, `formation` et `mentions-legales` partagent bien le meme header et le meme socle visuel en preview live.
 
 ## Backlog P1
 - [ ] Supprimer les references documentaires a `#projets`, Malt, GitHub Pages static prod, dual-rail hero, contrast toggle.
 - [ ] Verifier les events `data-track` sur les CTA actifs uniquement.
 - [x] Recaler `tracking:check` sur le contrat Astro actif pour sortir des faux positifs legacy.
 - [x] Valider preview OVH.
-- [x] Valider prod OVH.
+- [x] Valider preview OVH avec la nouvelle top bar mobile (`23095540371`).
+- [ ] Revalider prod OVH avec la nouvelle top bar mobile.
 
 ## Backlog P2
 - [x] Supprimer les reliquats `.site-contrast-toggle` du CSS global.
@@ -119,7 +124,9 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 
 ### Gate UX
 - Aucun panneau critique ne reste sur fond sombre.
-- Mobile 390/768 sans debordement.
+- Top bar mobile 390/768 sans debordement ni double hauteur permanente.
+- Une action primaire `Contact` reste visible hors menu sur mobile.
+- Menu ferme = header compact ; menu ouvert = navigation claire et scrollable.
 - CTA primary/secondary lisibles sur fond clair.
 - Contact completement utilisable.
 
@@ -139,5 +146,6 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 ## Definition of done
 1. Le site public sert par defaut une version blanc contraste coherente.
 2. Aucun element critique de l'ancienne DA sombre ne reste visible.
-3. Les docs actives parlent du vrai site OVH/Astro actuel.
-4. Preview et production sont verifiees sur cette base.
+3. La top bar mobile n'occupe plus un bloc disproportionne et ne wrap plus comme une nav desktop.
+4. Les docs actives parlent du vrai site OVH/Astro actuel.
+5. Preview et production sont verifiees sur cette base.
