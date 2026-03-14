@@ -74,7 +74,8 @@ Utilisateur: `ecobsoleiq`
 2. Préparer les identifiants (hors repo):
    - Copier `.env.ftp.example` vers `.env.ftp`
    - Remplacer `FTP_PASS=...` par le vrai mot de passe
-   - Garder `FTP_REMOTE_DIR=/www` (recommandé OVH mutualisé)
+   - Garder `FTP_REMOTE_DIR=/www` en FTP
+   - Ne pas réutiliser ici le chemin absolu SFTP ` /home/ecobsoleiq/www `
    - `source .env.ftp` (ou exporter `FTP_PASS` / `FTP_HOST` en variable d'env)
 3. Déploiement via script:
    - `FTP_PASS='<ton_mot_de_passe>' FTP_REMOTE_DIR='/www' npm run deploy:ftp`
@@ -89,7 +90,9 @@ Utilisateur: `ecobsoleiq`
 Notes:
 - Le script utilise `lftp`; installe-le si absent: `brew install lftp` ou `apt-get install lftp`.
 - Le script refuse de synchroniser vers `/` par sécurité (utiliser `/www`).
-- Si ton host pointe vers un sous-répertoire, ajuste `FTP_REMOTE_DIR` (ex: `/www/`).
+- Sur cet hébergement OVH, le chroot FTP fait que le docroot public se référence en FTP comme `/www`, alors qu'en SFTP il apparaît comme `/home/ecobsoleiq/www`.
+- Mélanger les deux crée un faux arbre du type `/home/ecobsoleiq/home/ecobsoleiq/www/...`, hors docroot web.
+- Si ton host pointe vers un sous-répertoire, ajuste `FTP_REMOTE_DIR` à partir de la racine FTP (ex: `/www/preview`).
 - Aucune donnée sensible n’est hardcodée dans le script (mot de passe via `FTP_PASS` uniquement).
 
 Exemple 1-liner (via fichier local `.env.ftp`):

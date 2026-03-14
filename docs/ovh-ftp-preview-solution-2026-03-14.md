@@ -14,6 +14,18 @@ Le runner :
 - choisit la cible `preview` ou `production`
 - synchronise `dist/` via `lftp`
 
+## Point critique OVH
+
+Sur cet hebergement, le chemin valide depend du protocole :
+- FTP : `/www`
+- SFTP : `/home/ecobsoleiq/www`
+
+Il ne faut pas reutiliser le chemin absolu SFTP dans le flux FTP.
+Sinon OVH cree un arbre imbrique du type :
+- `/home/ecobsoleiq/home/ecobsoleiq/www/...`
+
+qui n'est pas le docroot public.
+
 ## Secrets GitHub requis
 
 - `OVH_FTP_HOST`

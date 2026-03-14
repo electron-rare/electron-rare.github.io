@@ -49,6 +49,13 @@ if [[ "$FTP_REMOTE_DIR" != /* ]]; then
   FTP_REMOTE_DIR="/$FTP_REMOTE_DIR"
 fi
 
+if [[ "$FTP_REMOTE_DIR" == /home/* ]]; then
+  echo "Refusing FTP sync to an absolute server filesystem path: '$FTP_REMOTE_DIR'."
+  echo "On OVH FTP, use the chrooted path instead: '/www' or '/www/<subdir>'."
+  echo "Example: SFTP uses '/home/ecobsoleiq/www', but FTP must use '/www'."
+  exit 1
+fi
+
 if [[ "$FTP_REMOTE_DIR" == "/" && "${ALLOW_FTP_ROOT_SYNC:-0}" != "1" ]]; then
   echo "Refusing FTP sync to '/'."
   echo "Set FTP_REMOTE_DIR='/www' (recommended for OVH web hosting)."
