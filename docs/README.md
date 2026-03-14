@@ -45,34 +45,15 @@ Repo: `/home/zacus/electron-rare-preview-ovh`
 
 ## Docs historiques a ne plus traiter comme source de vérité
 
-- `github-pages-deploy.md`
-- `deploy-runbook-gh-ovh-2026-03-02.md`
-- `acquisition-seo-plan.md`
-- `INDEX-AUDIT-DOCUMENTS-2026-03-02.md`
-- `README-AUDIT-2026-03-02.md`
-- `QUICK-REFERENCE-2026-03-02.md`
-- `dual-deployment-execution-plan.md`
-- `implementation-plan-dual-hosting-2026-03-02.md`
-- `da-progress-log-2026-03-02.md`
-- `audit-plan-amelioration-2026-03-02.md`
-- `audit-approfondi-webdesign-webmarketing-2026-03-02.md`
-- `QUICK-REFERENCE-2026-03-02.md`
-- `README-AUDIT-2026-03-02.md`
-- `home-copy-sheet-v1-2026-03-02.md`
-- `figma-da-six-variants-github.md`
-- `top8-ui-reference-todos.md`
-- `wireflow-conversion-da00.md`
-- `sprint-c-kpi-experiments-2026-03-02.md`
-- `da-benchmark-industrie-creative-2026-03-02.md`
-- `ga4-gtm-setup-sprint-c-2026-03-02.md`
-- `figma-da-v1-v10-innovation-reset.md`
-- `figma-da-proposals.md`
-- `figma-web-parity-checklist-2026-03-02.md`
-- `asset-production-backlog-2026-03-02.md`
-- `TL-DR-2026-03-02.md`
-- `webdesign-responsive-modern.md`
-- `recherche-documentaire-index.md`
-- `logo-integration-runbook.md`
+- archive principale:
+  - `docs/archive/2026-03-legacy-plans/README.md`
+  - `docs/archive/2026-03-legacy-plans/`
+
+Contenu archive:
+- anciens runbooks GitHub Pages et double hebergement
+- audits et quick references de debut mars 2026
+- variantes Figma, wireflows, benchmarks et backlogs d'assets
+- anciens snapshots KPI, GTM et copy sheets
 
 Ces documents restent utiles comme archive de contexte, mais ils ont ete ecrits a un moment ou:
 - GitHub Pages etait encore traite comme prod active

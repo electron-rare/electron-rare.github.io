@@ -43,6 +43,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - [x] Runbooks et plans legacy les plus confus recales en mode historique ou remplaces par des versions actives.
 - [x] Les gros audits et plans de transition restants sont maintenant bannieres comme historiques pour eviter les faux redemarrages.
 - [x] Les benchmarks, plans Figma, snapshots KPI et backlogs d'assets secondaires sont eux aussi recales comme archives historiques.
+- [x] Les docs historiques sont maintenant deplacees physiquement dans `docs/archive/2026-03-legacy-plans/`.
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 - [ ] Confirmer visuellement depuis un navigateur humain que `www` sert bien la nouvelle home sur tous les points d'acces.
@@ -85,7 +86,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - [x] Mettre en place un point d'entree documentaire actif et reclasser les runbooks les plus critiques.
 - [ ] Nettoyer le reste des references legacy a l'interieur meme des archives secondaires quand ce sera utile.
 - [ ] Mesurer LCP et budget media de la variante blanche en conditions reelles.
-- [ ] Archiver les plans anterieurs devenus purement historiques.
+- [x] Archiver les plans anterieurs devenus purement historiques.
 
 ## Regles de pilotage
 - Preview d'abord, production ensuite.
