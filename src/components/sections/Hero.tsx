@@ -1,5 +1,6 @@
 import * as React from 'react';
 import type { CtaLink } from '@/lib/types';
+import { withSiteBase } from '@/lib/site';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 
 const heroCtas: CtaLink[] = [
@@ -24,6 +25,7 @@ const heroCtas: CtaLink[] = [
 ];
 
 const HERO_TITLE_WORDS = ['Conception', 'electronique', 'sur mesure'];
+const assetPath = (value: string) => withSiteBase(value);
 
 const HERO_VARIANT_ASSETS: Record<
   string,
@@ -45,18 +47,18 @@ const HERO_VARIANT_ASSETS: Record<
   }
 > = {
   v12: {
-    routingDesktopWebp: '/assets/da/openai/hero-pcb-routing-map-v2.webp',
-    routingMobileWebp: '/assets/da/openai/hero-pcb-routing-map-mobile-low-noise-v2.webp',
-    routingDesktop: '/assets/da/openai/hero-pcb-routing-map-v2.png',
-    routingMobile: '/assets/da/openai/hero-pcb-routing-map-mobile-low-noise-v2.png',
-    instrumentDesktopWebp: '/assets/da/openai/hero-instrument-panel-v2.webp',
-    instrumentMobileWebp: '/assets/da/openai/hero-instrument-panel-mobile-low-noise-v2.webp',
-    instrumentDesktop: '/assets/da/openai/hero-instrument-panel-v2.png',
-    instrumentMobile: '/assets/da/openai/hero-instrument-panel-mobile-low-noise-v2.png',
-    notebookDesktopWebp: '/assets/da/openai/hero-carnet-labo-open-v2.webp',
-    notebookMobileWebp: '/assets/da/openai/carnet-labo-ouvert.webp',
-    notebookDesktop: '/assets/da/openai/hero-carnet-labo-open-v2.png',
-    notebookMobile: '/assets/da/openai/carnet-labo-ouvert.png',
+    routingDesktopWebp: assetPath('/assets/da/openai/hero-pcb-routing-map-v2.webp'),
+    routingMobileWebp: assetPath('/assets/da/openai/hero-pcb-routing-map-mobile-low-noise-v2.webp'),
+    routingDesktop: assetPath('/assets/da/openai/hero-pcb-routing-map-v2.png'),
+    routingMobile: assetPath('/assets/da/openai/hero-pcb-routing-map-mobile-low-noise-v2.png'),
+    instrumentDesktopWebp: assetPath('/assets/da/openai/hero-instrument-panel-v2.webp'),
+    instrumentMobileWebp: assetPath('/assets/da/openai/hero-instrument-panel-mobile-low-noise-v2.webp'),
+    instrumentDesktop: assetPath('/assets/da/openai/hero-instrument-panel-v2.png'),
+    instrumentMobile: assetPath('/assets/da/openai/hero-instrument-panel-mobile-low-noise-v2.png'),
+    notebookDesktopWebp: assetPath('/assets/da/openai/hero-carnet-labo-open-v2.webp'),
+    notebookMobileWebp: assetPath('/assets/da/openai/carnet-labo-ouvert.webp'),
+    notebookDesktop: assetPath('/assets/da/openai/hero-carnet-labo-open-v2.png'),
+    notebookMobile: assetPath('/assets/da/openai/carnet-labo-ouvert.png'),
     routingCaption: 'Architecture pcb',
     instrumentCaption: 'Appareil de mesure (asset)'
   }

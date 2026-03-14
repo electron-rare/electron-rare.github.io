@@ -1,4 +1,8 @@
+import { withSiteBase } from '../lib/paths';
+
 export function LabHomePage() {
+  const labPublicPath = `${withSiteBase('/lab/')}`;
+
   return (
     <section className="lab-panel">
       <p className="lab-kicker">Module C</p>
@@ -18,7 +22,7 @@ export function LabHomePage() {
         <article>
           <h2>Contrat d'integration</h2>
           <p>
-            Chemin public: <code>/lab/</code>. Deploiement via build Vite, independent du template statique.
+            Chemin public: <code>{labPublicPath}</code>. Deploiement via build Vite, independent du template statique.
           </p>
         </article>
       </div>

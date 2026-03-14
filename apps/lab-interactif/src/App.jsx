@@ -2,13 +2,14 @@ import { NavLink, Route, Routes } from 'react-router-dom';
 import { LabHomePage } from './pages/LabHomePage';
 import { SignalsPage } from './pages/SignalsPage';
 import { PrototypesPage } from './pages/PrototypesPage';
+import { withSiteBase } from './lib/paths';
 
 export function App() {
   return (
     <div className="lab-app">
       <header className="lab-header">
         <div className="lab-shell">
-          <a className="lab-brand" href="/">
+          <a className="lab-brand" href={withSiteBase('/')}>
             Retour site principal
           </a>
           <nav aria-label="Navigation lab">

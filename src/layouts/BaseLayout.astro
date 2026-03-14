@@ -1,5 +1,14 @@
 ---
-import { GTM_CONTAINER_ID_DEFAULT, SITE_META, SITE_OG_IMAGE_URL, SITE_URL } from '@/lib/site';
+import {
+  CANONICAL_URL,
+  GTM_CONTAINER_ID_DEFAULT,
+  PUBLIC_SITE_ROOT_URL,
+  SITE_IS_SUBPATH_BUILD,
+  SITE_META,
+  SITE_OG_IMAGE_URL,
+  stripSiteBase,
+  withSiteBase
+} from '@/lib/site';
 
 interface Props {
   title?: string;
@@ -11,25 +20,28 @@ const {
   description = SITE_META.description
 } = Astro.props;
 
-const canonical = SITE_URL;
+const pagePath = stripSiteBase(Astro.url.pathname);
+const canonical = new URL(pagePath, CANONICAL_URL).href;
+const pageUrl = new URL(pagePath, PUBLIC_SITE_ROOT_URL).href;
+const robotsContent = SITE_IS_SUBPATH_BUILD ? 'noindex,nofollow,noarchive' : 'index,follow,max-image-preview:large';
 const gtmId = import.meta.env.PUBLIC_GTM_CONTAINER_ID || GTM_CONTAINER_ID_DEFAULT;
 const structuredDataJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'WebSite',
-      '@id': `${canonical}#website`,
-      url: canonical,
+      '@id': `${CANONICAL_URL}#website`,
+      url: CANONICAL_URL,
       name: "L'électron rare",
       inLanguage: 'fr-FR',
       description: SITE_META.description
     },
     {
       '@type': 'Organization',
-      '@id': `${canonical}#organization`,
+      '@id': `${CANONICAL_URL}#organization`,
       name: "L'électron rare",
-      url: canonical,
-      logo: `${canonical}assets/brand/logo-mark.png`,
+      url: CANONICAL_URL,
+      logo: new URL('assets/brand/logo-mark.png', CANONICAL_URL).href,
       sameAs: [
         'https://fr.linkedin.com/in/electron-rare',
         'https://www.malt.com/profile/clementsaillant',
@@ -38,15 +50,15 @@ const structuredDataJsonLd = JSON.stringify({
     },
     {
       '@type': 'Person',
-      '@id': `${canonical}#person`,
+      '@id': `${CANONICAL_URL}#person`,
       name: 'Clément Saillant',
       alternateName: "L'électron rare",
-      url: canonical,
+      url: CANONICAL_URL,
       jobTitle: 'Concepteur en création électronique, design produit et systèmes expérimentaux',
       description:
         "Codeur créatif, itérateur IA et inventeur de systèmes : création électronique, performances audiovisuelles et collaborations studio sous l'identité L'électron rare.",
       worksFor: {
-        '@id': `${canonical}#organization`
+        '@id': `${CANONICAL_URL}#organization`
       },
       sameAs: [
         'https://fr.linkedin.com/in/electron-rare',
@@ -66,20 +78,20 @@ const structuredDataJsonLd = JSON.stringify({
     <title>{title}</title>
     <meta name="theme-color" content={SITE_META.themeColor} />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={withSiteBase('/favicon.svg')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={withSiteBase('/favicon-32x32.png')} />
+    <link rel="icon" type="image/png" sizes="16x16" href={withSiteBase('/favicon-16x16.png')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={withSiteBase('/apple-touch-icon.png')} />
+    <link rel="shortcut icon" href={withSiteBase('/favicon.ico')} />
 
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="robots" content={robotsContent} />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="L'électron rare" />
     <meta property="og:title" content={title} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:description" content={SITE_META.ogDescription} />
     <meta property="og:image" content={SITE_OG_IMAGE_URL} />
     <meta property="og:image:width" content="1200" />
@@ -410,62 +422,6 @@ const structuredDataJsonLd = JSON.stringify({
           });
           window.addEventListener('pagehide', flushInp);
         }
-      })();
-    </script>
-
-    <script is:inline>
-      (function () {
-        var root = document.documentElement;
-        var key = "lelectron-theme";
-        var defaultTheme = "default";
-        var lightTheme = 'light';
-        var highContrastTheme = 'high-contrast';
-        var themes = [defaultTheme, lightTheme, highContrastTheme];
-        // Prefer the atelier (light) theme by default; allow cycling to standard + high contrast.
-        var preferred = window.matchMedia && window.matchMedia('(prefers-contrast: more)').matches ? highContrastTheme : lightTheme;
-
-        var labelForTheme = function (theme) {
-          if (theme === lightTheme) {
-            return 'Mode contraste';
-          }
-          if (theme === highContrastTheme) {
-            return 'Mode standard';
-          }
-          return 'Mode clair';
-        };
-
-        var applyTheme = function (theme) {
-          root.setAttribute('data-theme', theme);
-          window.localStorage.setItem(key, theme);
-          var button = document.querySelector('[data-theme-toggle]');
-          if (!button) {
-            return;
-          }
-
-          button.textContent = labelForTheme(theme);
-          button.setAttribute('aria-pressed', theme === highContrastTheme ? 'true' : 'false');
-        };
-
-        var toggleTheme = function () {
-          var current = root.getAttribute('data-theme') || defaultTheme;
-          var index = themes.indexOf(current);
-          var nextTheme = themes[(index + 1) % themes.length];
-          applyTheme(nextTheme);
-        };
-
-        var stored = window.localStorage.getItem(key);
-        if (stored === defaultTheme || stored === lightTheme || stored === highContrastTheme) {
-          root.setAttribute('data-theme', stored);
-        } else {
-          root.setAttribute('data-theme', preferred);
-        }
-
-        var button = document.querySelector('[data-theme-toggle]');
-        if (button) {
-          button.addEventListener('click', toggleTheme);
-        }
-
-        applyTheme(root.getAttribute('data-theme') || defaultTheme);
       })();
     </script>
 
