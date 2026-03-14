@@ -10,7 +10,7 @@ function resolveBaseUrl() {
   }
 
   if (target === 'production' || target === 'prod') {
-    return process.env.PUBLIC_SITE_URL_PROD || process.env.PUBLIC_SITE_URL;
+    return process.env['PUBLIC_SITE_URL_PROD'] || process.env.PUBLIC_SITE_URL;
   }
 
   throw new Error(`Unknown target "${target}". Use "preview" or "production".`);

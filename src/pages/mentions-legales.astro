@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@/styles/global.css';
 import '@/styles/home-workbench.css';
+import SiteHeader from '@/components/SiteHeader.astro';
 import { withSiteBase } from '@/lib/site';
 
 const title = "Mentions légales — L'électron rare";
@@ -13,25 +14,16 @@ const formationHref = withSiteBase('/formation/');
 const contactHref = withSiteBase('/#contact');
 const labHref = withSiteBase('/lab/');
 const mentionsHref = withSiteBase('/mentions-legales/');
+const headerItems = [
+  { href: homeAboutHref, label: 'Approche' },
+  { href: homeMissionsHref, label: 'Missions' },
+  { href: formationHref, label: 'Formation' },
+  { href: contactHref, label: 'Contact', desktopOnly: true }
+];
 ---
 
 <BaseLayout title={title} description={description}>
-  <header class="sticky top-0 z-30 site-nav">
-    <div class="site-shell figma-lab-nav-row">
-      <a href={homeHref} class="figma-lab-nav-title">
-        <span>L'électron rare</span>
-        <span class="figma-lab-nav-kicker">Design électronique · Consulting · Formation</span>
-      </a>
-      <nav aria-label="Navigation principale">
-        <ul class="figma-lab-nav-list">
-          <li><a href={homeAboutHref} class="figma-lab-nav-link site-navlink">Approche</a></li>
-          <li><a href={homeMissionsHref} class="figma-lab-nav-link site-navlink">Missions</a></li>
-          <li><a href={formationHref} class="figma-lab-nav-link site-navlink">Formation</a></li>
-          <li><a href={contactHref} class="figma-lab-nav-link site-navlink">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <SiteHeader brandHref={homeHref} items={headerItems} quickHref={contactHref} />
 
   <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
 

@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@/styles/global.css';
 import '@/styles/home-workbench.css';
+import SiteHeader from '@/components/SiteHeader.astro';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
 import { CaseStudies } from '@/components/sections/CaseStudies';
@@ -14,27 +15,18 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 const formationHref = withSiteBase('/formation/');
 const labHref = withSiteBase('/lab/');
 const mentionsHref = withSiteBase('/mentions-legales/');
+const headerItems = [
+  { href: '#a-propos', label: 'Approche' },
+  { href: '#graphic-sprints-title', label: 'Missions' },
+  { href: formationHref, label: 'Formation' },
+  { href: labHref, label: 'Lab', attrs: trackAttrs(TRACK_EVENTS.ctaLabInteractifOpen, labHref) },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#contact', label: 'Contact', desktopOnly: true }
+];
 ---
 
 <BaseLayout>
-  <header class="sticky top-0 z-30 site-nav">
-    <div class="site-shell figma-lab-nav-row">
-      <a href="#top" class="figma-lab-nav-title">
-        <span>L'électron rare</span>
-        <span class="figma-lab-nav-kicker">Design électronique · Consulting · Formation</span>
-      </a>
-      <nav aria-label="Navigation principale">
-        <ul class="figma-lab-nav-list">
-          <li><a href="#a-propos" class="figma-lab-nav-link site-navlink">Approche</a></li>
-          <li><a href="#graphic-sprints-title" class="figma-lab-nav-link site-navlink">Missions</a></li>
-          <li><a href={formationHref} class="figma-lab-nav-link site-navlink">Formation</a></li>
-          <li><a href={labHref} class="figma-lab-nav-link site-navlink" {...trackAttrs(TRACK_EVENTS.ctaLabInteractifOpen, labHref)}>Lab</a></li>
-          <li><a href="#faq" class="figma-lab-nav-link site-navlink">FAQ</a></li>
-          <li><a href="#contact" class="figma-lab-nav-link site-navlink">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
 
   <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
     <section class="structure-grid structure-grid--hero" data-reveal>

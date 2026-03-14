@@ -533,6 +533,75 @@ const structuredDataJsonLd = JSON.stringify({
 
     <script is:inline>
       (function () {
+        var menus = Array.prototype.slice.call(document.querySelectorAll('[data-nav-menu]'));
+        if (!menus.length) {
+          return;
+        }
+
+        var syncMenuState = function (menu) {
+          var summary = menu.querySelector('summary');
+          if (!summary) {
+            return;
+          }
+          summary.setAttribute('aria-expanded', menu.hasAttribute('open') ? 'true' : 'false');
+        };
+
+        var closeMenu = function (menu) {
+          if (!menu.hasAttribute('open')) {
+            return;
+          }
+          menu.removeAttribute('open');
+          syncMenuState(menu);
+        };
+
+        for (var i = 0; i < menus.length; i += 1) {
+          var menu = menus[i];
+          syncMenuState(menu);
+
+          menu.addEventListener('toggle', function () {
+            syncMenuState(this);
+          });
+
+          var links = menu.querySelectorAll('a');
+          for (var l = 0; l < links.length; l += 1) {
+            links[l].addEventListener('click', function () {
+              var parentMenu = this.closest('[data-nav-menu]');
+              if (parentMenu) {
+                closeMenu(parentMenu);
+              }
+            });
+          }
+        }
+
+        document.addEventListener('click', function (event) {
+          for (var i = 0; i < menus.length; i += 1) {
+            if (!menus[i].contains(event.target)) {
+              closeMenu(menus[i]);
+            }
+          }
+        });
+
+        document.addEventListener('keydown', function (event) {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          for (var i = 0; i < menus.length; i += 1) {
+            closeMenu(menus[i]);
+          }
+        });
+
+        window.addEventListener('resize', function () {
+          if (window.innerWidth >= 768) {
+            for (var i = 0; i < menus.length; i += 1) {
+              closeMenu(menus[i]);
+            }
+          }
+        });
+      })();
+    </script>
+
+    <script is:inline>
+      (function () {
         var items = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
         if (!items.length) {
           return;

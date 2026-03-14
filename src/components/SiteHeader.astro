@@ -1,0 +1,75 @@
+---
+interface NavItem {
+  href: string;
+  label: string;
+  current?: boolean;
+  attrs?: Record<string, string>;
+  desktopOnly?: boolean;
+}
+
+interface Props {
+  brandHref: string;
+  items: NavItem[];
+  kicker?: string;
+  quickHref?: string;
+  quickLabel?: string;
+  quickAttrs?: Record<string, string>;
+}
+
+const {
+  brandHref,
+  items,
+  kicker = 'Design électronique · Consulting · Formation',
+  quickHref,
+  quickLabel = 'Contact',
+  quickAttrs = {}
+} = Astro.props;
+---
+
+<header class="sticky top-0 z-30 site-nav site-header">
+  <div class="site-shell site-header-shell">
+    <a href={brandHref} class="site-header-brand figma-lab-nav-title">
+      <span class="site-header-brand-title">L'électron rare</span>
+      <span class="site-header-brand-kicker figma-lab-nav-kicker">{kicker}</span>
+    </a>
+
+    <div class="site-header-right">
+      {
+        quickHref && (
+          <a href={quickHref} class="site-header-quick-link figma-lab-nav-link site-navlink" {...quickAttrs}>
+            {quickLabel}
+          </a>
+        )
+      }
+
+      <details class="site-header-menu" data-nav-menu>
+        <summary class="site-header-menu-toggle" aria-label="Ouvrir la navigation principale">
+          <span class="site-header-menu-label">Menu</span>
+          <span class="site-header-menu-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </span>
+        </summary>
+
+        <nav class="site-header-primary" aria-label="Navigation principale">
+          <ul class="figma-lab-nav-list site-header-list">
+            {
+              items.map((item) => (
+                <li class:list={['site-header-item', item.desktopOnly && 'site-header-item--desktop-only']}>
+                  <a
+                    href={item.href}
+                    class:list={['figma-lab-nav-link', 'site-navlink', item.current && 'is-active']}
+                    aria-current={item.current ? 'page' : undefined}
+                    {...(item.attrs ?? {})}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
