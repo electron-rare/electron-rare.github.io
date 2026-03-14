@@ -5461,6 +5461,7 @@ input.contact-minitel-textarea:focus {
   }
 
   .site-header-right {
+    position: static;
     gap: 0.42rem;
   }
 
@@ -5497,7 +5498,11 @@ input.contact-minitel-textarea:focus {
 
   .site-header-list .figma-lab-nav-link,
   .site-header-list .site-navlink {
+    display: flex;
+    align-items: center;
     min-height: 2.875rem;
+    min-block-size: 2.875rem;
+    block-size: 2.875rem;
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
     padding-inline: 0.95rem;
