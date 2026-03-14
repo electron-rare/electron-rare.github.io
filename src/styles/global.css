@@ -5191,3 +5191,169 @@ input.contact-minitel-textarea:focus {
   }
 
 }
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .hero-bg-photo {
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.1) 0%, transparent 82%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.1) 0%, transparent 82%);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .hero-bg-photo img {
+  filter: grayscale(0.18) contrast(1.02) brightness(1.1);
+  mix-blend-mode: multiply;
+  opacity: 0.24;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .photo-strip-img,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .video-strip-clip {
+  border: 1px solid rgba(47, 42, 37, 0.14);
+  background: #ffffff;
+  box-shadow: 0 16px 30px rgba(11, 10, 9, 0.06);
+  filter: grayscale(0.08) contrast(1);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .photo-strip-img:hover,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .video-strip-clip:hover {
+  filter: none;
+  transform: translateY(-2px);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .faq-question:focus-visible,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .faq-item summary:focus-visible {
+  outline: 2px solid #0b5d65;
+  outline-offset: 4px;
+  background: rgba(11, 93, 101, 0.06);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel {
+  border-color: rgba(47, 42, 37, 0.24);
+  background: #ffffff;
+  box-shadow:
+    0 12px 30px rgba(11, 10, 9, 0.08),
+    0 28px 48px rgba(11, 10, 9, 0.06);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-header {
+  background: linear-gradient(180deg, #f8f3eb, #efe7da);
+  border-bottom-color: rgba(11, 93, 101, 0.14);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-title-bar {
+  color: #0b5d65;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-screen {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(11, 93, 101, 0.04) 0 1px,
+      transparent 1px 5px
+    ),
+    linear-gradient(180deg, #ffffff 0%, #faf7f2 100%);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-h2 {
+  color: #0b0a09;
+  text-shadow: none;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-line {
+  color: #2f2a25;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-line--dim {
+  color: #6d645a;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-label {
+  color: #0b5d65;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-textarea,
+:root[data-da-variant="v12"][data-theme="high-contrast"] input.contact-minitel-textarea,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-input,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-select {
+  border-color: rgba(47, 42, 37, 0.18);
+  background: rgba(255, 255, 255, 0.96);
+  color: #0b0a09;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] input.contact-minitel-textarea::placeholder,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-input::placeholder {
+  color: rgba(47, 42, 37, 0.5);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-textarea:focus,
+:root[data-da-variant="v12"][data-theme="high-contrast"] input.contact-minitel-textarea:focus,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-input:focus,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-select:focus,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-tab:focus-visible,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-btn:focus-visible,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-link:focus-visible {
+  outline: none;
+  border-color: #0b5d65;
+  box-shadow: 0 0 0 3px rgba(11, 93, 101, 0.14);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-btn {
+  border-color: rgba(47, 42, 37, 0.18);
+  background: rgba(255, 255, 255, 0.96);
+  color: #0b0a09;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-btn:hover,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-btn:focus-visible {
+  background: #f5efe4;
+  color: #0b0a09;
+  box-shadow: 0 0 0 3px rgba(11, 93, 101, 0.14);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-btn--primary {
+  border-color: #0b5d65;
+  background: linear-gradient(180deg, #0b5d65, #07444a);
+  color: #ffffff;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-btn--primary:hover,
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-btn--primary:focus-visible {
+  background: linear-gradient(180deg, #0c6a73, #085056);
+  color: #ffffff;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-link {
+  color: #7f4a23;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-link:hover {
+  color: #0b5d65;
+  text-shadow: none;
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-tabs {
+  border-bottom-color: rgba(47, 42, 37, 0.14);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-tab {
+  border-color: rgba(47, 42, 37, 0.14);
+  color: rgba(47, 42, 37, 0.7);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-tab:hover {
+  color: #0b0a09;
+  background: rgba(11, 93, 101, 0.05);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-tab--active {
+  color: #0b5d65;
+  background: rgba(11, 93, 101, 0.08);
+  border-color: rgba(11, 93, 101, 0.22);
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230b5d65' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+}
+
+:root[data-da-variant="v12"][data-theme="high-contrast"] .contact-minitel-select option {
+  background: #ffffff;
+  color: #0b0a09;
+}

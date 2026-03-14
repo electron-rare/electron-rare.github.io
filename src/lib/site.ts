@@ -3,7 +3,6 @@ const normalizeUrl = (value: string) => (value.endsWith('/') ? value : `${value}
 const resolvedSiteUrl =
   import.meta.env.PUBLIC_SITE_URL ||
   process.env.PUBLIC_SITE_URL ||
-  process.env.EXTERNAL_SITE_URL ||
   'https://electron-rare.github.io/';
 
 const parsedSiteUrl = new URL(normalizeUrl(resolvedSiteUrl));
@@ -62,7 +61,7 @@ export const SITE_META = {
   twitterDescription:
     "Designer électronique embarquée freelance : prototype hardware, consulting & formation. Industries créatives · industrie · IoT.",
   ogImagePath: 'assets/og-cover.jpg',
-  themeColor: '#0b0d0c'
+  themeColor: '#ffffff'
 } as const;
 
 export const SITE_OG_IMAGE_URL = new URL(SITE_META.ogImagePath, PUBLIC_SITE_ROOT_URL).href;

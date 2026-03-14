@@ -1,4 +1,4 @@
-import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
+import { trackAttrs } from '@/lib/tracking';
 import { CASE_STUDIES } from '@/content/home-content';
 
 export function CaseStudies() {

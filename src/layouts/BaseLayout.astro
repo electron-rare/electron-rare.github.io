@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import {
   CANONICAL_URL,
   GTM_CONTAINER_ID_DEFAULT,
@@ -121,10 +121,11 @@ const structuredDataJsonLd = JSON.stringify({
 ---
 
 <!doctype html>
-<html lang="fr" data-theme="default">
+<html lang="fr" data-theme="high-contrast">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
     <!-- Fonts self-hosted — see src/styles/fonts.css -->
     <title>{title}</title>
     <meta name="theme-color" content={SITE_META.themeColor} />
@@ -135,7 +136,7 @@ const structuredDataJsonLd = JSON.stringify({
     <link rel="apple-touch-icon" sizes="180x180" href={withSiteBase('/apple-touch-icon.png')} />
     <link rel="shortcut icon" href={withSiteBase('/favicon.ico')} />
 
-    <ViewTransitions />
+    <ClientRouter />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={robotsContent} />
 
@@ -220,7 +221,7 @@ const structuredDataJsonLd = JSON.stringify({
       )
     }
 
-    <a class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-black focus:px-3 focus:py-2 focus:text-white" href="#main-content">
+    <a class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-black focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-white" href="#main-content">
       Aller au contenu
     </a>
 

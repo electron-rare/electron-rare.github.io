@@ -1,191 +1,141 @@
-# Backlog DA-01 — Decision Complet
+# Backlog DA-01 - White Contrast Consolidation
 
-Date: 2026-03-02
-Source: Sprint DA-00 (brief + wireflow conversion)
+Updated: 2026-03-14
+Source: homepage Astro synchronisee avec la base OVH
 
 ## Objectif
-Implémenter la refonte complète selon le wireflow validé, sans modifier les contrats publics (anchors core, tracking, SEO).
+Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire l'ancienne variante `studio/figma` ni le vieux modele GitHub Pages statique.
 
-## Etat d'avancement DA (2026-03-02)
-- [x] Mapping section/composants finalisé en phase de refonte.
-- [x] DA-00 intégré: structure Header/Hero/Systems/Production/Conversion/Footer et zones mobiles définies.
-- [x] Contrat tokens/typographie/couleurs maintenu dans `src/styles/global.css`.
-- [x] Validation finale pré-production en cours (preflight + checks build locaux + captures Figma consolidées).
-- [ ] Plan de version web hors GitHub réservé (build Astro externe) en attente de besoin produit.
-- [ ] Revue de dérive visuelle et conversion à refaire sur chaque release majeure.
+## Sources de verite
+- Structure homepage: `src/pages/index.astro`
+- Sections actives: `Hero`, `About`, `CaseStudies`, `GraphicSprints`, `Faq`, `Contact`
+- Copy et donnees: `src/content/home-content.ts`
+- Theme et layout: `src/layouts/BaseLayout.astro`, `src/styles/global.css`, `src/styles/home-workbench.css`
+- Tracking: `src/lib/tracking.ts` + `src/layouts/BaseLayout.astro`
+- Deploiement: `docs/ovh-ftp-preview-solution-2026-03-14.md`
 
-## 1) Mapping section -> composants
+## Decisions DA
+- Theme par defaut: `high-contrast` clair, oriente blanc/ivoire.
+- Palette de travail:
+  - fonds `#ffffff`, `#faf7f2`, `#f5efe4`
+  - texte `#0b0a09`, `#2f2a25`
+  - accent froid `#0b5d65`
+  - accent chaud `#7f4a23`
+- Bouton contraste: non expose au public. Pas de toggle tant qu'il n'existe pas comme fonctionnalite produit reelle.
+- Rendition souhaitee:
+  - surfaces blanches nettes
+  - contraste fort mais pas clinique
+  - traces teal/rust en accent, pas en fond systematique
+  - motion reduite et discrète
 
-1. `Header_ControlRoom`
+## Mapping section -> composants reels
+1. `Header_Navigation`
 - Cible: `src/pages/index.astro` + `src/layouts/BaseLayout.astro`
-- Eléments:
-  - nav niveau 1 (labels libres)
-  - bus posture (niveau 2)
-  - status + contrast toggle
+- Elements:
+  - marque
+  - nav anchors
+  - acces direct formation, lab, FAQ, contact
 
-2. `Hero_Impact`
+2. `Hero_Conversion`
 - Cible: `src/components/sections/Hero.tsx`
-- Eléments:
-  - hook visuel
-  - manifeste 3 lignes
-  - CTA dual rail
+- Elements:
+  - promesse
+  - statut/disponibilite
+  - CTA contact
+  - fond photo + lockup
 
-3. `Identity_Proof`
-- Cible: `src/components/sections/IdentityLab.tsx` + `TrustStrip.tsx`
-- Eléments:
-  - identité studio
-  - preuves rapides
+3. `About_Approche`
+- Cible: `src/components/sections/About.tsx`
+- Elements:
+  - portrait
+  - expertise
+  - secteurs
+  - chips d'offres / familles de sujets
 
-4. `Systems_Block`
-- Cible: `FlowDiagram.tsx` + `SystemPipeline.tsx` + `About.tsx`
-- Eléments:
-  - explication process
-  - architecture systeme
+4. `Cases_Proof`
+- Cible: `src/components/sections/CaseStudies.tsx`
+- Elements:
+  - cas concrets
+  - preuve de terrain
+  - articulation industrie / culture / produit
 
-5. `Production_Block`
-- Cible: `Projects.tsx` + `ProjectsTimeline.tsx` + `LabNotes.tsx`
-- Eléments:
-  - portfolio systemique
-  - chronologie
-  - protocole Intent->Result
-
-6. `Conversion_Block`
-- Cible: `TrustStrip.tsx` + `Contact.tsx`
-- Eléments:
-  - reassurance
-  - contact 2 voies (LinkedIn/Malt)
-
-7. `Footer_Knowledge`
+5. `Field_Media`
 - Cible: `src/pages/index.astro` + `src/styles/global.css`
-- Eléments:
-  - liens process/stack/contact
+- Elements:
+  - photo strip
+  - video strip
 
-## 2) Mapping token -> CSS var
+6. `Mission_Formats`
+- Cible: `src/components/sections/GraphicSprints.tsx`
+- Elements:
+  - 3 formats
+  - progression
+  - CTA de contact
 
-Fichier cible: `src/styles/global.css`
+7. `Faq_Trust`
+- Cible: `src/components/sections/Faq.astro`
+- Elements:
+  - details/summary
+  - reponse rapide aux objections
 
-### Palette
-- `--bg`, `--bg-elevated`, `--surface`, `--surface-soft`, `--surface-alt`
-- `--trace-cyan`, `--trace-magenta`, `--trace-green`, `--trace-amber`
-- `--electric`, `--accent`, `--signal`
-- `--line`, `--line-soft`, `--line-edge`, `--line-rail`
+8. `Contact_ClearTerminal`
+- Cible: `src/components/sections/Contact.astro`
+- Elements:
+  - bloc contact type minitel mais en rendition claire
+  - email draft
+  - formulaire direct
+  - LinkedIn
 
-### Typographie
-- display serif editorial
-- body sans
-- micro labels mono
+9. `Footer_Knowledge`
+- Cible: `src/pages/index.astro`
+- Elements:
+  - navigation secondaire
+  - ressources
+  - contact direct
 
-### Layout
-- `site-shell` largeur max desktop
-- grilles desktop/mobile (1440/390)
-- rules sections `structure-grid` / `structure-cell`
+## Backlog P0
+- [ ] Forcer la cascade sur la DA blanche dans `BaseLayout.astro`, `site.ts`, `global.css`, `home-workbench.css`.
+- [ ] Relever les derniers blocs sombres restants: `hero-bg-photo`, `photo-strip`, `video-strip`, `contact-minitel`, FAQ focus.
+- [ ] Verifier la lisibilite des CTA sur blanc.
+- [ ] Verifier que la home et `formation` partagent bien le meme socle visuel.
 
-## 3) Mapping interaction -> motion rule
+## Backlog P1
+- [ ] Supprimer les references documentaires a `#projets`, Malt, GitHub Pages static prod, dual-rail hero, contrast toggle.
+- [ ] Verifier les events `data-track` sur les CTA actifs uniquement.
+- [ ] Valider preview OVH puis prod.
 
-### Navigation
-- progress line header
-- etat actif sur section visible
-- micro-jitter actif uniquement sur lien actif
+## Backlog P2
+- [ ] Supprimer les reliquats `.site-contrast-toggle` du CSS global.
+- [ ] Evaluer si un vrai theme secondaire doit exister plus tard ou si le mode blanc reste la seule version publique.
+- [ ] Consolider une archive explicite des anciens artefacts DA pour eviter toute reintroduction.
 
-### Sections
-- reveal par bloc (opacity + translateY)
-- cadence differenciee par bloc (Hero > Systems > Conversion)
-
-### CTA
-- etat hover/focus/active explicite
-- primaire > secondaire visuellement
-
-### Accessibilite motion
-- `prefers-reduced-motion`: desactiver animations non essentielles
-
-## 4) Interfaces internes a standardiser
-
-### CTA contract
-Type logique:
-- `label: string`
-- `href: string`
-- `event: TrackEventName`
-- `destination: string`
-- `external?: boolean`
-
-Usage:
-- Hero, About, Projects, Contact, Trust utilisent le meme contrat.
-
-### Proof card contract
-Type logique:
-- `label: string`
-- `value: string`
-- `priority?: "high" | "medium"`
-
-### Timeline/LabNotes contract
-Type logique:
-- `date/year`
-- `title`
-- `category`
-- `summary`
-- `href/event/destination` optionnels
-
-## 5) Gates de validation DA-01
-
+## Gates de validation
 ### Gate Build
 - `npm run typecheck`
-- `npm run build`
-- `npm run preflight:pages`
+- `npm run build:external`
 - `npm run tracking:check`
 
 ### Gate UX
-- ancres `#a-propos`, `#projets`, `#contact` fonctionnelles
-- CTA primary/secondary lisibles
-- mobile 390 sans overflow
-- validation 390/768/1024/1440 conservée dans evidence
-
-### Gate Tracking
-- events declenches sans duplication
-- params `event_category/event_label/destination` conformes
+- Aucun panneau critique ne reste sur fond sombre.
+- Mobile 390/768 sans debordement.
+- CTA primary/secondary lisibles sur fond clair.
+- Contact completement utilisable.
 
 ### Gate Accessibilite
-- focus visible
-- ordre tab coherent
-- reduced-motion OK
+- Focus visible sur nav, FAQ, CTA, formulaire.
+- Contraste texte/fond conforme sur les composants critiques.
+- `prefers-reduced-motion` conserve.
 
-### Gate SEO
-- robots/sitemap accessibles
-- canonical + OG/Twitter presents
+### Gate Tracking
+- Aucun event legacy mort.
+- Clics hero/contact/lab/linkedin/email visibles dans la dataLayer.
 
-## 6) Ordre d’implementation recommande
+### Gate Deploy
+- Preview OK avant production.
+- Verification live des URL et ancres.
 
-### P0
-1. Recomposer la structure de `src/pages/index.astro`
-2. Harmoniser tokens/layout de `src/styles/global.css`
-3. Verifier ancres core + tracking
-
-### P1
-1. Harmoniser les sections (Hero, Systems, Production, Conversion)
-2. Finaliser footer knowledge/protocoles
-3. QA responsive + accessibilite
-
-### P2
-1. Storybook coverage structure + sections
-2. Optimisation bundle/motion
-
-## 7) Risques et parades
-
-1. Risque: surcharge visuelle
-- Parade: matrice arbitrage DA vs conversion appliquee
-
-2. Risque: regression tracking
-- Parade: tests manuels click-by-click + check dataLayer
-
-3. Risque: degrade mobile
-- Parade: validation systematique 390/768/1024/1440
-
-## 8) Version duale (prod immédiate + web hors GitHub)
-- Production immédiate: GitHub Pages conserve la version `index.html/styles.css/script.js` pour stabilité.
-- Version web hors GitHub: build Astro `dist/` prévu comme variante de long terme (non déployé pour le moment).
-- Règle: aucun changement d'UI ne doit diverger sans mise à jour explicite des 2 cahiers de preuve (scope statique + scope web externe).
-
-## 9) Definition of done DA-01
-1. Structure cible implementee en code.
-2. DA conforme au brief v2.2.0 (reset innovant).
-3. Contrats publics preserves.
-4. Tests passes et evidence mise a jour.
+## Definition of done
+1. Le site public sert par defaut une version blanc contraste coherente.
+2. Aucun element critique de l'ancienne DA sombre ne reste visible.
+3. Les docs actives parlent du vrai site OVH/Astro actuel.
+4. Preview et production sont verifiees sur cette base.

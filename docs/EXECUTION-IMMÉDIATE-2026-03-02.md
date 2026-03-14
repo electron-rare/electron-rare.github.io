@@ -1,141 +1,65 @@
-# EXECUTIVE SUMMARY — Actions à faire immédiatement
+# EXECUTION IMMEDIATE - White Contrast Rollout
 
-**Date** : 2 mars 2026  
-**Sévérité** : 🔴 CRITIQUE — Impact direct sur conversion  
-**Effort estimé** : 48-72h pour P0/P1
+Updated: 2026-03-14
+Severite: critique pour coherence visuelle et lisibilite
 
----
+## 3 actions prioritaires
 
-## 🎯 3 ACTIONS PRIORITAIRES (Ce week-end)
+### 1. Basculer tout le site sur une DA blanche par defaut
+Probleme:
+- la home synchronisee OVH est la bonne base, mais une partie du CSS reste encore oriente sombre
+- le runtime pointait encore vers `data-theme="default"`
 
-### **1️⃣ Optimiser images hero — GAIN IMMÉDIAT +30-40% CONVERSION**
+Action:
+- passer le layout sur un theme clair par defaut
+- reposer les surfaces principales sur blanc/ivoire
+- reprendre les accents en teal/rust
+- traiter explicitement les ilots a risque:
+  - hero photo
+  - photo strip
+  - video strip
+  - `contact-minitel`
+  - FAQ focus
 
-**Problème** :
-- Image hero = **6.4 MB** (3.1 MB + 2.3 MB)
-- LCP actuel : **~3.5 secondes**
-- Mobile users : **40%+ bounce avant voir CTA**
+Fichiers cle:
+- `src/layouts/BaseLayout.astro`
+- `src/lib/site.ts`
+- `src/styles/global.css`
+- `src/styles/home-workbench.css`
 
-**Solution** (3-4h) :
+### 2. Rebuilder et verifier le preview OVH
+Action:
+- builder la variante preview avec le bon `PUBLIC_SITE_URL`
+- verifier que tous les liens et assets sortent en `/preview/`
+- publier sur OVH seulement apres build propre
+
+Commande de base:
 ```bash
-# 1. Installer convertisseur
-brew install imagemagick webp
-
-# 2. Convertir 2 images hero en AVIF (meilleur ratio)
-# hero-pcb-routing-map.png 3.1 MB → 160 KB AVIF
-# proof-prototype-bench.png 2.3 MB → 140 KB AVIF
-
-# 3. Ajouter responsive srcset
-# → Servir 390px/768px/1440px différentes
-
-# 4. Lazy-load secondary image
-# → Primary eager = LCP, Secondary lazy
+cd /home/zacus/electron-rare-preview-ovh
+PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
 ```
 
-**Résultat** :
-- LCP : 3.5s → **<700ms** ✅
-- Conversion : +35-45% (mobile stops bounce)
-- Page weight : 6.4 MB → **350 KB hero**
+### 3. Revalider la production actuelle apres preview
+Action:
+- tester les pages et ancres reelles du site
+- verifier la suppression du contraste sombre sur les surfaces critiques
+- confirmer tracking et meta minimums
 
-**Files à toucher** :
-- [index.html](index.html#L197-L208)
-- [script.js](script.js#L5-95)
-- `/public/assets/da/openai/*.png` (convert to AVIF/WebP)
+Routes a verifier:
+- `/`
+- `/formation/`
+- `/mentions-legales/`
+- `/lab/`
+- `/robots.txt`
+- `/sitemap.xml`
 
----
+## Cible de sortie
+- theme blanc contraste par defaut
+- contact lisible et clavier-friendly
+- preview valide avant push prod
+- docs alignees sur Astro + OVH + GitHub Actions FTP
 
-### **2️⃣ Fixer typecheck CI — Éviter futur blocage**
-
-**Problème** :
-- `npm run typecheck` échoue
-- Risque bloquer CI dans 2-3 sprints
-
-**Solution** (1h) :
-```bash
-# Modifier tsconfig.json :
-# Ajouter "exclude": ["tmp/**", "node_modules"]
-
-# Test :
-npm run typecheck  # ✅ doit passer
-```
-
-**Files** : [tsconfig.json](tsconfig.json)
-
----
-
-### **3️⃣ Valider GA4 Realtime — Confirmer acquisition fonctionne**
-
-**Problème** :
-- Tracking implémenté mais **non validé en production**
-- Risque conversion non mesurée
-
-**Solution** (1h) :
-```bash
-# 1. Ouvrir GA4 DebugView
-#    https://analytics.google.com/ → Admin → GTM-5SLM67QF
-
-# 2. Tester events live :
-#    - Visit https://electron-rare.github.io
-#    - Click CTA (Projets, Contact, LinkedIn)
-#    - Verify events appear en Realtime ✅
-
-# 3. Archive : screenshot DebugView + events log
-```
-
----
-
-## 📊 IMPACT RÉSUMÉ
-
-| Action | Complexité | Impact | Timeline |
-|--------|-----------|--------|----------|
-| **Images AVIF** | ⭐⭐ | +35% conversion | 4h |
-| **Figures responsive** | ⭐⭐⭐ | +15% mobile UX | 2h |
-| **typecheck fix** | ⭐ | Risk mitigation | 1h |
-| **GA4 validation** | ⭐ | Measurement trust | 1h |
-| **Deploy + test** | ⭐⭐ | Verification | 2h |
-| **TOTAL** | | **+50% overall UX** | **10h = 1.25 jours** |
-
----
-
-## 🚀 EXÉCUTION PROPOSÉE
-
-**Vendredi 2026-03-05** (finish line) :
-- [ ] 09:00 : images conversion start
-- [ ] 11:00 : HTML/script.js edits
-- [ ] 13:00 : typecheck fix + test build
-- [ ] 15:00 : GA4 validation + screenshot
-- [ ] 16:30 : deploy + Lighthouse verify
-- [ ] 17:30 : archive evidence + commit
-
-**Aftermath** :
-- Week-end : monitor GA4 Realtime data
-- Lundi : Lighthouse >85, LCP <2.5s validation
-
----
-
-## 💡 PROCHAINE ÉTAPE (Semaine 2)
-
-**Si images réussies (expected) :**
-1. SEO enrichissement (JSON-LD WebSite, Organization)
-2. GSC property claim + sitemap submit
-3. Monitor indexation (7 jours)
-
-**Si complications** :
-1. Revert images → fallback PNG optimisé (moins idéal mais rapide)
-2. Continue sans AVIF (WebP+PNG suffisant)
-
----
-
-## 📞 SUPPORT TOOLS
-
-**Image conversion online** (backup) :
-- https://cloudconvert.com/png-to-avif
-- https://squoosh.app/ (Google, local)
-
-**Validation** :
-- Lighthouse : Chrome DevTools F12
-- GA4 : https://analytics.google.com
-- Schema : https://search.google.com/test/rich-results
-
----
-
-**Questions ?** → Lire [docs/audit-plan-amelioration-2026-03-02.md](audit-plan-amelioration-2026-03-02.md) pour détails complets.
+## Regles
+- ne plus documenter `index.html`, `script.js`, ou GitHub Pages root files comme source de prod
+- ne plus parler de `#projets`, Malt, ou du bouton contraste
+- ne plus relancer l'ancienne DA `studio/figma`
