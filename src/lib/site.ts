@@ -55,11 +55,11 @@ export function stripSiteBase(pathname: string) {
 export const SITE_META = {
   title: "Systèmes électroniques spécifiques | L'électron rare",
   description:
-    "Conception, mise au point et fiabilisation de systèmes électroniques spécifiques. Prototypes, instrumentation, automatisme, interfaces techniques et projets multi-techniques.",
+    "Conception, mise au point et fiabilisation de systèmes électroniques spécifiques. Électronique, automatisme, énergie, stockage, instrumentation et projets multi-techniques.",
   ogDescription:
-    "L'Électron Rare conçoit et fiabilise des systèmes électroniques spécifiques, en mobilisant les partenaires adaptés quand le projet devient multi-technique.",
+    "L'Électron Rare conçoit et fiabilise des systèmes électroniques spécifiques en électronique, automatisme, énergie et stockage, avec les partenaires adaptés quand le projet devient multi-technique.",
   twitterDescription:
-    "Systèmes électroniques spécifiques : conception, mise au point, fiabilisation et coordination multi-technique avec les bons partenaires.",
+    "Électronique, automatisme, énergie, stockage : systèmes spécifiques, mise au point et coordination multi-technique avec les bons partenaires.",
   ogImagePath: 'assets/og-cover.jpg',
   themeColor: '#ffffff'
 } as const;

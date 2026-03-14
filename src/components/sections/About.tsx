@@ -28,10 +28,10 @@ export function About() {
           />
           <div className="about-intro-text">
             <p className="section-lead mb-0 mt-3">
-              L&apos;Électron Rare intervient sur des systèmes électroniques spécifiques : prototypes, instrumentation, automatisme, interfaces techniques, énergie, contrôle et intégration terrain.
+              L&apos;Électron Rare intervient sur des systèmes électroniques spécifiques : électronique, instrumentation, automatisme, énergie, stockage, optimisation, contrôle et intégration terrain.
             </p>
             <p className="mb-0 mt-3 studio-muted">
-              Je suis <strong>Clément Saillant</strong>, fondateur de <strong>L&apos;électron rare</strong>. Mon rôle n&apos;est pas de vendre “un peu d&apos;embarqué” en plus, mais de rendre possible un système électronique juste pour le besoin réel : conception, diagnostic, mise au point, prototype, reprise d&apos;existant ou fiabilisation.
+              Je suis <strong>Clément Saillant</strong>, fondateur de <strong>L&apos;électron rare</strong>. Mon rôle n&apos;est pas de vendre “un peu d&apos;embarqué” en plus, mais de rendre possible le bon système pour le besoin réel : électronique, automatisme, énergie, stockage, optimisation, diagnostic, prototype, reprise d&apos;existant ou fiabilisation.
             </p>
             <p className="mb-0 mt-3 studio-muted">
               J&apos;interviens seul quand le cœur du sujet est électronique. Quand le projet devient multi-technique, je m&apos;appuie sur les partenaires adaptés pour assembler le bon périmètre : mécanique, fabrication, logiciel, intégration, scénographie ou formation.

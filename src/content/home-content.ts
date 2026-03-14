@@ -4,10 +4,10 @@ import type { TrackEventName } from '@/lib/tracking';
 export const HERO_TITLE_WORDS = ['Systèmes électroniques spécifiques, du besoin au livrable fiable'] as const;
 
 export const ABOUT_FAMILIES = [
-  'Architecture électronique spécifique : cartes, interfaces, capteurs, alimentation, reprise d’existant, mise au point et validation.',
+  'Électronique spécifique : cartes, interfaces, capteurs, alimentation, reprise d’existant, mise au point et validation.',
   'Instrumentation, contrôle et automatisme : bancs, armoires, automates, variateurs, protocoles terrain et remise en service.',
   'Dispositifs techniques pour le réel : audio, LED, scène, installation, diffusion, robustesse terrain et intégration d’usage.',
-  'Énergie, télémétrie et systèmes connectés : mesure, batterie, collecte de données, IoT et supervision quand c’est utile.',
+  'Énergie, stockage et optimisation : mesure, batterie, conversion, supervision, télémétrie et amélioration d’exploitation.',
   'Montages multi-techniques avec partenaires : mécanique, fabrication, logiciel, intégration, scénographie et formation selon le bon périmètre.'
 ] as const;
 

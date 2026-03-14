@@ -6,8 +6,8 @@ import SiteHeader from '@/components/SiteHeader.astro';
 import { withSiteBase } from '@/lib/site';
 import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 
-const title = "Formation embarquée | L'électron rare";
-const description = "Formations sur mesure : électronique embarquée, PCB, IoT, automatisme. 1 jour, 3 jours ou programme dédié. Écoles, entreprises.";
+const title = "Formation électronique appliquée | L'électron rare";
+const description = "Formations sur mesure : électronique, automatisme, énergie, stockage, PCB, instrumentation, IoT et optimisation. 1 jour, 3 jours ou programme dédié. Écoles, entreprises.";
 const homeHref = withSiteBase('/');
 const homeAboutHref = withSiteBase('/#a-propos');
 const homeMissionsHref = withSiteBase('/#graphic-sprints-title');
@@ -22,7 +22,7 @@ const headerItems = [
 ];
 ---
 
-<BaseLayout title={title} description={description} ogDescription="Formations sur mesure en électronique embarquée : PCB, IoT, automatisme industriel. 1 jour, 3 jours ou programme dédié. Écoles, entreprises, centres de formation.">
+<BaseLayout title={title} description={description} ogDescription="Formations sur mesure en électronique, automatisme, énergie, stockage, PCB, instrumentation et IoT. 1 jour, 3 jours ou programme dédié. Écoles, entreprises, centres de formation.">
   <SiteHeader brandHref={homeHref} items={headerItems} quickHref={contactHref} />
 
   <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
@@ -30,12 +30,12 @@ const headerItems = [
     <section class="circuit-board rounded-2xl p-5 md:p-6 mt-4" data-reveal>
       <div class="circuit-title-row">
         <span class="circuit-node" aria-hidden="true"></span>
-        <h1 class="m-0 text-3xl md:text-4xl">Formation électronique embarquée</h1>
+        <h1 class="m-0 text-3xl md:text-4xl">Formation électronique appliquée</h1>
         <span class="circuit-pinline" aria-hidden="true"></span>
       </div>
 
       <p class="section-lead mb-0 mt-3">
-        Des formations pratiques, ancrées dans le terrain, pour monter en compétences sur l'électronique embarquée, la conception PCB, l'IoT et l'automatisme industriel.
+        Des formations pratiques, ancrées dans le terrain, pour monter en compétences sur l'électronique, l'automatisme, l'énergie, le stockage, la conception PCB, l'instrumentation, l'IoT et l'optimisation d'usage.
       </p>
       <p class="mb-0 mt-3 studio-muted">
         Chaque formation est construite sur mesure à partir de votre contexte réel : vos projets, vos équipes, vos contraintes. Pas de slides génériques — du bench, du schéma et du livrable.
@@ -52,13 +52,13 @@ const headerItems = [
       <div class="mt-4 rounded-xl border border-[color:var(--line)] p-3">
         <ul class="m-0 grid grid-cols-1 gap-2 p-0">
           <li class="list-none studio-chip studio-chip--cyan">
-            <strong>Entreprises industrielles</strong> — équipes R&D, bureaux d'études, techniciens de maintenance qui veulent intégrer l'embarqué dans leurs produits ou process.
+            <strong>Entreprises industrielles</strong> — équipes R&D, bureaux d'études, techniciens de maintenance qui veulent concevoir, diagnostiquer ou fiabiliser des systèmes électroniques dans leurs produits ou process.
           </li>
           <li class="list-none studio-chip studio-chip--vio">
-            <strong>Écoles et universités</strong> — BTS, IUT, grandes écoles : TP encadrés, projets tutorés, modules spécialisés en électronique embarquée.
+            <strong>Écoles et universités</strong> — BTS, IUT, grandes écoles : TP encadrés, projets tutorés, modules spécialisés en systèmes électroniques, PCB et prototypage.
           </li>
           <li class="list-none studio-chip studio-chip--pink">
-            <strong>Centres de formation</strong> — organismes souhaitant intégrer des modules électronique embarquée, IoT ou automatisme à leur catalogue.
+            <strong>Centres de formation</strong> — organismes souhaitant intégrer des modules électronique, instrumentation, énergie, stockage, IoT ou automatisme à leur catalogue.
           </li>
           <li class="list-none studio-chip studio-chip--emerald">
             <strong>Studios créatifs et compagnies</strong> — équipes techniques du spectacle vivant, de l'événementiel ou des arts numériques qui veulent gagner en autonomie.
@@ -147,7 +147,7 @@ const headerItems = [
 
       <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
         <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">Électronique embarquée</h3>
+          <h3 class="m-0 text-lg font-semibold">Systèmes électroniques et embarqués</h3>
           <p class="mt-2 mb-0 studio-muted">
             Architecture matérielle, microcontrôleurs (STM32, ESP32, Teensy), alimentation, lecture de datasheet, debug sur bench. Conformité IPC-A-610 et CEM.
           </p>
@@ -164,6 +164,13 @@ const headerItems = [
           <h3 class="m-0 text-lg font-semibold">IoT et protocoles</h3>
           <p class="mt-2 mb-0 studio-muted">
             Capteurs, télémétrie, protocoles terrain (MQTT, HTTP, VE.Direct), connectivité (WiFi, BLE, LoRa), TinyML et IA embarquée. Du capteur au dashboard.
+          </p>
+        </article>
+
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h3 class="m-0 text-lg font-semibold">Énergie, stockage et optimisation</h3>
+          <p class="mt-2 mb-0 studio-muted">
+            Batterie, BMS, télémétrie, supervision, pilotage de charges, logique d'optimisation et amélioration d'exploitation. De la mesure au système mieux réglé.
           </p>
         </article>
 
@@ -247,7 +254,7 @@ const headerItems = [
         <p class="m-0 footer-title">L'électron rare</p>
         <div class="footer-brand-meta">
           <p class="mb-0 footer-copy">
-            © 2026 Clément Saillant - design électronique embarquée, consulting, formation — industries créatives et industrie.
+            © 2026 Clément Saillant - systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.
           </p>
         </div>
       </div>

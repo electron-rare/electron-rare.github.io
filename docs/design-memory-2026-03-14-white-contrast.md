@@ -5,6 +5,7 @@ Status: active
 
 ## Decision
 La version publique de L'Electron Rare repart sur une base claire, contraste blanc, par defaut.
+Le positionnement public de reference devient : systemes electroniques specifiques, avec focales visibles sur electronique, automatisme, energie, stockage et optimisation.
 
 ## Pourquoi
 - la homepage OVH synchronisee est la bonne base produit
@@ -48,6 +49,14 @@ La version publique de L'Electron Rare repart sur une base claire, contraste bla
 - overrides DA v12: `src/styles/home-workbench.css`
 - header partage: `src/components/SiteHeader.astro`
 - fermeture et sync du menu mobile: script inline dans `src/layouts/BaseLayout.astro`
+- promesse et familles de sujets: `src/content/home-content.ts`, `src/components/sections/Hero.tsx`, `src/components/sections/About.tsx`
+
+## Positionnement actif
+- coeur: systemes electroniques specifiques
+- familles rendues visibles: electronique, automatisme, energie, stockage, optimisation
+- l'embarque reste une competence, pas le libelle principal du metier
+- les projets multi-techniques sont portes avec les partenaires adaptes
+- le lab n'est plus une surface publique produit
 
 ## Etat courant
 - preview white-contrast valide

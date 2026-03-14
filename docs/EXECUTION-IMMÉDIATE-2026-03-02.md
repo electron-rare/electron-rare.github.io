@@ -3,6 +3,12 @@
 Updated: 2026-03-14
 Severite: critique pour coherence visuelle et lisibilite
 
+## Positionnement de reference
+- systemes electroniques specifiques
+- familles visibles: electronique, automatisme, energie, stockage, optimisation
+- l'embarque reste une competence, pas le libelle principal
+- le lab n'est plus une surface publique a exposer
+
 ## 3 actions prioritaires
 
 ### 1. Finaliser la top bar mobile compacte
@@ -48,7 +54,6 @@ Routes a verifier:
 - `/`
 - `/formation/`
 - `/mentions-legales/`
-- `/lab/`
 - `/robots.txt`
 - `/sitemap.xml`
 

@@ -17,6 +17,10 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 
 ## Decisions DA
 - Theme par defaut: `high-contrast` clair, oriente blanc/ivoire.
+- Positionnement de reference:
+  - systemes electroniques specifiques
+  - familles mises en avant: electronique, automatisme, energie, stockage, optimisation
+  - l'embarque reste un sous-ensemble de l'offre, pas le titre principal
 - Palette de travail:
   - fonds `#ffffff`, `#faf7f2`, `#f5efe4`
   - texte `#0b0a09`, `#2f2a25`
@@ -43,7 +47,7 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 - Cible: `src/components/sections/Hero.tsx`
 - Elements:
   - promesse
-  - statut/disponibilite
+  - familles de competence visibles
   - CTA contact
   - fond photo + lockup
 
@@ -105,6 +109,7 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 
 ## Backlog P1
 - [ ] Supprimer les references documentaires a `#projets`, Malt, GitHub Pages static prod, dual-rail hero, contrast toggle.
+- [ ] Supprimer les references documentaires actives a `/lab/` comme surface publique produit.
 - [ ] Verifier les events `data-track` sur les CTA actifs uniquement.
 - [x] Recaler `tracking:check` sur le contrat Astro actif pour sortir des faux positifs legacy.
 - [x] Valider preview OVH.
@@ -139,7 +144,7 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 
 ### Gate Tracking
 - Aucun event legacy mort.
-- Clics hero/contact/lab/linkedin/email visibles dans la dataLayer.
+- Clics hero/contact/linkedin/email/github visibles dans la dataLayer.
 
 ### Gate Deploy
 - Preview OK avant production.

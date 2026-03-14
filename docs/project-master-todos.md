@@ -6,8 +6,9 @@ Source of truth: this file for execution priorities, plus the current code in `s
 ## Scope actif
 - Site Astro publie sur OVH via GitHub Actions FTP.
 - Preview publique sous `/preview/`, production a la racine.
-- Pages actives: `/`, `/formation/`, `/mentions-legales/`, `/lab/`, `robots.txt`, `sitemap.xml`.
+- Pages actives: `/`, `/formation/`, `/mentions-legales/`, `robots.txt`, `sitemap.xml`.
 - Direction artistique active: `white-contrast`, claire par defaut, sans bouton de bascule public.
+- Positionnement actif: systemes electroniques specifiques, avec familles visibles electronique, automatisme, energie, stockage et optimisation; pas limite a l'embarque, avec partenaires mobilises quand le projet devient multi-technique.
 - Surface a maintenir: Hero, Approche, Cas concrets, photo strip, video strip, Missions, FAQ, Contact, footer.
 
 ## Verites de reference
@@ -32,6 +33,8 @@ Source of truth: this file for execution priorities, plus the current code in `s
 - [x] Top bar mobile refondue via header partage + menu compact (`a3ccc1c`).
 - [x] Preview OVH mis a jour avec la nouvelle top bar mobile et valide publiquement (`23095540371`).
 - [x] Production OVH republiee avec la nouvelle top bar mobile et validee publiquement via GitHub Actions (`23096174775`).
+- [x] Hero, about, footer et FAQ recales sur le positionnement `systemes electroniques specifiques`.
+- [x] Signaux publics `disponible`, `freelance · France`, `UNSTABLE BY DESIGN` et exposition publique du lab retires du site.
 - [ ] White-contrast pass verifiee visuellement sur preview.
 - [ ] White-contrast pass verifiee visuellement sur production.
 - [ ] Confirmer visuellement depuis un navigateur humain que `www` sert bien la nouvelle home sur tous les points d'acces.
@@ -47,7 +50,9 @@ Source of truth: this file for execution priorities, plus the current code in `s
 
 ## P1 - Validation live
 - [x] Deployer la production a la racine avec la top bar mobile modernisee.
-- [x] Re-verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/lab/`, `/robots.txt`, `/sitemap.xml` via le check public GitHub Actions apres redeploiement.
+- [ ] Republier preview et production avec le nouveau positionnement et suppression effective du repertoire `/lab/`.
+- [ ] Re-verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/robots.txt`, `/sitemap.xml` via le check public GitHub Actions apres redeploiement.
+- [ ] Verifier que `https://www.lelectronrare.fr/lab/` ne fait plus partie de la surface publique servie.
 - [ ] Verifier l'absence de retour vers l'ancienne homepage ou d'elements sombres residuels.
 - [ ] Verifier les ancres actives: `#a-propos`, `#graphic-sprints-title`, `#faq`, `#contact`.
 - [ ] Verifier la top bar mobile sur 390px et 768px: une seule ligne visible fermee, CTA `Contact` direct, menu stable, fermeture sur clic/Escape.
@@ -59,7 +64,6 @@ Source of truth: this file for execution priorities, plus the current code in `s
   - `outbound_linkedin_contact`
   - `outbound_email_contact`
   - `outbound_github_contact`
-  - `cta_lab_interactif_open`
 - [ ] Verifier les events auto:
   - `experiment_variant_exposed`
   - `engagement_scroll_depth`
