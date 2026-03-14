@@ -47,6 +47,8 @@ const structuredDataJsonLd = JSON.stringify({
       url: CANONICAL_URL,
       logo: new URL('assets/brand/logo-mark.png', CANONICAL_URL).href,
       knowsAbout: [
+        'systèmes électroniques spécifiques',
+        'conception électronique sur mesure',
         'design électronique embarquée',
         'électronique embarquée',
         'systèmes embarqués',
@@ -76,10 +78,12 @@ const structuredDataJsonLd = JSON.stringify({
       name: 'Clément Saillant',
       alternateName: "L'électron rare",
       url: CANONICAL_URL,
-      jobTitle: 'Designer electronique embarquee, consultant et formateur',
+      jobTitle: 'Concepteur de systemes electroniques specifiques',
       description:
-        "Designer electronique embarquee freelance, consultant et formateur. Prototype hardware, automatisme industriel, IoT, instrumentation et formation. Industries creatives et industrie sous l'identite L'electron rare.",
+        "Concepteur de systemes electroniques specifiques. Diagnostic, conception, mise au point et fiabilisation de projets electroniques, avec mobilisation de partenaires adaptes quand le projet devient multi-technique.",
       knowsAbout: [
+        'specific electronic systems',
+        'electronic systems design',
         'embedded electronics designer',
         'electronics consultant',
         'electronics trainer',
@@ -112,9 +116,9 @@ const structuredDataJsonLd = JSON.stringify({
       name: "L'électron rare",
       url: canonical,
       provider: { '@id': `${CANONICAL_URL}#person` },
-      serviceType: ['Design électronique embarquée', 'Prototype hardware', 'Automatisme industriel', 'Consulting électronique', 'Formation électronique embarquée', 'Développement IoT'],
+      serviceType: ['Systèmes électroniques spécifiques', 'Prototype électronique', 'Instrumentation', 'Automatisme industriel', 'Consulting électronique', 'Formation technique'],
       areaServed: { '@type': 'Country', name: 'France' },
-      description: 'Design électronique embarquée freelance : prototype, consulting, formation. Industries créatives et industrie. Du diagnostic au produit fini.'
+      description: 'Conception, mise au point et fiabilisation de systèmes électroniques spécifiques, avec partenaires adaptés pour les projets multi-techniques.'
     }
   ]
 });
@@ -149,7 +153,7 @@ const structuredDataJsonLd = JSON.stringify({
     <meta property="og:image" content={SITE_OG_IMAGE_URL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="L'electron rare - design electronique embarquee, consulting et formation - industries creatives et industrie" />
+    <meta property="og:image:alt" content="L'electron rare - systemes electroniques specifiques, conception, mise au point et partenariats multi-techniques" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

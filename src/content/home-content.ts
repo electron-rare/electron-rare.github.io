@@ -1,14 +1,14 @@
 import { TRACK_EVENTS } from '@/lib/tracking';
 import type { TrackEventName } from '@/lib/tracking';
 
-export const HERO_TITLE_WORDS = ['Électronique embarquée du signal au produit'] as const;
+export const HERO_TITLE_WORDS = ['Systèmes électroniques spécifiques, du besoin au livrable fiable'] as const;
 
 export const ABOUT_FAMILIES = [
-  'Embarqué et audio : architecture matérielle, alimentation, batterie, microcontrôleurs — du schéma au PCB testé. Conception selon les règles IPC-A-610 et CEM.',
-  'Contrôle LED et scénographie : pilotage, diffusion, topologies multi-cartes pour la scène et l\u2019événement. Protocoles DMX, Art-Net, DANTE.',
-  'Énergie et IoT : VE.Direct, télémétrie, capteurs, protocoles terrain, TinyML / IA embarquée — de la mesure à la décision.',
-  'Industriel et automatisme : automates Siemens/Schneider, variateurs, armoires, câblage et mise en service. Conformité IEC 60204-1, IEC 61439, NFC 13-200.',
-  'Consulting et formation : audit technique, accompagnement conception, gestion de projet électronique, workflows agentiques et IA appliquée à l\u2019embarqué. Formation en école, entreprise et centre de formation.'
+  'Architecture électronique spécifique : cartes, interfaces, capteurs, alimentation, reprise d’existant, mise au point et validation.',
+  'Instrumentation, contrôle et automatisme : bancs, armoires, automates, variateurs, protocoles terrain et remise en service.',
+  'Dispositifs techniques pour le réel : audio, LED, scène, installation, diffusion, robustesse terrain et intégration d’usage.',
+  'Énergie, télémétrie et systèmes connectés : mesure, batterie, collecte de données, IoT et supervision quand c’est utile.',
+  'Montages multi-techniques avec partenaires : mécanique, fabrication, logiciel, intégration, scénographie et formation selon le bon périmètre.'
 ] as const;
 
 export type SprintStatus = 'trace' | 'bench' | 'run';

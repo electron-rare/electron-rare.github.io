@@ -53,13 +53,13 @@ export function stripSiteBase(pathname: string) {
 }
 
 export const SITE_META = {
-  title: "Électronique embarquée freelance | L'électron rare",
+  title: "Systèmes électroniques spécifiques | L'électron rare",
   description:
-    "Design électronique embarquée freelance : prototype, consulting, formation, automatisme industriel, IoT. Du cahier des charges au produit testé.",
+    "Conception, mise au point et fiabilisation de systèmes électroniques spécifiques. Prototypes, instrumentation, automatisme, interfaces techniques et projets multi-techniques.",
   ogDescription:
-    "Design électronique embarquée freelance : prototype, consulting, formation. Industries créatives et industrie. Du diagnostic au produit fini.",
+    "L'Électron Rare conçoit et fiabilise des systèmes électroniques spécifiques, en mobilisant les partenaires adaptés quand le projet devient multi-technique.",
   twitterDescription:
-    "Designer électronique embarquée freelance : prototype hardware, consulting & formation. Industries créatives · industrie · IoT.",
+    "Systèmes électroniques spécifiques : conception, mise au point, fiabilisation et coordination multi-technique avec les bons partenaires.",
   ogImagePath: 'assets/og-cover.jpg',
   themeColor: '#ffffff'
 } as const;

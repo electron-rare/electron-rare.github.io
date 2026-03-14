@@ -2,7 +2,7 @@ import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
 import { HERO_TITLE_WORDS } from '@/content/home-content';
 import { withSiteBase } from '@/lib/site';
 
-const HERO_SLOGAN_LINES = ['du concept au produit testé'] as const;
+const HERO_SLOGAN_LINES = ['du besoin réel au système fiable'] as const;
 
 export function Hero() {
   return (
@@ -21,7 +21,7 @@ export function Hero() {
       <div className="figma-lab-hero-grid">
         <article className="figma-lab-left hero-panel-image">
           <div className="hero-panel-head">
-            <p className="hero-eyebrow hero-eyebrow--image">Design électronique · Consulting · Formation</p>
+            <p className="hero-eyebrow hero-eyebrow--image">Systèmes spécifiques · multi-techniques</p>
           </div>
 
           <h1 id="hero-title" className="figma-lab-title">
@@ -36,7 +36,7 @@ export function Hero() {
             <img src={withSiteBase('/assets/brand/logo-lockup.png')} alt="" className="hero-lockup-image" width={1400} height={700} loading="eager" decoding="sync" fetchPriority="high" />
           </div>
 
-          <p className="hero-slogan" aria-label="du concept au produit testé">
+          <p className="hero-slogan" aria-label="du besoin réel au système fiable">
             {HERO_SLOGAN_LINES.map((line, lineIndex) => (
               <span key={line} className="hero-slogan-line">
                 {Array.from(line).map((character, charIndex) => (
@@ -54,8 +54,8 @@ export function Hero() {
           </p>
 
           <p className="figma-lab-copy hero-copy-reveal hero-copy-reveal--lead">
-            Votre projet a besoin d&apos;électronique embarquée — mais le sujet est flou, coûteux ou risqué ?<br />
-            Je transforme votre besoin en livrable testé : prototype, carte, firmware ou montée en compétences.
+            Votre projet demande plus qu&apos;une carte standard ou un simple conseil ponctuel ?<br />
+            L&apos;Électron Rare conçoit, met au point et fiabilise des systèmes électroniques spécifiques, en mobilisant les bons partenaires quand le projet devient multi-technique.
           </p>
 
           <div className="figma-lab-cta-row">

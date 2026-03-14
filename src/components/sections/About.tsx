@@ -19,7 +19,7 @@ export function About() {
         <div className="about-intro">
           <img
             src={withSiteBase('/assets/photos/portrait-bench.webp')}
-            alt="Clément Saillant, designer électronique embarquée freelance, consultant et formateur"
+            alt="Clément Saillant, concepteur de systèmes électroniques spécifiques"
             className="about-portrait"
             loading="lazy"
             decoding="async"
@@ -28,16 +28,16 @@ export function About() {
           />
           <div className="about-intro-text">
             <p className="section-lead mb-0 mt-3">
-              Électronique embarquée, automatisme industriel, prototypage hardware, instrumentation — et aussi consulting, formation et workflows agentiques. J&apos;interviens là où le projet croise plusieurs disciplines.
+              L&apos;Électron Rare intervient sur des systèmes électroniques spécifiques : prototypes, instrumentation, automatisme, interfaces techniques, énergie, contrôle et intégration terrain.
             </p>
             <p className="mb-0 mt-3 studio-muted">
-              Je suis <strong>Clément Saillant</strong>, fondateur de <strong>L&apos;électron rare</strong>. Depuis plus de 5 ans, je conçois des solutions électroniques sur mesure pour le spectacle vivant, les installations artistiques et l&apos;industrie. J&apos;accompagne aussi des équipes en consulting et en formation — du cahier des charges à la mise en production.
+              Je suis <strong>Clément Saillant</strong>, fondateur de <strong>L&apos;électron rare</strong>. Mon rôle n&apos;est pas de vendre “un peu d&apos;embarqué” en plus, mais de rendre possible un système électronique juste pour le besoin réel : conception, diagnostic, mise au point, prototype, reprise d&apos;existant ou fiabilisation.
             </p>
             <p className="mb-0 mt-3 studio-muted">
-              Secteurs : spectacle vivant, industries créatives, transport (CBTC), énergie, IoT, audio professionnel, robotique. Outils : KiCad, oscilloscopes, automates Siemens/Schneider, uC (STM32, ESP, Teensy), Python, C/C++.
+              J&apos;interviens seul quand le cœur du sujet est électronique. Quand le projet devient multi-technique, je m&apos;appuie sur les partenaires adaptés pour assembler le bon périmètre : mécanique, fabrication, logiciel, intégration, scénographie ou formation.
             </p>
             <p className="mb-0 mt-3 studio-muted">
-              Retours de terrain et notes techniques sur le <a href="https://blog.saillant.cc" target="_blank" rel="noopener noreferrer" className="studio-link">blog technique</a>. Formations disponibles sur la <a href={withSiteBase('/formation/')} className="studio-link">page formation</a>.
+              Secteurs : industrie, installations techniques, scène, énergie, transport, audio, dispositifs hybrides. Retours de terrain sur le <a href="https://blog.saillant.cc" target="_blank" rel="noopener noreferrer" className="studio-link">blog technique</a>. Formations sur la <a href={withSiteBase('/formation/')} className="studio-link">page formation</a>.
             </p>
             <p className="mb-0 mt-3 studio-muted" style={{ fontSize: '0.85em', opacity: 0.85 }}>
               Assuré RC Pro · NDA sur demande
