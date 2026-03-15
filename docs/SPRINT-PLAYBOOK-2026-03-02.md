@@ -80,6 +80,7 @@ curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview
 - top bar mobile preview validee publiquement: `23095540371`
 - preview repositionne electronique/automatisme/energie et purge du lab public: `23098262445`
 - hero actif attendu: vrai oscilloscope en fond, sans texture carnet legacy
+- preview hero oscilloscope recadre valide publiquement: `23099694984`
 
 ## Sprint C - Production
 
@@ -108,6 +109,7 @@ curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/sitemap
 ### C4 - Etat courant
 - production republiee avec le lot `Modernize Electron Rare mobile header`: `23096174775`
 - production repositionnee electronique/automatisme/energie et purge du lab public: `23098335508`
+- production hero oscilloscope recadre valide publiquement: `23099760106`
 - verification publique du workflow: OK
 - verification locale `curl` avec `User-Agent` workflow: `200` sur `www`, `formation`, `mentions-legales`
 - controle navigateur humain encore requis pour la validation UX finale

@@ -51,6 +51,7 @@ Action:
 Etat:
 - preview top bar publie et valide publiquement via GitHub Actions `23095540371`
 - preview repositionne et purge du lab public valide publiquement via GitHub Actions `23098262445`
+- preview hero oscilloscope recadre valide publiquement via GitHub Actions `23099694984`
 
 ### 4. Verifier la production reellement servie
 Action:
@@ -61,6 +62,7 @@ Action:
 Etat:
 - production top bar republiee via GitHub Actions `23096174775`
 - production repositionnee et purgee du lab public via GitHub Actions `23098335508`
+- production hero oscilloscope recadre via GitHub Actions `23099760106`
 - verification publique du workflow: OK
 - verification locale `curl` OK avec `-A 'electron-rare-gh-verify/1.0'`
 

@@ -79,6 +79,8 @@ Le positionnement public de reference devient : systemes electroniques specifiqu
 - production republiee avec le meme positionnement via `23098335508`
 - hero blanc recadre sur une vraie image d'oscilloscope
 - ancienne texture `hero-carnet-labo-open-v2` retiree du hero actif en high-contrast
+- preview republie avec le hero oscilloscope recadre via `23099694984`
+- production republiee avec le meme hero oscilloscope via `23099760106`
 - le lab n'est plus publie sur preview ni sur production (`404` sur `/preview/lab/` et `/lab/`)
 - verification locale reproductible avec le `User-Agent` du workflow
 - controle navigateur humain encore requis pour la validation UX finale

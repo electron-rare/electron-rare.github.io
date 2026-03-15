@@ -40,6 +40,8 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - [x] Production OVH republiee avec le meme positionnement (`23098335508`).
 - [x] `https://www.lelectronrare.fr/lab/` et `https://www.lelectronrare.fr/preview/lab/` repondent maintenant `404`.
 - [x] Le hero blanc utilise maintenant un vrai visuel oscilloscope, avec recadrage et overlays recales pour la DA claire.
+- [x] Preview OVH republie avec le hero oscilloscope recadre et le recadrage memoire/docs (`23099694984`).
+- [x] Production OVH republiee avec le meme hero oscilloscope (`23099760106`).
 - [x] `docs/README.md` cree comme point d'entree et source de verite documentaire.
 - [x] Runbooks et plans legacy les plus confus recales en mode historique ou remplaces par des versions actives.
 - [x] Les gros audits et plans de transition restants sont maintenant bannieres comme historiques pour eviter les faux redemarrages.
