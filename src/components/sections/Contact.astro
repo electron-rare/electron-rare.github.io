@@ -41,7 +41,6 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
         Réponse sous 48h avec un premier retour technique.
       </p>
 
-      <!-- Tab switcher -->
       <div class="contact-minitel-tabs">
         <button
           type="button"
@@ -59,7 +58,6 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
         </button>
       </div>
 
-      <!-- Tab: mailto draft -->
       <div data-contact-panel="email">
         <div class="contact-minitel-textarea-wrap">
           <label for="contact-draft" class="contact-minitel-label">&gt; MESSAGE :</label>
@@ -99,33 +97,65 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
         </div>
       </div>
 
-      <!-- Tab: Web3Forms contact form -->
       <div data-contact-panel="form" style="display:none;">
-        <!-- Form (idle/sending/error states) -->
         <div id="contact-form-container">
-          <form id="contact-web3form">
-            <div class="contact-minitel-textarea-wrap">
+          <form id="contact-crm-form" class="contact-minitel-form">
+            <div class="contact-minitel-field">
               <label for="contact-form-name" class="contact-minitel-label">&gt; NOM :</label>
               <input
                 id="contact-form-name"
                 type="text"
                 required
-                class="contact-minitel-textarea"
-                style="height:auto;min-height:2.4em;resize:none"
+                class="contact-minitel-input"
+                autocomplete="name"
                 placeholder="Votre nom"
               />
             </div>
-            <div class="contact-minitel-textarea-wrap">
+
+            <div class="contact-minitel-field">
               <label for="contact-form-email" class="contact-minitel-label">&gt; EMAIL :</label>
               <input
                 id="contact-form-email"
                 type="email"
                 required
-                class="contact-minitel-textarea"
-                style="height:auto;min-height:2.4em;resize:none"
+                class="contact-minitel-input"
+                autocomplete="email"
                 placeholder="votre@email.com"
               />
             </div>
+
+            <div class="contact-minitel-field">
+              <label for="contact-form-phone" class="contact-minitel-label">&gt; TELEPHONE :</label>
+              <input
+                id="contact-form-phone"
+                type="tel"
+                class="contact-minitel-input"
+                autocomplete="tel"
+                placeholder="Optionnel"
+              />
+            </div>
+
+            <div class="contact-minitel-field">
+              <label for="contact-form-organization" class="contact-minitel-label">&gt; STRUCTURE :</label>
+              <input
+                id="contact-form-organization"
+                type="text"
+                class="contact-minitel-input"
+                autocomplete="organization"
+                placeholder="Entreprise, atelier, compagnie, studio..."
+              />
+            </div>
+
+            <div class="contact-minitel-field">
+              <label for="contact-form-need-type" class="contact-minitel-label">&gt; BESOIN :</label>
+              <select id="contact-form-need-type" class="contact-minitel-select" required>
+                <option value="" selected disabled>Choisir le type de besoin</option>
+                <option value="technique">Projet technique</option>
+                <option value="formation">Formation</option>
+                <option value="mixte">Projet mixte</option>
+              </select>
+            </div>
+
             <div class="contact-minitel-textarea-wrap">
               <label for="contact-form-message" class="contact-minitel-label">&gt; MESSAGE :</label>
               <textarea
@@ -136,6 +166,14 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
                 rows="8"
               >{DEFAULT_MESSAGE}</textarea>
             </div>
+
+            <label class="contact-minitel-consent" for="contact-form-consent">
+              <input id="contact-form-consent" type="checkbox" required />
+              <span class="contact-minitel-consent-text">
+                J'accepte que mes coordonnees soient utilisees pour traiter cette demande.
+              </span>
+            </label>
+
             <div class="contact-minitel-actions">
               <button
                 type="submit"
@@ -155,10 +193,9 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
           </form>
         </div>
 
-        <!-- Success state -->
         <div id="contact-form-success" style="display:none;">
           <p class="contact-minitel-line" style="text-align:center;padding:2rem 0">
-            &gt; MESSAGE ENVOYÉ ✓
+            &gt; MESSAGE ENVOYE ✓
           </p>
           <p class="contact-minitel-line contact-minitel-line--dim" style="text-align:center">
             Merci ! Je reviens vers vous sous 48h.
@@ -180,7 +217,7 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
           ─────────────────────────────────────────
         </p>
         <p class="contact-minitel-line contact-minitel-line--dim">
-          Électronique · automatisme · énergie · diagnostic · formation
+          Electronique · automatisme · energie · diagnostic · formation
         </p>
         <p class="contact-minitel-line">
           Mail direct : <a href="mailto:contact@lelectronrare.fr" class="contact-minitel-link">contact@lelectronrare.fr</a>
@@ -191,8 +228,7 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
 </section>
 
 <script>
-  const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
-  const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+  const CRM_INTAKE_ENDPOINT = 'https://electron.saillant.cc/api/intake/lead';
   const DEFAULT_MESSAGE = `Bonjour Clément,
 
 J'ai un projet / besoin autour d'un système électronique spécifique.
@@ -201,19 +237,34 @@ Contexte :
 Ce que j'attends :
 Contraintes (délai, budget) :`;
 
-  // --- Tab switching ---
+  const trackingWindow = window as Window & { dataLayer?: Array<Record<string, unknown>> };
+
+  const pushTrackingEvent = (eventName: string, payload: Record<string, unknown> = {}) => {
+    trackingWindow.dataLayer = trackingWindow.dataLayer || [];
+    trackingWindow.dataLayer.push({
+      event: eventName,
+      event_category: 'engagement',
+      event_label: eventName,
+      page_path: window.location.pathname || '/',
+      page_title: document.title || '',
+      da_variant: document.documentElement.getAttribute('data-da-variant') || 'v12',
+      ...payload,
+    });
+  };
+
   const tabButtons = document.querySelectorAll<HTMLButtonElement>('[data-contact-tab]');
   const panels = document.querySelectorAll<HTMLElement>('[data-contact-panel]');
 
   tabButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const target = btn.dataset.contactTab!;
-      tabButtons.forEach((b) => b.classList.toggle('contact-minitel-tab--active', b.dataset.contactTab === target));
-      panels.forEach((p) => { p.style.display = p.dataset.contactPanel === target ? '' : 'none'; });
+      tabButtons.forEach((button) => button.classList.toggle('contact-minitel-tab--active', button.dataset.contactTab === target));
+      panels.forEach((panel) => {
+        panel.style.display = panel.dataset.contactPanel === target ? '' : 'none';
+      });
     });
   });
 
-  // --- Mailto draft ---
   const draftArea = document.getElementById('contact-draft') as HTMLTextAreaElement;
   const mailtoLink = document.getElementById('contact-mailto-link') as HTMLAnchorElement;
 
@@ -225,69 +276,108 @@ Contraintes (délai, budget) :`;
 
   draftArea.addEventListener('input', updateMailtoHref);
 
-  // --- Clipboard copy ---
   const copyBtn = document.getElementById('contact-copy-btn') as HTMLButtonElement;
   copyBtn.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(draftArea.value);
-      copyBtn.textContent = '[OK] Message copié ✓';
-      setTimeout(() => { copyBtn.textContent = '[COPIE] Copier le message'; }, 1800);
+      copyBtn.textContent = '[OK] Message copie ✓';
+      setTimeout(() => {
+        copyBtn.textContent = '[COPIE] Copier le message';
+      }, 1800);
     } catch {
-      // Silently fail — clipboard API may not be available
+      // Silently fail — clipboard API may not be available.
     }
   });
 
-  // --- Web3Forms submission ---
-  const form = document.getElementById('contact-web3form') as HTMLFormElement;
+  const form = document.getElementById('contact-crm-form') as HTMLFormElement;
   const formContainer = document.getElementById('contact-form-container') as HTMLElement;
   const formSuccess = document.getElementById('contact-form-success') as HTMLElement;
   const formError = document.getElementById('contact-form-error') as HTMLElement;
   const submitBtn = document.getElementById('contact-form-submit') as HTMLButtonElement;
   const nameInput = document.getElementById('contact-form-name') as HTMLInputElement;
   const emailInput = document.getElementById('contact-form-email') as HTMLInputElement;
+  const phoneInput = document.getElementById('contact-form-phone') as HTMLInputElement;
+  const organizationInput = document.getElementById('contact-form-organization') as HTMLInputElement;
+  const needTypeInput = document.getElementById('contact-form-need-type') as HTMLSelectElement;
   const messageArea = document.getElementById('contact-form-message') as HTMLTextAreaElement;
+  const consentInput = document.getElementById('contact-form-consent') as HTMLInputElement;
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  const resetContactForm = () => {
+    nameInput.value = '';
+    emailInput.value = '';
+    phoneInput.value = '';
+    organizationInput.value = '';
+    needTypeInput.value = '';
+    messageArea.value = DEFAULT_MESSAGE;
+    consentInput.checked = false;
+  };
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
     formError.style.display = 'none';
+    formError.textContent = "> Erreur d'envoi. Essayez via l'onglet [1] ou par mail direct.";
     submitBtn.disabled = true;
     submitBtn.textContent = '[...] Envoi en cours...';
 
+    const payload = {
+      name: nameInput.value.trim(),
+      email: emailInput.value.trim(),
+      phone: phoneInput.value.trim() || undefined,
+      organization: organizationInput.value.trim() || undefined,
+      message: messageArea.value.trim(),
+      sourceChannel: 'site',
+      sourceDetail: 'contact_form',
+      needType: needTypeInput.value,
+      pagePath: `${window.location.pathname || '/'}${window.location.hash || ''}`,
+      consent: consentInput.checked,
+    };
+
     try {
-      const res = await fetch(WEB3FORMS_ENDPOINT, {
+      const response = await fetch(CRM_INTAKE_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `Contact lelectronrare.fr — ${nameInput.value}`,
-          from_name: nameInput.value,
-          email: emailInput.value,
-          message: messageArea.value,
-        }),
+        body: JSON.stringify(payload),
       });
+      const result = await response.json().catch(() => null);
 
-      if (res.ok) {
+      if (response.ok) {
         formContainer.style.display = 'none';
         formSuccess.style.display = '';
-        // Reset fields for next use
-        nameInput.value = '';
-        emailInput.value = '';
-        messageArea.value = DEFAULT_MESSAGE;
+        pushTrackingEvent('contact_form_submit', {
+          destination: CRM_INTAKE_ENDPOINT,
+          source_detail: payload.sourceDetail,
+          need_type: payload.needType,
+        });
+        resetContactForm();
       } else {
+        const detail = result?.error?.message || result?.error?.code;
+        formError.textContent = detail
+          ? `> ${detail}. Essayez via l'onglet [1] ou par mail direct.`
+          : "> Erreur d'envoi. Essayez via l'onglet [1] ou par mail direct.";
         formError.style.display = '';
+        pushTrackingEvent('contact_form_error', {
+          destination: CRM_INTAKE_ENDPOINT,
+          source_detail: payload.sourceDetail,
+          status_code: response.status,
+        });
       }
     } catch {
       formError.style.display = '';
+      pushTrackingEvent('contact_form_error', {
+        destination: CRM_INTAKE_ENDPOINT,
+        source_detail: payload.sourceDetail,
+        status_code: 'network_error',
+      });
     }
 
     submitBtn.disabled = false;
     submitBtn.textContent = '[ENVOI] Envoyer le message';
   });
 
-  // --- Reset form (back from success) ---
   const resetBtn = document.getElementById('contact-form-reset') as HTMLButtonElement;
   resetBtn.addEventListener('click', () => {
     formSuccess.style.display = 'none';
     formContainer.style.display = '';
+    formError.style.display = 'none';
   });
 </script>

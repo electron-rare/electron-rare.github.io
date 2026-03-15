@@ -5010,6 +5010,28 @@ input.contact-minitel-textarea:focus {
   margin-bottom: 0.8rem;
 }
 
+.contact-minitel-consent {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  margin-top: 0.2rem;
+  color: rgba(224, 247, 247, 0.82);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.contact-minitel-consent input {
+  inline-size: 1rem;
+  block-size: 1rem;
+  margin-top: 0.15rem;
+  accent-color: #5bd1d8;
+  flex: 0 0 auto;
+}
+
+.contact-minitel-consent-text {
+  flex: 1 1 auto;
+}
+
 .contact-minitel-input,
 .contact-minitel-select {
   width: 100%;
