@@ -39,6 +39,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - [x] Preview OVH republie avec le positionnement `electronique · automatisme · energie · stockage · optimisation` (`23098262445`).
 - [x] Production OVH republiee avec le meme positionnement (`23098335508`).
 - [x] `https://www.lelectronrare.fr/lab/` et `https://www.lelectronrare.fr/preview/lab/` repondent maintenant `404`.
+- [x] Le hero blanc utilise maintenant un vrai visuel oscilloscope, avec recadrage et overlays recales pour la DA claire.
 - [x] `docs/README.md` cree comme point d'entree et source de verite documentaire.
 - [x] Runbooks et plans legacy les plus confus recales en mode historique ou remplaces par des versions actives.
 - [x] Les gros audits et plans de transition restants sont maintenant bannieres comme historiques pour eviter les faux redemarrages.
@@ -52,7 +53,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 ## P0 - Bloc de sortie immediate
 - [x] Builder le preview avec le theme blanc contraste (`PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external`).
 - [ ] Verifier le rendu de la home: top bar mobile, hero, approche, cas clients, missions, FAQ, footer.
-- [ ] Verifier les surfaces medias: hero photo, photo strip, video strip.
+- [ ] Verifier les surfaces medias: hero oscilloscope, photo strip, video strip.
 - [ ] Verifier la section contact en version claire: tabs, textarea, formulaire, focus clavier, messages d'etat.
 - [ ] Verifier `/formation/` et `/mentions-legales/` avec le meme theme clair.
 - [x] Deployer le preview OVH et valider `https://www.lelectronrare.fr/preview/`.
@@ -63,6 +64,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - [x] Re-verifier en live les routes `/`, `/formation/`, `/mentions-legales/`, `/robots.txt`, `/sitemap.xml` via le check public GitHub Actions apres redeploiement.
 - [x] Verifier que `https://www.lelectronrare.fr/lab/` ne fait plus partie de la surface publique servie.
 - [ ] Verifier l'absence de retour vers l'ancienne homepage ou d'elements sombres residuels.
+- [ ] Verifier le cadrage live du hero oscilloscope sur preview et production.
 - [ ] Verifier les ancres actives: `#a-propos`, `#graphic-sprints-title`, `#faq`, `#contact`.
 - [ ] Verifier la top bar mobile sur 390px et 768px: une seule ligne visible fermee, CTA `Contact` direct, menu stable, fermeture sur clic/Escape.
 - [x] Documenter la contrainte de verification locale: `curl` sans `User-Agent` specifique retourne `403` sur `www` depuis cette machine.

@@ -34,6 +34,7 @@ PUBLIC_SITE_URL=https://www.lelectronrare.fr/preview/ npm run build:external
 
 ### A2 - Zones a verifier dans le build
 - top bar desktop/mobile et hero
+- hero oscilloscope: cadrage, contraste, lisibilite CTA
 - approche et cas concrets
 - photo strip et video strip
 - formats de mission
@@ -78,6 +79,7 @@ curl -fsSI -A 'electron-rare-gh-verify/1.0' https://www.lelectronrare.fr/preview
 - white-contrast preview valide: `23094884980`
 - top bar mobile preview validee publiquement: `23095540371`
 - preview repositionne electronique/automatisme/energie et purge du lab public: `23098262445`
+- hero actif attendu: vrai oscilloscope en fond, sans texture carnet legacy
 
 ## Sprint C - Production
 

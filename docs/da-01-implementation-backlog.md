@@ -50,6 +50,7 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
   - familles de competence visibles
   - CTA contact
   - fond photo + lockup
+  - fond hero sur vrai oscilloscope, pas photo d'atelier trop large
 
 3. `About_Approche`
 - Cible: `src/components/sections/About.tsx`
@@ -103,6 +104,7 @@ Consolider la DA actuelle en version claire, contraste blanc, sans reintroduire 
 ## Backlog P0
 - [x] Forcer la cascade sur la DA blanche dans `BaseLayout.astro`, `site.ts`, `global.css`, `home-workbench.css`.
 - [x] Relever les derniers blocs sombres restants: `hero-bg-photo`, `photo-strip`, `video-strip`, `contact-minitel`, FAQ focus.
+- [x] Recaler le hero sur une image d'oscilloscope credible pour la promesse technique, avec overlays blancs propres.
 - [x] Remplacer la nav mobile "desktop qui wrap" par une top bar compacte state-of-art 2026.
 - [ ] Verifier la lisibilite des CTA sur blanc.
 - [ ] Verifier que la home, `formation` et `mentions-legales` partagent bien le meme header et le meme socle visuel en preview live.

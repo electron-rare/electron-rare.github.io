@@ -30,9 +30,21 @@ Fichiers cle:
 - `src/pages/formation.astro`
 - `src/pages/mentions-legales.astro`
 
-### 2. Verifier visuellement le preview OVH
+### 2. Verifier le hero blanc reellement servie
+Action:
+- confirmer que le hero utilise un vrai visuel oscilloscope
+- verifier qu'il ne replonge pas dans une photo d'atelier large ou une texture legacy
+- controler le contraste titre / copy / CTA avec la nouvelle image
+
+Fichiers cle:
+- `src/components/sections/Hero.tsx`
+- `src/styles/global.css`
+- `src/styles/home-workbench.css`
+
+### 3. Verifier visuellement le preview OVH
 Action:
 - controler la top bar sur mobile reel
+- controler le hero oscilloscope sur un vrai navigateur
 - verifier qu'elle reste compacte fermee
 - verifier que le menu est lisible et stable ouvert
 
@@ -40,7 +52,7 @@ Etat:
 - preview top bar publie et valide publiquement via GitHub Actions `23095540371`
 - preview repositionne et purge du lab public valide publiquement via GitHub Actions `23098262445`
 
-### 3. Verifier la production reellement servie
+### 4. Verifier la production reellement servie
 Action:
 - confirmer dans un navigateur humain que `www` sert bien la nouvelle home et le nouveau header
 - verifier localement avec le meme `User-Agent` que le workflow quand on utilise `curl`

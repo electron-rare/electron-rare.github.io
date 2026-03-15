@@ -16,6 +16,10 @@ Repo: `/home/zacus/electron-rare-preview-ovh`
   - familles visibles: electronique, automatisme, energie, stockage, optimisation
   - l'embarque reste une competence, pas le titre principal
   - les projets multi-techniques s'appuient sur les partenaires adaptes
+- Hero actif:
+  - titre: `Systemes electroniques specifiques, du besoin au livrable fiable`
+  - fond: oscilloscope en plan rapproche, pas atelier large ni texture carnet legacy
+  - surcouches: white-contrast propres, lisibles, sans retour a l'imaginaire `studio/figma`
 
 ## Lire dans cet ordre
 

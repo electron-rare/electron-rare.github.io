@@ -4453,31 +4453,58 @@ details[open] > .faq-question .faq-chevron::after {
   position: absolute;
   top: 0;
   right: 0;
-  width: 45%;
+  width: min(47%, 35rem);
   height: 100%;
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  mask-image: linear-gradient(to left, rgba(0,0,0,0.18) 0%, transparent 85%);
-  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.18) 0%, transparent 85%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.08) 38%, transparent 86%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.08) 38%, transparent 86%);
+}
+
+.hero-bg-photo::before,
+.hero-bg-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-bg-photo::before {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.78) 14%, rgba(255, 255, 255, 0.22) 46%, rgba(255, 255, 255, 0.04) 72%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(244, 238, 227, 0.26));
+}
+
+.hero-bg-photo::after {
+  z-index: 2;
+  border-left: 1px solid rgba(47, 42, 37, 0.08);
+  background:
+    radial-gradient(circle at 18% 22%, rgba(26, 79, 90, 0.16), transparent 32%),
+    radial-gradient(circle at 80% 18%, rgba(140, 50, 16, 0.12), transparent 22%);
+  mix-blend-mode: multiply;
+  opacity: 0.82;
 }
 
 .hero-bg-photo img {
+  position: relative;
+  z-index: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
-  filter: grayscale(0.5) contrast(1.1);
+  object-position: 52% 18%;
+  filter: grayscale(0.22) contrast(1.08) brightness(0.96) saturate(0.86);
   mix-blend-mode: luminosity;
 }
 
 [data-theme="light"] .hero-bg-photo {
-  mask-image: linear-gradient(to left, rgba(0,0,0,0.12) 0%, transparent 80%);
-  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.12) 0%, transparent 80%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,0.14) 0%, rgba(0,0,0,0.06) 34%, transparent 82%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.14) 0%, rgba(0,0,0,0.06) 34%, transparent 82%);
 }
 
 [data-theme="light"] .hero-bg-photo img {
-  filter: grayscale(0.6) contrast(1.05);
+  filter: grayscale(0.28) contrast(1.04) brightness(0.98) saturate(0.88);
 }
 
 @media (max-width: 767px) {
@@ -5050,14 +5077,14 @@ input.contact-minitel-textarea:focus {
 }
 
 :root[data-da-variant="v12"][data-theme="high-contrast"] .hero-bg-photo {
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.1) 0%, transparent 82%);
-  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.1) 0%, transparent 82%);
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.05) 36%, transparent 82%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.05) 36%, transparent 82%);
 }
 
 :root[data-da-variant="v12"][data-theme="high-contrast"] .hero-bg-photo img {
-  filter: grayscale(0.18) contrast(1.02) brightness(1.1);
+  filter: grayscale(0.04) contrast(1.06) brightness(0.97) saturate(0.88);
   mix-blend-mode: multiply;
-  opacity: 0.24;
+  opacity: 0.42;
 }
 
 :root[data-da-variant="v12"][data-theme="high-contrast"] .photo-strip-img,

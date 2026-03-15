@@ -28,6 +28,18 @@ Le positionnement public de reference devient : systemes electroniques specifiqu
 - typography mono sur certains labels et statuts
 - accents rust/teal sur CTA, badges, progression et reperes
 
+## Hero actif
+- eyebrow: `Electronique · automatisme · energie · optimisation`
+- titre: `Systemes electroniques specifiques, du besoin au livrable fiable`
+- sous-ligne: `electronique · automatisme · energie`
+- fond image: oscilloscope en plan rapproche, lecture waveform / interface de mesure
+- cadrage: image utile a droite, pas atelier large illisible
+- surcouches: gradients clairs et accents teal/rust tres legers
+- interdit:
+  - texture carnet legacy sur le panneau hero blanc
+  - photo d'atelier trop large ou trop generique
+  - overlays qui salissent la lecture du titre ou du CTA
+
 ## Regles header 2026
 - desktop: navigation inline, stable, sans bruit inutile
 - mobile: header compact, une seule ligne utile a l'ouverture de page
@@ -65,6 +77,8 @@ Le positionnement public de reference devient : systemes electroniques specifiqu
 - production republee avec la top bar mobile via GitHub Actions `23096174775`
 - preview republie avec le positionnement electronique/automatisme/energie/stockage/optimisation via `23098262445`
 - production republiee avec le meme positionnement via `23098335508`
+- hero blanc recadre sur une vraie image d'oscilloscope
+- ancienne texture `hero-carnet-labo-open-v2` retiree du hero actif en high-contrast
 - le lab n'est plus publie sur preview ni sur production (`404` sur `/preview/lab/` et `/lab/`)
 - verification locale reproductible avec le `User-Agent` du workflow
 - controle navigateur humain encore requis pour la validation UX finale
