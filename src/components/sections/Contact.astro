@@ -12,9 +12,7 @@ Contexte :
 Ce que j'attends :
 Contraintes (délai, budget) :`;
 
-const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURIComponent("Contact L'Électron Rare")}&body=${encodeURIComponent(DEFAULT_MESSAGE)}`;
-const apiBase = (import.meta.env.PUBLIC_API_URL || '').replace(/\/$/, '');
-const CONTACT_FORM_ENDPOINT = apiBase ? `${apiBase}/api/submit-lead` : '/api/submit-lead';
+// All contact goes through CRM form — no mailto
 ---
 
 <section
@@ -43,65 +41,9 @@ const CONTACT_FORM_ENDPOINT = apiBase ? `${apiBase}/api/submit-lead` : '/api/sub
         Réponse sous 48h avec un premier retour technique.
       </p>
 
-      <div class="contact-minitel-tabs">
-        <button
-          type="button"
-          class="contact-minitel-tab contact-minitel-tab--active"
-          data-contact-tab="email"
-        >
-          [1] Via e-mail
-        </button>
-        <button
-          type="button"
-          class="contact-minitel-tab"
-          data-contact-tab="form"
-        >
-          [2] Formulaire direct
-        </button>
-      </div>
-
-      <div data-contact-panel="email">
-        <div class="contact-minitel-textarea-wrap">
-          <label for="contact-draft" class="contact-minitel-label">&gt; MESSAGE :</label>
-          <textarea
-            id="contact-draft"
-            class="contact-minitel-textarea"
-            spellcheck="true"
-            rows="8"
-          >{DEFAULT_MESSAGE}</textarea>
-        </div>
-
-        <div class="contact-minitel-actions">
-          <a
-            id="contact-mailto-link"
-            href={defaultMailtoHref}
-            {...trackAttrs(TRACK_EVENTS.outboundEmailContact, 'mailto:contact@lelectronrare.fr')}
-            class="contact-minitel-btn contact-minitel-btn--primary"
-          >
-            [ENVOI] Envoyer par mail
-          </a>
-          <button
-            type="button"
-            class="contact-minitel-btn"
-            id="contact-copy-btn"
-          >
-            [COPIE] Copier le message
-          </button>
-          <a
-            href="https://fr.linkedin.com/in/electron-rare"
-            target="_blank"
-            rel="noopener noreferrer"
-            {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
-            class="contact-minitel-btn"
-          >
-            [LINKEDIN] Envoyer via LinkedIn
-          </a>
-        </div>
-      </div>
-
-      <div data-contact-panel="form" style="display:none;">
+      <div data-contact-panel="form">
         <div id="contact-form-container">
-          <form id="contact-crm-form" class="contact-minitel-form" data-contact-submit-endpoint={CONTACT_FORM_ENDPOINT}>
+          <form id="contact-crm-form" class="contact-minitel-form">
             <div class="contact-minitel-field">
               <label for="contact-form-name" class="contact-minitel-label">&gt; NOM :</label>
               <input
@@ -222,7 +164,7 @@ const CONTACT_FORM_ENDPOINT = apiBase ? `${apiBase}/api/submit-lead` : '/api/sub
           Electronique · automatisme · energie · diagnostic · formation
         </p>
         <p class="contact-minitel-line">
-          Mail direct : <a href="mailto:contact@lelectronrare.fr" class="contact-minitel-link">contact@lelectronrare.fr</a>
+          Tous les messages passent par notre CRM sécurisé.
         </p>
       </div>
     </div>
@@ -230,6 +172,7 @@ const CONTACT_FORM_ENDPOINT = apiBase ? `${apiBase}/api/submit-lead` : '/api/sub
 </section>
 
 <script>
+  const CRM_INTAKE_ENDPOINT = 'https://api.lelectronrare.fr/api/submit-lead';
   const DEFAULT_MESSAGE = `Bonjour Clément,
 
 J'ai un projet / besoin autour d'un système électronique spécifique.
@@ -266,29 +209,7 @@ Contraintes (délai, budget) :`;
     });
   });
 
-  const draftArea = document.getElementById('contact-draft') as HTMLTextAreaElement;
-  const mailtoLink = document.getElementById('contact-mailto-link') as HTMLAnchorElement;
-
-  function updateMailtoHref() {
-    const subject = encodeURIComponent("Contact L'Électron Rare");
-    const body = encodeURIComponent(draftArea.value);
-    mailtoLink.href = `mailto:contact@lelectronrare.fr?subject=${subject}&body=${body}`;
-  }
-
-  draftArea.addEventListener('input', updateMailtoHref);
-
-  const copyBtn = document.getElementById('contact-copy-btn') as HTMLButtonElement;
-  copyBtn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(draftArea.value);
-      copyBtn.textContent = '[OK] Message copie ✓';
-      setTimeout(() => {
-        copyBtn.textContent = '[COPIE] Copier le message';
-      }, 1800);
-    } catch {
-      // Silently fail — clipboard API may not be available.
-    }
-  });
+  // Email tab removed — all contact goes through CRM form
 
   const form = document.getElementById('contact-crm-form') as HTMLFormElement;
   const formContainer = document.getElementById('contact-form-container') as HTMLElement;
@@ -302,7 +223,6 @@ Contraintes (délai, budget) :`;
   const needTypeInput = document.getElementById('contact-form-need-type') as HTMLSelectElement;
   const messageArea = document.getElementById('contact-form-message') as HTMLTextAreaElement;
   const consentInput = document.getElementById('contact-form-consent') as HTMLInputElement;
-  const CRM_INTAKE_ENDPOINT = form.dataset.contactSubmitEndpoint || '/api/submit-lead';
 
   const resetContactForm = () => {
     nameInput.value = '';
