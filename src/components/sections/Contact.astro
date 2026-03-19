@@ -196,20 +196,7 @@ Contraintes (délai, budget) :`;
     });
   };
 
-  const tabButtons = document.querySelectorAll<HTMLButtonElement>('[data-contact-tab]');
-  const panels = document.querySelectorAll<HTMLElement>('[data-contact-panel]');
-
-  tabButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.contactTab!;
-      tabButtons.forEach((button) => button.classList.toggle('contact-minitel-tab--active', button.dataset.contactTab === target));
-      panels.forEach((panel) => {
-        panel.style.display = panel.dataset.contactPanel === target ? '' : 'none';
-      });
-    });
-  });
-
-  // Email tab removed — all contact goes through CRM form
+  // All contact goes through CRM form — no tabs
 
   const form = document.getElementById('contact-crm-form') as HTMLFormElement;
   const formContainer = document.getElementById('contact-form-container') as HTMLElement;
