@@ -1,0 +1,108 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@/styles/global.css';
+---
+
+<BaseLayout title="Portfolio — L'Electron Rare" description="Projets électronique embarquée, prototypage et systèmes spécifiques.">
+  <main class="portfolio-page">
+    <h1 class="portfolio-title">Portfolio</h1>
+    <p class="portfolio-intro">
+      Explorez les schémas et PCB de projets réalisés. Les viewers interactifs
+      permettent de zoomer, naviguer et inspecter chaque composant.
+    </p>
+
+    <section class="portfolio-section">
+      <h2 class="portfolio-h2">Viewer interactif KiCad</h2>
+      <p class="portfolio-desc">
+        Chargez un fichier <code>.kicad_sch</code> ou <code>.kicad_pcb</code> pour l'explorer directement dans le navigateur.
+      </p>
+
+      <div class="portfolio-upload">
+        <label for="kicad-file" class="portfolio-upload-label">
+          Glissez un fichier KiCad ou cliquez pour ouvrir
+        </label>
+        <input type="file" id="kicad-file" accept=".kicad_sch,.kicad_pcb,.kicad_prj" class="portfolio-upload-input" />
+      </div>
+
+      <div id="viewer-container" class="portfolio-viewer" style="display:none;">
+        <kicanvas-embed id="kicad-viewer" controls="full" theme="kicad" style="width:100%;height:600px;border-radius:8px;border:1px solid var(--line, #3a2f24);"></kicanvas-embed>
+      </div>
+
+      <p class="portfolio-note">
+        Propulsé par <a href="https://kicanvas.org" target="_blank" rel="noopener" class="portfolio-link">KiCanvas</a> — viewer open source pour KiCad.
+      </p>
+    </section>
+
+    <section class="portfolio-section">
+      <h2 class="portfolio-h2">Projets récents</h2>
+      <div class="portfolio-grid">
+        <div class="portfolio-card">
+          <h3>Contrôleur LED DMX</h3>
+          <p>Carte custom ESP32 pour pilotage LED haute puissance via DMX512. Spectacle vivant, KXKM.</p>
+          <span class="portfolio-tag">ESP32</span>
+          <span class="portfolio-tag">DMX</span>
+          <span class="portfolio-tag">LED</span>
+        </div>
+        <div class="portfolio-card">
+          <h3>Banc de test BMS</h3>
+          <p>Système de test automatisé pour batteries lithium. Mesure, charge/décharge, logging.</p>
+          <span class="portfolio-tag">BMS</span>
+          <span class="portfolio-tag">Mesure</span>
+          <span class="portfolio-tag">XT60</span>
+        </div>
+        <div class="portfolio-card">
+          <h3>Automate Siemens S7</h3>
+          <p>Diagnostic et reprogrammation d'automate industriel. Migration firmware, câblage armoire.</p>
+          <span class="portfolio-tag">Siemens</span>
+          <span class="portfolio-tag">PLC</span>
+          <span class="portfolio-tag">Industrie</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="portfolio-cta">
+      <a href="/preview#contact" class="portfolio-btn">Discuter de votre projet →</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<script type="module" src="/assets/js/kicanvas.js"></script>
+<script>
+  const fileInput = document.getElementById('kicad-file');
+  const viewerContainer = document.getElementById('viewer-container');
+  const viewer = document.getElementById('kicad-viewer');
+
+  fileInput?.addEventListener('change', async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+    viewer?.setAttribute('src', url);
+    if (viewerContainer) viewerContainer.style.display = 'block';
+  });
+</script>
+
+<style>
+  .portfolio-page { max-width:900px; margin:0 auto; padding:48px 24px; min-height:100vh; }
+  .portfolio-title { font-family:'Fraunces',serif; font-size:clamp(28px,5vw,42px); color:var(--text,#f4eee3); margin:0 0 16px; }
+  .portfolio-intro { font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--text-muted,#d6cbb9); line-height:1.7; margin:0 0 40px; }
+  .portfolio-section { margin-bottom:48px; }
+  .portfolio-h2 { font-family:'Fraunces',serif; font-size:22px; color:var(--accent,#f1c27a); margin:0 0 12px; }
+  .portfolio-desc { font-size:14px; color:var(--text-dim,#b6a894); margin:0 0 20px; }
+  .portfolio-desc code { color:var(--electric,#5bd1d8); background:var(--surface,#1a1510); padding:2px 6px; border-radius:3px; font-size:13px; }
+  .portfolio-upload { border:2px dashed var(--line,#3a2f24); border-radius:8px; padding:32px; text-align:center; margin-bottom:20px; transition:border-color .2s; }
+  .portfolio-upload:hover { border-color:var(--electric,#5bd1d8); }
+  .portfolio-upload-label { font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--text-muted,#d6cbb9); cursor:pointer; display:block; }
+  .portfolio-upload-input { position:absolute; opacity:0; width:0; height:0; }
+  .portfolio-viewer { margin:20px 0; border-radius:8px; overflow:hidden; }
+  .portfolio-note { font-size:12px; color:var(--text-dim,#b6a894); opacity:.6; }
+  .portfolio-link { color:var(--electric,#5bd1d8); }
+  .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
+  .portfolio-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:20px; }
+  .portfolio-card h3 { font-family:'Fraunces',serif; font-size:18px; color:var(--text,#f4eee3); margin:0 0 8px; }
+  .portfolio-card p { font-size:14px; color:var(--text-muted,#d6cbb9); line-height:1.6; margin:0 0 12px; }
+  .portfolio-tag { display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--electric,#5bd1d8); background:rgba(91,209,216,.1); padding:2px 8px; border-radius:3px; margin-right:6px; margin-bottom:4px; }
+  .portfolio-cta { text-align:center; margin-top:48px; }
+  .portfolio-btn { display:inline-block; padding:12px 28px; font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--bg,#0b0a09); background:var(--accent,#f1c27a); text-decoration:none; border-radius:4px; transition:all .2s; }
+  .portfolio-btn:hover { background:var(--electric,#5bd1d8); box-shadow:0 0 20px rgba(91,209,216,.3); }
+</style>
