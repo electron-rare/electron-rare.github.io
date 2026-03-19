@@ -11,24 +11,12 @@ import '@/styles/global.css';
       <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-green-soft, #b6d18f44)" stroke-width="0.8" transform="rotate(90 150 150)"/>
       <circle cx="150" cy="150" r="18" fill="url(#nucleusGlow)"/>
       <circle cx="150" cy="150" r="8" fill="var(--accent, #f1c27a)"/>
-      <circle r="5" fill="var(--electric, #5bd1d8)">
-        <animateMotion dur="3s" repeatCount="indefinite"><mpath href="#o1"/></animateMotion>
-      </circle>
-      <circle r="10" fill="var(--electric, #5bd1d8)" opacity="0.3">
-        <animateMotion dur="3s" repeatCount="indefinite"><mpath href="#o1"/></animateMotion>
-      </circle>
-      <circle r="4" fill="var(--accent, #f1c27a)">
-        <animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#o2"/></animateMotion>
-      </circle>
-      <circle r="9" fill="var(--accent, #f1c27a)" opacity="0.25">
-        <animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#o2"/></animateMotion>
-      </circle>
-      <circle r="3" fill="var(--trace-green, #b6d18f)">
-        <animateMotion dur="5.8s" repeatCount="indefinite"><mpath href="#o3"/></animateMotion>
-      </circle>
-      <circle r="8" fill="var(--trace-green, #b6d18f)" opacity="0.2">
-        <animateMotion dur="5.8s" repeatCount="indefinite"><mpath href="#o3"/></animateMotion>
-      </circle>
+      <circle r="5" fill="var(--electric, #5bd1d8)"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#o1"/></animateMotion></circle>
+      <circle r="10" fill="var(--electric, #5bd1d8)" opacity="0.3"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#o1"/></animateMotion></circle>
+      <circle r="4" fill="var(--accent, #f1c27a)"><animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#o2"/></animateMotion></circle>
+      <circle r="9" fill="var(--accent, #f1c27a)" opacity="0.25"><animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#o2"/></animateMotion></circle>
+      <circle r="3" fill="var(--trace-green, #b6d18f)"><animateMotion dur="5.8s" repeatCount="indefinite"><mpath href="#o3"/></animateMotion></circle>
+      <circle r="8" fill="var(--trace-green, #b6d18f)" opacity="0.2"><animateMotion dur="5.8s" repeatCount="indefinite"><mpath href="#o3"/></animateMotion></circle>
       <defs>
         <ellipse id="o1" cx="150" cy="150" rx="120" ry="45" transform="rotate(-30 150 150)" fill="none"/>
         <ellipse id="o2" cx="150" cy="150" rx="120" ry="45" transform="rotate(30 150 150)" fill="none"/>
@@ -39,9 +27,7 @@ import '@/styles/global.css';
         </radialGradient>
       </defs>
     </svg>
-
     <h1 class="title">L'<span class="electric">é</span>lectron rare</h1>
-
     <div class="timer" id="timer">
       <div class="unit"><span class="num" id="days">--</span><span class="label">jours</span></div>
       <div class="sep">:</div>
@@ -51,16 +37,13 @@ import '@/styles/global.css';
       <div class="sep">:</div>
       <div class="unit"><span class="num" id="seconds">--</span><span class="label">secondes</span></div>
     </div>
-
     <p class="tagline" id="tagline"></p>
-
     <p class="footnote">Systèmes électroniques spécifiques · Formations · Prototypage</p>
   </main>
 </BaseLayout>
 
 <script>
   const LAUNCH = new Date('2026-05-01T00:00:00+02:00').getTime();
-
   const messages = [
     "Charge des condensateurs en cours...",
     "Calibration de l'oscilloscope...",
@@ -78,130 +61,36 @@ import '@/styles/global.css';
     "Vérification du plan de masse...",
     "Analyse du spectre RF..."
   ];
-
   let msgIndex = Math.floor(Math.random() * messages.length);
-
   function pad(n) { return String(n).padStart(2, '0'); }
-
   function update() {
-    const now = Date.now();
-    const diff = Math.max(0, LAUNCH - now);
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('days').textContent = pad(d);
-    document.getElementById('hours').textContent = pad(h);
-    document.getElementById('minutes').textContent = pad(m);
-    document.getElementById('seconds').textContent = pad(s);
+    const diff = Math.max(0, LAUNCH - Date.now());
+    document.getElementById('days').textContent = pad(Math.floor(diff / 86400000));
+    document.getElementById('hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    document.getElementById('minutes').textContent = pad(Math.floor((diff % 3600000) / 60000));
+    document.getElementById('seconds').textContent = pad(Math.floor((diff % 60000) / 1000));
   }
-
   function rotateMessage() {
     const el = document.getElementById('tagline');
     el.style.opacity = '0';
-    setTimeout(() => {
-      el.textContent = messages[msgIndex];
-      el.style.opacity = '1';
-      msgIndex = (msgIndex + 1) % messages.length;
-    }, 400);
+    setTimeout(() => { el.textContent = messages[msgIndex]; el.style.opacity = '1'; msgIndex = (msgIndex + 1) % messages.length; }, 400);
   }
-
-  update();
-  rotateMessage();
+  update(); rotateMessage();
   setInterval(update, 1000);
   setInterval(rotateMessage, 8000);
 </script>
 
 <style>
-  .countdown-page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 48px 24px;
-    background: var(--bg, #0b0a09);
-  }
-
-  .atom {
-    width: clamp(180px, 35vw, 260px);
-    height: auto;
-    margin-bottom: 24px;
-  }
-
-  .title {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(28px, 5vw, 48px);
-    font-weight: 700;
-    color: var(--text, #f4eee3);
-    margin: 0 0 32px;
-    letter-spacing: -1px;
-  }
-
-  .electric {
-    color: var(--electric, #5bd1d8);
-    animation: pulse 3s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; text-shadow: 0 0 12px var(--electric, #5bd1d8); }
-  }
-
-  .timer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 32px;
-  }
-
-  .unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .num {
-    font-family: 'IBM Plex Mono', 'Share Tech Mono', monospace;
-    font-size: clamp(36px, 8vw, 72px);
-    font-weight: 600;
-    color: var(--text, #f4eee3);
-    line-height: 1;
-    min-width: 2ch;
-  }
-
-  .label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim, #b6a894);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 6px;
-  }
-
-  .sep {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: clamp(28px, 6vw, 56px);
-    color: var(--accent, #f1c27a);
-    opacity: 0.5;
-    margin-bottom: 20px;
-  }
-
-  .tagline {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    color: var(--accent, #f1c27a);
-    margin: 0 0 40px;
-    min-height: 1.5em;
-    transition: opacity 0.4s ease;
-  }
-
-  .footnote {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--text-dim, #b6a894);
-    opacity: 0.4;
-    letter-spacing: 0.5px;
-  }
+  .countdown-page { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 24px; background:var(--bg,#0b0a09); }
+  .atom { width:clamp(180px,35vw,260px); height:auto; margin-bottom:24px; }
+  .title { font-family:'Fraunces',serif; font-size:clamp(28px,5vw,48px); font-weight:700; color:var(--text,#f4eee3); margin:0 0 32px; letter-spacing:-1px; }
+  .electric { color:var(--electric,#5bd1d8); animation:pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6;text-shadow:0 0 12px var(--electric,#5bd1d8)} }
+  .timer { display:flex; align-items:center; gap:8px; margin-bottom:32px; }
+  .unit { display:flex; flex-direction:column; align-items:center; }
+  .num { font-family:'IBM Plex Mono','Share Tech Mono',monospace; font-size:clamp(36px,8vw,72px); font-weight:600; color:var(--text,#f4eee3); line-height:1; min-width:2ch; }
+  .label { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); text-transform:uppercase; letter-spacing:2px; margin-top:6px; }
+  .sep { font-family:'IBM Plex Mono',monospace; font-size:clamp(28px,6vw,56px); color:var(--accent,#f1c27a); opacity:.5; margin-bottom:20px; }
+  .tagline { font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--accent,#f1c27a); margin:0 0 40px; min-height:1.5em; transition:opacity .4s ease; }
+  .footnote { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim,#b6a894); opacity:.4; letter-spacing:.5px; }
 </style>
