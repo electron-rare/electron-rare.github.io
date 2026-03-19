@@ -55,7 +55,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y lftp
 
-      - name: Deploy target
+      - name: Build static site
         env:
-          DEPLOY_TARGET_SKIP_BUILD: "0"
-        run: bash scripts/deploy-ovh-ftp-target.sh "${{ inputs.target }}"
+          PUBLIC_SITE_URL: https://www.lelectronrare.fr/
+        run: npm run build:astro
+
+      - name: Deploy to OVH
+        run: |
+          lftp -u "$FTP_USER","$FTP_PASS" "ftp://$FTP_HOST" <<EOF
+          set ssl:verify-certificate no
+          set ftp:list-options -a
+          set cmd:fail-exit true
+          set net:max-retries 3
+          set net:timeout 30
+          mirror --reverse --delete --verbose dist/ ${FTP_REMOTE_DIR:-/www}
+          bye
+          EOF
