@@ -58,7 +58,7 @@ jobs:
       - name: Build static site
         env:
           PUBLIC_SITE_URL: https://www.lelectronrare.fr/
-        run: npm run build:astro
+        run: npm run build
 
       - name: Deploy to OVH
         run: |
