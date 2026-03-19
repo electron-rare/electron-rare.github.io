@@ -1,0 +1,37 @@
+services:
+  electron-rare-site:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        FRAPPE_URL: ${FRAPPE_URL:?FRAPPE_URL is required}
+        FRAPPE_API_KEY: ${FRAPPE_API_KEY:?FRAPPE_API_KEY is required}
+        FRAPPE_API_SECRET: ${FRAPPE_API_SECRET:?FRAPPE_API_SECRET is required}
+        CRM_FALLBACK_URL: ${CRM_FALLBACK_URL:-}
+    container_name: electron-rare-site
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4321
+      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://www.lelectronrare.fr}
+      FRAPPE_URL: ${FRAPPE_URL}
+      FRAPPE_API_KEY: ${FRAPPE_API_KEY}
+      FRAPPE_API_SECRET: ${FRAPPE_API_SECRET}
+      CRM_FALLBACK_URL: ${CRM_FALLBACK_URL:-}
+      NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    extra_hosts:
+      - "tower.saillant.cc:192.168.0.120"
+    ports:
+      - "127.0.0.1:4321:4321"
+    networks:
+      - zacus-stack
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+networks:
+  zacus-stack:
+    external: true
+    name: zacus-stack_default

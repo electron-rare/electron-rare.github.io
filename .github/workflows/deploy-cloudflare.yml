@@ -1,0 +1,78 @@
+name: Deploy to Cloudflare (via Photon)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_SITE_URL: https://www.lelectronrare.fr/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Deploy to Photon
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.PHOTON_HOST }}
+          username: root
+          key: ${{ secrets.PHOTON_SSH_KEY }}
+          source: "dist/"
+          target: "/tmp/site-dist/"
+          overwrite: true
+          rm: true
+
+      - name: Restart site container
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PHOTON_HOST }}
+          username: root
+          key: ${{ secrets.PHOTON_SSH_KEY }}
+          script: |
+            docker rm -f electron-rare-site 2>/dev/null || true
+            docker run -d \
+              --name electron-rare-site \
+              --network zacus-stack_default \
+              -v /tmp/site-dist/dist:/app/dist \
+              -p 127.0.0.1:4321:4321 \
+              --restart unless-stopped \
+              node:22-alpine \
+              sh -c 'npm install -g serve 2>/dev/null && serve /app/dist -l 4321 -s'
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PHOTON_HOST }}
+          username: root
+          key: ${{ secrets.PHOTON_SSH_KEY }}
+          script: |
+            sleep 8
+            STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:4321/)
+            if [ "$STATUS" != "200" ]; then
+              echo "Site returned $STATUS instead of 200"
+              exit 1
+            fi
+            echo "Site is live (HTTP 200)"

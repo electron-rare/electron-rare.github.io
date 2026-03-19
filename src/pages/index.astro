@@ -1,146 +1,207 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@/styles/global.css';
-import '@/styles/home-workbench.css';
-import SiteHeader from '@/components/SiteHeader.astro';
-import { Hero } from '@/components/sections/Hero';
-import { About } from '@/components/sections/About';
-import { CaseStudies } from '@/components/sections/CaseStudies';
-import { GraphicSprints } from '@/components/sections/GraphicSprints';
-import Contact from '@/components/sections/Contact.astro';
-import Faq from '@/components/sections/Faq.astro';
-import { withSiteBase } from '@/lib/site';
-import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
-
-const formationHref = withSiteBase('/formation/');
-const mentionsHref = withSiteBase('/mentions-legales/');
-const headerItems = [
-  { href: '#a-propos', label: 'Approche' },
-  { href: '#graphic-sprints-title', label: 'Missions' },
-  { href: formationHref, label: 'Formation' },
-  { href: '#faq', label: 'FAQ' },
-  { href: '#contact', label: 'Contact', desktopOnly: true }
-];
 ---
 
-<BaseLayout>
-  <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
+<BaseLayout title="L'Electron Rare — Bientôt" description="L'Electron Rare arrive. Systèmes électroniques spécifiques, formations, prototypage.">
+  <main class="countdown-page">
+    <svg class="atom" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-cyan-soft, #5bd1d866)" stroke-width="0.8" transform="rotate(-30 150 150)"/>
+      <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-amber-soft, #f1c27a66)" stroke-width="0.8" transform="rotate(30 150 150)"/>
+      <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-green-soft, #b6d18f44)" stroke-width="0.8" transform="rotate(90 150 150)"/>
+      <circle cx="150" cy="150" r="18" fill="url(#nucleusGlow)"/>
+      <circle cx="150" cy="150" r="8" fill="var(--accent, #f1c27a)"/>
+      <circle r="5" fill="var(--electric, #5bd1d8)">
+        <animateMotion dur="3s" repeatCount="indefinite"><mpath href="#o1"/></animateMotion>
+      </circle>
+      <circle r="10" fill="var(--electric, #5bd1d8)" opacity="0.3">
+        <animateMotion dur="3s" repeatCount="indefinite"><mpath href="#o1"/></animateMotion>
+      </circle>
+      <circle r="4" fill="var(--accent, #f1c27a)">
+        <animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#o2"/></animateMotion>
+      </circle>
+      <circle r="9" fill="var(--accent, #f1c27a)" opacity="0.25">
+        <animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#o2"/></animateMotion>
+      </circle>
+      <circle r="3" fill="var(--trace-green, #b6d18f)">
+        <animateMotion dur="5.8s" repeatCount="indefinite"><mpath href="#o3"/></animateMotion>
+      </circle>
+      <circle r="8" fill="var(--trace-green, #b6d18f)" opacity="0.2">
+        <animateMotion dur="5.8s" repeatCount="indefinite"><mpath href="#o3"/></animateMotion>
+      </circle>
+      <defs>
+        <ellipse id="o1" cx="150" cy="150" rx="120" ry="45" transform="rotate(-30 150 150)" fill="none"/>
+        <ellipse id="o2" cx="150" cy="150" rx="120" ry="45" transform="rotate(30 150 150)" fill="none"/>
+        <ellipse id="o3" cx="150" cy="150" rx="120" ry="45" transform="rotate(90 150 150)" fill="none"/>
+        <radialGradient id="nucleusGlow">
+          <stop offset="0%" stop-color="var(--accent, #f1c27a)" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="var(--accent, #f1c27a)" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+    </svg>
 
-  <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
-    <section class="structure-grid structure-grid--hero" data-reveal>
-      <div class="structure-cell structure-cell--hero">
-        <Hero />
-      </div>
-    </section>
+    <h1 class="title">L'<span class="electric">é</span>lectron rare</h1>
 
-    <section class="structure-grid structure-grid--systems" data-reveal>
-      <div class="structure-cell structure-cell--about">
-        <About />
-      </div>
-    </section>
-
-    <section class="structure-grid structure-grid--cases" data-reveal>
-      <div class="structure-cell structure-cell--cases">
-        <CaseStudies />
-      </div>
-    </section>
-
-    <section class="photo-strip" aria-label="Photos de terrain" data-reveal>
-      <div class="photo-strip-track">
-        <img src={withSiteBase('/assets/photos/pcb-teensy-led-kxkm.webp')} alt="PCB custom Teensy LED — projet spectacle vivant KXKM" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/platine-automate-cablage.webp')} alt="Câblage automate industriel — intervention terrain" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/bench-bms-batteries-xt60.webp')} alt="Banc de test BMS batteries — prototypage" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/automate-siemens-s7.webp')} alt="Automate Siemens S7 — diagnostic industriel" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/soudure-pcb-composants.webp')} alt="Soudure PCB — formation et prototypage" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/oscilloscope-philips-vintage.webp')} alt="Instrumentation et mesure — oscilloscope" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/rack-cbtc-lon-connecteurs.webp')} alt="Rack CBTC transport — connectique industrielle" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/pcb-embarquee-boitier-test.webp')} alt="Carte embarquée en test — validation prototype" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/armoire-automate-schneider.webp')} alt="Armoire Schneider — automatisme industriel" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/outillage-atelier-pro.webp')} alt="Atelier professionnel — outillage organisé" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-      </div>
-    </section>
-
-    <section class="video-strip" aria-label="Vidéos de terrain" data-reveal>
-      <div class="video-strip-track">
-        <video src={withSiteBase('/assets/videos/video-bench-electronique.mp4')} poster={withSiteBase('/assets/videos/video-bench-electronique-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Bench électronique en action"></video>
-        <video src={withSiteBase('/assets/videos/video-test-prototype.mp4')} poster={withSiteBase('/assets/videos/video-test-prototype-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Test de prototype"></video>
-        <video src={withSiteBase('/assets/videos/video-instrumentation.mp4')} poster={withSiteBase('/assets/videos/video-instrumentation-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Instrumentation et mesure"></video>
-      </div>
-    </section>
-
-    <section class="structure-grid structure-grid--sprints" data-reveal>
-      <div class="structure-cell structure-cell--sprints">
-        <GraphicSprints />
-      </div>
-    </section>
-
-    <section class="structure-grid structure-grid--faq" data-reveal>
-      <div class="structure-cell structure-cell--faq">
-        <Faq />
-      </div>
-    </section>
-
-    <section class="structure-grid structure-grid--conversion" data-reveal>
-      <div class="structure-cell structure-cell--contact">
-        <Contact />
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
-    <div class="site-shell footer-grid footer-grid--enhanced">
-      <div class="footer-col footer-col--brand">
-        <p class="m-0 footer-title">L'électron rare</p>
-        <div class="footer-brand-meta">
-          <p class="mb-0 footer-copy">
-            © 2026 Clément Saillant - systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.
-          </p>
-          <p class="mb-0 footer-copy footer-copy--right">
-            Contact direct : LinkedIn DM ou contact@lelectronrare.fr
-          </p>
-        </div>
-      </div>
-      <nav aria-label="Ressources studio" class="footer-links footer-links--single-rail">
-        <a href="#a-propos" class="footer-link">Approche</a>
-        <a href="#graphic-sprints-title" class="footer-link">Missions</a>
-        <a href={formationHref} class="footer-link">Formation</a>
-        <a href="#faq" class="footer-link">FAQ</a>
-        <a href="#contact" class="footer-link">Contact</a>
-        <a
-          href="https://fr.linkedin.com/in/electron-rare"
-          target="_blank"
-          rel="noopener noreferrer me"
-          {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
-          class="footer-link"
-        >
-          LinkedIn
-        </a>
-        <a
-          href="mailto:contact@lelectronrare.fr"
-          {...trackAttrs(TRACK_EVENTS.outboundEmailContact, 'mailto:contact@lelectronrare.fr')}
-          class="footer-link"
-        >
-          contact@lelectronrare.fr
-        </a>
-        <a
-          href="https://github.com/electron-rare/"
-          target="_blank"
-          rel="noopener noreferrer me"
-          {...trackAttrs(TRACK_EVENTS.outboundGithubContact, 'github.com')}
-          class="footer-link"
-        >
-          GitHub
-        </a>
-        <a
-          href="https://blog.saillant.cc"
-          target="_blank"
-          rel="noopener noreferrer me"
-          class="footer-link"
-        >
-          Blog technique
-        </a>
-        <a href={mentionsHref} class="footer-link">Mentions légales</a>
-      </nav>
+    <div class="timer" id="timer">
+      <div class="unit"><span class="num" id="days">--</span><span class="label">jours</span></div>
+      <div class="sep">:</div>
+      <div class="unit"><span class="num" id="hours">--</span><span class="label">heures</span></div>
+      <div class="sep">:</div>
+      <div class="unit"><span class="num" id="minutes">--</span><span class="label">minutes</span></div>
+      <div class="sep">:</div>
+      <div class="unit"><span class="num" id="seconds">--</span><span class="label">secondes</span></div>
     </div>
-  </footer>
+
+    <p class="tagline" id="tagline"></p>
+
+    <p class="footnote">Systèmes électroniques spécifiques · Formations · Prototypage</p>
+  </main>
 </BaseLayout>
+
+<script>
+  const LAUNCH = new Date('2026-05-01T00:00:00+02:00').getTime();
+
+  const messages = [
+    "Charge des condensateurs en cours...",
+    "Calibration de l'oscilloscope...",
+    "Soudure des derniers composants...",
+    "Vérification de la BOM...",
+    "Flash du firmware en cours...",
+    "Mesure de continuité... bip.",
+    "Routage des dernières pistes...",
+    "Test de la chaîne d'alimentation...",
+    "Programmation du bootloader...",
+    "Revue de schéma en cours...",
+    "Placement des composants CMS...",
+    "Passage au four de refusion...",
+    "Debug JTAG en cours...",
+    "Vérification du plan de masse...",
+    "Analyse du spectre RF..."
+  ];
+
+  let msgIndex = Math.floor(Math.random() * messages.length);
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function update() {
+    const now = Date.now();
+    const diff = Math.max(0, LAUNCH - now);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('days').textContent = pad(d);
+    document.getElementById('hours').textContent = pad(h);
+    document.getElementById('minutes').textContent = pad(m);
+    document.getElementById('seconds').textContent = pad(s);
+  }
+
+  function rotateMessage() {
+    const el = document.getElementById('tagline');
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.textContent = messages[msgIndex];
+      el.style.opacity = '1';
+      msgIndex = (msgIndex + 1) % messages.length;
+    }, 400);
+  }
+
+  update();
+  rotateMessage();
+  setInterval(update, 1000);
+  setInterval(rotateMessage, 8000);
+</script>
+
+<style>
+  .countdown-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    background: var(--bg, #0b0a09);
+  }
+
+  .atom {
+    width: clamp(180px, 35vw, 260px);
+    height: auto;
+    margin-bottom: 24px;
+  }
+
+  .title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    color: var(--text, #f4eee3);
+    margin: 0 0 32px;
+    letter-spacing: -1px;
+  }
+
+  .electric {
+    color: var(--electric, #5bd1d8);
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; text-shadow: 0 0 12px var(--electric, #5bd1d8); }
+  }
+
+  .timer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .num {
+    font-family: 'IBM Plex Mono', 'Share Tech Mono', monospace;
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 600;
+    color: var(--text, #f4eee3);
+    line-height: 1;
+    min-width: 2ch;
+  }
+
+  .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim, #b6a894);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 6px;
+  }
+
+  .sep {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(28px, 6vw, 56px);
+    color: var(--accent, #f1c27a);
+    opacity: 0.5;
+    margin-bottom: 20px;
+  }
+
+  .tagline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--accent, #f1c27a);
+    margin: 0 0 40px;
+    min-height: 1.5em;
+    transition: opacity 0.4s ease;
+  }
+
+  .footnote {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim, #b6a894);
+    opacity: 0.4;
+    letter-spacing: 0.5px;
+  }
+</style>

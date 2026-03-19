@@ -1,3 +1,4 @@
+import node from '@astrojs/node';
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
@@ -11,6 +12,8 @@ const basePath = sitePathname === '/' ? '/' : sitePathname.replace(/\/$/, '');
 export default defineConfig({
   site: siteUrl,
   base: basePath,
+  output: 'server',
+  adapter: node({ mode: 'standalone' }),
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()]
