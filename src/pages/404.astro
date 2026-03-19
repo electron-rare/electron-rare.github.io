@@ -1,0 +1,244 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Électron introuvable" description="Cette page n'existe pas." canonicalPath="/404">
+  <main class="page-404">
+    <svg class="atom" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Orbital paths -->
+      <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-cyan-soft, #5bd1d866)" stroke-width="0.8" transform="rotate(-30 150 150)"/>
+      <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-amber-soft, #f1c27a66)" stroke-width="0.8" transform="rotate(30 150 150)"/>
+      <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-green-soft, #b6d18f44)" stroke-width="0.8" transform="rotate(90 150 150)"/>
+
+      <!-- Nucleus glow -->
+      <circle cx="150" cy="150" r="18" fill="url(#nucleusGlow)"/>
+      <circle cx="150" cy="150" r="8" fill="var(--accent, #f1c27a)"/>
+
+      <!-- Electron 1 (cyan) -->
+      <circle r="5" fill="var(--electric, #5bd1d8)">
+        <animateMotion dur="3s" repeatCount="indefinite">
+          <mpath href="#orbit1"/>
+        </animateMotion>
+      </circle>
+      <circle r="10" fill="var(--electric, #5bd1d8)" opacity="0.3">
+        <animateMotion dur="3s" repeatCount="indefinite">
+          <mpath href="#orbit1"/>
+        </animateMotion>
+      </circle>
+
+      <!-- Electron 2 (amber) -->
+      <circle r="4" fill="var(--accent, #f1c27a)">
+        <animateMotion dur="4.2s" repeatCount="indefinite">
+          <mpath href="#orbit2"/>
+        </animateMotion>
+      </circle>
+      <circle r="9" fill="var(--accent, #f1c27a)" opacity="0.25">
+        <animateMotion dur="4.2s" repeatCount="indefinite">
+          <mpath href="#orbit2"/>
+        </animateMotion>
+      </circle>
+
+      <!-- Electron 3 (missing - dashed orbit, blinking) -->
+      <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-green, #b6d18f)" stroke-width="0.5" stroke-dasharray="4 8" transform="rotate(90 150 150)" opacity="0.5">
+        <animate attributeName="stroke-dashoffset" from="0" to="48" dur="3s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle r="3.5" fill="var(--trace-green, #b6d18f)" opacity="0.15">
+        <animateMotion dur="5.8s" repeatCount="indefinite">
+          <mpath href="#orbit3"/>
+        </animateMotion>
+        <animate attributeName="opacity" values="0.15;0.5;0.15;0" dur="5.8s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Hidden motion paths -->
+      <defs>
+        <ellipse id="orbit1" cx="150" cy="150" rx="120" ry="45" transform="rotate(-30 150 150)" fill="none"/>
+        <ellipse id="orbit2" cx="150" cy="150" rx="120" ry="45" transform="rotate(30 150 150)" fill="none"/>
+        <ellipse id="orbit3" cx="150" cy="150" rx="120" ry="45" transform="rotate(90 150 150)" fill="none"/>
+        <radialGradient id="nucleusGlow">
+          <stop offset="0%" stop-color="var(--accent, #f1c27a)" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="var(--accent, #f1c27a)" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+    </svg>
+
+    <h1>4<span class="zero">0</span>4</h1>
+    <p class="tagline" id="tagline"></p>
+    <p class="explanation" id="explanation"></p>
+
+    <div class="actions">
+      <a href="/" class="btn-home">← Retour au noyau</a>
+    </div>
+
+    <p class="footnote" id="footnote"></p>
+  </main>
+</BaseLayout>
+
+<script>
+  const messages = [
+    {
+      tagline: "Électron introuvable.",
+      explanation: "Selon le principe d'incertitude de Heisenberg, plus on connaît précisément l'URL, moins on sait où est la page.",
+      footnote: "Erreur 404 · Couche électronique non peuplée · Probabilité de présence : 0%"
+    },
+    {
+      tagline: "Superposition quantique.",
+      explanation: "Cette page existe et n'existe pas en même temps. Malheureusement, votre navigateur vient de l'observer.",
+      footnote: "Erreur 404 · Fonction d'onde effondrée · Chat de Schrödinger : pas trouvé"
+    },
+    {
+      tagline: "Effet tunnel raté.",
+      explanation: "La page a tenté de traverser la barrière de potentiel du serveur. Elle n'avait pas assez d'énergie.",
+      footnote: "Erreur 404 · Barrière : 1.21 eV · Énergie requise : insuffisante"
+    },
+    {
+      tagline: "Signal non détecté.",
+      explanation: "On a branché l'oscilloscope, vérifié la masse, suivi les pistes du PCB. Rien. Le signal s'arrête ici.",
+      footnote: "Erreur 404 · Multimètre : OL · Continuité : FAIL"
+    },
+    {
+      tagline: "Composant manquant.",
+      explanation: "La BOM indique un composant à cet emplacement. Mais le pick-and-place a oublié de le poser.",
+      footnote: "Erreur 404 · Ref: U404 · Empreinte : NOT_POPULATED"
+    },
+    {
+      tagline: "Court-circuit temporel.",
+      explanation: "Cette page existera peut-être dans le futur. Ou elle a existé dans le passé. La relativité est floue là-dessus.",
+      footnote: "Erreur 404 · Référentiel : indéterminé · Temps propre : NaN"
+    },
+    {
+      tagline: "Masse flottante.",
+      explanation: "Sans référence de masse, impossible de mesurer quoi que ce soit. Cette URL flotte dans le vide intersidéral du serveur.",
+      footnote: "Erreur 404 · GND : déconnecté · Potentiel : indéfini"
+    },
+    {
+      tagline: "Intrication rompue.",
+      explanation: "Cette page était intriquée avec une autre. Quelqu'un a mesuré l'autre page et celle-ci s'est décohérée.",
+      footnote: "Erreur 404 · Bell inequality : violated · EPR : paradox"
+    },
+    {
+      tagline: "Fréquence hors bande.",
+      explanation: "Votre requête émet sur une fréquence que notre serveur ne peut pas capter. Essayez de réaccorder votre URL.",
+      footnote: "Erreur 404 · Bande passante : 0 Hz · Filtre : rejet total"
+    },
+    {
+      tagline: "Soudure froide.",
+      explanation: "La connexion entre votre navigateur et cette page présente une soudure froide. Contact intermittent. Page absente.",
+      footnote: "Erreur 404 · Joint : CMS · Diagnostic : reflow nécessaire"
+    }
+  ];
+
+  let currentIndex = Math.floor(Math.random() * messages.length);
+
+  function updateMessage() {
+    const msg = messages[currentIndex];
+    const tagline = document.getElementById('tagline');
+    const explanation = document.getElementById('explanation');
+    const footnote = document.getElementById('footnote');
+
+    tagline.style.opacity = '0';
+    explanation.style.opacity = '0';
+    footnote.style.opacity = '0';
+
+    setTimeout(() => {
+      tagline.textContent = msg.tagline;
+      explanation.textContent = msg.explanation;
+      footnote.textContent = msg.footnote;
+      tagline.style.opacity = '1';
+      explanation.style.opacity = '1';
+      footnote.style.opacity = '1';
+    }, 400);
+
+    currentIndex = (currentIndex + 1) % messages.length;
+  }
+
+  updateMessage();
+  setInterval(updateMessage, 10000);
+</script>
+
+<style>
+  .page-404 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+  }
+
+  .atom {
+    width: clamp(200px, 40vw, 280px);
+    height: auto;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(72px, 15vw, 140px);
+    font-weight: 700;
+    color: var(--text, #f4eee3);
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -4px;
+  }
+
+  .zero {
+    display: inline-block;
+    animation: glitch 4s ease-in-out infinite;
+    color: var(--electric, #5bd1d8);
+  }
+
+  @keyframes glitch {
+    0%, 88%, 100% { opacity: 1; transform: none; }
+    90% { opacity: 0.5; transform: translateX(-3px) skewX(-3deg); color: var(--trace-magenta, #d89b63); }
+    92% { opacity: 0.8; transform: translateX(2px) skewX(1deg); }
+    94% { opacity: 0.3; transform: translateX(-1px); color: var(--accent, #f1c27a); }
+    96% { opacity: 1; transform: none; }
+  }
+
+  .tagline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(20px, 3.5vw, 28px);
+    color: var(--accent, #f1c27a);
+    margin: 12px 0 20px;
+    transition: opacity 0.4s ease;
+  }
+
+  .explanation {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--text-muted, #d6cbb9);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 0 32px;
+    transition: opacity 0.4s ease;
+  }
+
+  .actions { margin-bottom: 40px; }
+
+  .btn-home {
+    display: inline-block;
+    padding: 12px 28px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--bg, #0b0a09);
+    background: var(--accent, #f1c27a);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .btn-home:hover {
+    background: var(--electric, #5bd1d8);
+    box-shadow: 0 0 20px rgba(91, 209, 216, 0.3);
+  }
+
+  .footnote {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim, #b6a894);
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+    transition: opacity 0.4s ease;
+  }
+</style>

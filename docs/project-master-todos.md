@@ -10,6 +10,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - Direction artistique active: `white-contrast`, claire par defaut, sans bouton de bascule public.
 - Positionnement actif: systemes electroniques specifiques, avec familles visibles electronique, automatisme, energie, stockage et optimisation; pas limite a l'embarque, avec partenaires mobilises quand le projet devient multi-technique.
 - Surface a maintenir: Hero, Approche, Cas concrets, photo strip, video strip, Missions, FAQ, Contact, footer.
+- Endpoint lead production: `POST /api/submit-lead` (SSR -> Frappe CRM Lead, fallback optionnel `CRM_FALLBACK_URL`).
 
 ## Verites de reference
 - Point d'entree documentaire: `docs/README.md`
@@ -19,6 +20,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - Theme/layout: `src/layouts/BaseLayout.astro`, `src/styles/global.css`, `src/styles/home-workbench.css`
 - Canonical/base/deploiement: `src/lib/site.ts`, `scripts/build-astro-external.mjs`, `docs/ovh-ftp-preview-solution-2026-03-14.md`
 - Tracking actif: `src/lib/tracking.ts` + emitters inline dans `src/layouts/BaseLayout.astro`
+- Endpoint opérationnel lead: `src/pages/api/submit-lead.ts` + intégration formulaire `src/components/sections/Contact.astro`.
 
 ## Etat courant
 - [x] Homepage OVH re-synchronisee dans le repo Astro.
@@ -39,6 +41,7 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - [x] Preview OVH republie avec le positionnement `electronique · automatisme · energie · stockage · optimisation` (`23098262445`).
 - [x] Production OVH republiee avec le meme positionnement (`23098335508`).
 - [x] `https://www.lelectronrare.fr/lab/` et `https://www.lelectronrare.fr/preview/lab/` repondent maintenant `404`.
+- [x] `POST /api/submit-lead` actif et pointé vers Frappe CRM Lead en production (`electron-rare-site`).
 - [x] Le hero blanc utilise maintenant un vrai visuel oscilloscope, avec recadrage et overlays recales pour la DA claire.
 - [x] Preview OVH republie avec le hero oscilloscope recadre et le recadrage memoire/docs (`23099694984`).
 - [x] Production OVH republiee avec le meme hero oscilloscope (`23099760106`).
@@ -97,3 +100,25 @@ Source of truth: this file for execution priorities, plus [docs/README.md](./REA
 - Toute doc active doit parler du site Astro/OVH actuel, pas d'une ancienne homepage statique.
 - Les ancres de reference sont celles du code actuel, pas `#projets`.
 - Le theme de reference est clair/white-contrast par defaut.
+
+
+## Deploiement SSR Photon (2026-03-19)
+- [x] Creer un dockerfile multi-stage pour build + runtime serve (production legere).
+- [x] Creer le compose site et la route Traefik associee.
+- [x] Ajouter un .env.example d'exemple pour deploiement et activer FRAPPE_* + PUBLIC_SITE_URL.
+  - [x] Route Traefik externe: https://www.lelectronrare.fr et lelectronrare.fr (source réelle: /root/zacus-stack/config/traefik/dynamic/electron-rare-site.yml)
+- [x] Rebuilder/redeployer le service electron-rare-site sur port 4321.
+- [x] Verifier routes: /, /404, /mentions-legales => 200.
+- [x] Ajouter la page mentions-legales et la page 404.
+- [x] Brancher le formulaire de contact vers Frappe CRM en production.
+
+## Carte de flux lead (prod)
+
+```mermaid
+flowchart LR
+  V[Visiteur] -->|Complète formulaire| F[Contact.astro /api/submit-lead]
+  F -->|POST JSON| A[src/pages/api/submit-lead]
+  A -->|POST| R[Frappe CRM Lead]
+  A -->|fallback (si Frappe KO)| C[CRM custom legacy]
+  R -->|Lead stocke| D[Dashboard CRM + pipeline]
+```

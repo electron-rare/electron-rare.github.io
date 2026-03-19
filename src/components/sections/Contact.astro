@@ -13,6 +13,8 @@ Ce que j'attends :
 Contraintes (délai, budget) :`;
 
 const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURIComponent("Contact L'Électron Rare")}&body=${encodeURIComponent(DEFAULT_MESSAGE)}`;
+const apiBase = (import.meta.env.PUBLIC_API_URL || '').replace(/\/$/, '');
+const CONTACT_FORM_ENDPOINT = apiBase ? `${apiBase}/api/submit-lead` : '/api/submit-lead';
 ---
 
 <section
@@ -99,7 +101,7 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
 
       <div data-contact-panel="form" style="display:none;">
         <div id="contact-form-container">
-          <form id="contact-crm-form" class="contact-minitel-form">
+          <form id="contact-crm-form" class="contact-minitel-form" data-contact-submit-endpoint={CONTACT_FORM_ENDPOINT}>
             <div class="contact-minitel-field">
               <label for="contact-form-name" class="contact-minitel-label">&gt; NOM :</label>
               <input
@@ -228,7 +230,6 @@ const defaultMailtoHref = `mailto:contact@lelectronrare.fr?subject=${encodeURICo
 </section>
 
 <script>
-  const CRM_INTAKE_ENDPOINT = 'https://electron.saillant.cc/api/intake/lead';
   const DEFAULT_MESSAGE = `Bonjour Clément,
 
 J'ai un projet / besoin autour d'un système électronique spécifique.
@@ -301,6 +302,7 @@ Contraintes (délai, budget) :`;
   const needTypeInput = document.getElementById('contact-form-need-type') as HTMLSelectElement;
   const messageArea = document.getElementById('contact-form-message') as HTMLTextAreaElement;
   const consentInput = document.getElementById('contact-form-consent') as HTMLInputElement;
+  const CRM_INTAKE_ENDPOINT = form.dataset.contactSubmitEndpoint || '/api/submit-lead';
 
   const resetContactForm = () => {
     nameInput.value = '';
