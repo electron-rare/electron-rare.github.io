@@ -131,13 +131,46 @@ import '@/styles/global.css';
         <div class="task-list" id="linkedin-tasks"></div>
       </div>
 
+      <!-- Technique restant -->
+      <div class="task-group">
+        <h3 class="group-label group-label--cyan">Technique restant</h3>
+        <div class="task-list">
+          <div class="task" data-id="gsc"><div class="task-header"><input type="checkbox" class="task-check" id="task-gsc" /><label for="task-gsc" class="task-label">Google Search Console — ajouter lelectronrare.fr</label><span class="task-badge badge--cyan">SEO</span></div><div class="task-body"><p>Se connecter à <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a>, ajouter www.lelectronrare.fr, copier le code TXT de vérification.</p></div></div>
+          <div class="task" data-id="calcom-setup"><div class="task-header"><input type="checkbox" class="task-check" id="task-calcom" /><label for="task-calcom" class="task-label">Configurer dispo Cal.com (horaires, jours)</label><span class="task-badge badge--cyan">Config</span></div><div class="task-body"><div class="task-actions"><a href="https://rdv.saillant.cc/settings/my-account/availability" target="_blank" class="btn btn--outline">Cal.com Availability</a></div></div></div>
+          <div class="task" data-id="metabase-dash"><div class="task-header"><input type="checkbox" class="task-check" id="task-metabase" /><label for="task-metabase" class="task-label">Personnaliser dashboard Metabase</label><span class="task-badge badge--cyan">KPI</span></div><div class="task-body"><div class="task-actions"><a href="https://kpi.saillant.cc/dashboard/2" target="_blank" class="btn btn--outline">Dashboard Pipeline</a></div></div></div>
+        </div>
+      </div>
+
       <!-- Lancement -->
       <div class="task-group">
         <h3 class="group-label group-label--green">Lancement — 1er mai</h3>
         <div class="task-list">
-          <div class="task" data-id="launch"><div class="task-header"><input type="checkbox" class="task-check" id="task-launch" /><label for="task-launch" class="task-label">Swap countdown → site complet</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><pre class="code-block">bash ~/lib/launch-site.sh</pre></div></div>
-          <div class="task" data-id="newsletter-launch"><div class="task-header"><input type="checkbox" class="task-check" id="task-nl" /><label for="task-nl" class="task-label">Newsletter "Lancement"</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><div class="task-actions"><a href="https://mail.saillant.cc" target="_blank" class="btn btn--primary">Listmonk</a></div></div></div>
+          <div class="task" data-id="launch"><div class="task-header"><input type="checkbox" class="task-check" id="task-launch" /><label for="task-launch" class="task-label">Swap countdown → site complet</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><pre class="code-block">bash ~/lib/launch-site.sh</pre><p>Rollback si problème :</p><pre class="code-block">bash ~/lib/rollback-site.sh</pre></div></div>
+          <div class="task" data-id="newsletter-launch"><div class="task-header"><input type="checkbox" class="task-check" id="task-nl" /><label for="task-nl" class="task-label">Newsletter "Lancement" (template ID 10)</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><div class="task-actions"><a href="https://mail.saillant.cc" target="_blank" class="btn btn--primary">Listmonk</a></div></div></div>
           <div class="task" data-id="li6"><div class="task-header"><input type="checkbox" class="task-check" id="task-li6" /><label for="task-li6" class="task-label">LinkedIn #06 — "C'est en ligne"</label><span class="task-badge badge--green">1er mai</span></div></div>
+          <div class="task" data-id="deploy-final"><div class="task-header"><input type="checkbox" class="task-check" id="task-deploy" /><label for="task-deploy" class="task-label">Deploy final + vérification toutes pages</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><pre class="code-block">bash ~/lib/deploy-site.sh</pre></div></div>
+        </div>
+      </div>
+
+      <!-- Complété session 20 mars -->
+      <div class="task-group">
+        <h3 class="group-label" style="color:var(--text-dim);border-bottom-color:var(--line-soft)">Complété — 20 mars</h3>
+        <div class="task-list">
+          <div class="task task--done" data-id="d-brevo"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-brevo" checked disabled /><label class="task-label">SMTP Brevo + DKIM/SPF configurés</label></div></div>
+          <div class="task task--done" data-id="d-dns"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-dns" checked disabled /><label class="task-label">DNS lelectronrare.fr migré Cloudflare</label></div></div>
+          <div class="task task--done" data-id="d-site"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-site" checked disabled /><label class="task-label">Site déployé via tunnel Cloudflare</label></div></div>
+          <div class="task task--done" data-id="d-api"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-api" checked disabled /><label class="task-label">API CRM + AI scoring Ollama</label></div></div>
+          <div class="task task--done" data-id="d-welcome"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-welcome" checked disabled /><label class="task-label">Welcome sequence 3 emails Listmonk</label></div></div>
+          <div class="task task--done" data-id="d-lms"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-lms" checked disabled /><label class="task-label">Frappe LMS 3 cours + 13 chapitres</label></div></div>
+          <div class="task task--done" data-id="d-calcom"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-calcom" checked disabled /><label class="task-label">Cal.com 4 créneaux + CalDAV Apple</label></div></div>
+          <div class="task task--done" data-id="d-metabase"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-metabase" checked disabled /><label class="task-label">Metabase dashboards + DB Frappe</label></div></div>
+          <div class="task task--done" data-id="d-n8n"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-n8n" checked disabled /><label class="task-label">n8n workflows + route Traefik</label></div></div>
+          <div class="task task--done" data-id="d-infra"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-infra" checked disabled /><label class="task-label">Docker pinning + backup MariaDB + Redis AOF</label></div></div>
+          <div class="task task--done" data-id="d-auth"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-auth" checked disabled /><label class="task-label">Authentik SSO sur /ops /intranet (Cloudflare Access supprimé)</label></div></div>
+          <div class="task task--done" data-id="d-portfolio"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-portfolio" checked disabled /><label class="task-label">Portfolio KiCanvas KXKM ESP32 + Parallelator</label></div></div>
+          <div class="task task--done" data-id="d-robots"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-robots" checked disabled /><label class="task-label">robots.txt noindex pages internes</label></div></div>
+          <div class="task task--done" data-id="d-scripts"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-scripts" checked disabled /><label class="task-label">Scripts deploy-site.sh + launch-site.sh + rollback-site.sh</label></div></div>
+          <div class="task task--done" data-id="d-crm-fr"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-crm-fr" checked disabled /><label class="task-label">CRM Frappe en français + 50 rôles Clément</label></div></div>
         </div>
       </div>
     </section>
