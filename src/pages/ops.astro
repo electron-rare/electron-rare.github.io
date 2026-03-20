@@ -414,10 +414,34 @@ import '@/styles/global.css';
 
     <!-- TAB: Monitoring -->
     <section class="panel" id="panel-monitor">
-      <h2 class="section-title">Monitoring</h2>
+      <h2 class="section-title">Monitoring & Outils collaboratifs</h2>
+
+      <h3 class="subsection-title">Services status</h3>
       <div class="monitor-grid" id="monitor-grid"></div>
-      <div class="task-actions" style="margin-top:16px">
-        <a href="https://kpi.saillant.cc" target="_blank" class="btn btn--outline">Metabase</a>
+
+      <h3 class="subsection-title" style="margin-top:24px">Outils collaboratifs</h3>
+      <div class="grid" style="margin-bottom:20px">
+        <a href="https://memos.saillant.cc" class="card" target="_blank"><div class="card-icon">📝</div><h2>Memos</h2><p>Notes rapides, journal de bord, idées</p><span class="card-url">memos.saillant.cc</span></a>
+        <a href="https://docs.saillant.cc" class="card" target="_blank"><div class="card-icon">📄</div><h2>Paperless</h2><p>GED, factures, contrats, docs scannés</p><span class="card-url">docs.saillant.cc</span></a>
+        <a href="https://karakeep.saillant.cc" class="card" target="_blank"><div class="card-icon">🔖</div><h2>Karakeep</h2><p>Bookmarks intelligents, veille web</p><span class="card-url">karakeep.saillant.cc</span></a>
+        <a href="https://dify.saillant.cc" class="card" target="_blank"><div class="card-icon">🧠</div><h2>Dify</h2><p>Workflows IA custom, chatbots, RAG</p><span class="card-url">dify.saillant.cc</span></a>
+        <a href="https://langfuse.saillant.cc" class="card" target="_blank"><div class="card-icon">📊</div><h2>Langfuse</h2><p>Observabilité IA, traces LLM, coûts</p><span class="card-url">langfuse.saillant.cc</span></a>
+        <a href="https://feeds.saillant.cc" class="card" target="_blank"><div class="card-icon">📰</div><h2>Miniflux</h2><p>Flux RSS, veille sectorielle</p><span class="card-url">feeds.saillant.cc</span></a>
+        <a href="https://ntfy.saillant.cc" class="card" target="_blank"><div class="card-icon">🔔</div><h2>ntfy</h2><p>Notifications push temps réel</p><span class="card-url">ntfy.saillant.cc</span></a>
+        <a href="https://bookmarks.saillant.cc" class="card" target="_blank"><div class="card-icon">🏷️</div><h2>Linkding</h2><p>Bookmarks & tags</p><span class="card-url">bookmarks.saillant.cc</span></a>
+        <a href="https://watch.saillant.cc" class="card" target="_blank"><div class="card-icon">👁️</div><h2>Changedetection</h2><p>Surveillance pages web concurrents</p><span class="card-url">watch.saillant.cc</span></a>
+        <a href="https://checks.saillant.cc" class="card" target="_blank"><div class="card-icon">✅</div><h2>Healthchecks</h2><p>Monitoring cron jobs & alertes</p><span class="card-url">checks.saillant.cc</span></a>
+        <a href="https://logs.saillant.cc" class="card" target="_blank"><div class="card-icon">📋</div><h2>Dozzle</h2><p>Logs Docker temps réel</p><span class="card-url">logs.saillant.cc</span></a>
+        <a href="https://grafana-tower.saillant.cc" class="card" target="_blank"><div class="card-icon">📈</div><h2>Grafana Tower</h2><p>Dashboards infra Tower</p><span class="card-url">grafana-tower.saillant.cc</span></a>
+      </div>
+
+      <h3 class="subsection-title">Infra & observabilité</h3>
+      <div class="links">
+        <a href="https://kpi.saillant.cc" target="_blank">Metabase KPI</a>
+        <a href="https://grafana.saillant.cc" target="_blank">Grafana Photon</a>
+        <a href="https://prometheus.saillant.cc" target="_blank">Prometheus</a>
+        <a href="https://auth.saillant.cc" target="_blank">Authentik SSO</a>
+        <a href="https://mascarade.saillant.cc" target="_blank">mascarade UI</a>
       </div>
     </section>
 
@@ -426,7 +450,7 @@ import '@/styles/global.css';
 
 <script>
   // Auth handled by Authentik forward-auth via Traefik
-  const MASCARADE_API = 'https://mascarade.saillant.cc';
+  const MASCARADE_API = 'https://api.lelectronrare.fr';
   const MASCARADE_KEY = '845f8173270c9c4eb051d645cc58ac6882933341e82bff218da48aebb6e5b029';
   const CRM_API = 'https://api.lelectronrare.fr';
 
@@ -539,7 +563,7 @@ import '@/styles/global.css';
     output.innerHTML = '<div class="ai-loading">Génération en cours...</div>';
     output.style.display = 'block';
     try {
-      const res = await fetch(MASCARADE_API + '/api/agents/' + agent + '/run', {
+      const res = await fetch(MASCARADE_API + '/api/ai/' + agent + '/run', {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + MASCARADE_KEY, 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
@@ -581,7 +605,7 @@ import '@/styles/global.css';
 
     try {
       const agent = chatAgent.value;
-      const res = await fetch(MASCARADE_API + '/api/agents/' + agent + '/run', {
+      const res = await fetch(MASCARADE_API + '/api/ai/' + agent + '/run', {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + MASCARADE_KEY, 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: [{ role: 'user', content: msg }] })
@@ -611,7 +635,7 @@ import '@/styles/global.css';
 
     // Fetch leads from Frappe via mascarade-api or direct
     try {
-      const res = await fetch(MASCARADE_API + '/agents/analyst/run', {
+      const res = await fetch(MASCARADE_API + '/api/ai/analyst/run', {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + MASCARADE_KEY, 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: [{ role: 'user', content: 'Requête Frappe CRM: donne-moi le nombre total de leads, le nombre de leads New, le score IA moyen, et le nombre de leads chauds (custom_ai_urgency=chaud). Aussi liste les 5 derniers leads avec nom, organisation, segment, score IA, urgence, date. Format JSON strict.' }] })
@@ -626,7 +650,7 @@ import '@/styles/global.css';
   async function loadAgents() {
     const grid = document.getElementById('agents-grid');
     try {
-      const res = await fetch(MASCARADE_API + '/api/agents', { headers: { 'Authorization': 'Bearer ' + MASCARADE_KEY } });
+      const res = await fetch(MASCARADE_API + '/api/ai/', { headers: { 'Content-Type': 'application/json' } });
       const agents = await res.json();
       const list = Array.isArray(agents) ? agents : agents.agents || [];
       grid.innerHTML = list.map(a => `
@@ -644,14 +668,22 @@ import '@/styles/global.css';
   // --- Monitoring ---
   async function loadMonitor() {
     const services = [
-      { name: 'Site', url: 'https://www.lelectronrare.fr/', expect: 200 },
-      { name: 'API CRM', url: CRM_API + '/health', expect: 200 },
-      { name: 'Frappe CRM', url: 'https://tower.saillant.cc/api/method/ping', expect: null },
-      { name: 'Listmonk', url: 'https://mail.saillant.cc/', expect: null },
-      { name: 'n8n', url: 'https://n8n.saillant.cc/', expect: null },
-      { name: 'Cal.com', url: 'https://rdv.saillant.cc/', expect: null },
-      { name: 'Metabase', url: 'https://kpi.saillant.cc/', expect: null },
-      { name: 'mascarade', url: MASCARADE_API + '/api/agents', expect: null },
+      { name: 'Site', url: 'https://www.lelectronrare.fr/' },
+      { name: 'API', url: CRM_API + '/health' },
+      { name: 'Frappe', url: 'https://tower.saillant.cc/' },
+      { name: 'Listmonk', url: 'https://mail.saillant.cc/' },
+      { name: 'n8n', url: 'https://n8n.saillant.cc/' },
+      { name: 'Cal.com', url: 'https://rdv.saillant.cc/' },
+      { name: 'Metabase', url: 'https://kpi.saillant.cc/' },
+      { name: 'Authentik', url: 'https://auth.saillant.cc/' },
+      { name: 'Memos', url: 'https://memos.saillant.cc/' },
+      { name: 'Paperless', url: 'https://docs.saillant.cc/' },
+      { name: 'Karakeep', url: 'https://karakeep.saillant.cc/' },
+      { name: 'Dify', url: 'https://dify.saillant.cc/' },
+      { name: 'Langfuse', url: 'https://langfuse.saillant.cc/' },
+      { name: 'Miniflux', url: 'https://feeds.saillant.cc/' },
+      { name: 'ntfy', url: 'https://ntfy.saillant.cc/' },
+      { name: 'Grafana', url: 'https://grafana.saillant.cc/' },
     ];
     const grid = document.getElementById('monitor-grid');
     grid.innerHTML = services.map(s => `<div class="monitor-card" id="mon-${s.name.replace(/\s/g,'')}"><div class="monitor-name">${s.name}</div><div class="monitor-status">...</div></div>`).join('');
