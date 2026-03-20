@@ -6,79 +6,127 @@ import '@/styles/global.css';
 <BaseLayout title="Intranet — L'Electron Rare" description="Dashboard interne des services.">
   <main class="intranet">
     <h1 class="intranet-title">Intranet <span class="electric">L'Electron Rare</span></h1>
-    <p class="intranet-sub">Accès rapide à tous les services internes</p>
+    <p class="intranet-sub">Accès rapide · Services · Monitoring</p>
 
     <div class="grid">
       <a href="https://tower.saillant.cc/app/crm" class="card" target="_blank" rel="noopener">
         <div class="card-icon">📊</div>
         <h2>Frappe CRM</h2>
-        <p>Leads, deals, pipeline commercial</p>
-        <span class="card-url">tower.saillant.cc</span>
+        <p>Leads, deals, pipeline commercial, AI scoring</p>
+        <span class="card-url">tower.saillant.cc/app/crm</span>
       </a>
 
-      <a href="https://tower.saillant.cc/app/lms" class="card" target="_blank" rel="noopener">
+      <a href="https://tower.saillant.cc/lms/courses" class="card" target="_blank" rel="noopener">
         <div class="card-icon">🎓</div>
         <h2>Frappe LMS</h2>
-        <p>Formations KiCad, Debug, Dispositifs</p>
-        <span class="card-url">tower.saillant.cc/app/lms</span>
+        <p>3 formations : KiCad, Debug & Mesure, Dispositifs Culturels</p>
+        <span class="card-url">tower.saillant.cc/lms/courses</span>
       </a>
 
       <a href="https://mail.saillant.cc" class="card" target="_blank" rel="noopener">
         <div class="card-icon">📧</div>
         <h2>Listmonk</h2>
-        <p>Newsletter, campagnes, subscribers</p>
+        <p>Newsletter, welcome sequence 3 emails, subscribers</p>
         <span class="card-url">mail.saillant.cc</span>
       </a>
 
       <a href="https://n8n.saillant.cc" class="card" target="_blank" rel="noopener">
         <div class="card-icon">⚡</div>
         <h2>n8n</h2>
-        <p>Workflows automation</p>
+        <p>Workflows : lead scoring, newsletter sync, follow-up</p>
         <span class="card-url">n8n.saillant.cc</span>
-      </a>
-
-      <a href="https://auth.saillant.cc" class="card" target="_blank" rel="noopener">
-        <div class="card-icon">🔐</div>
-        <h2>Authentik</h2>
-        <p>SSO, utilisateurs, permissions</p>
-        <span class="card-url">auth.saillant.cc</span>
       </a>
 
       <a href="https://kpi.saillant.cc" class="card" target="_blank" rel="noopener">
         <div class="card-icon">📈</div>
         <h2>Metabase</h2>
-        <p>Dashboards KPI, analytics</p>
+        <p>Dashboard pipeline, leads par segment/source, score IA</p>
         <span class="card-url">kpi.saillant.cc</span>
       </a>
 
       <a href="https://rdv.saillant.cc" class="card" target="_blank" rel="noopener">
         <div class="card-icon">📅</div>
         <h2>Cal.com</h2>
-        <p>Prise de rendez-vous</p>
+        <p>RDV : découverte 20min, projet 30min, formation, audit 1h</p>
         <span class="card-url">rdv.saillant.cc</span>
+      </a>
+
+      <a href="https://mascarade.saillant.cc/health" class="card" target="_blank" rel="noopener">
+        <div class="card-icon">🤖</div>
+        <h2>mascarade IA</h2>
+        <p>16 agents IA : writer, analyst, KiCad, SPICE, planner...</p>
+        <span class="card-url">mascarade.saillant.cc</span>
+      </a>
+
+      <a href="https://auth.saillant.cc" class="card" target="_blank" rel="noopener">
+        <div class="card-icon">🔐</div>
+        <h2>Authentik SSO</h2>
+        <p>Utilisateurs, permissions, providers</p>
+        <span class="card-url">auth.saillant.cc</span>
+      </a>
+
+      <a href="https://www.lelectronrare.fr/ops" class="card card--highlight" target="_blank" rel="noopener">
+        <div class="card-icon">🎯</div>
+        <h2>Ops Center</h2>
+        <p>Workflow, copilote IA, CRM live, monitoring</p>
+        <span class="card-url">lelectronrare.fr/ops</span>
       </a>
 
       <a href="https://api.lelectronrare.fr/health" class="card" target="_blank" rel="noopener">
         <div class="card-icon">🔌</div>
         <h2>API Proxy</h2>
-        <p>Health check, uptime</p>
+        <p>Submit lead → Frappe + AI scoring Ollama</p>
         <span class="card-url">api.lelectronrare.fr</span>
       </a>
     </div>
 
     <div class="section">
-      <h2 class="section-title">Status des services</h2>
+      <h2 class="section-title">Status live</h2>
       <div id="status-grid" class="status-grid"></div>
     </div>
 
     <div class="section">
-      <h2 class="section-title">Liens rapides</h2>
+      <h2 class="section-title">Site public</h2>
       <div class="links">
-        <a href="https://www.lelectronrare.fr/preview" target="_blank">Site preview</a>
-        <a href="https://www.lelectronrare.fr/portfolio" target="_blank">Portfolio KiCanvas</a>
-        <a href="https://www.lelectronrare.fr/formation" target="_blank">Page formation</a>
-        <a href="https://github.com/electron-rare" target="_blank">GitHub</a>
-        <a href="https://fr.linkedin.com/in/electron-rare" target="_blank">LinkedIn</a>
+        <a href="https://www.lelectronrare.fr/">Countdown</a>
+        <a href="https://www.lelectronrare.fr/preview">Preview complet</a>
+        <a href="https://www.lelectronrare.fr/formation">Formations</a>
+        <a href="https://www.lelectronrare.fr/portfolio">Portfolio KiCanvas</a>
+        <a href="https://www.lelectronrare.fr/mentions-legales">Mentions légales</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">RDV publics</h2>
+      <div class="links">
+        <a href="https://rdv.saillant.cc/clement/decouverte">Appel découverte 20min</a>
+        <a href="https://rdv.saillant.cc/clement/point-projet">Point projet 30min</a>
+        <a href="https://rdv.saillant.cc/clement/formation">Échange formation 30min</a>
+        <a href="https://rdv.saillant.cc/clement/audit">Audit technique 1h</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Ressources</h2>
+      <div class="links">
+        <a href="https://github.com/electron-rare">GitHub</a>
+        <a href="https://github.com/KomplexKapharnaum">GitHub KXKM</a>
+        <a href="https://fr.linkedin.com/in/electron-rare">LinkedIn</a>
+        <a href="https://tower.saillant.cc/app/lms-course">Admin LMS</a>
+        <a href="https://tower.saillant.cc/app/email-account">Email accounts</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Credentials</h2>
+      <div class="cred-grid">
+        <div class="cred"><span class="cred-label">Frappe CRM</span><span class="cred-val">clement@lelectronrare.fr</span></div>
+        <div class="cred"><span class="cred-label">Frappe Admin</span><span class="cred-val">Administrator</span></div>
+        <div class="cred"><span class="cred-label">Authentik</span><span class="cred-val">clement@saillant.cc</span></div>
+        <div class="cred"><span class="cred-label">Listmonk</span><span class="cred-val">admin</span></div>
+        <div class="cred"><span class="cred-label">Cal.com</span><span class="cred-val">clement@lelectronrare.fr</span></div>
+        <div class="cred"><span class="cred-label">Metabase</span><span class="cred-val">clement@lelectronrare.fr</span></div>
+        <div class="cred"><span class="cred-label">n8n</span><span class="cred-val">clement@lelectronrare.fr</span></div>
       </div>
     </div>
   </main>
@@ -91,6 +139,9 @@ import '@/styles/global.css';
     { name: 'Frappe CRM', url: 'https://tower.saillant.cc/' },
     { name: 'Listmonk', url: 'https://mail.saillant.cc/' },
     { name: 'n8n', url: 'https://n8n.saillant.cc/' },
+    { name: 'Cal.com', url: 'https://rdv.saillant.cc/' },
+    { name: 'Metabase', url: 'https://kpi.saillant.cc/' },
+    { name: 'mascarade', url: 'https://mascarade.saillant.cc/health' },
     { name: 'Authentik', url: 'https://auth.saillant.cc/' },
   ];
 
@@ -99,15 +150,21 @@ import '@/styles/global.css';
     services.forEach(s => {
       const el = document.createElement('div');
       el.className = 'status-item';
-      el.innerHTML = `<span class="status-dot status-checking"></span><span class="status-name">${s.name}</span>`;
+      el.innerHTML = `<span class="status-dot status-checking"></span><span class="status-name">${s.name}</span><span class="status-ms"></span>`;
       grid.appendChild(el);
 
-      fetch(s.url, { mode: 'no-cors', cache: 'no-store' })
+      const t0 = Date.now();
+      fetch(s.url, { mode: 'no-cors', cache: 'no-store', signal: AbortSignal.timeout(5000) })
         .then(() => {
+          const ms = Date.now() - t0;
           el.querySelector('.status-dot')?.classList.replace('status-checking', 'status-up');
+          const msEl = el.querySelector('.status-ms');
+          if (msEl) msEl.textContent = ms + 'ms';
         })
         .catch(() => {
           el.querySelector('.status-dot')?.classList.replace('status-checking', 'status-down');
+          const msEl = el.querySelector('.status-ms');
+          if (msEl) msEl.textContent = 'timeout';
         });
     });
   }
@@ -118,23 +175,34 @@ import '@/styles/global.css';
   .intranet-title { font-family:'Fraunces',serif; font-size:clamp(24px,4vw,36px); color:var(--text,#f4eee3); margin:0 0 8px; }
   .electric { color:var(--electric,#5bd1d8); }
   .intranet-sub { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text-dim,#b6a894); margin:0 0 32px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; margin-bottom:40px; }
-  .card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:20px; text-decoration:none; transition:all .2s; display:block; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin-bottom:40px; }
+  .card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:18px; text-decoration:none; transition:all .2s; display:block; }
   .card:hover { border-color:var(--electric,#5bd1d8); box-shadow:0 0 16px rgba(91,209,216,.15); transform:translateY(-2px); }
-  .card-icon { font-size:28px; margin-bottom:8px; }
-  .card h2 { font-family:'Fraunces',serif; font-size:16px; color:var(--text,#f4eee3); margin:0 0 4px; }
-  .card p { font-size:13px; color:var(--text-muted,#d6cbb9); margin:0 0 8px; line-height:1.4; }
-  .card-url { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); opacity:.6; }
-  .section { margin-bottom:32px; }
-  .section-title { font-family:'Fraunces',serif; font-size:18px; color:var(--accent,#f1c27a); margin:0 0 16px; }
-  .status-grid { display:flex; flex-wrap:wrap; gap:12px; }
-  .status-item { display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text-muted,#d6cbb9); }
-  .status-dot { width:8px; height:8px; border-radius:50%; }
+  .card--highlight { border-color:var(--accent,#f1c27a); background:rgba(241,194,122,0.05); }
+  .card-icon { font-size:24px; margin-bottom:8px; }
+  .card h2 { font-family:'Fraunces',serif; font-size:15px; color:var(--text,#f4eee3); margin:0 0 4px; }
+  .card p { font-size:12px; color:var(--text-muted,#d6cbb9); margin:0 0 8px; line-height:1.4; }
+  .card-url { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text-dim,#b6a894); opacity:.5; }
+
+  .section { margin-bottom:28px; }
+  .section-title { font-family:'Fraunces',serif; font-size:17px; color:var(--accent,#f1c27a); margin:0 0 14px; padding-bottom:6px; border-bottom:1px solid var(--line,#3a2f24); }
+
+  .status-grid { display:flex; flex-wrap:wrap; gap:10px; }
+  .status-item { display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-muted,#d6cbb9); background:var(--surface,#1a1510); padding:6px 12px; border-radius:6px; border:1px solid var(--line,#3a2f24); }
+  .status-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
   .status-checking { background:#f1c27a; animation:blink 1s infinite; }
-  .status-up { background:#4ade80; }
-  .status-down { background:#ef4444; }
+  .status-up { background:#4ade80; box-shadow:0 0 4px #4ade80; }
+  .status-down { background:#ef4444; box-shadow:0 0 4px #ef4444; }
+  .status-ms { font-size:10px; color:var(--text-dim,#b6a894); opacity:.6; }
   @keyframes blink { 50% { opacity:.3; } }
-  .links { display:flex; flex-wrap:wrap; gap:12px; }
-  .links a { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--electric,#5bd1d8); text-decoration:none; padding:6px 12px; border:1px solid var(--line,#3a2f24); border-radius:4px; transition:all .2s; }
-  .links a:hover { border-color:var(--electric,#5bd1d8); background:rgba(91,209,216,.1); }
+
+  .links { display:flex; flex-wrap:wrap; gap:8px; }
+  .links a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--electric,#5bd1d8); text-decoration:none; padding:6px 12px; border:1px solid var(--line,#3a2f24); border-radius:6px; transition:all .2s; }
+  .links a:hover { border-color:var(--electric,#5bd1d8); background:rgba(91,209,216,.08); }
+
+  .cred-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:8px; }
+  .cred { display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:12px; padding:8px 12px; background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:6px; }
+  .cred-label { color:var(--text-dim,#b6a894); }
+  .cred-val { color:var(--electric,#5bd1d8); }
 </style>
