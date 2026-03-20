@@ -1,0 +1,569 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@/styles/global.css';
+---
+
+<BaseLayout title="Ops — L'Electron Rare" description="Centre opérationnel avec IA mascarade.">
+  <main class="ops" id="ops-main">
+
+    <!-- Header -->
+    <div class="ops-header">
+      <div>
+        <h1 class="ops-title">Ops <span class="electric">L'Electron Rare</span></h1>
+        <p class="ops-sub">Centre opérationnel · IA mascarade intégrée</p>
+      </div>
+      <div class="status-bar" id="status-bar">
+        <span class="status-dot" id="status-dot"></span>
+        <span class="status-text" id="status-text">Connexion...</span>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <nav class="tabs" id="tabs">
+      <button class="tab tab--active" data-tab="workflow">Workflow</button>
+      <button class="tab" data-tab="copilot">Copilote IA</button>
+      <button class="tab" data-tab="crm">CRM Live</button>
+      <button class="tab" data-tab="agents">Agents</button>
+      <button class="tab" data-tab="monitor">Monitoring</button>
+    </nav>
+
+    <!-- TAB: Workflow -->
+    <section class="panel panel--active" id="panel-workflow">
+
+      <div class="workflow-header">
+        <h2 class="section-title">Actions en cours</h2>
+        <div class="workflow-stats" id="workflow-stats"></div>
+      </div>
+
+      <!-- Urgents -->
+      <div class="task-group">
+        <h3 class="group-label group-label--red">Urgent — Deadline proche</h3>
+        <div class="task-list" id="urgent-tasks">
+          <div class="task task--urgent" data-due="2026-03-31" data-id="fat">
+            <div class="task-header">
+              <input type="checkbox" class="task-check" id="task-fat" />
+              <label for="task-fat" class="task-label">Formaliser accord FAT</label>
+              <span class="task-badge badge--red">31 mars</span>
+              <button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un contrat de partenariat formation entre L'Electron Rare (Clément Saillant, ingénieur électronique freelance Marseille) et Funky Audio Tools pour des formations en électronique embarquée. Inclus: split marge 70/30, responsabilités, assurance RC pro, durée 1 an renouvelable." title="Générer avec IA">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </button>
+            </div>
+            <div class="task-body">
+              <p>Rédiger contrat partenariat formation avec Funky Audio Tools.</p>
+              <div class="ai-output" id="ai-output-fat"></div>
+              <div class="task-actions">
+                <a href="mailto:?subject=Accord%20partenariat%20formation%20FAT" class="btn btn--outline">Rédiger email</a>
+                <a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--outline">CRM</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="task task--urgent" data-due="2026-03-31" data-id="gie">
+            <div class="task-header">
+              <input type="checkbox" class="task-check" id="task-gie" />
+              <label for="task-gie" class="task-label">One-pager GIE Hémisphère</label>
+              <span class="task-badge badge--red">31 mars</span>
+              <button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un one-pager professionnel pour un GIE entre L'Electron Rare (électronique embarquée) et Hémisphère (multi-technique). Offre: systèmes électroniques spécifiques pour l'industrie et la culture. Format: titre, proposition de valeur, compétences croisées, références, contact." title="Générer avec IA">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </button>
+            </div>
+            <div class="task-body">
+              <p>Compléter le one-pager collectif avec Hémisphère.</p>
+              <div class="ai-output" id="ai-output-gie"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prospection -->
+      <div class="task-group">
+        <h3 class="group-label group-label--amber">Prospection</h3>
+        <div class="task-list">
+          <div class="task" data-due="2026-03-25" data-id="mediatone">
+            <div class="task-header">
+              <input type="checkbox" class="task-check" id="task-mediatone" />
+              <label for="task-mediatone" class="task-label">Email Mediatone — Sarah Le Tolguenec</label>
+              <span class="task-badge badge--amber">Prospection</span>
+              <button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un email de proposition de formation 'Dispositifs Culturels' (1 jour, 775€ HT, LED/DMX/intégration technique) à Sarah Le Tolguenec, coordinatrice formation chez Mediatone (association culturelle Lyon, certifiée Qualiopi). Ton professionnel, concis." title="Générer avec IA">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </button>
+            </div>
+            <div class="task-body">
+              <p>Proposition formation Dispositifs Culturels. Portes ouvertes 31 mars.</p>
+              <div class="ai-output" id="ai-output-mediatone"></div>
+              <div class="task-actions">
+                <a href="mailto:site@mediatone.net?subject=Proposition%20formation%20%E2%80%94%20%C3%89lectronique%20spectacle" class="btn btn--primary">Envoyer email</a>
+                <a href="https://tower.saillant.cc/app/crm/CRM-LEAD-2026-00027" target="_blank" class="btn btn--outline">Fiche CRM</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="task" data-id="prospect-debug">
+            <div class="task-header">
+              <input type="checkbox" class="task-check" id="task-prospect-debug" />
+              <label for="task-prospect-debug" class="task-label">5 emails prospection Debug & Mesure</label>
+              <span class="task-badge badge--cyan">Formation</span>
+              <button class="task-ai-btn" data-agent="writer" data-prompt="Génère 5 variantes personnalisées d'un email de prospection pour la formation 'Debug & Mesure' (1 jour, 775€, oscilloscope/analyseur logique/méthodologie). Cibles: PME tech, labos R&D, écoles d'ingénieurs. Pour chaque variante: nom entreprise fictif, prénom contact, angle personnalisé." title="Générer 5 variantes">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </button>
+            </div>
+            <div class="task-body">
+              <div class="ai-output" id="ai-output-prospect-debug"></div>
+              <div class="task-actions">
+                <a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--outline">Choisir cibles CRM</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="task" data-id="cibles-gie">
+            <div class="task-header">
+              <input type="checkbox" class="task-check" id="task-cibles-gie" />
+              <label for="task-cibles-gie" class="task-label">Lister 20 cibles hybrides GIE</label>
+              <span class="task-badge badge--amber">30 avril</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LinkedIn -->
+      <div class="task-group">
+        <h3 class="group-label group-label--blue">LinkedIn — Planning éditorial</h3>
+        <div class="task-list" id="linkedin-tasks"></div>
+      </div>
+
+      <!-- Lancement -->
+      <div class="task-group">
+        <h3 class="group-label group-label--green">Lancement — 1er mai</h3>
+        <div class="task-list">
+          <div class="task" data-id="launch"><div class="task-header"><input type="checkbox" class="task-check" id="task-launch" /><label for="task-launch" class="task-label">Swap countdown → site complet</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><pre class="code-block">bash ~/lib/launch-site.sh</pre></div></div>
+          <div class="task" data-id="newsletter-launch"><div class="task-header"><input type="checkbox" class="task-check" id="task-nl" /><label for="task-nl" class="task-label">Newsletter "Lancement"</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><div class="task-actions"><a href="https://mail.saillant.cc" target="_blank" class="btn btn--primary">Listmonk</a></div></div></div>
+          <div class="task" data-id="li6"><div class="task-header"><input type="checkbox" class="task-check" id="task-li6" /><label for="task-li6" class="task-label">LinkedIn #06 — "C'est en ligne"</label><span class="task-badge badge--green">1er mai</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: Copilot -->
+    <section class="panel" id="panel-copilot">
+      <h2 class="section-title">Copilote IA — mascarade</h2>
+      <p class="hint">Pose une question ou donne une instruction. Les agents mascarade répondent.</p>
+      <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-msg chat-msg--system">Prêt. 16 agents disponibles. Modèles: mistral:7b, qwen3.5:9b, phi4, deepseek-r1:8b...</div>
+        </div>
+        <div class="chat-input-row">
+          <select id="chat-agent" class="chat-select">
+            <option value="agent-zero">Agent Zero (auto)</option>
+            <option value="writer">Writer</option>
+            <option value="analyst">Analyst</option>
+            <option value="planner">Planner</option>
+            <option value="coder">Coder</option>
+            <option value="brainstorm">Brainstorm</option>
+            <option value="kicad-designer">KiCad Designer</option>
+            <option value="spice-expert">SPICE Expert</option>
+            <option value="components-expert">Components Expert</option>
+            <option value="pcb-routing-kicad">PCB Routing</option>
+            <option value="classifier">Classifier</option>
+            <option value="summarizer">Summarizer</option>
+            <option value="translator">Translator</option>
+            <option value="image-generator">Image Generator</option>
+            <option value="knowledge-scribe">Knowledge Scribe</option>
+            <option value="freecad-designer">FreeCAD Designer</option>
+          </select>
+          <textarea id="chat-input" class="chat-input" placeholder="Demande quelque chose à l'IA..." rows="2"></textarea>
+          <button id="chat-send" class="btn btn--primary chat-send">Envoyer</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: CRM Live -->
+    <section class="panel" id="panel-crm">
+      <h2 class="section-title">CRM Live</h2>
+      <div class="crm-grid">
+        <div class="crm-card" id="crm-leads-count"><div class="crm-card-num">-</div><div class="crm-card-label">Leads total</div></div>
+        <div class="crm-card" id="crm-leads-new"><div class="crm-card-num">-</div><div class="crm-card-label">Nouveaux</div></div>
+        <div class="crm-card" id="crm-score-avg"><div class="crm-card-num">-</div><div class="crm-card-label">Score IA moyen</div></div>
+        <div class="crm-card" id="crm-hot"><div class="crm-card-num">-</div><div class="crm-card-label">Leads chauds</div></div>
+      </div>
+      <h3 class="subsection-title">Derniers leads</h3>
+      <div class="table-wrap"><table class="data-table" id="leads-table"><thead><tr><th>Nom</th><th>Organisation</th><th>Segment</th><th>Score IA</th><th>Urgence</th><th>Date</th></tr></thead><tbody id="leads-tbody"></tbody></table></div>
+      <div class="task-actions" style="margin-top:16px">
+        <a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--primary">Ouvrir Frappe CRM</a>
+        <a href="https://kpi.saillant.cc" target="_blank" class="btn btn--outline">Dashboards Metabase</a>
+        <button class="btn btn--outline" id="refresh-crm">Rafraîchir</button>
+      </div>
+    </section>
+
+    <!-- TAB: Agents -->
+    <section class="panel" id="panel-agents">
+      <h2 class="section-title">Agents mascarade</h2>
+      <div class="agents-grid" id="agents-grid"></div>
+      <div class="task-actions" style="margin-top:16px">
+        <a href="https://n8n.saillant.cc" target="_blank" class="btn btn--outline">n8n Workflows</a>
+        <a href="https://mascarade.saillant.cc" target="_blank" class="btn btn--outline">mascarade UI</a>
+      </div>
+    </section>
+
+    <!-- TAB: Monitoring -->
+    <section class="panel" id="panel-monitor">
+      <h2 class="section-title">Monitoring</h2>
+      <div class="monitor-grid" id="monitor-grid"></div>
+      <div class="task-actions" style="margin-top:16px">
+        <a href="https://kpi.saillant.cc" target="_blank" class="btn btn--outline">Metabase</a>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
+
+<script>
+  // Auth handled by Authentik forward-auth via Traefik
+  const MASCARADE_API = 'https://mascarade.saillant.cc';
+  const MASCARADE_KEY = '845f8173270c9c4eb051d645cc58ac6882933341e82bff218da48aebb6e5b029';
+  const CRM_API = 'https://api.lelectronrare.fr';
+
+  // --- Tabs ---
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab--active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('panel--active'));
+      tab.classList.add('tab--active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('panel--active');
+    });
+  });
+
+  // --- Task persistence ---
+  document.querySelectorAll('.task-check').forEach(cb => {
+    const key = 'ops-' + cb.id;
+    cb.checked = localStorage.getItem(key) === '1';
+    if (cb.checked) cb.closest('.task')?.classList.add('task--done');
+    cb.addEventListener('change', () => {
+      localStorage.setItem(key, cb.checked ? '1' : '0');
+      cb.closest('.task')?.classList.toggle('task--done', cb.checked);
+      updateStats();
+    });
+  });
+
+  document.querySelectorAll('.task-header').forEach(h => {
+    h.addEventListener('click', e => {
+      if (e.target.tagName === 'INPUT' || e.target.closest('.task-ai-btn')) return;
+      h.closest('.task')?.classList.toggle('task--open');
+    });
+  });
+
+  // --- Overdue ---
+  document.querySelectorAll('.task[data-due]').forEach(t => {
+    if (new Date(t.dataset.due) < new Date() && !t.querySelector('.task-check')?.checked)
+      t.classList.add('task--overdue');
+  });
+
+  // --- Stats ---
+  function updateStats() {
+    const all = document.querySelectorAll('.task-check');
+    const done = [...all].filter(c => c.checked).length;
+    const el = document.getElementById('workflow-stats');
+    if (el) el.innerHTML = `<span class="stat">${done}/${all.length} terminées</span>`;
+  }
+  updateStats();
+
+  // --- LinkedIn tasks (generated) ---
+  const liPosts = [
+    { id:'li1', label:'#01 — Disponibilité', date:'Mar 1 avril, 8h', due:'2026-04-01', text:'Disponible pour vos projets électroniques.\n\nJe suis Clément Saillant, ingénieur électronique freelance basé à Marseille. Systèmes électroniques spécifiques.\n\nMes terrains de jeu :\n→ Industrie et automatisme\n→ Dispositifs culturels\n→ Énergie et stockage\n\nDM ou contact@lelectronrare.fr' },
+    { id:'li3', label:'#03 — Formation KiCad', date:'Mar 8 avril, 8h', due:'2026-04-08', text:'J\'ouvre une formation KiCad. 2 jours. De la page blanche au PCB fabriqué.\n\nJour 1 : prise en main, schéma, composants\nJour 2 : routage, règles, fichiers fabrication\n\n1 550€ HT — Marseille — 6 personnes max.\n\ncontact@lelectronrare.fr' },
+    { id:'li2', label:'#02 — Retour terrain', date:'Jeu 10 avril, 7h30', due:'2026-04-10', text:'Un client m\'envoie un prototype. Son alim 3.3V oscille à 150 kHz.\n\nLe problème : condensateur de découplage à 12 mm du pin VCC.\nLa correction : au plus court, via direct. L\'oscillation disparaît.\n\nSi vous avez un prototype qui fait des siennes...\ncontact@lelectronrare.fr' },
+    { id:'li4', label:'#04 — 3 erreurs PCB', date:'Mer 16 avril, 7h30', due:'2026-04-16', text:'3 erreurs de conception PCB :\n1. Condensateurs de découplage trop loin\n2. Plan de masse fragmenté\n3. Pistes d\'alimentation sous-dimensionnées\n\nCes trois points résolvent 80% des problèmes.\n\nwww.lelectronrare.fr — 1er mai.' },
+    { id:'li5', label:'#05 — Annonce lancement', date:'Mar 22 avril, 8h', due:'2026-04-22', text:'Le 1er mai, www.lelectronrare.fr sera en ligne.\n\n→ Missions techniques\n→ Catalogue formations\n→ Portfolio\n→ Contact direct\n\nSystèmes électroniques spécifiques. Du sur-mesure.' },
+  ];
+  const liContainer = document.getElementById('linkedin-tasks');
+  liPosts.forEach(p => {
+    const overdue = new Date(p.due) < new Date();
+    liContainer.innerHTML += `
+      <div class="task ${overdue ? 'task--overdue' : ''}" data-due="${p.due}" data-id="${p.id}">
+        <div class="task-header">
+          <input type="checkbox" class="task-check" id="task-${p.id}" />
+          <label for="task-${p.id}" class="task-label">${p.label}</label>
+          <span class="task-badge badge--blue">${p.date}</span>
+        </div>
+        <div class="task-body">
+          <pre class="template-block">${p.text}</pre>
+          <div class="task-actions">
+            <button class="btn btn--primary copy-btn" data-text="${encodeURIComponent(p.text)}">Copier</button>
+            <a href="https://www.linkedin.com/feed/" target="_blank" class="btn btn--outline">LinkedIn</a>
+            <button class="task-ai-btn-inline" data-agent="writer" data-prompt="Améliore ce post LinkedIn pour un ingénieur électronique freelance. Garde le ton technique et direct. Pas d'emoji abusif. Post original: ${encodeURIComponent(p.text)}">Améliorer avec IA</button>
+          </div>
+          <div class="ai-output" id="ai-output-${p.id}"></div>
+        </div>
+      </div>`;
+  });
+
+  // Re-bind events for generated tasks
+  liContainer.querySelectorAll('.task-check').forEach(cb => {
+    const key = 'ops-' + cb.id;
+    cb.checked = localStorage.getItem(key) === '1';
+    if (cb.checked) cb.closest('.task')?.classList.add('task--done');
+    cb.addEventListener('change', () => { localStorage.setItem(key, cb.checked ? '1' : '0'); cb.closest('.task')?.classList.toggle('task--done', cb.checked); updateStats(); });
+  });
+  liContainer.querySelectorAll('.task-header').forEach(h => { h.addEventListener('click', e => { if (e.target.tagName === 'INPUT' || e.target.closest('button')) return; h.closest('.task')?.classList.toggle('task--open'); }); });
+  liContainer.querySelectorAll('.copy-btn').forEach(btn => { btn.addEventListener('click', () => { navigator.clipboard.writeText(decodeURIComponent(btn.dataset.text)); btn.textContent = 'Copié !'; setTimeout(() => btn.textContent = 'Copier', 2000); }); });
+  updateStats();
+
+  // --- Mascarade AI calls ---
+  async function callAgent(agent, prompt, outputId) {
+    const output = document.getElementById('ai-output-' + outputId);
+    if (!output) return;
+    output.innerHTML = '<div class="ai-loading">Génération en cours...</div>';
+    output.style.display = 'block';
+    try {
+      const res = await fetch(MASCARADE_API + '/api/agents/' + agent + '/run', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + MASCARADE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
+      });
+      const data = await res.json();
+      const text = data.response || data.content || data.message || data.result || JSON.stringify(data);
+      output.innerHTML = '<div class="ai-result"><pre>' + text.replace(/</g, '&lt;') + '</pre><button class="btn btn--primary copy-btn" style="margin-top:8px">Copier</button></div>';
+      output.querySelector('.copy-btn').addEventListener('click', function() { navigator.clipboard.writeText(text); this.textContent = 'Copié !'; });
+    } catch (e) {
+      output.innerHTML = '<div class="ai-error">Erreur: ' + e.message + '</div>';
+    }
+  }
+
+  document.querySelectorAll('.task-ai-btn, .task-ai-btn-inline').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const task = btn.closest('.task');
+      task.classList.add('task--open');
+      callAgent(btn.dataset.agent, decodeURIComponent(btn.dataset.prompt || btn.dataset.prompt), task.dataset.id);
+    });
+  });
+
+  // --- Copilot chat ---
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSend = document.getElementById('chat-send');
+  const chatAgent = document.getElementById('chat-agent');
+
+  chatSend.addEventListener('click', sendChat);
+  chatInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); } });
+
+  async function sendChat() {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+    chatInput.value = '';
+    chatMessages.innerHTML += `<div class="chat-msg chat-msg--user">${msg.replace(/</g,'&lt;')}</div>`;
+    chatMessages.innerHTML += `<div class="chat-msg chat-msg--ai" id="chat-pending"><span class="ai-loading">Réflexion...</span></div>`;
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+      const agent = chatAgent.value;
+      const res = await fetch(MASCARADE_API + '/api/agents/' + agent + '/run', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + MASCARADE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: msg }] })
+      });
+      const data = await res.json();
+      const text = data.response || data.content || data.message || data.result || JSON.stringify(data);
+      document.getElementById('chat-pending').innerHTML = '<pre>' + text.replace(/</g, '&lt;') + '</pre>';
+      document.getElementById('chat-pending').id = '';
+    } catch (e) {
+      document.getElementById('chat-pending').innerHTML = 'Erreur: ' + e.message;
+      document.getElementById('chat-pending').id = '';
+    }
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // --- CRM Live ---
+  async function loadCRM() {
+    try {
+      const res = await fetch(CRM_API + '/health');
+      const h = await res.json();
+      document.getElementById('status-dot').className = 'status-dot status-dot--ok';
+      document.getElementById('status-text').textContent = 'API OK · uptime ' + Math.round(h.uptime/60) + 'min';
+    } catch {
+      document.getElementById('status-dot').className = 'status-dot status-dot--err';
+      document.getElementById('status-text').textContent = 'API hors ligne';
+    }
+
+    // Fetch leads from Frappe via mascarade-api or direct
+    try {
+      const res = await fetch(MASCARADE_API + '/agents/analyst/run', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + MASCARADE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: 'Requête Frappe CRM: donne-moi le nombre total de leads, le nombre de leads New, le score IA moyen, et le nombre de leads chauds (custom_ai_urgency=chaud). Aussi liste les 5 derniers leads avec nom, organisation, segment, score IA, urgence, date. Format JSON strict.' }] })
+      });
+      // Fallback: just show link to Metabase
+    } catch {}
+  }
+  loadCRM();
+  document.getElementById('refresh-crm')?.addEventListener('click', loadCRM);
+
+  // --- Agents list ---
+  async function loadAgents() {
+    const grid = document.getElementById('agents-grid');
+    try {
+      const res = await fetch(MASCARADE_API + '/api/agents', { headers: { 'Authorization': 'Bearer ' + MASCARADE_KEY } });
+      const agents = await res.json();
+      const list = Array.isArray(agents) ? agents : agents.agents || [];
+      grid.innerHTML = list.map(a => `
+        <div class="agent-card">
+          <div class="agent-name">${a.name || a.id || '?'}</div>
+          <div class="agent-model">${a.model || a.provider || ''}</div>
+        </div>
+      `).join('');
+    } catch (e) {
+      grid.innerHTML = '<p class="hint">Impossible de charger les agents: ' + e.message + '</p>';
+    }
+  }
+  loadAgents();
+
+  // --- Monitoring ---
+  async function loadMonitor() {
+    const services = [
+      { name: 'Site', url: 'https://www.lelectronrare.fr/', expect: 200 },
+      { name: 'API CRM', url: CRM_API + '/health', expect: 200 },
+      { name: 'Frappe CRM', url: 'https://tower.saillant.cc/api/method/ping', expect: null },
+      { name: 'Listmonk', url: 'https://mail.saillant.cc/', expect: null },
+      { name: 'n8n', url: 'https://n8n.saillant.cc/', expect: null },
+      { name: 'Cal.com', url: 'https://rdv.saillant.cc/', expect: null },
+      { name: 'Metabase', url: 'https://kpi.saillant.cc/', expect: null },
+      { name: 'mascarade', url: MASCARADE_API + '/api/agents', expect: null },
+    ];
+    const grid = document.getElementById('monitor-grid');
+    grid.innerHTML = services.map(s => `<div class="monitor-card" id="mon-${s.name.replace(/\s/g,'')}"><div class="monitor-name">${s.name}</div><div class="monitor-status">...</div></div>`).join('');
+
+    for (const s of services) {
+      const card = document.getElementById('mon-' + s.name.replace(/\s/g,''));
+      try {
+        const t0 = Date.now();
+        const res = await fetch(s.url, { mode: 'no-cors', signal: AbortSignal.timeout(5000) }).catch(() => null);
+        const ms = Date.now() - t0;
+        card.querySelector('.monitor-status').textContent = ms + 'ms';
+        card.classList.add('monitor-card--ok');
+      } catch {
+        card.querySelector('.monitor-status').textContent = 'timeout';
+        card.classList.add('monitor-card--err');
+      }
+    }
+  }
+  loadMonitor();
+
+</script>
+
+<style>
+  .ops { max-width:1000px; margin:0 auto; padding:32px 24px; min-height:100vh; }
+  .ops-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; flex-wrap:wrap; gap:16px; }
+  .ops-title { font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:var(--text,#f4eee3); margin:0; }
+  .ops-sub { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text-dim,#b6a894); margin:4px 0 0; }
+  .electric { color:var(--electric,#5bd1d8); }
+
+  .status-bar { display:flex; align-items:center; gap:8px; padding:8px 14px; background:var(--surface,#1a1510); border-radius:8px; border:1px solid var(--line,#3a2f24); }
+  .status-dot { width:8px; height:8px; border-radius:50%; background:#666; }
+  .status-dot--ok { background:#4ade80; box-shadow:0 0 6px #4ade80; }
+  .status-dot--err { background:#ef4444; box-shadow:0 0 6px #ef4444; }
+  .status-text { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); }
+
+  /* Tabs */
+  .tabs { display:flex; gap:4px; margin-bottom:24px; overflow-x:auto; border-bottom:1px solid var(--line,#3a2f24); padding-bottom:0; }
+  .tab { font-family:'IBM Plex Mono',monospace; font-size:13px; padding:10px 16px; background:none; border:none; color:var(--text-dim,#b6a894); cursor:pointer; border-bottom:2px solid transparent; transition:all 0.2s; white-space:nowrap; }
+  .tab:hover { color:var(--text,#f4eee3); }
+  .tab--active { color:var(--electric,#5bd1d8); border-bottom-color:var(--electric,#5bd1d8); }
+
+  .panel { display:none; }
+  .panel--active { display:block; }
+
+  .section-title { font-family:'Fraunces',serif; font-size:20px; color:var(--accent,#f1c27a); margin:0 0 16px; }
+  .subsection-title { font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--text-muted,#d6cbb9); margin:24px 0 12px; }
+  .hint { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text-dim,#b6a894); margin:0 0 16px; }
+
+  /* Workflow */
+  .workflow-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .stat { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim,#b6a894); background:var(--surface,#1a1510); padding:4px 10px; border-radius:6px; }
+
+  .task-group { margin-bottom:28px; }
+  .group-label { font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:1.5px; margin:0 0 10px; padding:0 0 6px; }
+  .group-label--red { color:#f87171; border-bottom:1px solid rgba(239,68,68,0.2); }
+  .group-label--amber { color:var(--accent,#f1c27a); border-bottom:1px solid rgba(241,194,122,0.2); }
+  .group-label--blue { color:#60a5fa; border-bottom:1px solid rgba(96,165,250,0.2); }
+  .group-label--green { color:#4ade80; border-bottom:1px solid rgba(74,222,128,0.2); }
+
+  .task-list { display:flex; flex-direction:column; gap:6px; }
+  .task { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; overflow:hidden; transition:all 0.2s; }
+  .task:hover { border-color:var(--line-edge,#ffffff2e); }
+  .task--urgent { border-left:3px solid #ef4444; }
+  .task--overdue { border-left:3px solid #ef4444; background:rgba(239,68,68,0.04); }
+  .task--done { opacity:0.35; }
+  .task--done .task-label { text-decoration:line-through; }
+
+  .task-header { display:flex; align-items:center; gap:10px; padding:12px 14px; cursor:pointer; user-select:none; }
+  .task-check { width:16px; height:16px; accent-color:var(--electric,#5bd1d8); cursor:pointer; flex-shrink:0; }
+  .task-label { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text,#f4eee3); flex:1; }
+  .task-badge { font-family:'IBM Plex Mono',monospace; font-size:10px; padding:2px 7px; border-radius:5px; white-space:nowrap; }
+  .badge--red { background:rgba(239,68,68,0.15); color:#f87171; }
+  .badge--amber { background:rgba(241,194,122,0.15); color:var(--accent,#f1c27a); }
+  .badge--cyan { background:rgba(91,209,216,0.15); color:var(--electric,#5bd1d8); }
+  .badge--blue { background:rgba(96,165,250,0.15); color:#60a5fa; }
+  .badge--green { background:rgba(74,222,128,0.15); color:#4ade80; }
+
+  .task-ai-btn, .task-ai-btn-inline { background:none; border:1px solid var(--line,#3a2f24); border-radius:6px; padding:4px 8px; cursor:pointer; color:var(--electric,#5bd1d8); transition:all 0.2s; display:flex; align-items:center; gap:4px; font-family:'IBM Plex Mono',monospace; font-size:11px; }
+  .task-ai-btn:hover, .task-ai-btn-inline:hover { background:rgba(91,209,216,0.1); border-color:var(--electric,#5bd1d8); }
+  .task-ai-btn-inline { margin-left:auto; }
+
+  .task-body { display:none; padding:0 14px 14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-muted,#d6cbb9); line-height:1.6; }
+  .task--open .task-body { display:block; }
+
+  .task-actions { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+  .btn { display:inline-block; padding:7px 14px; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500; border-radius:6px; text-decoration:none; cursor:pointer; border:none; transition:all 0.2s; }
+  .btn--primary { background:var(--accent,#f1c27a); color:var(--bg,#0b0a09); }
+  .btn--primary:hover { background:var(--electric,#5bd1d8); }
+  .btn--outline { background:transparent; border:1px solid var(--line,#3a2f24); color:var(--text-muted,#d6cbb9); }
+  .btn--outline:hover { border-color:var(--electric,#5bd1d8); color:var(--electric,#5bd1d8); }
+
+  .ai-output { display:none; margin-top:10px; }
+  .ai-loading { color:var(--electric,#5bd1d8); animation:pulse 1.5s infinite; }
+  .ai-result pre { background:var(--surface-soft,#211a13); border:1px solid var(--line,#3a2f24); border-radius:6px; padding:12px; font-size:12px; white-space:pre-wrap; word-break:break-word; max-height:400px; overflow-y:auto; color:var(--text,#f4eee3); }
+  .ai-error { color:#f87171; }
+
+  .template-block { background:var(--surface-soft,#211a13); border-radius:6px; padding:12px; font-size:12px; white-space:pre-wrap; color:var(--text-muted,#d6cbb9); margin:0 0 10px; border:1px solid var(--line,#3a2f24); }
+  .code-block { background:var(--surface-soft,#211a13); border:1px solid var(--line,#3a2f24); border-radius:6px; padding:10px 14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--electric,#5bd1d8); overflow-x:auto; margin:6px 0; }
+
+  /* Chat */
+  .chat-container { border:1px solid var(--line,#3a2f24); border-radius:10px; overflow:hidden; }
+  .chat-messages { height:400px; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:var(--surface-alt,#17120d); }
+  .chat-msg { font-family:'IBM Plex Mono',monospace; font-size:13px; padding:10px 14px; border-radius:8px; max-width:85%; line-height:1.6; }
+  .chat-msg pre { white-space:pre-wrap; word-break:break-word; margin:0; }
+  .chat-msg--user { background:rgba(91,209,216,0.1); border:1px solid rgba(91,209,216,0.2); color:var(--text,#f4eee3); align-self:flex-end; }
+  .chat-msg--ai { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); color:var(--text-muted,#d6cbb9); align-self:flex-start; }
+  .chat-msg--system { background:rgba(241,194,122,0.08); border:1px solid rgba(241,194,122,0.15); color:var(--accent,#f1c27a); font-size:11px; align-self:center; }
+  .chat-input-row { display:flex; gap:8px; padding:12px; background:var(--surface,#1a1510); border-top:1px solid var(--line,#3a2f24); }
+  .chat-select { font-family:'IBM Plex Mono',monospace; font-size:11px; background:var(--surface-soft,#211a13); color:var(--text-muted,#d6cbb9); border:1px solid var(--line,#3a2f24); border-radius:6px; padding:6px 8px; }
+  .chat-input { flex:1; font-family:'IBM Plex Mono',monospace; font-size:13px; background:var(--surface-soft,#211a13); color:var(--text,#f4eee3); border:1px solid var(--line,#3a2f24); border-radius:6px; padding:8px 12px; resize:none; }
+  .chat-input:focus { outline:none; border-color:var(--electric,#5bd1d8); }
+  .chat-send { flex-shrink:0; }
+
+  /* CRM */
+  .crm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; margin-bottom:20px; }
+  .crm-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:10px; padding:16px; text-align:center; }
+  .crm-card-num { font-family:'IBM Plex Mono',monospace; font-size:28px; font-weight:700; color:var(--text,#f4eee3); }
+  .crm-card-label { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); margin-top:4px; }
+
+  .table-wrap { overflow-x:auto; }
+  .data-table { width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:12px; }
+  .data-table th { text-align:left; padding:8px 10px; color:var(--text-dim,#b6a894); border-bottom:1px solid var(--line,#3a2f24); font-weight:500; }
+  .data-table td { padding:8px 10px; color:var(--text-muted,#d6cbb9); border-bottom:1px solid var(--line-soft,#2a221a); }
+
+  /* Agents */
+  .agents-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:10px; }
+  .agent-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:14px; }
+  .agent-name { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--electric,#5bd1d8); font-weight:500; }
+  .agent-model { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); margin-top:4px; }
+
+  /* Monitor */
+  .monitor-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:10px; }
+  .monitor-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:14px; text-align:center; }
+  .monitor-card--ok { border-color:rgba(74,222,128,0.3); }
+  .monitor-card--err { border-color:rgba(239,68,68,0.3); }
+  .monitor-name { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text,#f4eee3); }
+  .monitor-status { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); margin-top:6px; }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  @media (max-width:640px) { .tabs { gap:0; } .tab { padding:8px 10px; font-size:11px; } .chat-input-row { flex-wrap:wrap; } .chat-select { width:100%; } }
+</style>
