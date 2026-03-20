@@ -21,6 +21,8 @@ import '@/styles/global.css';
     <!-- Tabs -->
     <nav class="tabs" id="tabs">
       <button class="tab tab--active" data-tab="workflow">Workflow</button>
+      <button class="tab" data-tab="business">Business Plan</button>
+      <button class="tab" data-tab="marketing">Marketing</button>
       <button class="tab" data-tab="copilot">Copilote IA</button>
       <button class="tab" data-tab="crm">CRM Live</button>
       <button class="tab" data-tab="agents">Agents</button>
@@ -171,6 +173,180 @@ import '@/styles/global.css';
           <div class="task task--done" data-id="d-robots"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-robots" checked disabled /><label class="task-label">robots.txt noindex pages internes</label></div></div>
           <div class="task task--done" data-id="d-scripts"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-scripts" checked disabled /><label class="task-label">Scripts deploy-site.sh + launch-site.sh + rollback-site.sh</label></div></div>
           <div class="task task--done" data-id="d-crm-fr"><div class="task-header"><input type="checkbox" class="task-check" id="task-d-crm-fr" checked disabled /><label class="task-label">CRM Frappe en français + 50 rôles Clément</label></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: Business Plan -->
+    <section class="panel" id="panel-business">
+      <h2 class="section-title">Business Plan — Backlog maître</h2>
+      <p class="hint">Source de vérité : <a href="https://github.com/electron-rare/communication-marketing-electron-rare" target="_blank" class="portfolio-link">Business OS</a></p>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--green">P0 — Clarté commerciale (DONE)</h3>
+        <div class="task-list">
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Positionnement "systèmes électroniques spécifiques"</label></div></div>
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Grille prix simple et assumée</label></div></div>
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Messages alignés site/SEO/LinkedIn</label></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--green">P1 — Preuves (DONE)</h3>
+        <div class="task-list">
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Cas industrie + culture + formation écrits</label></div></div>
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">3 preuves courtes LinkedIn/homepage</label></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--amber">P2 — Formation</h3>
+        <div class="task-list">
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">3 modules vendables (KiCad 2j/1550€, Debug 1j/775€, Dispositifs 1j/775€)</label></div></div>
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Process FAT, trames proposition, matrices marge</label></div></div>
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">One-pagers commerciaux + templates email prospection</label></div></div>
+          <div class="task" data-id="bp-fat"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-fat" /><label for="task-bp-fat" class="task-label">Formaliser accord FAT (contrat, split, assurance)</label><span class="task-badge badge--red">31 mars</span></div></div>
+          <div class="task" data-id="bp-prospects"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-prospects" /><label for="task-bp-prospects" class="task-label">Lister 20-30 prospects qualifiés</label></div></div>
+          <div class="task" data-id="bp-test-vente"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-test" /><label for="task-bp-test" class="task-label">Tester 2 ventes/sessions (Debug & Mesure recommandé en premier)</label></div></div>
+          <div class="task" data-id="bp-marge"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-marge" /><label for="task-bp-marge" class="task-label">Mesurer marge / charge / satisfaction sur réel</label></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--amber">P3 — GIE Hémisphère</h3>
+        <div class="task-list">
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Objet, règles leads/coûts, one-pager (trame)</label></div></div>
+          <div class="task" data-id="bp-onepager"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-onepager" /><label for="task-bp-onepager" class="task-label">Finaliser one-pager avec Hémisphère</label><span class="task-badge badge--red">31 mars</span></div></div>
+          <div class="task" data-id="bp-cibles20"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-cibles20" /><label for="task-bp-cibles20" class="task-label">20 cibles hybrides locales</label><span class="task-badge badge--amber">30 avril</span></div></div>
+          <div class="task" data-id="bp-visites"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-visites" /><label for="task-bp-visites" class="task-label">6 visites/rencontres + 1 offre hybride</label><span class="task-badge badge--amber">31 mai</span></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--cyan">P4 — CRM & Pilotage</h3>
+        <div class="task-list">
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">CRM Frappe live + formulaire site → lead + AI scoring</label></div></div>
+          <div class="task" data-id="bp-suivi-sources"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-sources" /><label for="task-bp-sources" class="task-label">Suivre leads par source (site, LinkedIn, partenaires)</label></div><div class="task-body"><div class="task-actions"><a href="https://kpi.saillant.cc/dashboard/2" target="_blank" class="btn btn--outline">Dashboard Metabase</a></div></div></div>
+          <div class="task" data-id="bp-revue"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-revue" /><label for="task-bp-revue" class="task-label">Revue mensuelle pipeline</label><span class="task-badge badge--cyan">Mensuel</span></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--cyan">P5 — Migration Frappe</h3>
+        <div class="task-list">
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Frappe CRM + ERPNext + LMS bootstrappé sur Tower</label></div></div>
+          <div class="task" data-id="bp-import-leads"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-import" /><label for="task-bp-import" class="task-label">Importer leads historiques (0 réels dans legacy)</label></div></div>
+          <div class="task" data-id="bp-devis"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-devis" /><label for="task-bp-devis" class="task-label">Basculer devis/facturation vers ERPNext</label></div></div>
+          <div class="task" data-id="bp-readonly"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-readonly" /><label for="task-bp-readonly" class="task-label">CRM custom en read-only</label></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--blue">P7 — Exécution commerciale</h3>
+        <div class="task-list">
+          <div class="task" data-id="bp-li5"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-li5" /><label for="task-bp-li5" class="task-label">Publier 5 posts LinkedIn (S12-S16)</label><span class="task-badge badge--blue">Avril</span></div></div>
+          <div class="task" data-id="bp-email15"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-email15" /><label for="task-bp-email15" class="task-label">Envoyer 15 emails prospection Debug & Mesure</label></div></div>
+          <div class="task" data-id="bp-ecole"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-ecole" /><label for="task-bp-ecole" class="task-label">Relancer école art numérique (reconduction KiCad)</label></div></div>
+          <div class="task" data-id="bp-culture3"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-culture3" /><label for="task-bp-culture3" class="task-label">Contacter 3 compagnies culture (Dispositifs Culturels)</label></div></div>
+          <div class="task" data-id="bp-appels3"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-appels3" /><label for="task-bp-appels3" class="task-label">Réaliser 3 appels découverte</label></div></div>
+          <div class="task" data-id="bp-prop2"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-prop2" /><label for="task-bp-prop2" class="task-label">Envoyer 2 propositions formation</label></div></div>
+          <div class="task" data-id="bp-session1"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-session1" /><label for="task-bp-session1" class="task-label">Planifier 1 session formation avant fin avril</label></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label">P6 — Outils marketing</h3>
+        <div class="task-list">
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Listmonk, SMTP Brevo, welcome sequence, Cal.com, Metabase, LMS</label></div></div>
+          <div class="task" data-id="bp-pdf"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-pdf" /><label for="task-bp-pdf" class="task-label">Générer lead magnet PDF checklist PCB</label><button class="task-ai-btn" data-agent="writer" data-prompt="Génère une checklist de revue de conception PCB en 20 points. Format: titre du point, description courte, critère de validation. Couvre: schéma, routage, alimentation, CEM, thermique, fabrication. Ton technique, concis." title="Générer avec IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-bp-pdf"></div></div></div>
+          <div class="task" data-id="bp-calcom-link"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-calcom-link" /><label for="task-bp-calcom-link" class="task-label">Intégrer liens Cal.com dans emails, one-pagers, LinkedIn</label></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: Marketing -->
+    <section class="panel" id="panel-marketing">
+      <h2 class="section-title">Marketing & Communication</h2>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--blue">LinkedIn — Planning éditorial</h3>
+        <div class="task-list" id="marketing-linkedin"></div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--amber">Prospection email</h3>
+        <div class="task-list">
+          <div class="task" data-id="mk-mediatone">
+            <div class="task-header">
+              <input type="checkbox" class="task-check" id="task-mk-mediatone" />
+              <label for="task-mk-mediatone" class="task-label">Email Mediatone — Sarah Le Tolguenec</label>
+              <span class="task-badge badge--amber">Formation culture</span>
+              <button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un email de proposition formation Dispositifs Culturels (1j, 775€, LED/DMX/intégration) à Sarah Le Tolguenec, coordinatrice formation Mediatone Lyon, certifiée Qualiopi. Finançable Afdas. Portes ouvertes 31 mars." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button>
+            </div>
+            <div class="task-body">
+              <div class="ai-output" id="ai-output-mk-mediatone"></div>
+              <div class="task-actions">
+                <a href="mailto:site@mediatone.net?subject=Proposition%20formation%20%E2%80%94%20%C3%89lectronique%20spectacle" class="btn btn--primary">Envoyer email</a>
+                <a href="https://tower.saillant.cc/app/crm/CRM-LEAD-2026-00027" target="_blank" class="btn btn--outline">Fiche CRM</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="task" data-id="mk-debug15">
+            <div class="task-header">
+              <input type="checkbox" class="task-check" id="task-mk-debug15" />
+              <label for="task-mk-debug15" class="task-label">15 emails prospection Debug & Mesure</label>
+              <span class="task-badge badge--cyan">Formation</span>
+              <button class="task-ai-btn" data-agent="writer" data-prompt="Génère 5 emails personnalisés pour la formation Debug et Mesure (1 jour, 775 euros, oscilloscope/analyseur/méthodologie). Cibles: PME tech, labos R et D, écoles ingénieurs. Objet + corps pour chaque. Ton direct, concis." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button>
+            </div>
+            <div class="task-body">
+              <details class="task-template"><summary>Template A — Approche directe</summary><div class="template-content"><p><strong>Objet :</strong> Vos équipes perdent du temps en debug ?</p><p>Dans la plupart des bureaux d'études, le debug se fait au feeling. Formation 1 jour, 775€/personne, finançable OPCO. 15 min pour en discuter ?</p></div></details>
+              <details class="task-template"><summary>Template B — Approche valeur</summary><div class="template-content"><p><strong>Objet :</strong> 80% du temps de debug perdu sur des bugs simples</p><p>La formation Debug & Mesure donne une approche systématique. Intéressé ? Répondez.</p></div></details>
+              <details class="task-template"><summary>Template C — Approche référence</summary><div class="template-content"><p><strong>Objet :</strong> Leur debug prenait 2 jours — maintenant 2 heures</p><p>Temps de diagnostic divisé par quatre. Programme détaillé sur demande.</p></div></details>
+              <details class="task-template"><summary>Relance J+5</summary><div class="template-content"><p>Avez-vous eu le temps de regarder mon message sur la formation Debug & Mesure ?</p></div></details>
+              <div class="ai-output" id="ai-output-mk-debug15"></div>
+              <div class="task-actions"><a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--outline">Choisir cibles CRM</a></div>
+            </div>
+          </div>
+
+          <div class="task" data-id="mk-ecole"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-ecole" /><label for="task-mk-ecole" class="task-label">Relancer école art numérique (reconduction KiCad)</label><button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un email de relance pour reconduire une formation KiCad (2 jours) dans une école d'art numérique. Ton: rappel de la session précédente réussie, proposition de nouvelles dates." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-mk-ecole"></div></div></div>
+
+          <div class="task" data-id="mk-culture3"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-culture3" /><label for="task-mk-culture3" class="task-label">3 compagnies culture (Dispositifs Culturels)</label><button class="task-ai-btn" data-agent="analyst" data-prompt="Identifie 5 compagnies de spectacle vivant ou lieux culturels à Marseille/Lyon qui utilisent de l'électronique dans leurs créations (LED, DMX, installations interactives). Pour chaque: nom, ville, site web, contact probable, angle d'approche." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-mk-culture3"></div></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--green">Newsletter</h3>
+        <div class="task-list">
+          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Welcome sequence 3 emails (bienvenue, valeur PCB, offre)</label></div></div>
+          <div class="task" data-id="mk-nl-launch"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-nl" /><label for="task-mk-nl" class="task-label">Newsletter lancement (template ID 10)</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><div class="task-actions"><a href="https://mail.saillant.cc" target="_blank" class="btn btn--primary">Listmonk</a></div></div></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label group-label--cyan">KPIs marketing</h3>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-target">10+</div><div class="kpi-label">Leads site (avril)</div></div>
+          <div class="kpi-card"><div class="kpi-target">15+</div><div class="kpi-label">Leads prospection</div></div>
+          <div class="kpi-card"><div class="kpi-target">3+</div><div class="kpi-label">Appels découverte</div></div>
+          <div class="kpi-card"><div class="kpi-target">2+</div><div class="kpi-label">Propositions envoyées</div></div>
+          <div class="kpi-card"><div class="kpi-target">1+</div><div class="kpi-label">Session planifiée</div></div>
+          <div class="kpi-card"><div class="kpi-target">20+</div><div class="kpi-label">Subscribers newsletter</div></div>
+          <div class="kpi-card"><div class="kpi-target">5</div><div class="kpi-label">Posts LinkedIn</div></div>
+        </div>
+        <div class="task-actions" style="margin-top:12px">
+          <a href="https://kpi.saillant.cc/dashboard/2" target="_blank" class="btn btn--outline">Dashboard Metabase</a>
+          <a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--outline">CRM Pipeline</a>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <h3 class="group-label">Liens RDV publics</h3>
+        <div class="links">
+          <a href="https://rdv.saillant.cc/clement/decouverte" target="_blank">Appel découverte 20min</a>
+          <a href="https://rdv.saillant.cc/clement/point-projet" target="_blank">Point projet 30min</a>
+          <a href="https://rdv.saillant.cc/clement/formation" target="_blank">Échange formation 30min</a>
+          <a href="https://rdv.saillant.cc/clement/audit" target="_blank">Audit technique 1h</a>
         </div>
       </div>
     </section>
@@ -337,6 +513,23 @@ import '@/styles/global.css';
   });
   liContainer.querySelectorAll('.task-header').forEach(h => { h.addEventListener('click', e => { if (e.target.tagName === 'INPUT' || e.target.closest('button')) return; h.closest('.task')?.classList.toggle('task--open'); }); });
   liContainer.querySelectorAll('.copy-btn').forEach(btn => { btn.addEventListener('click', () => { navigator.clipboard.writeText(decodeURIComponent(btn.dataset.text)); btn.textContent = 'Copié !'; setTimeout(() => btn.textContent = 'Copier', 2000); }); });
+
+  // Duplicate LinkedIn posts in marketing tab
+  const mkLi = document.getElementById('marketing-linkedin');
+  if (mkLi) { mkLi.innerHTML = liContainer.innerHTML; mkLi.querySelectorAll('.task-check').forEach(cb => { cb.id = 'mk-' + cb.id; const lbl = cb.nextElementSibling; if(lbl) lbl.htmlFor = cb.id; }); mkLi.querySelectorAll('.task-header').forEach(h => { h.addEventListener('click', e => { if (e.target.tagName === 'INPUT' || e.target.closest('button')) return; h.closest('.task')?.classList.toggle('task--open'); }); }); mkLi.querySelectorAll('.copy-btn').forEach(btn => { btn.addEventListener('click', () => { navigator.clipboard.writeText(decodeURIComponent(btn.dataset.text)); btn.textContent = 'Copié !'; setTimeout(() => btn.textContent = 'Copier', 2000); }); }); }
+
+  // Bind business plan checkboxes
+  document.querySelectorAll('#panel-business .task-check, #panel-marketing .task-check').forEach(cb => {
+    if (cb.disabled) return;
+    const key = 'ops-' + cb.id;
+    cb.checked = localStorage.getItem(key) === '1';
+    if (cb.checked) cb.closest('.task')?.classList.add('task--done');
+    cb.addEventListener('change', () => { localStorage.setItem(key, cb.checked ? '1' : '0'); cb.closest('.task')?.classList.toggle('task--done', cb.checked); updateStats(); });
+  });
+  document.querySelectorAll('#panel-business .task-header, #panel-marketing .task-header').forEach(h => {
+    h.addEventListener('click', e => { if (e.target.tagName === 'INPUT' || e.target.closest('button')) return; h.closest('.task')?.classList.toggle('task--open'); });
+  });
+
   updateStats();
 
   // --- Mascarade AI calls ---
@@ -598,5 +791,14 @@ import '@/styles/global.css';
   .monitor-status { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); margin-top:6px; }
 
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-  @media (max-width:640px) { .tabs { gap:0; } .tab { padding:8px 10px; font-size:11px; } .chat-input-row { flex-wrap:wrap; } .chat-select { width:100%; } }
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px; }
+  .kpi-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:14px; text-align:center; }
+  .kpi-target { font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:700; color:var(--electric,#5bd1d8); }
+  .kpi-label { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text-dim,#b6a894); margin-top:4px; }
+  .links { display:flex; flex-wrap:wrap; gap:8px; }
+  .links a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--electric,#5bd1d8); text-decoration:none; padding:6px 12px; border:1px solid var(--line,#3a2f24); border-radius:6px; transition:all .2s; }
+  .links a:hover { border-color:var(--electric,#5bd1d8); background:rgba(91,209,216,.08); }
+  .portfolio-link { color:var(--electric,#5bd1d8); }
+
+  @media (max-width:640px) { .tabs { gap:0; } .tab { padding:8px 10px; font-size:11px; } .chat-input-row { flex-wrap:wrap; } .chat-select { width:100%; } .kpi-grid { grid-template-columns:repeat(3,1fr); } }
 </style>
