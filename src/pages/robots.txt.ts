@@ -8,6 +8,11 @@ Disallow: /
 `
     : `User-agent: *
 Allow: /
+Disallow: /preview
+Disallow: /ops
+Disallow: /intranet
+Disallow: /portfolio
+Disallow: /countdown
 
 Sitemap: ${CANONICAL_URL}sitemap.xml
 `;
