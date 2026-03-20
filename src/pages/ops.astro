@@ -46,7 +46,7 @@ import '@/styles/global.css';
               <input type="checkbox" class="task-check" id="task-fat" />
               <label for="task-fat" class="task-label">Formaliser accord FAT</label>
               <span class="task-badge badge--red">31 mars</span>
-              <button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un contrat de partenariat formation entre L'Electron Rare (Clément Saillant, ingénieur électronique freelance Marseille) et Funky Audio Tools pour des formations en électronique embarquée. Inclus: split marge 70/30, responsabilités, assurance RC pro, durée 1 an renouvelable." title="Générer avec IA">
+              <button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un contrat de partenariat formation entre L'Electron Rare (Clément Saillant, ingénieur électronique freelance basé en Beaujolais) et Funky Audio Tools pour des formations en électronique embarquée. Inclus: split marge 70/30, responsabilités, assurance RC pro, durée 1 an renouvelable." title="Générer avec IA">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
               </button>
             </div>
@@ -311,7 +311,7 @@ import '@/styles/global.css';
 
           <div class="task" data-id="mk-ecole"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-ecole" /><label for="task-mk-ecole" class="task-label">Relancer école art numérique (reconduction KiCad)</label><button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un email de relance pour reconduire une formation KiCad (2 jours) dans une école d'art numérique. Ton: rappel de la session précédente réussie, proposition de nouvelles dates." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-mk-ecole"></div></div></div>
 
-          <div class="task" data-id="mk-culture3"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-culture3" /><label for="task-mk-culture3" class="task-label">3 compagnies culture (Dispositifs Culturels)</label><button class="task-ai-btn" data-agent="analyst" data-prompt="Identifie 5 compagnies de spectacle vivant ou lieux culturels à Marseille/Lyon qui utilisent de l'électronique dans leurs créations (LED, DMX, installations interactives). Pour chaque: nom, ville, site web, contact probable, angle d'approche." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-mk-culture3"></div></div></div>
+          <div class="task" data-id="mk-culture3"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-culture3" /><label for="task-mk-culture3" class="task-label">3 compagnies culture (Dispositifs Culturels)</label><button class="task-ai-btn" data-agent="analyst" data-prompt="Identifie 5 compagnies de spectacle vivant ou lieux culturels en Beaujolais/Lyon/toute la France qui utilisent de l'électronique dans leurs créations (LED, DMX, installations interactives). Pour chaque: nom, ville, site web, contact probable, angle d'approche." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-mk-culture3"></div></div></div>
         </div>
       </div>
 
@@ -421,18 +421,18 @@ import '@/styles/global.css';
 
       <h3 class="subsection-title" style="margin-top:24px">Outils collaboratifs</h3>
       <div class="grid" style="margin-bottom:20px">
-        <a href="https://memos.saillant.cc" class="card" target="_blank"><div class="card-icon">📝</div><h2>Memos</h2><p>Notes rapides, journal de bord, idées</p><span class="card-url">memos.saillant.cc</span></a>
-        <a href="https://docs.saillant.cc" class="card" target="_blank"><div class="card-icon">📄</div><h2>Paperless</h2><p>GED, factures, contrats, docs scannés</p><span class="card-url">docs.saillant.cc</span></a>
-        <a href="https://karakeep.saillant.cc" class="card" target="_blank"><div class="card-icon">🔖</div><h2>Karakeep</h2><p>Bookmarks intelligents, veille web</p><span class="card-url">karakeep.saillant.cc</span></a>
-        <a href="https://dify.saillant.cc" class="card" target="_blank"><div class="card-icon">🧠</div><h2>Dify</h2><p>Workflows IA custom, chatbots, RAG</p><span class="card-url">dify.saillant.cc</span></a>
-        <a href="https://langfuse.saillant.cc" class="card" target="_blank"><div class="card-icon">📊</div><h2>Langfuse</h2><p>Observabilité IA, traces LLM, coûts</p><span class="card-url">langfuse.saillant.cc</span></a>
-        <a href="https://feeds.saillant.cc" class="card" target="_blank"><div class="card-icon">📰</div><h2>Miniflux</h2><p>Flux RSS, veille sectorielle</p><span class="card-url">feeds.saillant.cc</span></a>
-        <a href="https://ntfy.saillant.cc" class="card" target="_blank"><div class="card-icon">🔔</div><h2>ntfy</h2><p>Notifications push temps réel</p><span class="card-url">ntfy.saillant.cc</span></a>
-        <a href="https://bookmarks.saillant.cc" class="card" target="_blank"><div class="card-icon">🏷️</div><h2>Linkding</h2><p>Bookmarks & tags</p><span class="card-url">bookmarks.saillant.cc</span></a>
-        <a href="https://watch.saillant.cc" class="card" target="_blank"><div class="card-icon">👁️</div><h2>Changedetection</h2><p>Surveillance pages web concurrents</p><span class="card-url">watch.saillant.cc</span></a>
-        <a href="https://checks.saillant.cc" class="card" target="_blank"><div class="card-icon">✅</div><h2>Healthchecks</h2><p>Monitoring cron jobs & alertes</p><span class="card-url">checks.saillant.cc</span></a>
-        <a href="https://logs.saillant.cc" class="card" target="_blank"><div class="card-icon">📋</div><h2>Dozzle</h2><p>Logs Docker temps réel</p><span class="card-url">logs.saillant.cc</span></a>
-        <a href="https://grafana-tower.saillant.cc" class="card" target="_blank"><div class="card-icon">📈</div><h2>Grafana Tower</h2><p>Dashboards infra Tower</p><span class="card-url">grafana-tower.saillant.cc</span></a>
+        <a href="https://memos.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/notes.png" alt="" width="32" height="32"/></div><h2>Memos</h2><p>Notes rapides, journal de bord, idées</p><span class="card-url">memos.saillant.cc</span></a>
+        <a href="https://docs.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/documents.png" alt="" width="32" height="32"/></div><h2>Paperless</h2><p>GED, factures, contrats, docs scannés</p><span class="card-url">docs.saillant.cc</span></a>
+        <a href="https://karakeep.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/bookmarks.png" alt="" width="32" height="32"/></div><h2>Karakeep</h2><p>Bookmarks intelligents, veille web</p><span class="card-url">karakeep.saillant.cc</span></a>
+        <a href="https://dify.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/workflow-ai.png" alt="" width="32" height="32"/></div><h2>Dify</h2><p>Workflows IA custom, chatbots, RAG</p><span class="card-url">dify.saillant.cc</span></a>
+        <a href="https://langfuse.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/analytics.png" alt="" width="32" height="32"/></div><h2>Langfuse</h2><p>Observabilité IA, traces LLM, coûts</p><span class="card-url">langfuse.saillant.cc</span></a>
+        <a href="https://feeds.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/rss.png" alt="" width="32" height="32"/></div><h2>Miniflux</h2><p>Flux RSS, veille sectorielle</p><span class="card-url">feeds.saillant.cc</span></a>
+        <a href="https://ntfy.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/bell.png" alt="" width="32" height="32"/></div><h2>ntfy</h2><p>Notifications push temps réel</p><span class="card-url">ntfy.saillant.cc</span></a>
+        <a href="https://bookmarks.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/bookmarks.png" alt="" width="32" height="32"/></div><h2>Linkding</h2><p>Bookmarks & tags</p><span class="card-url">bookmarks.saillant.cc</span></a>
+        <a href="https://watch.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/eye.png" alt="" width="32" height="32"/></div><h2>Changedetection</h2><p>Surveillance pages web concurrents</p><span class="card-url">watch.saillant.cc</span></a>
+        <a href="https://checks.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/health.png" alt="" width="32" height="32"/></div><h2>Healthchecks</h2><p>Monitoring cron jobs & alertes</p><span class="card-url">checks.saillant.cc</span></a>
+        <a href="https://logs.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/logs.png" alt="" width="32" height="32"/></div><h2>Dozzle</h2><p>Logs Docker temps réel</p><span class="card-url">logs.saillant.cc</span></a>
+        <a href="https://grafana-tower.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/chart.png" alt="" width="32" height="32"/></div><h2>Grafana Tower</h2><p>Dashboards infra Tower</p><span class="card-url">grafana-tower.saillant.cc</span></a>
       </div>
 
       <h3 class="subsection-title">Infra & observabilité</h3>
@@ -500,8 +500,8 @@ import '@/styles/global.css';
 
   // --- LinkedIn tasks (generated) ---
   const liPosts = [
-    { id:'li1', label:'#01 — Disponibilité', date:'Mar 1 avril, 8h', due:'2026-04-01', text:'Disponible pour vos projets électroniques.\n\nJe suis Clément Saillant, ingénieur électronique freelance basé à Marseille. Systèmes électroniques spécifiques.\n\nMes terrains de jeu :\n→ Industrie et automatisme\n→ Dispositifs culturels\n→ Énergie et stockage\n\nDM ou contact@lelectronrare.fr' },
-    { id:'li3', label:'#03 — Formation KiCad', date:'Mar 8 avril, 8h', due:'2026-04-08', text:'J\'ouvre une formation KiCad. 2 jours. De la page blanche au PCB fabriqué.\n\nJour 1 : prise en main, schéma, composants\nJour 2 : routage, règles, fichiers fabrication\n\n1 550€ HT — Marseille — 6 personnes max.\n\ncontact@lelectronrare.fr' },
+    { id:'li1', label:'#01 — Disponibilité', date:'Mar 1 avril, 8h', due:'2026-04-01', text:'Disponible pour vos projets électroniques.\n\nJe suis Clément Saillant, ingénieur électronique freelance basé en Beaujolais. Systèmes électroniques spécifiques.\n\nMes terrains de jeu :\n→ Industrie et automatisme\n→ Dispositifs culturels\n→ Énergie et stockage\n\nDM ou contact@lelectronrare.fr' },
+    { id:'li3', label:'#03 — Formation KiCad', date:'Mar 8 avril, 8h', due:'2026-04-08', text:'J\'ouvre une formation KiCad. 2 jours. De la page blanche au PCB fabriqué.\n\nJour 1 : prise en main, schéma, composants\nJour 2 : routage, règles, fichiers fabrication\n\n1 550€ HT — Lyon ou sur site — 6 personnes max.\n\ncontact@lelectronrare.fr' },
     { id:'li2', label:'#02 — Retour terrain', date:'Jeu 10 avril, 7h30', due:'2026-04-10', text:'Un client m\'envoie un prototype. Son alim 3.3V oscille à 150 kHz.\n\nLe problème : condensateur de découplage à 12 mm du pin VCC.\nLa correction : au plus court, via direct. L\'oscillation disparaît.\n\nSi vous avez un prototype qui fait des siennes...\ncontact@lelectronrare.fr' },
     { id:'li4', label:'#04 — 3 erreurs PCB', date:'Mer 16 avril, 7h30', due:'2026-04-16', text:'3 erreurs de conception PCB :\n1. Condensateurs de découplage trop loin\n2. Plan de masse fragmenté\n3. Pistes d\'alimentation sous-dimensionnées\n\nCes trois points résolvent 80% des problèmes.\n\nwww.lelectronrare.fr — 1er mai.' },
     { id:'li5', label:'#05 — Annonce lancement', date:'Mar 22 avril, 8h', due:'2026-04-22', text:'Le 1er mai, www.lelectronrare.fr sera en ligne.\n\n→ Missions techniques\n→ Catalogue formations\n→ Portfolio\n→ Contact direct\n\nSystèmes électroniques spécifiques. Du sur-mesure.' },
@@ -707,130 +707,154 @@ import '@/styles/global.css';
 </script>
 
 <style>
-  .ops { max-width:1000px; margin:0 auto; padding:32px 24px; min-height:100vh; }
+  .ops { max-width:1100px; margin:0 auto; padding:32px 24px; min-height:100vh; background:#f8f6f2; color:#1a1a1a; }
   .ops-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; flex-wrap:wrap; gap:16px; }
-  .ops-title { font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:var(--text,#f4eee3); margin:0; }
-  .ops-sub { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text-dim,#b6a894); margin:4px 0 0; }
-  .electric { color:var(--electric,#5bd1d8); }
+  .ops-title { font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:#1a1a1a; margin:0; }
+  .ops-sub { font-family:'IBM Plex Mono',monospace; font-size:13px; color:#666; margin:4px 0 0; }
+  .electric { color:#0e8a8f; }
 
-  .status-bar { display:flex; align-items:center; gap:8px; padding:8px 14px; background:var(--surface,#1a1510); border-radius:8px; border:1px solid var(--line,#3a2f24); }
-  .status-dot { width:8px; height:8px; border-radius:50%; background:#666; }
-  .status-dot--ok { background:#4ade80; box-shadow:0 0 6px #4ade80; }
+  .status-bar { display:flex; align-items:center; gap:8px; padding:8px 14px; background:#fff; border-radius:8px; border:1px solid #e0ddd6; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+  .status-dot { width:8px; height:8px; border-radius:50%; background:#ccc; }
+  .status-dot--ok { background:#22c55e; box-shadow:0 0 6px #22c55e; }
   .status-dot--err { background:#ef4444; box-shadow:0 0 6px #ef4444; }
-  .status-text { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); }
+  .status-text { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#666; }
 
   /* Tabs */
-  .tabs { display:flex; gap:4px; margin-bottom:24px; overflow-x:auto; border-bottom:1px solid var(--line,#3a2f24); padding-bottom:0; }
-  .tab { font-family:'IBM Plex Mono',monospace; font-size:13px; padding:10px 16px; background:none; border:none; color:var(--text-dim,#b6a894); cursor:pointer; border-bottom:2px solid transparent; transition:all 0.2s; white-space:nowrap; }
-  .tab:hover { color:var(--text,#f4eee3); }
-  .tab--active { color:var(--electric,#5bd1d8); border-bottom-color:var(--electric,#5bd1d8); }
+  .tabs { display:flex; gap:4px; margin-bottom:24px; overflow-x:auto; border-bottom:1px solid #e0ddd6; padding-bottom:0; }
+  .tab { font-family:'IBM Plex Mono',monospace; font-size:13px; padding:10px 16px; background:none; border:none; color:#888; cursor:pointer; border-bottom:2px solid transparent; transition:all 0.2s; white-space:nowrap; }
+  .tab:hover { color:#1a1a1a; }
+  .tab--active { color:#0e8a8f; border-bottom-color:#0e8a8f; }
 
   .panel { display:none; }
   .panel--active { display:block; }
 
-  .section-title { font-family:'Fraunces',serif; font-size:20px; color:var(--accent,#f1c27a); margin:0 0 16px; }
-  .subsection-title { font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--text-muted,#d6cbb9); margin:24px 0 12px; }
-  .hint { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text-dim,#b6a894); margin:0 0 16px; }
+  .section-title { font-family:'Fraunces',serif; font-size:20px; color:#1a1a1a; margin:0 0 16px; }
+  .subsection-title { font-family:'IBM Plex Mono',monospace; font-size:14px; color:#444; margin:24px 0 12px; }
+  .hint { font-family:'IBM Plex Mono',monospace; font-size:13px; color:#888; margin:0 0 16px; }
 
   /* Workflow */
   .workflow-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
-  .stat { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim,#b6a894); background:var(--surface,#1a1510); padding:4px 10px; border-radius:6px; }
+  .stat { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#888; background:#fff; padding:4px 10px; border-radius:6px; }
 
   .task-group { margin-bottom:28px; }
   .group-label { font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:1.5px; margin:0 0 10px; padding:0 0 6px; }
-  .group-label--red { color:#f87171; border-bottom:1px solid rgba(239,68,68,0.2); }
-  .group-label--amber { color:var(--accent,#f1c27a); border-bottom:1px solid rgba(241,194,122,0.2); }
-  .group-label--blue { color:#60a5fa; border-bottom:1px solid rgba(96,165,250,0.2); }
-  .group-label--green { color:#4ade80; border-bottom:1px solid rgba(74,222,128,0.2); }
+  .group-label--red { color:#dc2626; border-bottom:1px solid rgba(239,68,68,0.2); }
+  .group-label--amber { color:#b45309; border-bottom:1px solid rgba(241,194,122,0.2); }
+  .group-label--blue { color:#2563eb; border-bottom:1px solid rgba(96,165,250,0.2); }
+  .group-label--green { color:#16a34a; border-bottom:1px solid rgba(74,222,128,0.2); }
 
   .task-list { display:flex; flex-direction:column; gap:6px; }
-  .task { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; overflow:hidden; transition:all 0.2s; }
-  .task:hover { border-color:var(--line-edge,#ffffff2e); }
+  .task { background:#fff; border:1px solid #e0ddd6; border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,0.03); overflow:hidden; transition:all 0.2s; }
+  .task:hover { border-color:#ccc; }
   .task--urgent { border-left:3px solid #ef4444; }
   .task--overdue { border-left:3px solid #ef4444; background:rgba(239,68,68,0.04); }
   .task--done { opacity:0.35; }
   .task--done .task-label { text-decoration:line-through; }
 
   .task-header { display:flex; align-items:center; gap:10px; padding:12px 14px; cursor:pointer; user-select:none; }
-  .task-check { width:16px; height:16px; accent-color:var(--electric,#5bd1d8); cursor:pointer; flex-shrink:0; }
-  .task-label { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text,#f4eee3); flex:1; }
+  .task-check { width:16px; height:16px; accent-color:#0e8a8f; cursor:pointer; flex-shrink:0; }
+  .task-label { font-family:'IBM Plex Mono',monospace; font-size:13px; color:#1a1a1a; flex:1; }
   .task-badge { font-family:'IBM Plex Mono',monospace; font-size:10px; padding:2px 7px; border-radius:5px; white-space:nowrap; }
-  .badge--red { background:rgba(239,68,68,0.15); color:#f87171; }
-  .badge--amber { background:rgba(241,194,122,0.15); color:var(--accent,#f1c27a); }
-  .badge--cyan { background:rgba(91,209,216,0.15); color:var(--electric,#5bd1d8); }
-  .badge--blue { background:rgba(96,165,250,0.15); color:#60a5fa; }
-  .badge--green { background:rgba(74,222,128,0.15); color:#4ade80; }
+  .badge--red { background:rgba(239,68,68,0.15); color:#dc2626; }
+  .badge--amber { background:rgba(241,194,122,0.15); color:#b45309; }
+  .badge--cyan { background:rgba(91,209,216,0.15); color:#0e8a8f; }
+  .badge--blue { background:rgba(96,165,250,0.15); color:#2563eb; }
+  .badge--green { background:rgba(74,222,128,0.15); color:#16a34a; }
 
-  .task-ai-btn, .task-ai-btn-inline { background:none; border:1px solid var(--line,#3a2f24); border-radius:6px; padding:4px 8px; cursor:pointer; color:var(--electric,#5bd1d8); transition:all 0.2s; display:flex; align-items:center; gap:4px; font-family:'IBM Plex Mono',monospace; font-size:11px; }
-  .task-ai-btn:hover, .task-ai-btn-inline:hover { background:rgba(91,209,216,0.1); border-color:var(--electric,#5bd1d8); }
+  .task-ai-btn, .task-ai-btn-inline { background:none; border:1px solid #e0ddd6; border-radius:6px; padding:4px 8px; cursor:pointer; color:#0e8a8f; transition:all 0.2s; display:flex; align-items:center; gap:4px; font-family:'IBM Plex Mono',monospace; font-size:11px; }
+  .task-ai-btn:hover, .task-ai-btn-inline:hover { background:rgba(91,209,216,0.1); border-color:#0e8a8f; }
   .task-ai-btn-inline { margin-left:auto; }
 
-  .task-body { display:none; padding:0 14px 14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-muted,#d6cbb9); line-height:1.6; }
+  .task-body { display:none; padding:0 14px 14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#444; line-height:1.6; }
   .task--open .task-body { display:block; }
 
   .task-actions { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
   .btn { display:inline-block; padding:7px 14px; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500; border-radius:6px; text-decoration:none; cursor:pointer; border:none; transition:all 0.2s; }
-  .btn--primary { background:var(--accent,#f1c27a); color:var(--bg,#0b0a09); }
-  .btn--primary:hover { background:var(--electric,#5bd1d8); }
-  .btn--outline { background:transparent; border:1px solid var(--line,#3a2f24); color:var(--text-muted,#d6cbb9); }
-  .btn--outline:hover { border-color:var(--electric,#5bd1d8); color:var(--electric,#5bd1d8); }
+  .btn--primary { background:#0e8a8f; color:#fff; }
+  .btn--primary:hover { background:#0c7478; }
+  .btn--outline { background:transparent; border:1px solid #e0ddd6; color:#444; }
+  .btn--outline:hover { border-color:#0e8a8f; color:#0e8a8f; }
 
   .ai-output { display:none; margin-top:10px; }
-  .ai-loading { color:var(--electric,#5bd1d8); animation:pulse 1.5s infinite; }
-  .ai-result pre { background:var(--surface-soft,#211a13); border:1px solid var(--line,#3a2f24); border-radius:6px; padding:12px; font-size:12px; white-space:pre-wrap; word-break:break-word; max-height:400px; overflow-y:auto; color:var(--text,#f4eee3); }
-  .ai-error { color:#f87171; }
+  .ai-loading { color:#0e8a8f; animation:pulse 1.5s infinite; }
+  .ai-result pre { background:#f5f3ef; border:1px solid #e0ddd6; border-radius:6px; padding:12px; font-size:12px; white-space:pre-wrap; word-break:break-word; max-height:400px; overflow-y:auto; color:#1a1a1a; }
+  .ai-error { color:#dc2626; }
 
-  .template-block { background:var(--surface-soft,#211a13); border-radius:6px; padding:12px; font-size:12px; white-space:pre-wrap; color:var(--text-muted,#d6cbb9); margin:0 0 10px; border:1px solid var(--line,#3a2f24); }
-  .code-block { background:var(--surface-soft,#211a13); border:1px solid var(--line,#3a2f24); border-radius:6px; padding:10px 14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--electric,#5bd1d8); overflow-x:auto; margin:6px 0; }
+  .template-block { background:#f5f3ef; border-radius:6px; padding:12px; font-size:12px; white-space:pre-wrap; color:#444; margin:0 0 10px; border:1px solid #e0ddd6; }
+  .code-block { background:#f5f3ef; border:1px solid #e0ddd6; border-radius:6px; padding:10px 14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0e8a8f; overflow-x:auto; margin:6px 0; }
 
   /* Chat */
-  .chat-container { border:1px solid var(--line,#3a2f24); border-radius:10px; overflow:hidden; }
-  .chat-messages { height:400px; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:var(--surface-alt,#17120d); }
+  .chat-container { border:1px solid #e0ddd6; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.04); overflow:hidden; }
+  .chat-messages { height:400px; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:#fafaf8; }
   .chat-msg { font-family:'IBM Plex Mono',monospace; font-size:13px; padding:10px 14px; border-radius:8px; max-width:85%; line-height:1.6; }
   .chat-msg pre { white-space:pre-wrap; word-break:break-word; margin:0; }
-  .chat-msg--user { background:rgba(91,209,216,0.1); border:1px solid rgba(91,209,216,0.2); color:var(--text,#f4eee3); align-self:flex-end; }
-  .chat-msg--ai { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); color:var(--text-muted,#d6cbb9); align-self:flex-start; }
-  .chat-msg--system { background:rgba(241,194,122,0.08); border:1px solid rgba(241,194,122,0.15); color:var(--accent,#f1c27a); font-size:11px; align-self:center; }
-  .chat-input-row { display:flex; gap:8px; padding:12px; background:var(--surface,#1a1510); border-top:1px solid var(--line,#3a2f24); }
-  .chat-select { font-family:'IBM Plex Mono',monospace; font-size:11px; background:var(--surface-soft,#211a13); color:var(--text-muted,#d6cbb9); border:1px solid var(--line,#3a2f24); border-radius:6px; padding:6px 8px; }
-  .chat-input { flex:1; font-family:'IBM Plex Mono',monospace; font-size:13px; background:var(--surface-soft,#211a13); color:var(--text,#f4eee3); border:1px solid var(--line,#3a2f24); border-radius:6px; padding:8px 12px; resize:none; }
-  .chat-input:focus { outline:none; border-color:var(--electric,#5bd1d8); }
+  .chat-msg--user { background:rgba(91,209,216,0.1); border:1px solid rgba(91,209,216,0.2); color:#1a1a1a; align-self:flex-end; }
+  .chat-msg--ai { background:#fff; border:1px solid #e0ddd6; color:#444; align-self:flex-start; }
+  .chat-msg--system { background:rgba(241,194,122,0.08); border:1px solid rgba(241,194,122,0.15); color:#b45309; font-size:11px; align-self:center; }
+  .chat-input-row { display:flex; gap:8px; padding:12px; background:#fff; border-top:1px solid #e0ddd6; }
+  .chat-select { font-family:'IBM Plex Mono',monospace; font-size:11px; background:#f5f3ef; color:#444; border:1px solid #e0ddd6; border-radius:6px; padding:6px 8px; }
+  .chat-input { flex:1; font-family:'IBM Plex Mono',monospace; font-size:13px; background:#f5f3ef; color:#1a1a1a; border:1px solid #e0ddd6; border-radius:6px; padding:8px 12px; resize:none; }
+  .chat-input:focus { outline:none; border-color:#0e8a8f; }
   .chat-send { flex-shrink:0; }
 
   /* CRM */
   .crm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; margin-bottom:20px; }
-  .crm-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:10px; padding:16px; text-align:center; }
-  .crm-card-num { font-family:'IBM Plex Mono',monospace; font-size:28px; font-weight:700; color:var(--text,#f4eee3); }
-  .crm-card-label { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); margin-top:4px; }
+  .crm-card { background:#fff; border:1px solid #e0ddd6; border-radius:12px; padding:20px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .crm-card-num { font-family:'IBM Plex Mono',monospace; font-size:28px; font-weight:700; color:#1a1a1a; }
+  .crm-card-label { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#888; margin-top:4px; }
 
   .table-wrap { overflow-x:auto; }
   .data-table { width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:12px; }
-  .data-table th { text-align:left; padding:8px 10px; color:var(--text-dim,#b6a894); border-bottom:1px solid var(--line,#3a2f24); font-weight:500; }
-  .data-table td { padding:8px 10px; color:var(--text-muted,#d6cbb9); border-bottom:1px solid var(--line-soft,#2a221a); }
+  .data-table th { text-align:left; padding:8px 10px; color:#888; border-bottom:1px solid #e0ddd6; font-weight:500; }
+  .data-table td { padding:8px 10px; color:#444; border-bottom:1px solid #eae7e0; }
 
   /* Agents */
   .agents-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:10px; }
-  .agent-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:14px; }
-  .agent-name { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--electric,#5bd1d8); font-weight:500; }
-  .agent-model { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); margin-top:4px; }
+  .agent-card { background:#fff; border:1px solid #e0ddd6; border-radius:8px; padding:14px; }
+  .agent-name { font-family:'IBM Plex Mono',monospace; font-size:13px; color:#0e8a8f; font-weight:500; }
+  .agent-model { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#888; margin-top:4px; }
 
   /* Monitor */
   .monitor-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:10px; }
-  .monitor-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:14px; text-align:center; }
+  .monitor-card { background:#fff; border:1px solid #e0ddd6; border-radius:10px; padding:16px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.03); }
   .monitor-card--ok { border-color:rgba(74,222,128,0.3); }
   .monitor-card--err { border-color:rgba(239,68,68,0.3); }
-  .monitor-name { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text,#f4eee3); }
-  .monitor-status { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim,#b6a894); margin-top:6px; }
+  .monitor-name { font-family:'IBM Plex Mono',monospace; font-size:13px; color:#1a1a1a; }
+  .monitor-status { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#888; margin-top:6px; }
 
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
   .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px; }
-  .kpi-card { background:var(--surface,#1a1510); border:1px solid var(--line,#3a2f24); border-radius:8px; padding:14px; text-align:center; }
-  .kpi-target { font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:700; color:var(--electric,#5bd1d8); }
-  .kpi-label { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text-dim,#b6a894); margin-top:4px; }
+  .kpi-card { background:#fff; border:1px solid #e0ddd6; border-radius:12px; padding:18px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .kpi-target { font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:700; color:#0e8a8f; }
+  .kpi-label { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#888; margin-top:4px; }
   .links { display:flex; flex-wrap:wrap; gap:8px; }
-  .links a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--electric,#5bd1d8); text-decoration:none; padding:6px 12px; border:1px solid var(--line,#3a2f24); border-radius:6px; transition:all .2s; }
-  .links a:hover { border-color:var(--electric,#5bd1d8); background:rgba(91,209,216,.08); }
-  .portfolio-link { color:var(--electric,#5bd1d8); }
+  .links a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0e8a8f; text-decoration:none; padding:6px 12px; border:1px solid #e0ddd6; border-radius:6px; transition:all .2s; }
+  .links a:hover { border-color:#0e8a8f; background:rgba(91,209,216,.08); }
+  .portfolio-link { color:#0e8a8f; }
 
-  @media (max-width:640px) { .tabs { gap:0; } .tab { padding:8px 10px; font-size:11px; } .chat-input-row { flex-wrap:wrap; } .chat-select { width:100%; } .kpi-grid { grid-template-columns:repeat(3,1fr); } }
+  .card-icon img { width:48px; height:48px; border-radius:8px; } .card-icon { margin-bottom:12px; }
+
+  @media (max-width:768px) {
+    .ops { padding:20px 12px; }
+    .ops-header { flex-direction:column; gap:8px; }
+    .tabs { overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:0; }
+    .tabs::-webkit-scrollbar { display:none; }
+    .tab { padding:8px 12px; font-size:11px; flex-shrink:0; }
+    .grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+    .card { padding:14px; } .card h2 { font-size:13px; } .card p { font-size:11px; }
+    .task-header { padding:10px; gap:8px; } .task-label { font-size:12px; }
+    .task-badge { font-size:9px; } .task-body { padding:0 10px 10px; font-size:11px; }
+    .task-actions { flex-direction:column; } .btn { text-align:center; }
+    .chat-input-row { flex-wrap:wrap; } .chat-select { width:100%; }
+    .chat-messages { height:300px; } .chat-msg { max-width:95%; font-size:12px; }
+    .kpi-grid { grid-template-columns:repeat(3,1fr); gap:6px; }
+    .monitor-grid { grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); }
+    .agents-grid { grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .links { gap:6px; } .links a { font-size:11px; padding:5px 10px; }
+  }
+  @media (max-width:380px) {
+    .grid { grid-template-columns:1fr 1fr; }
+    .kpi-grid { grid-template-columns:repeat(2,1fr); }
+    .tab { padding:6px 8px; font-size:10px; }
+  }
 </style>
