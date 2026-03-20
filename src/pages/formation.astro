@@ -207,6 +207,97 @@ const headerItems = [
     <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
       <div class="circuit-title-row">
         <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
+        <h2 class="m-0 text-2xl md:text-3xl">Catalogue des formations</h2>
+        <span class="circuit-pinline" aria-hidden="true"></span>
+      </div>
+
+      <p class="section-lead mb-0 mt-3">14 modules prêts à l'emploi. Chaque formation est disponible en inter-entreprises (Lyon) ou intra/sur site (toute la France).</p>
+
+      <h3 class="mt-4 mb-2 text-lg font-semibold" style="color:var(--electric)">Initiations — Tous publics</h3>
+      <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Mes Premiers Circuits</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Breadboard, soudure, badge lumineux. Zéro prérequis.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 420€</strong> · 6-8 pers.</p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Arduino Pour Tous</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Capteurs, LED, moteurs. Kit Arduino à emporter.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 450€</strong> · 6-8 pers.</p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Lumière et Son</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">LED NeoPixel, DMX512, audio interactif. Kit LED+son inclus.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 480€</strong> · 6-8 pers.</p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">KiCad Découverte</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Du breadboard au PCB. Commandez votre carte chez JLCPCB.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 420€</strong> · 6-8 pers.</p>
+        </article>
+      </div>
+
+      <h3 class="mt-4 mb-2 text-lg font-semibold" style="color:var(--trace-magenta)">Créatif & Artistes</h3>
+      <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Créer son Contrôleur MIDI</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Teensy, potentiomètres, capteurs → instrument MIDI USB personnalisé.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 450€</strong> · Variante 3h : 220€</p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Programmation Embarquée pour Artistes</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">ESP32, capteurs, DMX, Art-Net, OSC → installations interactives.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 480€</strong> · Variante 3h : 240€</p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">IA pour la Création Artistique</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Stable Diffusion, ComfyUI, Ollama. Image, son, vidéo, performance live.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 500€</strong> · Variante 3h : 250€</p>
+        </article>
+      </div>
+
+      <h3 class="mt-4 mb-2 text-lg font-semibold" style="color:var(--accent)">Pro — Avancé</h3>
+      <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">KiCad — Conception PCB</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">KiCad 9/10, routage avancé, impedance, DFM, fabrication JLCPCB.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>2 jours · 1 550€</strong> · 6 pers. max</p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Dispositifs Culturels</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">LED, DMX512, Art-Net, autonomie batteries, intégration terrain spectacle.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 775€</strong> · Finançable Afdas/OPCO</p>
+        </article>
+      </div>
+
+      <h3 class="mt-4 mb-2 text-lg font-semibold" style="color:var(--trace-green)">Enfants & Jeunes</h3>
+      <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Premiers Circuits (8-10 ans)</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">micro:bit, programmation par blocs, LED, capteurs.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>3 demi-journées · 89€</strong></p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Maker Junior (10-13 ans)</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Arduino, première soudure, capteurs, projet personnel.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>5 demi-journées · 149€</strong></p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Electro Lab (13-16 ans)</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">ESP32, KiCad, conception et fabrication de vrai PCB.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>8 sessions · 299€</strong></p>
+        </article>
+        <article class="rounded-xl border border-[color:var(--line)] p-4">
+          <h4 class="m-0 text-base font-semibold">Atelier Parent-Enfant</h4>
+          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">3h de découverte en duo. Montage, soudure, LED.</p>
+          <p class="m-0" style="font-size:0.8rem"><strong>3h · 59€/binôme</strong> · À partir de 8 ans</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
+      <div class="circuit-title-row">
+        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
         <h2 class="m-0 text-2xl md:text-3xl">Demander un programme</h2>
         <span class="circuit-pinline" aria-hidden="true"></span>
       </div>
@@ -225,6 +316,14 @@ const headerItems = [
           {...trackAttrs(TRACK_EVENTS.outboundEmailContact, 'mailto:contact@lelectronrare.fr')}
         >
           Envoyer par mail
+        </a>
+        <a
+          href="https://rdv.saillant.cc/clement/formation"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="figma-lab-pill figma-lab-pill--secondary"
+        >
+          Réserver un échange 30 min
         </a>
         <a
           href="https://fr.linkedin.com/in/electron-rare"
