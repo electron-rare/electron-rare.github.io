@@ -5,6 +5,7 @@ import '@/styles/global.css';
 
 <BaseLayout title="L'Electron Rare — Bientôt" description="L'Electron Rare arrive. Systèmes électroniques spécifiques, formations, prototypage.">
   <main class="countdown-page">
+    <img src="/assets/brand/logo-mark.png" alt="L'Electron Rare" class="logo-mark" width="200" height="200" />
     <svg class="atom" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-cyan-soft, #5bd1d866)" stroke-width="0.8" transform="rotate(-30 150 150)"/>
       <ellipse cx="150" cy="150" rx="120" ry="45" fill="none" stroke="var(--trace-amber-soft, #f1c27a66)" stroke-width="0.8" transform="rotate(30 150 150)"/>
@@ -81,8 +82,9 @@ import '@/styles/global.css';
 </script>
 
 <style>
-  .countdown-page { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 24px; background:var(--bg,#0b0a09); }
-  .atom { width:clamp(180px,35vw,260px); height:auto; margin-bottom:24px; }
+  .countdown-page { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 24px; background:url('/assets/hero-bg.png') center/cover no-repeat var(--bg,#0b0a09); }
+  .logo-mark { width:clamp(120px,20vw,180px); height:auto; margin-bottom:16px; filter:drop-shadow(0 0 20px rgba(91,209,216,0.3)); }
+  .atom { width:clamp(140px,25vw,200px); height:auto; margin-bottom:24px; opacity:0.6; }
   .title { font-family:'Fraunces',serif; font-size:clamp(28px,5vw,48px); font-weight:700; color:var(--text,#f4eee3); margin:0 0 32px; letter-spacing:-1px; }
   .electric { color:var(--electric,#5bd1d8); animation:pulse 3s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6;text-shadow:0 0 12px var(--electric,#5bd1d8)} }
