@@ -3,55 +3,52 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@/styles/global.css';
 ---
 
-<BaseLayout title="Ops — L'Electron Rare" description="Centre opérationnel avec IA mascarade.">
+<BaseLayout title="Ops — L'Electron Rare" description="Centre opérationnel IA-native.">
   <main class="ops" id="ops-main">
 
-    <!-- Header -->
     <div class="ops-header">
       <div class="ops-header-left">
-        <img src="/assets/brand/logo-mark.jpg" alt="" width="36" height="36" class="ops-logo" />
+        <img src="/assets/brand/logo-mark.jpg" alt="" width="32" height="32" class="ops-logo" />
         <div>
           <h1 class="ops-title">Ops</h1>
-          <p class="ops-sub">L'Electron Rare · Centre opérationnel</p>
+          <p class="ops-sub">L'Electron Rare · <span id="task-count">—</span></p>
         </div>
       </div>
       <div class="ops-header-right">
         <div class="status-bar" id="status-bar">
           <span class="status-dot" id="status-dot"></span>
-          <span class="status-text" id="status-text">Connexion...</span>
+          <span class="status-text" id="status-text">...</span>
         </div>
-        <a href="/intranet" class="btn btn--outline btn--sm">Intranet</a>
       </div>
     </div>
 
-    <!-- Tabs -->
     <nav class="tabs" id="tabs">
-      <button class="tab tab--active" data-tab="workflow">Workflow</button>
-      <button class="tab" data-tab="business">Business Plan</button>
-      <button class="tab" data-tab="marketing">Marketing</button>
-      <button class="tab" data-tab="copilot">Copilote IA</button>
-      <button class="tab" data-tab="crm">CRM Live</button>
-      <button class="tab" data-tab="agents">Agents</button>
-      <button class="tab" data-tab="monitor">Monitoring</button>
+      <button class="tab tab--active" data-tab="tasks">Tâches</button>
+      <button class="tab" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="services">Services</button>
     </nav>
 
-    <!-- TAB: Workflow -->
-    <section class="panel panel--active" id="panel-workflow">
-
-      <div class="workflow-header">
-        <h2 class="section-title">Actions en cours</h2>
-        <div class="workflow-toolbar">
-          <div class="workflow-stats" id="workflow-stats"></div>
-          <button class="btn btn--primary btn--sm" id="add-task-btn">+ Nouvelle tâche</button>
-          <button class="btn btn--outline btn--sm" id="refresh-tasks">↻</button>
+    <!-- VUE 1: TÂCHES -->
+    <section class="panel panel--active" id="panel-tasks">
+      <div class="tasks-toolbar">
+        <button class="btn btn--primary btn--sm" id="add-task-btn">+ Nouvelle tâche</button>
+        <div class="tasks-filters">
+          <select id="filter-cat" class="filter-select"><option value="">Toutes catégories</option></select>
+          <select id="filter-status" class="filter-select">
+            <option value="">Tous statuts</option>
+            <option value="À faire" selected>À faire</option>
+            <option value="En cours">En cours</option>
+            <option value="Terminé">Terminé</option>
+          </select>
+          <input type="text" id="filter-search" class="filter-input" placeholder="Rechercher..." />
         </div>
+        <button class="btn btn--outline btn--sm" id="refresh-tasks">↻</button>
       </div>
 
-      <!-- Add task form (hidden by default) -->
-      <div class="add-task-form" id="add-task-form" style="display:none">
-        <input type="text" class="add-task-input" id="new-task-title" placeholder="Titre de la tâche..." />
-        <div class="add-task-row">
-          <select id="new-task-category" class="ai-agent-select">
+      <div id="add-task-form" style="display:none" class="card-form">
+        <input type="text" id="new-task-title" class="form-input" placeholder="Titre de la tâche..." />
+        <div class="form-row">
+          <select id="new-task-category" class="form-select">
             <option value="urgent">Urgent</option>
             <option value="prospection">Prospection</option>
             <option value="linkedin">LinkedIn</option>
@@ -60,308 +57,116 @@ import '@/styles/global.css';
             <option value="formation">Formation</option>
             <option value="gie">GIE</option>
             <option value="marketing">Marketing</option>
+            <option value="business">Business</option>
+            <option value="crm">CRM</option>
           </select>
-          <select id="new-task-priority" class="ai-agent-select">
-            <option value="P1">P1</option>
+          <select id="new-task-priority" class="form-select">
             <option value="P0">P0</option>
+            <option value="P1">P1</option>
             <option value="P2" selected>P2</option>
             <option value="P3">P3</option>
           </select>
-          <input type="date" id="new-task-deadline" class="add-task-input" style="width:auto" />
-          <select id="new-task-agent" class="ai-agent-select">
-            <option value="">Pas d'agent</option>
+          <input type="date" id="new-task-deadline" class="form-input" style="width:auto" />
+          <select id="new-task-agent" class="form-select">
+            <option value="">Sans IA</option>
             <option value="writer">writer</option>
             <option value="analyst">analyst</option>
             <option value="brainstorm">brainstorm</option>
             <option value="planner">planner</option>
+            <option value="prospection">prospection</option>
+            <option value="formation-designer">formation-designer</option>
           </select>
+        </div>
+        <textarea id="new-task-desc" class="form-textarea" rows="2" placeholder="Description (optionnel)..."></textarea>
+        <div class="form-row">
           <button class="btn btn--primary" id="save-task-btn">Enregistrer</button>
           <button class="btn btn--outline" id="cancel-task-btn">Annuler</button>
         </div>
       </div>
 
-      <!-- Dynamic task list loaded from API -->
-      <div id="tasks-container"><div class="ai-loading" style="padding:40px;text-align:center">Chargement des tâches...</div></div>
-
-
+      <div id="tasks-container"><div class="loading">Chargement...</div></div>
     </section>
 
+    <!-- VUE 2: DASHBOARD -->
+    <section class="panel" id="panel-dashboard">
+      <div class="kpi-grid" id="kpi-grid">
+        <div class="kpi-card"><div class="kpi-num" id="kpi-leads">—</div><div class="kpi-label">Leads</div></div>
+        <div class="kpi-card"><div class="kpi-num" id="kpi-hot">—</div><div class="kpi-label">Chauds</div></div>
+        <div class="kpi-card"><div class="kpi-num" id="kpi-score">—</div><div class="kpi-label">Score IA</div></div>
+        <div class="kpi-card"><div class="kpi-num" id="kpi-tasks">—</div><div class="kpi-label">Tâches</div></div>
+        <div class="kpi-card"><div class="kpi-num" id="kpi-done">—</div><div class="kpi-label">Terminées</div></div>
+        <div class="kpi-card"><div class="kpi-num" id="kpi-agents">—</div><div class="kpi-label">Agents IA</div></div>
+      </div>
 
-    <!-- TAB: Business Plan -->
-    <section class="panel" id="panel-business">
-      <h2 class="section-title">Business Plan — Backlog maître</h2>
-      <p class="hint">Source de vérité : <a href="https://github.com/electron-rare/communication-marketing-electron-rare" target="_blank" class="portfolio-link">Business OS</a></p>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--green">P0 — Clarté commerciale (DONE)</h3>
-        <div class="task-list">
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Positionnement "systèmes électroniques spécifiques"</label></div></div>
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Grille prix simple et assumée</label></div></div>
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Messages alignés site/SEO/LinkedIn</label></div></div>
+      <h3 class="sub-title">Agents mascarade <button class="btn btn--outline btn--sm" id="add-agent-btn" style="margin-left:8px">+ Créer</button></h3>
+      <div id="add-agent-form" style="display:none" class="card-form">
+        <input type="text" id="new-agent-name" class="form-input" placeholder="Nom (ex: email-drafter)" />
+        <input type="text" id="new-agent-desc" class="form-input" placeholder="Description" />
+        <textarea id="new-agent-prompt" class="form-textarea" rows="3" placeholder="System prompt..."></textarea>
+        <div class="form-row">
+          <select id="new-agent-strategy" class="form-select"><option value="best">best</option><option value="cheapest">cheapest</option><option value="fastest">fastest</option></select>
+          <select id="new-agent-provider" class="form-select"><option value="">Auto</option><option value="ollama">ollama</option><option value="claude">claude</option><option value="mistral">mistral</option></select>
+          <button class="btn btn--primary" id="save-agent-btn">Créer</button>
+          <button class="btn btn--outline" id="cancel-agent-btn">Annuler</button>
         </div>
       </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--green">P1 — Preuves (DONE)</h3>
-        <div class="task-list">
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Cas industrie + culture + formation écrits</label></div></div>
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">3 preuves courtes LinkedIn/homepage</label></div></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--amber">P2 — Formation</h3>
-        <div class="task-list">
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">3 modules vendables (KiCad 2j/1550€, Debug 1j/775€, Dispositifs 1j/775€)</label></div></div>
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Process FAT, trames proposition, matrices marge</label></div></div>
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">One-pagers commerciaux + templates email prospection</label></div></div>
-          <div class="task" data-id="bp-fat"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-fat" /><label for="task-bp-fat" class="task-label">Formaliser accord FAT (contrat, split, assurance)</label><span class="task-badge badge--red">31 mars</span></div></div>
-          <div class="task" data-id="bp-prospects"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-prospects" /><label for="task-bp-prospects" class="task-label">Lister 20-30 prospects qualifiés</label></div></div>
-          <div class="task" data-id="bp-test-vente"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-test" /><label for="task-bp-test" class="task-label">Tester 2 ventes/sessions (Debug & Mesure recommandé en premier)</label></div></div>
-          <div class="task" data-id="bp-marge"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-marge" /><label for="task-bp-marge" class="task-label">Mesurer marge / charge / satisfaction sur réel</label></div></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--amber">P3 — GIE Hémisphère</h3>
-        <div class="task-list">
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Objet, règles leads/coûts, one-pager (trame)</label></div></div>
-          <div class="task" data-id="bp-onepager"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-onepager" /><label for="task-bp-onepager" class="task-label">Finaliser one-pager avec Hémisphère</label><span class="task-badge badge--red">31 mars</span></div></div>
-          <div class="task" data-id="bp-cibles20"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-cibles20" /><label for="task-bp-cibles20" class="task-label">20 cibles hybrides locales</label><span class="task-badge badge--amber">30 avril</span></div></div>
-          <div class="task" data-id="bp-visites"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-visites" /><label for="task-bp-visites" class="task-label">6 visites/rencontres + 1 offre hybride</label><span class="task-badge badge--amber">31 mai</span></div></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--cyan">P4 — CRM & Pilotage</h3>
-        <div class="task-list">
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">CRM Frappe live + formulaire site → lead + AI scoring</label></div></div>
-          <div class="task" data-id="bp-suivi-sources"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-sources" /><label for="task-bp-sources" class="task-label">Suivre leads par source (site, LinkedIn, partenaires)</label></div><div class="task-body"><div class="task-actions"><a href="https://kpi.saillant.cc/dashboard/2" target="_blank" class="btn btn--outline">Dashboard Metabase</a></div></div></div>
-          <div class="task" data-id="bp-revue"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-revue" /><label for="task-bp-revue" class="task-label">Revue mensuelle pipeline</label><span class="task-badge badge--cyan">Mensuel</span></div></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--cyan">P5 — Migration Frappe</h3>
-        <div class="task-list">
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Frappe CRM + ERPNext + LMS bootstrappé sur Tower</label></div></div>
-          <div class="task" data-id="bp-import-leads"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-import" /><label for="task-bp-import" class="task-label">Importer leads historiques (0 réels dans legacy)</label></div></div>
-          <div class="task" data-id="bp-devis"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-devis" /><label for="task-bp-devis" class="task-label">Basculer devis/facturation vers ERPNext</label></div></div>
-          <div class="task" data-id="bp-readonly"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-readonly" /><label for="task-bp-readonly" class="task-label">CRM custom en read-only</label></div></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--blue">P7 — Exécution commerciale</h3>
-        <div class="task-list">
-          <div class="task" data-id="bp-li5"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-li5" /><label for="task-bp-li5" class="task-label">Publier 5 posts LinkedIn (S12-S16)</label><span class="task-badge badge--blue">Avril</span></div></div>
-          <div class="task" data-id="bp-email15"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-email15" /><label for="task-bp-email15" class="task-label">Envoyer 15 emails prospection Debug & Mesure</label></div></div>
-          <div class="task" data-id="bp-ecole"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-ecole" /><label for="task-bp-ecole" class="task-label">Relancer école art numérique (reconduction KiCad)</label></div></div>
-          <div class="task" data-id="bp-culture3"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-culture3" /><label for="task-bp-culture3" class="task-label">Contacter 3 compagnies culture (Dispositifs Culturels)</label></div></div>
-          <div class="task" data-id="bp-appels3"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-appels3" /><label for="task-bp-appels3" class="task-label">Réaliser 3 appels découverte</label></div></div>
-          <div class="task" data-id="bp-prop2"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-prop2" /><label for="task-bp-prop2" class="task-label">Envoyer 2 propositions formation</label></div></div>
-          <div class="task" data-id="bp-session1"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-session1" /><label for="task-bp-session1" class="task-label">Planifier 1 session formation avant fin avril</label></div></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label">P6 — Outils marketing</h3>
-        <div class="task-list">
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Listmonk, SMTP Brevo, welcome sequence, Cal.com, Metabase, LMS</label></div></div>
-          <div class="task" data-id="bp-pdf"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-pdf" /><label for="task-bp-pdf" class="task-label">Générer lead magnet PDF checklist PCB</label><button class="task-ai-btn" data-agent="writer" data-prompt="Génère une checklist de revue de conception PCB en 20 points. Format: titre du point, description courte, critère de validation. Couvre: schéma, routage, alimentation, CEM, thermique, fabrication. Ton technique, concis." title="Générer avec IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-bp-pdf"></div></div></div>
-          <div class="task" data-id="bp-calcom-link"><div class="task-header"><input type="checkbox" class="task-check" id="task-bp-calcom-link" /><label for="task-bp-calcom-link" class="task-label">Intégrer liens Cal.com dans emails, one-pagers, LinkedIn</label></div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB: Marketing -->
-    <section class="panel" id="panel-marketing">
-      <h2 class="section-title">Marketing & Communication</h2>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--blue">LinkedIn — Planning éditorial</h3>
-        <div class="task-list" id="marketing-linkedin"></div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--amber">Prospection email</h3>
-        <div class="task-list">
-          <div class="task" data-id="mk-mediatone">
-            <div class="task-header">
-              <input type="checkbox" class="task-check" id="task-mk-mediatone" />
-              <label for="task-mk-mediatone" class="task-label">Email Mediatone — Sarah Le Tolguenec</label>
-              <span class="task-badge badge--amber">Formation culture</span>
-              <button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un email de proposition formation Dispositifs Culturels (1j, 775€, LED/DMX/intégration) à Sarah Le Tolguenec, coordinatrice formation Mediatone Lyon, certifiée Qualiopi. Finançable Afdas. Portes ouvertes 31 mars." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button>
-            </div>
-            <div class="task-body">
-              <div class="ai-output" id="ai-output-mk-mediatone"></div>
-              <div class="task-actions">
-                <a href="mailto:site@mediatone.net?subject=Proposition%20formation%20%E2%80%94%20%C3%89lectronique%20spectacle" class="btn btn--primary">Envoyer email</a>
-                <a href="https://tower.saillant.cc/app/crm/CRM-LEAD-2026-00027" target="_blank" class="btn btn--outline">Fiche CRM</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="task" data-id="mk-debug15">
-            <div class="task-header">
-              <input type="checkbox" class="task-check" id="task-mk-debug15" />
-              <label for="task-mk-debug15" class="task-label">15 emails prospection Debug & Mesure</label>
-              <span class="task-badge badge--cyan">Formation</span>
-              <button class="task-ai-btn" data-agent="writer" data-prompt="Génère 5 emails personnalisés pour la formation Debug et Mesure (1 jour, 775 euros, oscilloscope/analyseur/méthodologie). Cibles: PME tech, labos R et D, écoles ingénieurs. Objet + corps pour chaque. Ton direct, concis." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button>
-            </div>
-            <div class="task-body">
-              <details class="task-template"><summary>Template A — Approche directe</summary><div class="template-content"><p><strong>Objet :</strong> Vos équipes perdent du temps en debug ?</p><p>Dans la plupart des bureaux d'études, le debug se fait au feeling. Formation 1 jour, 775€/personne, finançable OPCO. 15 min pour en discuter ?</p></div></details>
-              <details class="task-template"><summary>Template B — Approche valeur</summary><div class="template-content"><p><strong>Objet :</strong> 80% du temps de debug perdu sur des bugs simples</p><p>La formation Debug & Mesure donne une approche systématique. Intéressé ? Répondez.</p></div></details>
-              <details class="task-template"><summary>Template C — Approche référence</summary><div class="template-content"><p><strong>Objet :</strong> Leur debug prenait 2 jours — maintenant 2 heures</p><p>Temps de diagnostic divisé par quatre. Programme détaillé sur demande.</p></div></details>
-              <details class="task-template"><summary>Relance J+5</summary><div class="template-content"><p>Avez-vous eu le temps de regarder mon message sur la formation Debug & Mesure ?</p></div></details>
-              <div class="ai-output" id="ai-output-mk-debug15"></div>
-              <div class="task-actions"><a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--outline">Choisir cibles CRM</a></div>
-            </div>
-          </div>
-
-          <div class="task" data-id="mk-ecole"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-ecole" /><label for="task-mk-ecole" class="task-label">Relancer école art numérique (reconduction KiCad)</label><button class="task-ai-btn" data-agent="writer" data-prompt="Rédige un email de relance pour reconduire une formation KiCad (2 jours) dans une école d'art numérique. Ton: rappel de la session précédente réussie, proposition de nouvelles dates." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-mk-ecole"></div></div></div>
-
-          <div class="task" data-id="mk-culture3"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-culture3" /><label for="task-mk-culture3" class="task-label">3 compagnies culture (Dispositifs Culturels)</label><button class="task-ai-btn" data-agent="analyst" data-prompt="Identifie 5 compagnies de spectacle vivant ou lieux culturels en Beaujolais/Lyon/toute la France qui utilisent de l'électronique dans leurs créations (LED, DMX, installations interactives). Pour chaque: nom, ville, site web, contact probable, angle d'approche." title="IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button></div><div class="task-body"><div class="ai-output" id="ai-output-mk-culture3"></div></div></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--green">Newsletter</h3>
-        <div class="task-list">
-          <div class="task task--done"><div class="task-header"><input type="checkbox" checked disabled class="task-check" /><label class="task-label">Welcome sequence 3 emails (bienvenue, valeur PCB, offre)</label></div></div>
-          <div class="task" data-id="mk-nl-launch"><div class="task-header"><input type="checkbox" class="task-check" id="task-mk-nl" /><label for="task-mk-nl" class="task-label">Newsletter lancement (template ID 10)</label><span class="task-badge badge--green">1er mai</span></div><div class="task-body"><div class="task-actions"><a href="https://mail.saillant.cc" target="_blank" class="btn btn--primary">Listmonk</a></div></div></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label group-label--cyan">KPIs marketing</h3>
-        <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-target">10+</div><div class="kpi-label">Leads site (avril)</div></div>
-          <div class="kpi-card"><div class="kpi-target">15+</div><div class="kpi-label">Leads prospection</div></div>
-          <div class="kpi-card"><div class="kpi-target">3+</div><div class="kpi-label">Appels découverte</div></div>
-          <div class="kpi-card"><div class="kpi-target">2+</div><div class="kpi-label">Propositions envoyées</div></div>
-          <div class="kpi-card"><div class="kpi-target">1+</div><div class="kpi-label">Session planifiée</div></div>
-          <div class="kpi-card"><div class="kpi-target">20+</div><div class="kpi-label">Subscribers newsletter</div></div>
-          <div class="kpi-card"><div class="kpi-target">5</div><div class="kpi-label">Posts LinkedIn</div></div>
-        </div>
-        <div class="task-actions" style="margin-top:12px">
-          <a href="https://kpi.saillant.cc/dashboard/2" target="_blank" class="btn btn--outline">Dashboard Metabase</a>
-          <a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--outline">CRM Pipeline</a>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <h3 class="group-label">Liens RDV publics</h3>
-        <div class="links">
-          <a href="https://rdv.saillant.cc/clement/decouverte" target="_blank">Appel découverte 20min</a>
-          <a href="https://rdv.saillant.cc/clement/point-projet" target="_blank">Point projet 30min</a>
-          <a href="https://rdv.saillant.cc/clement/formation" target="_blank">Échange formation 30min</a>
-          <a href="https://rdv.saillant.cc/clement/audit" target="_blank">Audit technique 1h</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB: Copilot -->
-    <section class="panel" id="panel-copilot">
-      <h2 class="section-title">Copilote IA — mascarade</h2>
-      <p class="hint">Pose une question ou donne une instruction. Les agents mascarade répondent.</p>
-      <div class="chat-container">
-        <div class="chat-messages" id="chat-messages">
-          <div class="chat-msg chat-msg--system">Prêt. 16 agents disponibles. Modèles: mistral:7b, qwen3.5:9b, phi4, deepseek-r1:8b...</div>
-        </div>
-        <div class="chat-input-row">
-          <select id="chat-agent" class="chat-select">
-            <option value="agent-zero">Agent Zero (auto)</option>
-            <option value="writer">Writer</option>
-            <option value="analyst">Analyst</option>
-            <option value="planner">Planner</option>
-            <option value="coder">Coder</option>
-            <option value="brainstorm">Brainstorm</option>
-            <option value="kicad-designer">KiCad Designer</option>
-            <option value="spice-expert">SPICE Expert</option>
-            <option value="components-expert">Components Expert</option>
-            <option value="pcb-routing-kicad">PCB Routing</option>
-            <option value="classifier">Classifier</option>
-            <option value="summarizer">Summarizer</option>
-            <option value="translator">Translator</option>
-            <option value="image-generator">Image Generator</option>
-            <option value="knowledge-scribe">Knowledge Scribe</option>
-            <option value="freecad-designer">FreeCAD Designer</option>
-          </select>
-          <textarea id="chat-input" class="chat-input" placeholder="Demande quelque chose à l'IA..." rows="2"></textarea>
-          <button id="chat-send" class="btn btn--primary chat-send">Envoyer</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB: CRM Live -->
-    <section class="panel" id="panel-crm">
-      <div class="crm-header">
-        <h2 class="section-title">CRM Live</h2>
-        <button class="btn btn--outline btn--sm" id="refresh-crm">↻ Rafraîchir</button>
-      </div>
-      <div class="crm-grid">
-        <div class="crm-card" id="crm-leads-count"><div class="crm-card-icon">📊</div><div class="crm-card-num">-</div><div class="crm-card-label">Leads total</div></div>
-        <div class="crm-card" id="crm-leads-new"><div class="crm-card-icon">🆕</div><div class="crm-card-num">-</div><div class="crm-card-label">Nouveaux</div></div>
-        <div class="crm-card" id="crm-score-avg"><div class="crm-card-icon">🤖</div><div class="crm-card-num">-</div><div class="crm-card-label">Score IA moyen</div></div>
-        <div class="crm-card" id="crm-hot"><div class="crm-card-icon">🔥</div><div class="crm-card-num">-</div><div class="crm-card-label">Leads chauds</div></div>
-      </div>
-      <h3 class="subsection-title">Derniers leads</h3>
-      <div class="table-wrap"><table class="data-table" id="leads-table"><thead><tr><th>Nom</th><th>Organisation</th><th>Segment</th><th>Score IA</th><th>Urgence</th><th>Date</th></tr></thead><tbody id="leads-tbody"><tr><td colspan="6" style="text-align:center;color:#888;padding:20px">Chargement...</td></tr></tbody></table></div>
-      <div class="crm-links">
-        <a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--primary">Frappe CRM</a>
-        <a href="https://kpi.saillant.cc/dashboard/2" target="_blank" class="btn btn--outline">Metabase</a>
-        <a href="https://rdv.saillant.cc" target="_blank" class="btn btn--outline">Cal.com</a>
-        <a href="https://mail.saillant.cc" target="_blank" class="btn btn--outline">Listmonk</a>
-      </div>
-    </section>
-
-    <!-- TAB: Agents -->
-    <section class="panel" id="panel-agents">
-      <div class="crm-header">
-        <h2 class="section-title">Agents mascarade</h2>
-        <span class="agent-count" id="agent-count">16 agents</span>
-      </div>
-      <p class="hint">Cliquer sur un agent pour le tester dans le copilote.</p>
       <div class="agents-grid" id="agents-grid"></div>
-      <div class="crm-links" style="margin-top:16px">
-        <a href="https://n8n.saillant.cc" target="_blank" class="btn btn--outline">n8n Workflows</a>
-        <a href="https://mascarade.saillant.cc" target="_blank" class="btn btn--outline">mascarade UI</a>
-        <a href="https://langfuse.saillant.cc" target="_blank" class="btn btn--outline">Langfuse Traces</a>
-        <a href="https://dify.saillant.cc" target="_blank" class="btn btn--outline">Dify Workflows</a>
+
+      <h3 class="sub-title">Copilote rapide</h3>
+      <div class="copilot-bar">
+        <select id="chat-agent" class="form-select"></select>
+        <input type="text" id="chat-input" class="form-input" placeholder="Demande à l'IA..." style="flex:1" />
+        <button class="btn btn--primary" id="chat-send">→</button>
+      </div>
+      <div id="chat-output" class="chat-output"></div>
+
+      <div class="quick-links">
+        <a href="https://tower.saillant.cc/app/crm" target="_blank" class="btn btn--outline btn--sm">CRM</a>
+        <a href="https://kpi.saillant.cc/dashboard/2" target="_blank" class="btn btn--outline btn--sm">Metabase</a>
+        <a href="https://mail.saillant.cc" target="_blank" class="btn btn--outline btn--sm">Listmonk</a>
+        <a href="https://rdv.saillant.cc" target="_blank" class="btn btn--outline btn--sm">Cal.com</a>
+        <a href="https://n8n.saillant.cc" target="_blank" class="btn btn--outline btn--sm">n8n</a>
+        <a href="https://tower.saillant.cc/lms/courses" target="_blank" class="btn btn--outline btn--sm">LMS</a>
       </div>
     </section>
 
-    <!-- TAB: Monitoring -->
-    <section class="panel" id="panel-monitor">
-      <h2 class="section-title">Monitoring & Outils collaboratifs</h2>
-
-      <h3 class="subsection-title">Services status</h3>
+    <!-- VUE 3: SERVICES -->
+    <section class="panel" id="panel-services">
+      <h3 class="sub-title">Status <span class="status-refresh" id="refresh-services">↻</span></h3>
       <div class="monitor-grid" id="monitor-grid"></div>
 
-      <h3 class="subsection-title" style="margin-top:24px">Outils collaboratifs</h3>
-      <div class="grid" style="margin-bottom:20px">
-        <a href="https://memos.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/notes.png" alt="" width="32" height="32"/></div><h2>Memos</h2><p>Notes rapides, journal de bord, idées</p><span class="card-url">memos.saillant.cc</span></a>
-        <a href="https://docs.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/documents.png" alt="" width="32" height="32"/></div><h2>Paperless</h2><p>GED, factures, contrats, docs scannés</p><span class="card-url">docs.saillant.cc</span></a>
-        <a href="https://karakeep.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/bookmarks.png" alt="" width="32" height="32"/></div><h2>Karakeep</h2><p>Bookmarks intelligents, veille web</p><span class="card-url">karakeep.saillant.cc</span></a>
-        <a href="https://dify.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/workflow-ai.png" alt="" width="32" height="32"/></div><h2>Dify</h2><p>Workflows IA custom, chatbots, RAG</p><span class="card-url">dify.saillant.cc</span></a>
-        <a href="https://langfuse.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/analytics.png" alt="" width="32" height="32"/></div><h2>Langfuse</h2><p>Observabilité IA, traces LLM, coûts</p><span class="card-url">langfuse.saillant.cc</span></a>
-        <a href="https://feeds.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/rss.png" alt="" width="32" height="32"/></div><h2>Miniflux</h2><p>Flux RSS, veille sectorielle</p><span class="card-url">feeds.saillant.cc</span></a>
-        <a href="https://ntfy.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/bell.png" alt="" width="32" height="32"/></div><h2>ntfy</h2><p>Notifications push temps réel</p><span class="card-url">ntfy.saillant.cc</span></a>
-        <a href="https://bookmarks.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/bookmarks.png" alt="" width="32" height="32"/></div><h2>Linkding</h2><p>Bookmarks & tags</p><span class="card-url">bookmarks.saillant.cc</span></a>
-        <a href="https://watch.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/eye.png" alt="" width="32" height="32"/></div><h2>Changedetection</h2><p>Surveillance pages web concurrents</p><span class="card-url">watch.saillant.cc</span></a>
-        <a href="https://checks.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/health.png" alt="" width="32" height="32"/></div><h2>Healthchecks</h2><p>Monitoring cron jobs & alertes</p><span class="card-url">checks.saillant.cc</span></a>
-        <a href="https://logs.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/logs.png" alt="" width="32" height="32"/></div><h2>Dozzle</h2><p>Logs Docker temps réel</p><span class="card-url">logs.saillant.cc</span></a>
-        <a href="https://grafana-tower.saillant.cc" class="card" target="_blank"><div class="card-icon"><img src="/assets/icons/chart.png" alt="" width="32" height="32"/></div><h2>Grafana Tower</h2><p>Dashboards infra Tower</p><span class="card-url">grafana-tower.saillant.cc</span></a>
+      <h3 class="sub-title">Business</h3>
+      <div class="services-grid">
+        <a href="https://tower.saillant.cc/app/crm" class="svc-card" target="_blank"><img src="/assets/icons/crm.png" width="36" height="36" /><span>CRM</span></a>
+        <a href="https://tower.saillant.cc/lms/courses" class="svc-card" target="_blank"><img src="/assets/icons/lms.png" width="36" height="36" /><span>LMS</span></a>
+        <a href="https://mail.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/newsletter.png" width="36" height="36" /><span>Listmonk</span></a>
+        <a href="https://n8n.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/automation.png" width="36" height="36" /><span>n8n</span></a>
+        <a href="https://kpi.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/analytics.png" width="36" height="36" /><span>Metabase</span></a>
+        <a href="https://rdv.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/calendar.png" width="36" height="36" /><span>Cal.com</span></a>
       </div>
 
-      <h3 class="subsection-title">Infra & observabilité</h3>
-      <div class="links">
-        <a href="https://kpi.saillant.cc" target="_blank">Metabase KPI</a>
-        <a href="https://grafana.saillant.cc" target="_blank">Grafana Photon</a>
-        <a href="https://prometheus.saillant.cc" target="_blank">Prometheus</a>
-        <a href="https://auth.saillant.cc" target="_blank">Authentik SSO</a>
-        <a href="https://mascarade.saillant.cc" target="_blank">mascarade UI</a>
+      <h3 class="sub-title">IA & Collaboratif</h3>
+      <div class="services-grid">
+        <a href="https://mascarade.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/ai-brain.png" width="36" height="36" /><span>mascarade</span></a>
+        <a href="https://dify.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/workflow-ai.png" width="36" height="36" /><span>Dify</span></a>
+        <a href="https://langfuse.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/analytics.png" width="36" height="36" /><span>Langfuse</span></a>
+        <a href="https://memos.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/notes.png" width="36" height="36" /><span>Memos</span></a>
+        <a href="https://docs.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/documents.png" width="36" height="36" /><span>Paperless</span></a>
+        <a href="https://karakeep.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/bookmarks.png" width="36" height="36" /><span>Karakeep</span></a>
+        <a href="https://draw.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/eye.png" width="36" height="36" /><span>Excalidraw</span></a>
+        <a href="https://paste.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/logs.png" width="36" height="36" /><span>PrivateBin</span></a>
+      </div>
+
+      <h3 class="sub-title">Monitoring</h3>
+      <div class="services-grid">
+        <a href="https://grafana.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/chart.png" width="36" height="36" /><span>Grafana</span></a>
+        <a href="https://logs.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/logs.png" width="36" height="36" /><span>Dozzle</span></a>
+        <a href="https://ntfy.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/bell.png" width="36" height="36" /><span>ntfy</span></a>
+        <a href="https://checks.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/health.png" width="36" height="36" /><span>Healthchecks</span></a>
+        <a href="https://watch.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/eye.png" width="36" height="36" /><span>Changedetection</span></a>
+        <a href="https://feeds.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/rss.png" width="36" height="36" /><span>Miniflux</span></a>
+        <a href="https://auth.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/auth.png" width="36" height="36" /><span>Authentik</span></a>
+        <a href="https://browser.saillant.cc" class="svc-card" target="_blank"><img src="/assets/icons/eye.png" width="36" height="36" /><span>browser-use</span></a>
       </div>
     </section>
 
@@ -369,188 +174,13 @@ import '@/styles/global.css';
 </BaseLayout>
 
 <script>
-  // Auth handled by Authentik forward-auth via Traefik
-  const MASCARADE_API = 'https://api.lelectronrare.fr';
-  const MASCARADE_KEY = '845f8173270c9c4eb051d645cc58ac6882933341e82bff218da48aebb6e5b029';
-  const CRM_API = 'https://api.lelectronrare.fr';
+  const API = 'https://api.lelectronrare.fr';
+  const OPS = API + '/api/ops';
+  const AI = API + '/api/ai';
 
-  const OPS_API = CRM_API + '/api/ops';
-
-  // --- Load tasks from DB ---
-  let allTasks = [];
-  const categoryLabels = { urgent:'Urgent', prospection:'Prospection', linkedin:'LinkedIn', technique:'Technique', lancement:'Lancement 1er mai', formation:'Formation', gie:'GIE Hémisphère', crm:'CRM', marketing:'Marketing' };
-  const categoryColors = { urgent:'red', prospection:'amber', linkedin:'blue', technique:'cyan', lancement:'green', formation:'amber', gie:'amber', crm:'cyan', marketing:'blue' };
-  const statusIcons = { 'À faire':'○', 'En cours':'◐', 'Terminé':'●', 'Reporté':'◌' };
-
-  async function loadTasks() {
-    const container = document.getElementById('tasks-container');
-    try {
-      const res = await fetch(OPS_API + '/tasks', { headers: { 'Content-Type': 'application/json' } });
-      const data = await res.json();
-      allTasks = data.data || [];
-      renderTasks();
-    } catch (e) {
-      container.innerHTML = '<div class="ai-error" style="padding:20px">Erreur chargement: ' + e.message + '</div>';
-    }
-  }
-
-  function renderTasks() {
-    const container = document.getElementById('tasks-container');
-    const groups = {};
-    const done = [];
-    allTasks.forEach(t => {
-      if (t.status === 'Terminé') { done.push(t); return; }
-      const cat = t.category || 'technique';
-      if (!groups[cat]) groups[cat] = [];
-      groups[cat].push(t);
-    });
-
-    let html = '';
-    // Active tasks by category
-    for (const [cat, tasks] of Object.entries(groups)) {
-      const color = categoryColors[cat] || 'cyan';
-      const label = categoryLabels[cat] || cat;
-      html += '<div class="task-group"><h3 class="group-label group-label--' + color + '">' + label + ' (' + tasks.length + ')</h3><div class="task-list">';
-      tasks.forEach(t => { html += renderTask(t); });
-      html += '</div></div>';
-    }
-
-    // Completed
-    if (done.length > 0) {
-      html += '<details class="task-group completed-group"><summary class="group-label" style="color:#888;background:rgba(0,0,0,0.03);cursor:pointer">Terminé (' + done.length + ')</summary><div class="task-list">';
-      done.forEach(t => { html += renderTask(t, true); });
-      html += '</div></details>';
-    }
-
-    // Stats
-    const stats = document.getElementById('workflow-stats');
-    if (stats) stats.innerHTML = '<span class="stat">' + done.length + '/' + allTasks.length + ' terminées</span>';
-
-    container.innerHTML = html;
-    bindTaskEvents();
-  }
-
-  function renderTask(t, isDone) {
-    const overdue = t.deadline && new Date(t.deadline) < new Date() && t.status !== 'Terminé';
-    const color = categoryColors[t.category] || 'cyan';
-    const hasAI = t.ai_agent ? true : false;
-
-    return '<div class="task ' + (overdue ? 'task--overdue' : '') + (isDone ? ' task--done' : '') + '" data-task-id="' + t.name + '">' +
-      '<div class="task-header">' +
-        '<span class="task-status-icon" title="' + t.status + '">' + (statusIcons[t.status] || '○') + '</span>' +
-        '<span class="task-label">' + (t.task_title || '') + '</span>' +
-        (t.priority ? '<span class="task-badge badge--' + (t.priority === 'P0' ? 'red' : t.priority === 'P1' ? 'amber' : 'cyan') + '">' + t.priority + '</span>' : '') +
-        (t.deadline ? '<span class="task-badge badge--' + (overdue ? 'red' : 'blue') + '">' + t.deadline + '</span>' : '') +
-        (hasAI ? '<span class="task-badge badge--cyan" title="Agent: ' + t.ai_agent + '">IA</span>' : '') +
-      '</div>' +
-      '<div class="task-body">' +
-        (t.description ? '<p>' + t.description + '</p>' : '') +
-        (t.ai_result ? '<div class="ai-result-saved"><h4>Résultat IA</h4><pre>' + t.ai_result.replace(/</g,'&lt;').substring(0,500) + '</pre></div>' : '') +
-        '<div class="task-edit-row">' +
-          '<select class="task-status-select" data-id="' + t.name + '">' +
-            ['À faire','En cours','Terminé','Reporté'].map(s => '<option' + (s === t.status ? ' selected' : '') + '>' + s + '</option>').join('') +
-          '</select>' +
-          '<input type="text" class="task-note-input" data-id="' + t.name + '" placeholder="Ajouter une note..." value="' + (t.notes || '').replace(/"/g,'&quot;') + '" />' +
-          '<button class="btn btn--primary btn--sm task-save-btn" data-id="' + t.name + '">Enregistrer</button>' +
-          (hasAI ? '<button class="btn btn--outline btn--sm task-exec-btn" data-id="' + t.name + '">Exécuter IA</button>' : '') +
-          '<button class="btn btn--outline btn--sm task-delete-btn" data-id="' + t.name + '" title="Supprimer">✕</button>' +
-        '</div>' +
-        '<div class="task-ai-output" id="ai-out-' + t.name + '"></div>' +
-      '</div>' +
-    '</div>';
-  }
-
-  function bindTaskEvents() {
-    // Open/close
-    document.querySelectorAll('#tasks-container .task-header').forEach(h => {
-      h.addEventListener('click', () => h.closest('.task')?.classList.toggle('task--open'));
-    });
-
-    // Save (status + notes)
-    document.querySelectorAll('.task-save-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        const id = btn.dataset.id;
-        const task = btn.closest('.task');
-        const status = task.querySelector('.task-status-select')?.value;
-        const notes = task.querySelector('.task-note-input')?.value;
-        btn.textContent = '...';
-        try {
-          await fetch(OPS_API + '/tasks/' + id, {
-            method: 'PUT', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status, notes })
-          });
-          btn.textContent = '✓';
-          setTimeout(() => loadTasks(), 500);
-        } catch { btn.textContent = 'Erreur'; }
-      });
-    });
-
-    // Execute AI
-    document.querySelectorAll('.task-exec-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        const id = btn.dataset.id;
-        const output = document.getElementById('ai-out-' + id);
-        if (output) { output.innerHTML = '<div class="ai-loading">Exécution IA...</div>'; output.style.display = 'block'; }
-        btn.textContent = '...';
-        try {
-          const res = await fetch(OPS_API + '/execute/' + id, { method: 'POST', headers: { 'Content-Type': 'application/json' } });
-          const data = await res.json();
-          if (output) {
-            const text = data.result || data.error || 'Pas de résultat';
-            output.innerHTML = '<div class="ai-result"><pre>' + text.replace(/</g,'&lt;') + '</pre><button class="btn btn--primary btn--sm copy-btn">Copier</button></div>';
-            output.querySelector('.copy-btn')?.addEventListener('click', function() { navigator.clipboard.writeText(text); this.textContent = 'Copié !'; });
-          }
-          btn.textContent = 'Exécuter IA';
-          loadTasks();
-        } catch (err) {
-          if (output) output.innerHTML = '<div class="ai-error">Erreur: ' + err.message + '</div>';
-          btn.textContent = 'Exécuter IA';
-        }
-      });
-    });
-
-    // Delete
-    document.querySelectorAll('.task-delete-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        if (!confirm('Supprimer cette tâche ?')) return;
-        await fetch(OPS_API + '/tasks/' + btn.dataset.id, { method: 'DELETE' });
-        loadTasks();
-      });
-    });
-  }
-
-  // Add task form
-  document.getElementById('add-task-btn')?.addEventListener('click', () => {
-    document.getElementById('add-task-form').style.display = document.getElementById('add-task-form').style.display === 'none' ? 'block' : 'none';
-    document.getElementById('new-task-title')?.focus();
-  });
-  document.getElementById('cancel-task-btn')?.addEventListener('click', () => {
-    document.getElementById('add-task-form').style.display = 'none';
-  });
-  document.getElementById('save-task-btn')?.addEventListener('click', async () => {
-    const title = document.getElementById('new-task-title')?.value?.trim();
-    if (!title) return;
-    const data = {
-      task_title: title,
-      category: document.getElementById('new-task-category')?.value || 'technique',
-      priority: document.getElementById('new-task-priority')?.value || 'P2',
-      deadline: document.getElementById('new-task-deadline')?.value || null,
-      ai_agent: document.getElementById('new-task-agent')?.value || null,
-      status: 'À faire',
-      assigned_to: 'clement@lelectronrare.fr'
-    };
-    await fetch(OPS_API + '/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-    document.getElementById('new-task-title').value = '';
-    document.getElementById('add-task-form').style.display = 'none';
-    loadTasks();
-  });
-  document.getElementById('refresh-tasks')?.addEventListener('click', loadTasks);
-
-  // Initial load
-  loadTasks();
+  const catLabels = {urgent:'Urgent',prospection:'Prospection',linkedin:'LinkedIn',technique:'Technique',lancement:'Lancement',formation:'Formation',gie:'GIE',marketing:'Marketing',business:'Business',crm:'CRM'};
+  const catColors = {urgent:'red',prospection:'amber',linkedin:'blue',technique:'cyan',lancement:'green',formation:'amber',gie:'amber',crm:'cyan',marketing:'blue',business:'green'};
+  const prioColors = {P0:'red',P1:'amber',P2:'cyan',P3:'green'};
 
   // --- Tabs ---
   document.querySelectorAll('.tab').forEach(tab => {
@@ -558,676 +188,360 @@ import '@/styles/global.css';
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab--active'));
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('panel--active'));
       tab.classList.add('tab--active');
-      document.getElementById('panel-' + tab.dataset.tab).classList.add('panel--active');
+      document.getElementById('panel-' + tab.dataset.tab)?.classList.add('panel--active');
     });
   });
 
-  // --- Task persistence ---
-  document.querySelectorAll('.task-check').forEach(cb => {
-    const key = 'ops-' + cb.id;
-    cb.checked = localStorage.getItem(key) === '1';
-    if (cb.checked) cb.closest('.task')?.classList.add('task--done');
-    cb.addEventListener('change', () => {
-      localStorage.setItem(key, cb.checked ? '1' : '0');
-      cb.closest('.task')?.classList.toggle('task--done', cb.checked);
-      updateStats();
-    });
-  });
+  // --- TASKS ---
+  let allTasks = [];
 
-  document.querySelectorAll('.task-header').forEach(h => {
-    h.addEventListener('click', e => {
-      if (e.target.tagName === 'INPUT' || e.target.closest('.task-ai-btn')) return;
-      h.closest('.task')?.classList.toggle('task--open');
-    });
-  });
-
-  // --- Overdue ---
-  document.querySelectorAll('.task[data-due]').forEach(t => {
-    if (new Date(t.dataset.due) < new Date() && !t.querySelector('.task-check')?.checked)
-      t.classList.add('task--overdue');
-  });
-
-  // --- Stats ---
-  function updateStats() {
-    const all = document.querySelectorAll('.task-check');
-    const done = [...all].filter(c => c.checked).length;
-    const el = document.getElementById('workflow-stats');
-    if (el) el.innerHTML = `<span class="stat">${done}/${all.length} terminées</span>`;
+  async function loadTasks() {
+    try {
+      const res = await fetch(OPS + '/tasks', {headers:{'Content-Type':'application/json'}});
+      allTasks = (await res.json()).data || [];
+      renderTasks();
+    } catch(e) { document.getElementById('tasks-container').innerHTML = '<p class="err">Erreur: '+e.message+'</p>'; }
   }
-  updateStats();
 
-  // --- LinkedIn tasks (generated) ---
-  const liPosts = [
-    { id:'li1', label:'#01 — Disponibilité', date:'Mar 1 avril, 8h', due:'2026-04-01', text:'Disponible pour vos projets électroniques.\n\nJe suis Clément Saillant, ingénieur électronique freelance basé en Beaujolais. Systèmes électroniques spécifiques.\n\nMes terrains de jeu :\n→ Industrie et automatisme\n→ Dispositifs culturels\n→ Énergie et stockage\n\nDM ou contact@lelectronrare.fr' },
-    { id:'li3', label:'#03 — Formation KiCad', date:'Mar 8 avril, 8h', due:'2026-04-08', text:'J\'ouvre une formation KiCad. 2 jours. De la page blanche au PCB fabriqué.\n\nJour 1 : prise en main, schéma, composants\nJour 2 : routage, règles, fichiers fabrication\n\n1 550€ HT — Lyon ou sur site — 6 personnes max.\n\ncontact@lelectronrare.fr' },
-    { id:'li2', label:'#02 — Retour terrain', date:'Jeu 10 avril, 7h30', due:'2026-04-10', text:'Un client m\'envoie un prototype. Son alim 3.3V oscille à 150 kHz.\n\nLe problème : condensateur de découplage à 12 mm du pin VCC.\nLa correction : au plus court, via direct. L\'oscillation disparaît.\n\nSi vous avez un prototype qui fait des siennes...\ncontact@lelectronrare.fr' },
-    { id:'li4', label:'#04 — 3 erreurs PCB', date:'Mer 16 avril, 7h30', due:'2026-04-16', text:'3 erreurs de conception PCB :\n1. Condensateurs de découplage trop loin\n2. Plan de masse fragmenté\n3. Pistes d\'alimentation sous-dimensionnées\n\nCes trois points résolvent 80% des problèmes.\n\nwww.lelectronrare.fr — 1er mai.' },
-    { id:'li5', label:'#05 — Annonce lancement', date:'Mar 22 avril, 8h', due:'2026-04-22', text:'Le 1er mai, www.lelectronrare.fr sera en ligne.\n\n→ Missions techniques\n→ Catalogue formations\n→ Portfolio\n→ Contact direct\n\nSystèmes électroniques spécifiques. Du sur-mesure.' },
-  ];
-  const liContainer = document.getElementById('linkedin-tasks');
-  liPosts.forEach((p, i) => {
-    const overdue = new Date(p.due) < new Date();
-    const lines = p.text.split('\n').map(l => l ? `<p class="li-line">${l.replace(/</g,'&lt;')}</p>` : '<div class="li-spacer"></div>').join('');
-    liContainer.innerHTML += `
-      <div class="li-card ${overdue ? 'li-card--overdue' : ''}" data-due="${p.due}" data-id="${p.id}">
-        <div class="li-card-header">
-          <input type="checkbox" class="task-check" id="task-${p.id}" />
-          <div class="li-card-meta">
-            <span class="li-card-title">${p.label}</span>
-            <span class="li-card-date">${p.date}</span>
-          </div>
-          <span class="li-card-num">${i+1}/5</span>
+  function renderTasks() {
+    const cat = document.getElementById('filter-cat')?.value || '';
+    const status = document.getElementById('filter-status')?.value || '';
+    const search = (document.getElementById('filter-search')?.value || '').toLowerCase();
+
+    let filtered = allTasks;
+    if (cat) filtered = filtered.filter(t => t.category === cat);
+    if (status) filtered = filtered.filter(t => t.status === status);
+    if (search) filtered = filtered.filter(t => (t.task_title||'').toLowerCase().includes(search) || (t.description||'').toLowerCase().includes(search));
+
+    const groups = {};
+    const done = [];
+    filtered.forEach(t => {
+      if (t.status === 'Terminé') { done.push(t); return; }
+      const c = t.category || 'technique';
+      if (!groups[c]) groups[c] = [];
+      groups[c].push(t);
+    });
+
+    let html = '';
+    for (const [c, tasks] of Object.entries(groups)) {
+      html += `<div class="task-group"><div class="group-label group-label--${catColors[c]||'cyan'}">${catLabels[c]||c} (${tasks.length})</div><div class="task-list">${tasks.map(t => taskCard(t)).join('')}</div></div>`;
+    }
+    if (done.length) {
+      html += `<details class="task-group"><summary class="group-label group-done">Terminé (${done.length})</summary><div class="task-list">${done.map(t => taskCard(t,true)).join('')}</div></details>`;
+    }
+
+    const total = allTasks.length;
+    const doneCount = allTasks.filter(t => t.status === 'Terminé').length;
+    document.getElementById('task-count').textContent = `${doneCount}/${total} tâches`;
+    document.getElementById('tasks-container').innerHTML = html || '<p class="hint">Aucune tâche</p>';
+    bindTasks();
+
+    // Populate category filter
+    const catSelect = document.getElementById('filter-cat');
+    if (catSelect && catSelect.options.length <= 1) {
+      const cats = [...new Set(allTasks.map(t => t.category).filter(Boolean))].sort();
+      cats.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = catLabels[c]||c; catSelect.appendChild(o); });
+    }
+  }
+
+  function taskCard(t, isDone) {
+    const overdue = t.deadline && new Date(t.deadline) < new Date() && !isDone;
+    const isLinkedin = t.category === 'linkedin';
+    const lines = isLinkedin && t.description ? t.description.split('\\n').map(l => l ? '<p class="li-line">'+l+'</p>' : '<div class="li-spacer"></div>').join('') : '';
+
+    return `<div class="task ${overdue?'task--overdue':''} ${isDone?'task--done':''}" data-id="${t.name}">
+      <div class="task-header">
+        <span class="task-status">${t.status==='Terminé'?'●':t.status==='En cours'?'◐':'○'}</span>
+        <span class="task-title">${t.task_title||''}</span>
+        ${t.priority?`<span class="badge badge--${prioColors[t.priority]||'cyan'}">${t.priority}</span>`:''}
+        ${t.deadline?`<span class="badge badge--${overdue?'red':'blue'}">${t.deadline}</span>`:''}
+        ${t.ai_agent?`<span class="badge badge--cyan">IA</span>`:''}
+      </div>
+      <div class="task-body">
+        ${t.description?`<div class="task-desc">${isLinkedin?'<div class="li-preview"><div class="li-header"><div class="li-avatar">CS</div><div><b>Clément Saillant</b><br><small>Ingénieur électronique · L\'Electron Rare</small></div></div>'+lines+'</div>':'<p>'+t.description+'</p>'}</div>`:''}
+        ${t.ai_result?`<details class="ai-saved"><summary>Résultat IA</summary><pre>${(t.ai_result||'').substring(0,500)}</pre></details>`:''}
+        <div class="task-actions">
+          <select class="action-status" data-id="${t.name}">${['À faire','En cours','Terminé','Reporté'].map(s=>`<option${s===t.status?' selected':''}>${s}</option>`).join('')}</select>
+          <input type="text" class="action-note" data-id="${t.name}" placeholder="Note..." value="${(t.notes||'').replace(/"/g,'&quot;')}" />
+          <button class="btn btn--primary btn--sm save-btn" data-id="${t.name}">Save</button>
+          ${t.ai_agent?`<button class="btn btn--outline btn--sm exec-btn" data-id="${t.name}">IA: ${t.ai_agent}</button>`:''}
+          ${isLinkedin?`<button class="btn btn--outline btn--sm copy-btn" data-text="${encodeURIComponent(t.description||'')}">Copier</button><a href="https://linkedin.com/feed/" target="_blank" class="btn btn--outline btn--sm">LinkedIn</a>`:''}
         </div>
-        <div class="li-card-body">
-          <div class="li-preview">
-            <div class="li-preview-header">
-              <div class="li-avatar">CS</div>
-              <div><div class="li-author">Clément Saillant</div><div class="li-headline">Ingénieur électronique · L'Electron Rare</div></div>
-            </div>
-            <div class="li-content">${lines}</div>
-          </div>
-          <div class="li-card-actions">
-            <button class="btn btn--primary copy-btn" data-text="${encodeURIComponent(p.text)}">Copier le texte</button>
-            <a href="https://www.linkedin.com/feed/" target="_blank" class="btn btn--outline">Publier sur LinkedIn</a>
-            <button class="task-ai-btn-inline" data-agent="writer" data-prompt="Améliore ce post LinkedIn pour un ingénieur électronique freelance basé en Beaujolais. Garde le ton technique et direct. Pas d'emoji abusif. Ajoute des retours à la ligne pour aérer. Post original: ${encodeURIComponent(p.text)}">Améliorer avec IA</button>
-          </div>
-          <div class="ai-output" id="ai-output-${p.id}"></div>
-        </div>
-      </div>`;
-  });
-
-  // Bind LinkedIn card events
-  liContainer.querySelectorAll('.task-check').forEach(cb => {
-    const key = 'ops-' + cb.id;
-    cb.checked = localStorage.getItem(key) === '1';
-    if (cb.checked) cb.closest('.li-card')?.classList.add('task--done');
-    cb.addEventListener('change', () => { localStorage.setItem(key, cb.checked ? '1' : '0'); cb.closest('.li-card')?.classList.toggle('task--done', cb.checked); updateStats(); });
-  });
-  liContainer.querySelectorAll('.li-card-header').forEach(h => {
-    h.addEventListener('click', e => {
-      if (e.target.tagName === 'INPUT') return;
-      h.closest('.li-card')?.classList.toggle('li-card--open');
-    });
-  });
-  liContainer.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      navigator.clipboard.writeText(decodeURIComponent(btn.dataset.text));
-      btn.textContent = 'Copié !';
-      setTimeout(() => btn.textContent = 'Copier le texte', 2000);
-    });
-  });
-
-  // Duplicate LinkedIn posts in marketing tab
-  const mkLi = document.getElementById('marketing-linkedin');
-  if (mkLi) { mkLi.innerHTML = liContainer.innerHTML; mkLi.querySelectorAll('.task-check').forEach(cb => { cb.id = 'mk-' + cb.id; const lbl = cb.nextElementSibling; if(lbl) lbl.htmlFor = cb.id; }); mkLi.querySelectorAll('.task-header').forEach(h => { h.addEventListener('click', e => { if (e.target.tagName === 'INPUT' || e.target.closest('button')) return; h.closest('.task')?.classList.toggle('task--open'); }); }); mkLi.querySelectorAll('.copy-btn').forEach(btn => { btn.addEventListener('click', () => { navigator.clipboard.writeText(decodeURIComponent(btn.dataset.text)); btn.textContent = 'Copié !'; setTimeout(() => btn.textContent = 'Copier', 2000); }); }); }
-
-  // Bind business plan checkboxes
-  document.querySelectorAll('#panel-business .task-check, #panel-marketing .task-check').forEach(cb => {
-    if (cb.disabled) return;
-    const key = 'ops-' + cb.id;
-    cb.checked = localStorage.getItem(key) === '1';
-    if (cb.checked) cb.closest('.task')?.classList.add('task--done');
-    cb.addEventListener('change', () => { localStorage.setItem(key, cb.checked ? '1' : '0'); cb.closest('.task')?.classList.toggle('task--done', cb.checked); updateStats(); });
-  });
-  document.querySelectorAll('#panel-business .task-header, #panel-marketing .task-header').forEach(h => {
-    h.addEventListener('click', e => { if (e.target.tagName === 'INPUT' || e.target.closest('button')) return; h.closest('.task')?.classList.toggle('task--open'); });
-  });
-
-  updateStats();
-
-  // --- Mascarade AI calls ---
-  // --- AI Workflow with conversation ---
-  const aiConversations = {};
-
-  async function aiSend(agent, messages) {
-    const res = await fetch(MASCARADE_API + '/api/ai/' + agent + '/run', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages })
-    });
-    const data = await res.json();
-    return data.response || data.content || data.message || data.result || JSON.stringify(data);
+        <div class="ai-out" id="ai-${t.name}"></div>
+      </div>
+    </div>`;
   }
 
-  function renderConversation(outputId) {
-    const conv = aiConversations[outputId];
-    const output = document.getElementById('ai-output-' + outputId);
-    if (!output || !conv) return;
-
-    let html = '<div class="ai-conv">';
-
-    // Messages
-    conv.messages.forEach((m, i) => {
-      if (m.role === 'user') {
-        html += `<div class="ai-conv-msg ai-conv-user"><span class="ai-conv-role">Vous</span><p>${m.content.replace(/</g,'&lt;')}</p></div>`;
-      } else {
-        html += `<div class="ai-conv-msg ai-conv-ai"><span class="ai-conv-role">${conv.agent}</span><pre>${m.content.replace(/</g,'&lt;')}</pre>
-          <div class="ai-conv-msg-actions">
-            <button class="btn btn--primary copy-btn" data-idx="${i}">Copier</button>
-            ${m.content.length > 50 ? `<button class="btn btn--outline refine-btn" data-idx="${i}">Affiner</button>` : ''}
-          </div>
-        </div>`;
-      }
-    });
-
-    // Loading
-    if (conv.loading) {
-      html += '<div class="ai-conv-msg ai-conv-ai"><span class="ai-conv-role">' + conv.agent + '</span><div class="ai-loading">Réflexion...</div></div>';
-    }
-
-    // Input area
-    if (!conv.loading) {
-      html += `
-        <div class="ai-conv-input">
-          <div class="ai-conv-suggestions">
-            ${conv.messages.length === 0 ? `
-              <button class="ai-suggestion" data-msg="Génère un premier brouillon">Premier brouillon</button>
-              <button class="ai-suggestion" data-msg="Donne-moi 3 variantes">3 variantes</button>
-              <button class="ai-suggestion" data-msg="Analyse et propose des améliorations">Analyser</button>
-              <button class="ai-suggestion" data-msg="Génère un prompt image pour illustrer ce contenu">Prompt image</button>
-            ` : `
-              <button class="ai-suggestion" data-msg="Plus court et plus percutant">Plus court</button>
-              <button class="ai-suggestion" data-msg="Plus technique et détaillé">Plus technique</button>
-              <button class="ai-suggestion" data-msg="Reformule pour LinkedIn">Format LinkedIn</button>
-              <button class="ai-suggestion" data-msg="Traduis en anglais">English</button>
-              <button class="ai-suggestion" data-msg="Génère un prompt image DALL-E pour illustrer">Image</button>
-              <button class="ai-suggestion" data-msg="Résume en 3 bullet points">Résumer</button>
-            `}
-          </div>
-          <div class="ai-conv-row">
-            <select class="ai-agent-select">
-              <option value="${conv.agent}">${conv.agent}</option>
-              <option value="writer">writer</option>
-              <option value="analyst">analyst</option>
-              <option value="brainstorm">brainstorm</option>
-              <option value="planner">planner</option>
-              <option value="summarizer">summarizer</option>
-              <option value="coder">coder</option>
-              <option value="image-generator">image-generator</option>
-              <option value="translator">translator</option>
-            </select>
-            <textarea class="ai-conv-textarea" placeholder="Demande quelque chose ou affine le résultat..." rows="2"></textarea>
-            <button class="btn btn--primary ai-conv-send">Envoyer</button>
-          </div>
-          <div class="ai-conv-bottom">
-            <button class="btn btn--outline ai-conv-close">Fermer</button>
-            <button class="btn btn--outline ai-conv-reset">Nouvelle conversation</button>
-          </div>
-        </div>`;
-    }
-
-    html += '</div>';
-    output.innerHTML = html;
-    output.style.display = 'block';
-
-    // Bind events
-    output.querySelectorAll('.copy-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.dataset.idx);
-        navigator.clipboard.writeText(conv.messages[idx].content);
-        btn.textContent = 'Copié !';
-        setTimeout(() => btn.textContent = 'Copier', 2000);
-      });
-    });
-
-    output.querySelectorAll('.refine-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const ta = output.querySelector('.ai-conv-textarea');
-        if (ta) { ta.value = 'Affine cette réponse : '; ta.focus(); }
-      });
-    });
-
-    output.querySelectorAll('.ai-suggestion').forEach(btn => {
-      btn.addEventListener('click', () => sendConvMessage(outputId, btn.dataset.msg));
-    });
-
-    const sendBtn = output.querySelector('.ai-conv-send');
-    const textarea = output.querySelector('.ai-conv-textarea');
-    if (sendBtn && textarea) {
-      sendBtn.addEventListener('click', () => { if (textarea.value.trim()) sendConvMessage(outputId, textarea.value.trim()); });
-      textarea.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (textarea.value.trim()) sendConvMessage(outputId, textarea.value.trim()); } });
-    }
-
-    const agentSel = output.querySelector('.ai-agent-select');
-    if (agentSel) agentSel.addEventListener('change', () => { conv.agent = agentSel.value; });
-
-    output.querySelector('.ai-conv-close')?.addEventListener('click', () => { output.style.display = 'none'; });
-    output.querySelector('.ai-conv-reset')?.addEventListener('click', () => { conv.messages = []; renderConversation(outputId); });
-
-    // Scroll to bottom
-    const convEl = output.querySelector('.ai-conv');
-    if (convEl) convEl.scrollTop = convEl.scrollHeight;
+  function bindTasks() {
+    document.querySelectorAll('#tasks-container .task-header').forEach(h => h.addEventListener('click', () => h.closest('.task')?.classList.toggle('task--open')));
+    document.querySelectorAll('.save-btn').forEach(b => b.addEventListener('click', async e => {
+      e.stopPropagation(); const id=b.dataset.id, task=b.closest('.task');
+      b.textContent='...';
+      await fetch(OPS+'/tasks/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:task.querySelector('.action-status')?.value,notes:task.querySelector('.action-note')?.value})});
+      b.textContent='✓'; setTimeout(loadTasks,500);
+    }));
+    document.querySelectorAll('.exec-btn').forEach(b => b.addEventListener('click', async e => {
+      e.stopPropagation(); const id=b.dataset.id, out=document.getElementById('ai-'+id);
+      if(out){out.innerHTML='<div class="loading">IA...</div>';out.style.display='block';}
+      b.textContent='...';
+      try{const r=await fetch(OPS+'/execute/'+id,{method:'POST',headers:{'Content-Type':'application/json'}});const d=await r.json();
+      if(out)out.innerHTML='<pre>'+(d.result||d.error||'').substring(0,500).replace(/</g,'&lt;')+'</pre>';
+      }catch(err){if(out)out.innerHTML='<p class="err">'+err.message+'</p>';}
+      b.textContent='IA'; loadTasks();
+    }));
+    document.querySelectorAll('.copy-btn').forEach(b => b.addEventListener('click', e => {
+      e.stopPropagation(); navigator.clipboard.writeText(decodeURIComponent(b.dataset.text)); b.textContent='✓'; setTimeout(()=>b.textContent='Copier',2000);
+    }));
   }
 
-  async function sendConvMessage(outputId, userMsg) {
-    const conv = aiConversations[outputId];
-    conv.messages.push({ role: 'user', content: userMsg });
-    conv.loading = true;
-    renderConversation(outputId);
+  // Filters
+  ['filter-cat','filter-status'].forEach(id => document.getElementById(id)?.addEventListener('change', renderTasks));
+  document.getElementById('filter-search')?.addEventListener('input', renderTasks);
+  document.getElementById('refresh-tasks')?.addEventListener('click', loadTasks);
 
+  // Add task
+  document.getElementById('add-task-btn')?.addEventListener('click', () => { const f=document.getElementById('add-task-form'); f.style.display=f.style.display==='none'?'block':'none'; });
+  document.getElementById('cancel-task-btn')?.addEventListener('click', () => document.getElementById('add-task-form').style.display='none');
+  document.getElementById('save-task-btn')?.addEventListener('click', async () => {
+    const title=document.getElementById('new-task-title')?.value?.trim(); if(!title)return;
+    await fetch(OPS+'/tasks',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      task_title:title, category:document.getElementById('new-task-category')?.value||'technique',
+      priority:document.getElementById('new-task-priority')?.value||'P2',
+      deadline:document.getElementById('new-task-deadline')?.value||null,
+      ai_agent:document.getElementById('new-task-agent')?.value||null,
+      description:document.getElementById('new-task-desc')?.value||'',
+      status:'À faire', assigned_to:'clement@lelectronrare.fr'
+    })});
+    document.getElementById('new-task-title').value=''; document.getElementById('add-task-form').style.display='none'; loadTasks();
+  });
+
+  loadTasks();
+
+  // --- DASHBOARD ---
+  let allAgents = [];
+
+  async function loadDashboard() {
+    // KPIs
     try {
-      const text = await aiSend(conv.agent, conv.messages);
-      conv.messages.push({ role: 'assistant', content: text });
-    } catch (e) {
-      conv.messages.push({ role: 'assistant', content: 'Erreur: ' + e.message });
-    }
-    conv.loading = false;
-    renderConversation(outputId);
-  }
-
-  function callAgent(agent, prompt, outputId) {
-    // Initialize conversation with context
-    aiConversations[outputId] = {
-      agent,
-      messages: [],
-      loading: false,
-      context: prompt
-    };
-    // Add system context as first user message
-    if (prompt) {
-      aiConversations[outputId].messages.push({ role: 'user', content: prompt });
-      aiConversations[outputId].loading = true;
-      renderConversation(outputId);
-      aiSend(agent, [{ role: 'user', content: prompt }]).then(text => {
-        aiConversations[outputId].messages.push({ role: 'assistant', content: text });
-        aiConversations[outputId].loading = false;
-        renderConversation(outputId);
-      }).catch(e => {
-        aiConversations[outputId].messages.push({ role: 'assistant', content: 'Erreur: ' + e.message });
-        aiConversations[outputId].loading = false;
-        renderConversation(outputId);
-      });
-    } else {
-      renderConversation(outputId);
-    }
-  }
-
-  document.querySelectorAll('.task-ai-btn, .task-ai-btn-inline').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const task = btn.closest('.task');
-      task.classList.add('task--open');
-      callAgent(btn.dataset.agent, decodeURIComponent(btn.dataset.prompt || btn.dataset.prompt), task.dataset.id);
-    });
-  });
-
-  // --- Copilot chat ---
-  const chatMessages = document.getElementById('chat-messages');
-  const chatInput = document.getElementById('chat-input');
-  const chatSend = document.getElementById('chat-send');
-  const chatAgent = document.getElementById('chat-agent');
-
-  chatSend.addEventListener('click', sendChat);
-  chatInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); } });
-
-  async function sendChat() {
-    const msg = chatInput.value.trim();
-    if (!msg) return;
-    chatInput.value = '';
-    chatMessages.innerHTML += `<div class="chat-msg chat-msg--user">${msg.replace(/</g,'&lt;')}</div>`;
-    chatMessages.innerHTML += `<div class="chat-msg chat-msg--ai" id="chat-pending"><span class="ai-loading">Réflexion...</span></div>`;
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
+      document.getElementById('kpi-tasks').textContent = allTasks.length;
+      document.getElementById('kpi-done').textContent = allTasks.filter(t=>t.status==='Terminé').length;
+    } catch {}
+    // Agents
     try {
-      const agent = chatAgent.value;
-      const res = await fetch(MASCARADE_API + '/api/ai/' + agent + '/run', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [{ role: 'user', content: msg }] })
-      });
-      const data = await res.json();
-      const text = data.response || data.content || data.message || data.result || JSON.stringify(data);
-      document.getElementById('chat-pending').innerHTML = '<pre>' + text.replace(/</g, '&lt;') + '</pre>';
-      document.getElementById('chat-pending').id = '';
-    } catch (e) {
-      document.getElementById('chat-pending').innerHTML = 'Erreur: ' + e.message;
-      document.getElementById('chat-pending').id = '';
-    }
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  // --- CRM Live ---
-  async function loadCRM() {
+      const r = await fetch(AI, {headers:{'Content-Type':'application/json'}});
+      const d = await r.json();
+      allAgents = d.agents || (Array.isArray(d) ? d : []);
+      document.getElementById('kpi-agents').textContent = allAgents.length;
+      const grid = document.getElementById('agents-grid');
+      grid.innerHTML = allAgents.map(a => `<div class="agent-card" data-name="${a.name}"><b>${a.name}</b><span class="badge badge--${a.strategy==='best'?'cyan':a.strategy==='cheapest'?'green':'blue'}">${a.strategy}</span><p>${(a.description||'').substring(0,60)}</p></div>`).join('');
+      grid.querySelectorAll('.agent-card').forEach(c => c.addEventListener('click', () => {
+        const sel = document.getElementById('chat-agent'); if(sel) sel.value = c.dataset.name;
+        document.getElementById('chat-input')?.focus();
+      }));
+      // Populate chat selector
+      const sel = document.getElementById('chat-agent');
+      if (sel) sel.innerHTML = allAgents.map(a=>`<option value="${a.name}">${a.name}</option>`).join('');
+    } catch {}
+    // API health
     try {
-      const res = await fetch(CRM_API + '/health');
-      const h = await res.json();
+      const h = await fetch(API+'/health'); const d = await h.json();
       document.getElementById('status-dot').className = 'status-dot status-dot--ok';
-      document.getElementById('status-text').textContent = 'API OK · uptime ' + Math.round(h.uptime/60) + 'min';
+      document.getElementById('status-text').textContent = 'API OK';
     } catch {
       document.getElementById('status-dot').className = 'status-dot status-dot--err';
-      document.getElementById('status-text').textContent = 'API hors ligne';
-    }
-
-    // Fetch leads from Frappe via mascarade-api or direct
-    try {
-      const res = await fetch(MASCARADE_API + '/api/ai/analyst/run', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [{ role: 'user', content: 'Requête Frappe CRM: donne-moi le nombre total de leads, le nombre de leads New, le score IA moyen, et le nombre de leads chauds (custom_ai_urgency=chaud). Aussi liste les 5 derniers leads avec nom, organisation, segment, score IA, urgence, date. Format JSON strict.' }] })
-      });
-      // Fallback: just show link to Metabase
-    } catch {}
-  }
-  loadCRM();
-  document.getElementById('refresh-crm')?.addEventListener('click', loadCRM);
-
-  // --- Agents list ---
-  async function loadAgents() {
-    const grid = document.getElementById('agents-grid');
-    try {
-      const res = await fetch(MASCARADE_API + '/api/ai/', { headers: { 'Content-Type': 'application/json' }});
-      const agents = await res.json();
-      const list = Array.isArray(agents) ? agents : agents.agents || [];
-      grid.innerHTML = list.map(a => `
-        <div class="agent-card">
-          <div class="agent-name">${a.name || a.id || '?'}</div>
-          <div class="agent-model">${a.model || a.provider || ''}</div>
-        </div>
-      `).join('');
-    } catch (e) {
-      grid.innerHTML = '<p class="hint">Impossible de charger les agents: ' + e.message + '</p>';
+      document.getElementById('status-text').textContent = 'API down';
     }
   }
-  loadAgents();
 
-  // --- Monitoring ---
-  async function loadMonitor() {
+  // Agent CRUD
+  document.getElementById('add-agent-btn')?.addEventListener('click', () => { const f=document.getElementById('add-agent-form'); f.style.display=f.style.display==='none'?'block':'none'; });
+  document.getElementById('cancel-agent-btn')?.addEventListener('click', () => document.getElementById('add-agent-form').style.display='none');
+  document.getElementById('save-agent-btn')?.addEventListener('click', async () => {
+    const name=document.getElementById('new-agent-name')?.value?.trim(); if(!name)return;
+    await fetch(AI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      name, description:document.getElementById('new-agent-desc')?.value||'',
+      system_prompt:document.getElementById('new-agent-prompt')?.value||'',
+      strategy:document.getElementById('new-agent-strategy')?.value||'best',
+      preferred_provider:document.getElementById('new-agent-provider')?.value||null,
+      temperature:0.5, max_tokens:4096
+    })});
+    document.getElementById('add-agent-form').style.display='none'; loadDashboard();
+  });
+
+  // Copilot quick
+  document.getElementById('chat-send')?.addEventListener('click', sendChat);
+  document.getElementById('chat-input')?.addEventListener('keydown', e => { if(e.key==='Enter') sendChat(); });
+  async function sendChat() {
+    const input = document.getElementById('chat-input');
+    const msg = input?.value?.trim(); if(!msg) return; input.value = '';
+    const agent = document.getElementById('chat-agent')?.value || 'agent-zero';
+    const out = document.getElementById('chat-output');
+    out.innerHTML = '<div class="loading">'+agent+' réfléchit...</div>';
+    try {
+      const r = await fetch(AI+'/'+agent+'/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:msg}]})});
+      const d = await r.json();
+      out.innerHTML = '<pre>'+(d.content||d.response||JSON.stringify(d)).replace(/</g,'&lt;')+'</pre><button class="btn btn--outline btn--sm copy-chat">Copier</button>';
+      out.querySelector('.copy-chat')?.addEventListener('click', function(){navigator.clipboard.writeText(d.content||d.response||'');this.textContent='✓';});
+    } catch(e) { out.innerHTML = '<p class="err">Erreur: '+e.message+'</p>'; }
+  }
+
+  loadDashboard();
+
+  // --- SERVICES MONITORING ---
+  async function loadServices() {
     const services = [
-      { name: 'Site', url: 'https://www.lelectronrare.fr/' },
-      { name: 'API', url: CRM_API + '/health' },
-      { name: 'Frappe', url: 'https://tower.saillant.cc/' },
-      { name: 'Listmonk', url: 'https://mail.saillant.cc/' },
-      { name: 'n8n', url: 'https://n8n.saillant.cc/' },
-      { name: 'Cal.com', url: 'https://rdv.saillant.cc/' },
-      { name: 'Metabase', url: 'https://kpi.saillant.cc/' },
-      { name: 'Authentik', url: 'https://auth.saillant.cc/' },
-      { name: 'Memos', url: 'https://memos.saillant.cc/' },
-      { name: 'Paperless', url: 'https://docs.saillant.cc/' },
-      { name: 'Karakeep', url: 'https://karakeep.saillant.cc/' },
-      { name: 'Dify', url: 'https://dify.saillant.cc/' },
-      { name: 'Langfuse', url: 'https://langfuse.saillant.cc/' },
-      { name: 'Miniflux', url: 'https://feeds.saillant.cc/' },
-      { name: 'ntfy', url: 'https://ntfy.saillant.cc/' },
-      { name: 'Grafana', url: 'https://grafana.saillant.cc/' },
+      {name:'Site',url:'https://www.lelectronrare.fr/'},{name:'API',url:API+'/health'},
+      {name:'CRM',url:'https://tower.saillant.cc/'},{name:'Listmonk',url:'https://mail.saillant.cc/'},
+      {name:'n8n',url:'https://n8n.saillant.cc/'},{name:'Cal.com',url:'https://rdv.saillant.cc/'},
+      {name:'Metabase',url:'https://kpi.saillant.cc/'},{name:'Authentik',url:'https://auth.saillant.cc/'},
+      {name:'Memos',url:'https://memos.saillant.cc/'},{name:'Excalidraw',url:'https://draw.saillant.cc/'},
+      {name:'Paperless',url:'https://docs.saillant.cc/'},{name:'ntfy',url:'https://ntfy.saillant.cc/'},
     ];
     const grid = document.getElementById('monitor-grid');
-    grid.innerHTML = services.map(s => `<div class="monitor-card" id="mon-${s.name.replace(/\s/g,'')}"><div class="monitor-name">${s.name}</div><div class="monitor-status">...</div></div>`).join('');
-
+    grid.innerHTML = services.map(s => `<div class="mon-card" id="mon-${s.name}"><span class="mon-dot"></span><span class="mon-name">${s.name}</span><span class="mon-ms"></span></div>`).join('');
     for (const s of services) {
-      const card = document.getElementById('mon-' + s.name.replace(/\s/g,''));
-      try {
-        const t0 = Date.now();
-        const res = await fetch(s.url, { mode: 'no-cors', signal: AbortSignal.timeout(5000) }).catch(() => null);
-        const ms = Date.now() - t0;
-        card.querySelector('.monitor-status').textContent = ms + 'ms';
-        card.classList.add('monitor-card--ok');
-      } catch {
-        card.querySelector('.monitor-status').textContent = 'timeout';
-        card.classList.add('monitor-card--err');
-      }
+      const card = document.getElementById('mon-'+s.name); if(!card) continue;
+      const t0 = Date.now();
+      try { await fetch(s.url,{mode:'no-cors',signal:AbortSignal.timeout(5000)}); card.querySelector('.mon-dot').classList.add('mon-ok'); card.querySelector('.mon-ms').textContent=(Date.now()-t0)+'ms'; }
+      catch { card.querySelector('.mon-dot').classList.add('mon-err'); card.querySelector('.mon-ms').textContent='timeout'; }
     }
   }
-  loadMonitor();
-
+  document.getElementById('refresh-services')?.addEventListener('click', loadServices);
+  loadServices();
 </script>
 
 <style>
-  .ops { max-width:1100px; margin:0 auto; padding:24px 20px; min-height:100vh; background:#f8f6f2; color:#1a1a1a; font-family:'IBM Plex Mono',monospace; }
-  .ops-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px; padding-bottom:16px; border-bottom:1px solid #e0ddd6; }
-  .ops-header-left { display:flex; align-items:center; gap:12px; }
-  .ops-header-right { display:flex; align-items:center; gap:10px; }
-  .ops-logo { border-radius:8px; }
-  .ops-title { font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:#1a1a1a; margin:0; line-height:1.2; }
+  .ops { max-width:1000px; margin:0 auto; padding:20px 16px; min-height:100vh; background:#f8f6f2; color:#1a1a1a; font-family:'IBM Plex Mono',monospace; font-size:13px; }
+  .ops-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #e0ddd6; }
+  .ops-header-left { display:flex; align-items:center; gap:10px; }
+  .ops-header-right { display:flex; align-items:center; gap:8px; }
+  .ops-logo { border-radius:6px; }
+  .ops-title { font-family:'Fraunces',serif; font-size:20px; font-weight:700; margin:0; line-height:1.2; }
   .ops-sub { font-size:11px; color:#888; margin:2px 0 0; }
-  .electric { color:#0e8a8f; }
-  .btn--sm { padding:5px 10px; font-size:10px; }
 
-  .status-bar { display:flex; align-items:center; gap:6px; padding:6px 12px; background:#fff; border-radius:20px; border:1px solid #e0ddd6; }
-  .status-dot { width:7px; height:7px; border-radius:50%; background:#ccc; transition:all 0.3s; }
-  .status-dot--ok { background:#22c55e; box-shadow:0 0 6px #22c55e; }
-  .status-dot--err { background:#ef4444; box-shadow:0 0 6px #ef4444; }
+  .status-bar { display:flex; align-items:center; gap:5px; padding:5px 10px; background:#fff; border-radius:16px; border:1px solid #e0ddd6; }
+  .status-dot { width:7px; height:7px; border-radius:50%; background:#ccc; }
+  .status-dot--ok { background:#22c55e; box-shadow:0 0 4px #22c55e; }
+  .status-dot--err { background:#ef4444; }
   .status-text { font-size:10px; color:#888; }
 
-  /* Tabs */
-  .tabs { display:flex; gap:2px; margin-bottom:20px; overflow-x:auto; scrollbar-width:none; background:#fff; border-radius:10px; padding:3px; border:1px solid #e0ddd6; }
-  .tabs::-webkit-scrollbar { display:none; }
-  .tab { font-size:12px; padding:8px 14px; background:none; border:none; color:#888; cursor:pointer; border-radius:8px; transition:all 0.2s; white-space:nowrap; font-weight:500; }
+  .tabs { display:flex; gap:2px; margin-bottom:16px; background:#fff; border-radius:10px; padding:3px; border:1px solid #e0ddd6; }
+  .tab { font-size:12px; padding:8px 16px; background:none; border:none; color:#888; cursor:pointer; border-radius:8px; transition:all 0.15s; font-weight:500; }
   .tab:hover { color:#1a1a1a; background:#f5f3ef; }
   .tab--active { color:#fff; background:#0e8a8f; }
 
-  .panel { display:none; }
+  .panel { display:none; animation:fadeIn 0.15s ease; }
   .panel--active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(3px)} to{opacity:1;transform:none} }
 
-  .panel { animation:fadeIn 0.2s ease; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+  /* Tasks */
+  .tasks-toolbar { display:flex; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+  .tasks-filters { display:flex; gap:4px; flex:1; flex-wrap:wrap; }
+  .filter-select, .form-select { font-size:11px; padding:5px 8px; border:1px solid #e0ddd6; border-radius:6px; background:#fff; }
+  .filter-input, .form-input { font-size:12px; padding:6px 10px; border:1px solid #e0ddd6; border-radius:6px; background:#fff; color:#1a1a1a; }
+  .filter-input:focus, .form-input:focus, .form-textarea:focus { outline:none; border-color:#0e8a8f; box-shadow:0 0 0 2px rgba(14,138,143,0.1); }
+  .form-textarea { width:100%; font-size:12px; padding:8px 10px; border:1px solid #e0ddd6; border-radius:6px; background:#fff; resize:vertical; box-sizing:border-box; margin-bottom:8px; }
+  .form-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .card-form { background:#fff; border:1px solid #e0ddd6; border-radius:10px; padding:14px; margin-bottom:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
 
-  .section-title { font-family:'Fraunces',serif; font-size:18px; color:#1a1a1a; margin:0 0 14px; }
-  .subsection-title { font-size:13px; color:#444; margin:20px 0 10px; font-weight:600; }
-  .hint { font-size:12px; color:#888; margin:0 0 14px; }
-
-  /* Workflow */
-  .workflow-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
-  .stat { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#888; background:#fff; padding:4px 10px; border-radius:6px; }
-
-  .task-group { margin-bottom:24px; }
-  .group-label { font-size:11px; text-transform:uppercase; letter-spacing:1.5px; margin:0 0 10px; padding:5px 12px; border-radius:6px; display:inline-block; font-weight:600; }
-  .group-label--red { color:#dc2626; background:rgba(220,38,38,0.07); }
-  .group-label--amber { color:#b45309; background:rgba(180,83,9,0.07); }
-  .group-label--blue { color:#2563eb; background:rgba(37,99,235,0.07); }
-  .group-label--green { color:#16a34a; background:rgba(22,163,74,0.07); }
-  .group-label--cyan { color:#0e8a8f; background:rgba(14,138,143,0.07); }
+  .task-group { margin-bottom:16px; }
+  .group-label { font-size:11px; text-transform:uppercase; letter-spacing:1.5px; padding:4px 10px; border-radius:6px; display:inline-block; font-weight:600; margin-bottom:8px; }
+  .group-label--red { color:#dc2626; background:#fef2f2; } .group-label--amber { color:#b45309; background:#fffbeb; }
+  .group-label--blue { color:#2563eb; background:#eff6ff; } .group-label--green { color:#16a34a; background:#f0fdf4; }
+  .group-label--cyan { color:#0e8a8f; background:#f0fdfa; }
+  .group-done { color:#888; background:rgba(0,0,0,0.03); cursor:pointer; list-style:none; }
+  .group-done::-webkit-details-marker { display:none; }
+  .group-done::before { content:'▸ '; } details[open] > .group-done::before { content:'▾ '; }
 
   .task-list { display:flex; flex-direction:column; gap:6px; }
-  .task { background:#fff; border:1px solid #e0ddd6; border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,0.03); overflow:hidden; transition:all 0.15s ease; }
-  .task:hover { border-color:#c5c2bb; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
-  .task--open { box-shadow:0 2px 8px rgba(0,0,0,0.06); }
-  .task--urgent { border-left:3px solid #ef4444; }
-  .task--overdue { border-left:3px solid #ef4444; background:rgba(239,68,68,0.04); }
+  .task { background:#fff; border:1px solid #e0ddd6; border-radius:10px; overflow:hidden; transition:all 0.12s; }
+  .task:hover { border-color:#c5c2bb; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .task--overdue { border-left:3px solid #dc2626; }
   .task--done { opacity:0.35; }
-  .task--done .task-label { text-decoration:line-through; }
+  .task--done .task-title { text-decoration:line-through; }
+  .task--open .task-body { display:block; }
 
-  .task-header { display:flex; align-items:center; gap:10px; padding:10px 14px; cursor:pointer; user-select:none; transition:background 0.1s; }
-  .task-header:hover { background:rgba(0,0,0,0.01); }
-  .task-check { width:16px; height:16px; accent-color:#0e8a8f; cursor:pointer; flex-shrink:0; transition:transform 0.15s; }
-  .task-check:checked { transform:scale(1.1); }
-  .task-label { font-size:13px; color:#1a1a1a; flex:1; transition:color 0.2s; }
-  .task-badge { font-size:10px; padding:2px 8px; border-radius:10px; white-space:nowrap; font-weight:500; }
+  .task-header { display:flex; align-items:center; gap:8px; padding:10px 12px; cursor:pointer; }
+  .task-status { font-size:14px; color:#888; width:18px; text-align:center; }
+  .task-title { flex:1; font-size:13px; color:#1a1a1a; }
+  .badge { font-size:9px; padding:2px 7px; border-radius:8px; font-weight:600; }
   .badge--red { background:#fef2f2; color:#dc2626; border:1px solid #fecaca; }
   .badge--amber { background:#fffbeb; color:#b45309; border:1px solid #fde68a; }
   .badge--cyan { background:#f0fdfa; color:#0e8a8f; border:1px solid #99f6e4; }
   .badge--blue { background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; }
   .badge--green { background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0; }
 
-  .task-ai-btn, .task-ai-btn-inline { background:none; border:1px solid #e0ddd6; border-radius:6px; padding:4px 8px; cursor:pointer; color:#0e8a8f; transition:all 0.2s; display:flex; align-items:center; gap:4px; font-family:'IBM Plex Mono',monospace; font-size:11px; }
-  .task-ai-btn:hover, .task-ai-btn-inline:hover { background:rgba(91,209,216,0.1); border-color:#0e8a8f; }
-  .task-ai-btn-inline { margin-left:auto; }
+  .task-body { display:none; padding:0 12px 12px; font-size:12px; color:#444; }
+  .task-desc p { margin:4px 0; }
+  .task-actions { display:flex; gap:4px; margin-top:8px; flex-wrap:wrap; align-items:center; }
+  .action-status { font-size:11px; padding:4px 6px; border:1px solid #e0ddd6; border-radius:6px; }
+  .action-note { flex:1; min-width:100px; font-size:11px; padding:5px 8px; border:1px solid #e0ddd6; border-radius:6px; }
+  .ai-out { margin-top:8px; } .ai-out pre { font-size:11px; white-space:pre-wrap; word-break:break-word; background:#f5f3ef; padding:8px; border-radius:6px; max-height:200px; overflow-y:auto; }
+  .ai-saved summary { font-size:10px; color:#0e8a8f; cursor:pointer; }
+  .ai-saved pre { font-size:10px; white-space:pre-wrap; background:#f0fdfa; padding:8px; border-radius:6px; margin-top:4px; max-height:150px; overflow-y:auto; }
 
-  .task-body { display:none; padding:0 14px 14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#444; line-height:1.6; }
-  .task--open .task-body { display:block; }
+  /* LinkedIn preview */
+  .li-preview { background:#f8f8f6; border:1px solid #eae7e0; border-radius:8px; padding:12px; margin-bottom:8px; }
+  .li-header { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .li-avatar { width:32px; height:32px; border-radius:50%; background:#0e8a8f; color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; }
+  .li-line { margin:0 0 2px; font-size:12px; color:#333; } .li-spacer { height:8px; }
 
-  .task-actions { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
-  .btn { display:inline-flex; align-items:center; gap:4px; padding:7px 14px; font-size:11px; font-weight:500; border-radius:8px; text-decoration:none; cursor:pointer; border:none; transition:all 0.15s ease; }
-  .btn--primary { background:#0e8a8f; color:#fff; box-shadow:0 1px 3px rgba(14,138,143,0.2); }
-  .btn--primary:hover { background:#0c7478; box-shadow:0 2px 6px rgba(14,138,143,0.3); transform:translateY(-1px); }
-  .btn--primary:active { transform:translateY(0); }
+  .btn { display:inline-flex; align-items:center; gap:3px; padding:6px 12px; font-size:11px; font-weight:500; border-radius:8px; text-decoration:none; cursor:pointer; border:none; transition:all 0.12s; }
+  .btn--primary { background:#0e8a8f; color:#fff; box-shadow:0 1px 2px rgba(14,138,143,0.2); }
+  .btn--primary:hover { background:#0c7478; transform:translateY(-1px); }
   .btn--outline { background:#fff; border:1px solid #e0ddd6; color:#444; }
-  .btn--outline:hover { border-color:#0e8a8f; color:#0e8a8f; background:#f0fafa; }
+  .btn--outline:hover { border-color:#0e8a8f; color:#0e8a8f; }
+  .btn--sm { padding:4px 8px; font-size:10px; }
 
-  .ai-output { display:none; margin-top:10px; }
-  .ai-loading { color:#0e8a8f; animation:pulse 1.5s infinite; }
-  .ai-result pre { background:#f5f3ef; border:1px solid #e0ddd6; border-radius:6px; padding:12px; font-size:12px; white-space:pre-wrap; word-break:break-word; max-height:400px; overflow-y:auto; color:#1a1a1a; }
-  .ai-error { color:#dc2626; }
+  /* Dashboard */
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; margin-bottom:20px; }
+  .kpi-card { background:#fff; border:1px solid #e0ddd6; border-radius:12px; padding:16px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.03); }
+  .kpi-num { font-size:28px; font-weight:700; color:#1a1a1a; }
+  .kpi-label { font-size:10px; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
 
-  .template-block { background:#f5f3ef; border-radius:6px; padding:12px; font-size:12px; white-space:pre-wrap; color:#444; margin:0 0 10px; border:1px solid #e0ddd6; }
-  .code-block { background:#f5f3ef; border:1px solid #e0ddd6; border-radius:6px; padding:10px 14px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0e8a8f; overflow-x:auto; margin:6px 0; }
+  .sub-title { font-family:'Fraunces',serif; font-size:15px; color:#1a1a1a; margin:20px 0 10px; display:flex; align-items:center; gap:6px; }
 
-  /* Chat */
-  .chat-container { border:1px solid #e0ddd6; border-radius:14px; box-shadow:0 2px 12px rgba(0,0,0,0.04); overflow:hidden; }
-  .chat-messages { height:420px; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:#fafaf8; }
-  .chat-msg { font-size:13px; padding:10px 14px; border-radius:12px; max-width:85%; line-height:1.6; animation:fadeIn 0.2s ease; }
-  .chat-msg pre { white-space:pre-wrap; word-break:break-word; margin:0; }
-  .chat-msg--user { background:#e8f4f5; border:1px solid #c5e3e5; color:#1a1a1a; align-self:flex-end; border-bottom-right-radius:4px; }
-  .chat-msg--ai { background:#fff; border:1px solid #e0ddd6; color:#444; align-self:flex-start; border-bottom-left-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.03); }
-  .chat-msg--system { background:rgba(14,138,143,0.06); border:1px solid rgba(14,138,143,0.15); color:#0e8a8f; font-size:11px; align-self:center; border-radius:20px; }
-  .chat-input-row { display:flex; gap:8px; padding:12px; background:#fff; border-top:1px solid #e0ddd6; }
-  .chat-select { font-size:11px; background:#f5f3ef; color:#444; border:1px solid #e0ddd6; border-radius:8px; padding:6px 8px; }
-  .chat-input { flex:1; font-size:13px; background:#fff; color:#1a1a1a; border:1px solid #e0ddd6; border-radius:10px; padding:10px 14px; resize:none; }
-  .chat-input:focus { outline:none; border-color:#0e8a8f; box-shadow:0 0 0 3px rgba(14,138,143,0.1); }
-  .chat-send { flex-shrink:0; border-radius:10px; }
+  .agents-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:8px; margin-bottom:16px; }
+  .agent-card { background:#fff; border:1px solid #e0ddd6; border-radius:8px; padding:10px; cursor:pointer; transition:all 0.12s; }
+  .agent-card:hover { border-color:#0e8a8f; box-shadow:0 2px 6px rgba(14,138,143,0.08); }
+  .agent-card b { font-size:12px; color:#0e8a8f; display:block; margin-bottom:4px; }
+  .agent-card p { font-size:10px; color:#888; margin:4px 0 0; line-height:1.3; }
 
-  /* CRM */
-  .crm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; margin-bottom:20px; }
-  .crm-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
-  .crm-card { background:#fff; border:1px solid #e0ddd6; border-radius:14px; padding:18px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); transition:all 0.15s; }
-  .crm-card:hover { box-shadow:0 3px 10px rgba(0,0,0,0.06); transform:translateY(-2px); }
-  .crm-card-icon { font-size:20px; margin-bottom:6px; }
-  .crm-card-num { font-size:28px; font-weight:700; color:#1a1a1a; }
-  .crm-card-label { font-size:10px; color:#888; margin-top:4px; text-transform:uppercase; letter-spacing:0.5px; }
-  .crm-links { display:flex; gap:6px; margin-top:16px; flex-wrap:wrap; }
-  .agent-count { font-size:11px; color:#0e8a8f; background:#f0fdfa; padding:3px 10px; border-radius:10px; border:1px solid #99f6e4; }
-  .completed-group summary { list-style:none; } .completed-group summary::-webkit-details-marker { display:none; }
-  .completed-group summary::before { content:'▸ '; } .completed-group[open] summary::before { content:'▾ '; }
+  .copilot-bar { display:flex; gap:6px; margin-bottom:8px; }
+  .chat-output { min-height:20px; }
+  .chat-output pre { font-size:12px; white-space:pre-wrap; word-break:break-word; background:#fff; border:1px solid #e0ddd6; padding:12px; border-radius:8px; max-height:300px; overflow-y:auto; }
 
-  .workflow-toolbar { display:flex; align-items:center; gap:8px; }
-  .add-task-form { background:#fff; border:1px solid #e0ddd6; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04); animation:fadeIn 0.2s ease; }
-  .add-task-input { width:100%; font-size:14px; padding:10px 14px; border:1px solid #e0ddd6; border-radius:8px; background:#fff; color:#1a1a1a; box-sizing:border-box; margin-bottom:10px; }
-  .add-task-input:focus { outline:none; border-color:#0e8a8f; box-shadow:0 0 0 3px rgba(14,138,143,0.1); }
-  .add-task-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .quick-links { display:flex; gap:6px; flex-wrap:wrap; margin-top:16px; }
 
-  .task-status-icon { font-size:16px; color:#888; flex-shrink:0; width:20px; text-align:center; }
-  .task-edit-row { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; align-items:center; }
-  .task-status-select { font-size:11px; padding:5px 8px; border:1px solid #e0ddd6; border-radius:6px; background:#fff; color:#444; }
-  .task-note-input { flex:1; min-width:120px; font-size:12px; padding:6px 10px; border:1px solid #e0ddd6; border-radius:6px; background:#fff; color:#1a1a1a; }
-  .task-note-input:focus { outline:none; border-color:#0e8a8f; }
-  .task-ai-output { display:none; margin-top:10px; }
-  .task-ai-output[style*="block"] { display:block; }
-  .ai-result-saved { background:#f0fdfa; border:1px solid #99f6e4; border-radius:8px; padding:10px; margin-bottom:8px; }
-  .ai-result-saved h4 { font-size:11px; color:#0e8a8f; margin:0 0 6px; text-transform:uppercase; letter-spacing:1px; }
-  .ai-result-saved pre { font-size:11px; margin:0; white-space:pre-wrap; word-break:break-word; color:#333; max-height:200px; overflow-y:auto; }
-  .task-delete-btn { color:#dc2626 !important; border-color:#fecaca !important; }
-  .task-delete-btn:hover { background:#fef2f2 !important; }
+  /* Services */
+  .monitor-grid { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+  .mon-card { display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #e0ddd6; border-radius:8px; padding:6px 10px; font-size:11px; }
+  .mon-dot { width:7px; height:7px; border-radius:50%; background:#ccc; }
+  .mon-ok { background:#22c55e; } .mon-err { background:#ef4444; }
+  .mon-name { color:#1a1a1a; } .mon-ms { color:#888; font-size:9px; }
 
-  .table-wrap { overflow-x:auto; }
-  .data-table { width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:12px; }
-  .data-table th { text-align:left; padding:8px 10px; color:#888; border-bottom:1px solid #e0ddd6; font-weight:500; }
-  .data-table td { padding:8px 10px; color:#444; border-bottom:1px solid #eae7e0; }
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:8px; margin-bottom:16px; }
+  .svc-card { display:flex; flex-direction:column; align-items:center; gap:6px; padding:12px 8px; background:#fff; border:1px solid #e0ddd6; border-radius:10px; text-decoration:none; transition:all 0.12s; }
+  .svc-card:hover { border-color:#0e8a8f; box-shadow:0 2px 6px rgba(0,0,0,0.06); transform:translateY(-2px); }
+  .svc-card img { border-radius:8px; }
+  .svc-card span { font-size:10px; color:#444; text-align:center; }
+  .status-refresh { font-size:14px; cursor:pointer; color:#0e8a8f; }
 
-  /* Agents */
-  .agents-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:10px; }
-  .agent-card { background:#fff; border:1px solid #e0ddd6; border-radius:10px; padding:14px; cursor:pointer; transition:all 0.15s; }
-  .agent-card:hover { border-color:#0e8a8f; box-shadow:0 2px 8px rgba(14,138,143,0.1); transform:translateY(-1px); }
-  .agent-name { font-size:13px; color:#0e8a8f; font-weight:600; }
-  .agent-model { font-size:10px; color:#888; margin-top:4px; }
-
-  /* Monitor */
-  .monitor-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:10px; }
-  .monitor-card { background:#fff; border:1px solid #e0ddd6; border-radius:10px; padding:14px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.03); transition:all 0.2s; }
-  .monitor-card--ok { border-color:rgba(34,197,94,0.4); background:rgba(34,197,94,0.02); }
-  .monitor-card--err { border-color:rgba(239,68,68,0.4); background:rgba(239,68,68,0.02); }
-  .monitor-name { font-family:'IBM Plex Mono',monospace; font-size:13px; color:#1a1a1a; }
-  .monitor-status { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#888; margin-top:6px; }
-
+  .loading { text-align:center; padding:20px; color:#0e8a8f; animation:pulse 1.5s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px; }
-  .kpi-card { background:#fff; border:1px solid #e0ddd6; border-radius:12px; padding:18px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
-  .kpi-target { font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:700; color:#0e8a8f; }
-  .kpi-label { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#888; margin-top:4px; }
-  .links { display:flex; flex-wrap:wrap; gap:8px; }
-  .links a { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0e8a8f; text-decoration:none; padding:6px 12px; border:1px solid #e0ddd6; border-radius:6px; transition:all .2s; }
-  .links a:hover { border-color:#0e8a8f; background:rgba(91,209,216,.08); }
-  .portfolio-link { color:#0e8a8f; }
+  .err { color:#dc2626; font-size:12px; }
+  .hint { color:#888; font-size:12px; }
 
-  .card-icon img { width:48px; height:48px; border-radius:8px; } .card-icon { margin-bottom:12px; }
-
-  /* LinkedIn cards */
-  .li-card { background:#fff; border:1px solid #e0ddd6; border-radius:12px; overflow:hidden; transition:all 0.15s; margin-bottom:8px; }
-  .li-card:hover { box-shadow:0 2px 8px rgba(0,0,0,0.06); }
-  .li-card--overdue { border-left:3px solid #dc2626; }
-  .li-card-header { display:flex; align-items:center; gap:10px; padding:12px 16px; cursor:pointer; border-bottom:1px solid #f0ede8; }
-  .li-card-meta { flex:1; }
-  .li-card-title { font-size:13px; font-weight:600; color:#1a1a1a; display:block; }
-  .li-card-date { font-size:10px; color:#888; }
-  .li-card-num { font-size:10px; color:#bbb; background:#f5f3ef; padding:2px 8px; border-radius:10px; }
-  .li-card-body { display:none; padding:16px; }
-  .li-card.li-card--open .li-card-body { display:block; }
-  .li-card.task--done { opacity:0.35; }
-  .li-card.task--done .li-card-title { text-decoration:line-through; }
-
-  .li-preview { background:#f8f8f6; border:1px solid #eae7e0; border-radius:10px; padding:16px; margin-bottom:12px; }
-  .li-preview-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-  .li-avatar { width:40px; height:40px; border-radius:50%; background:#0e8a8f; color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
-  .li-author { font-size:13px; font-weight:600; color:#1a1a1a; }
-  .li-headline { font-size:11px; color:#888; }
-  .li-content { font-size:13px; color:#333; line-height:1.7; }
-  .li-line { margin:0 0 2px; }
-  .li-spacer { height:10px; }
-  .li-card-actions { display:flex; gap:6px; flex-wrap:wrap; }
-
-  /* AI Conversation */
-  .ai-conv { max-height:500px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; }
-  .ai-conv-msg { border-radius:10px; padding:10px 14px; font-size:12px; line-height:1.6; }
-  .ai-conv-msg p { margin:4px 0 0; } .ai-conv-msg pre { margin:4px 0 0; white-space:pre-wrap; word-break:break-word; font-size:12px; }
-  .ai-conv-role { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:1px; }
-  .ai-conv-user { background:#e8f4f5; border:1px solid #c5e3e5; align-self:flex-end; max-width:85%; }
-  .ai-conv-user .ai-conv-role { color:#0e8a8f; }
-  .ai-conv-ai { background:#fff; border:1px solid #e0ddd6; align-self:flex-start; max-width:90%; box-shadow:0 1px 3px rgba(0,0,0,0.03); }
-  .ai-conv-ai .ai-conv-role { color:#b45309; }
-  .ai-conv-msg-actions { display:flex; gap:6px; margin-top:8px; }
-
-  .ai-conv-input { margin-top:12px; border-top:1px solid #e0ddd6; padding-top:12px; }
-  .ai-conv-suggestions { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
-  .ai-suggestion { font-family:'IBM Plex Mono',monospace; font-size:10px; padding:4px 10px; background:#f5f3ef; border:1px solid #e0ddd6; border-radius:12px; cursor:pointer; color:#444; transition:all 0.2s; }
-  .ai-suggestion:hover { background:#e8f4f5; border-color:#0e8a8f; color:#0e8a8f; }
-  .ai-conv-row { display:flex; gap:6px; align-items:flex-end; }
-  .ai-conv-textarea { flex:1; font-family:'IBM Plex Mono',monospace; font-size:12px; padding:8px 10px; border:1px solid #e0ddd6; border-radius:6px; background:#fff; color:#1a1a1a; resize:none; box-sizing:border-box; }
-  .ai-conv-textarea:focus { outline:none; border-color:#0e8a8f; }
-  .ai-conv-send { flex-shrink:0; }
-  .ai-conv-bottom { display:flex; gap:6px; margin-top:8px; }
-  .ai-agent-select { font-family:'IBM Plex Mono',monospace; font-size:11px; padding:6px 8px; border:1px solid #e0ddd6; border-radius:6px; background:#fff; color:#444; }
-  .ai-result-actions { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
-
-  @media (max-width:768px) {
-    .ops { padding:16px 10px; }
-    .ops-header { flex-direction:column; gap:8px; align-items:flex-start; }
-    .ops-header-right { width:100%; justify-content:space-between; }
-    .ops-title { font-size:18px; }
-    .tab { padding:7px 10px; font-size:10px; }
-    .grid { grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; }
-    .card { padding:12px; } .card h2 { font-size:12px; } .card p { font-size:10px; }
-    .card-icon img { width:36px; height:36px; }
-    .section-title { font-size:16px; }
-    .task-header { padding:10px 12px; gap:8px; } .task-label { font-size:12px; }
-    .task-badge { font-size:9px; padding:2px 6px; }
-    .task-body { padding:0 12px 12px; font-size:11px; }
-    .task-actions { flex-direction:column; } .btn { text-align:center; justify-content:center; width:100%; }
-    .li-card-header { padding:10px 12px; }
-    .li-card-body { padding:12px; }
-    .li-preview { padding:12px; }
-    .li-content { font-size:12px; line-height:1.6; }
-    .li-card-actions { flex-direction:column; }
-    .li-card-actions .btn { width:100%; }
-    .chat-input-row { flex-wrap:wrap; } .chat-select { width:100%; }
-    .chat-messages { height:280px; } .chat-msg { max-width:95%; font-size:12px; }
-    .chat-input { font-size:12px; }
-    .kpi-grid { grid-template-columns:repeat(3,1fr); gap:6px; }
-    .kpi-card { padding:10px; } .kpi-target { font-size:20px; } .kpi-label { font-size:9px; }
-    .monitor-grid { grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:6px; }
-    .agents-grid { grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); }
-    .links { gap:4px; } .links a { font-size:10px; padding:5px 8px; }
-    .ai-conv { max-height:400px; }
-    .ai-conv-row { flex-direction:column; }
-    .ai-conv-textarea { width:100%; }
-    .ai-suggestion { font-size:9px; padding:3px 8px; }
-    .crm-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
-    .crm-card-num { font-size:22px; }
-  }
-  @media (max-width:380px) {
+  @media (max-width:640px) {
     .ops { padding:12px 8px; }
-    .grid { grid-template-columns:1fr 1fr; gap:6px; }
-    .kpi-grid { grid-template-columns:repeat(2,1fr); }
-    .tab { padding:6px 8px; font-size:9px; }
-    .li-avatar { width:32px; height:32px; font-size:12px; }
-    .li-content { font-size:11px; }
-    .monitor-grid { grid-template-columns:repeat(2,1fr); }
+    .tasks-toolbar { flex-direction:column; align-items:stretch; }
+    .tasks-filters { flex-direction:column; }
+    .task-actions { flex-direction:column; }
+    .btn { width:100%; justify-content:center; }
+    .kpi-grid { grid-template-columns:repeat(3,1fr); }
+    .services-grid { grid-template-columns:repeat(3,1fr); }
+    .agents-grid { grid-template-columns:repeat(2,1fr); }
+    .copilot-bar { flex-direction:column; }
+    .tab { padding:6px 10px; font-size:11px; }
   }
 </style>
