@@ -174,9 +174,25 @@ import '@/styles/global.css';
 </BaseLayout>
 
 <script>
+  // API Contracts:
+  // GET  /health         → { ok, agents, providers }
+  // GET  /api/ai         → { agents: [...] }
+  // POST /api/ai         → create agent
+  // POST /api/ai/:name/run → { messages: [{role, content}] }
+  // GET  /api/ops/tasks  → { data: [...] }
+  // POST /api/ops/tasks  → create task
+  // PUT  /api/ops/tasks/:id → update task
+  // POST /api/ops/execute/:id → AI execute
+
   const API = 'https://api.lelectronrare.fr';
   const OPS = API + '/api/ops';
   const AI = API + '/api/ai';
+
+  // Auth token for API calls — populate via data-token attribute on #ops-main
+  // or a <meta name="api-token"> tag. Empty string keeps unauthenticated flow working.
+  const AUTH_TOKEN = document.getElementById('ops-main')?.dataset?.token
+    || document.querySelector('meta[name="api-token"]')?.content
+    || '';
 
   const catLabels = {urgent:'Urgent',prospection:'Prospection',linkedin:'LinkedIn',technique:'Technique',lancement:'Lancement',formation:'Formation',gie:'GIE',marketing:'Marketing',business:'Business',crm:'CRM'};
   const catColors = {urgent:'red',prospection:'amber',linkedin:'blue',technique:'cyan',lancement:'green',formation:'amber',gie:'amber',crm:'cyan',marketing:'blue',business:'green'};
@@ -328,10 +344,15 @@ import '@/styles/global.css';
     } catch {}
     // Agents
     try {
-      const r = await fetch(AI, {headers:{'Content-Type':'application/json'}});
+      const agentHeaders = {'Content-Type':'application/json'};
+      if (AUTH_TOKEN) agentHeaders['Authorization'] = 'Bearer ' + AUTH_TOKEN;
+      const r = await fetch(AI, {headers: agentHeaders});
       const d = await r.json();
       allAgents = d.agents || (Array.isArray(d) ? d : []);
-      document.getElementById('kpi-agents').textContent = allAgents.length;
+      // kpi-agents is set from /health below; fallback to allAgents.length
+      if (!document.getElementById('kpi-agents').dataset.fromHealth) {
+        document.getElementById('kpi-agents').textContent = allAgents.length;
+      }
       const grid = document.getElementById('agents-grid');
       grid.innerHTML = allAgents.map(a => `<div class="agent-card" data-name="${a.name}"><b>${a.name}</b><span class="badge badge--${a.strategy==='best'?'cyan':a.strategy==='cheapest'?'green':'blue'}">${a.strategy}</span><p>${(a.description||'').substring(0,60)}</p></div>`).join('');
       grid.querySelectorAll('.agent-card').forEach(c => c.addEventListener('click', () => {
@@ -342,11 +363,19 @@ import '@/styles/global.css';
       const sel = document.getElementById('chat-agent');
       if (sel) sel.innerHTML = allAgents.map(a=>`<option value="${a.name}">${a.name}</option>`).join('');
     } catch {}
-    // API health
+    // API health — parse { ok, agents, providers }
     try {
-      const h = await fetch(API+'/health'); const d = await h.json();
+      const h = await fetch(API+'/health'); const hd = await h.json();
       document.getElementById('status-dot').className = 'status-dot status-dot--ok';
-      document.getElementById('status-text').textContent = 'API OK';
+      const parts = ['API OK'];
+      if (typeof hd.agents === 'number') parts.push(hd.agents + ' agents');
+      if (Array.isArray(hd.providers) && hd.providers.length) parts.push(hd.providers.join(', '));
+      document.getElementById('status-text').textContent = parts.join(' \u00b7 ');
+      // Update kpi-agents from health (authoritative count)
+      if (typeof hd.agents === 'number') {
+        document.getElementById('kpi-agents').textContent = hd.agents;
+        document.getElementById('kpi-agents').dataset.fromHealth = '1';
+      }
     } catch {
       document.getElementById('status-dot').className = 'status-dot status-dot--err';
       document.getElementById('status-text').textContent = 'API down';
