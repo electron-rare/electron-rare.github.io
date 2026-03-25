@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare (via Photon)
+name: Deploy to Tower
 
 on:
   push:
@@ -31,45 +31,50 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build static site
+      - name: Build site
         run: npm run build
 
-      - name: Deploy to Photon
+      - name: Deploy to Tower
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.PHOTON_HOST }}
-          username: root
-          key: ${{ secrets.PHOTON_SSH_KEY }}
+          host: ${{ secrets.TOWER_HOST }}
+          username: ${{ secrets.TOWER_USER }}
+          key: ${{ secrets.TOWER_SSH_KEY }}
           source: "dist/"
-          target: "/tmp/site-dist/"
+          target: "/home/clems/electron-rare-site/"
           overwrite: true
           rm: true
 
       - name: Restart site container
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.PHOTON_HOST }}
-          username: root
-          key: ${{ secrets.PHOTON_SSH_KEY }}
+          host: ${{ secrets.TOWER_HOST }}
+          username: ${{ secrets.TOWER_USER }}
+          key: ${{ secrets.TOWER_SSH_KEY }}
           script: |
+            cd /home/clems/electron-rare-site
             docker rm -f electron-rare-site 2>/dev/null || true
             docker run -d \
               --name electron-rare-site \
-              --network zacus-stack_default \
-              -v /tmp/site-dist/dist:/app/dist \
-              -p 127.0.0.1:4321:4321 \
+              --network mascarade-frontend \
+              -v /home/clems/electron-rare-site/dist:/app/dist \
+              -v /home/clems/electron-rare-site/node_modules:/app/node_modules \
+              -w /app \
+              -p 4321:4321 \
+              -e HOST=0.0.0.0 \
+              -e PORT=4321 \
               --restart unless-stopped \
               node:22-alpine \
-              sh -c 'npm install -g serve 2>/dev/null && serve /app/dist -l 4321 -s'
+              node dist/server/entry.mjs
 
       - name: Verify deployment
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.PHOTON_HOST }}
-          username: root
-          key: ${{ secrets.PHOTON_SSH_KEY }}
+          host: ${{ secrets.TOWER_HOST }}
+          username: ${{ secrets.TOWER_USER }}
+          key: ${{ secrets.TOWER_SSH_KEY }}
           script: |
-            sleep 8
+            sleep 5
             STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:4321/)
             if [ "$STATUS" != "200" ]; then
               echo "Site returned $STATUS instead of 200"
