@@ -26,12 +26,12 @@ Contraintes (délai, budget) :`;
       <span class="contact-minitel-dot" aria-hidden="true"></span>
       <span class="contact-minitel-dot contact-minitel-dot--amber" aria-hidden="true"></span>
       <span class="contact-minitel-dot contact-minitel-dot--green" aria-hidden="true"></span>
-      <span class="contact-minitel-title-bar">ÉLECTRON RARE — CONTACT</span>
+      <span class="contact-minitel-title-bar">Contact</span>
     </div>
 
     <div class="contact-minitel-screen">
       <h2 id="contact-title" class="contact-minitel-h2">
-        &gt; Parlons de votre projet_
+        Parlons de votre projet
       </h2>
 
       <p class="contact-minitel-line">
@@ -45,7 +45,7 @@ Contraintes (délai, budget) :`;
         <div id="contact-form-container">
           <form id="contact-crm-form" class="contact-minitel-form">
             <div class="contact-minitel-field">
-              <label for="contact-form-name" class="contact-minitel-label">&gt; NOM :</label>
+              <label for="contact-form-name" class="contact-minitel-label">Nom</label>
               <input
                 id="contact-form-name"
                 type="text"
@@ -57,7 +57,7 @@ Contraintes (délai, budget) :`;
             </div>
 
             <div class="contact-minitel-field">
-              <label for="contact-form-email" class="contact-minitel-label">&gt; EMAIL :</label>
+              <label for="contact-form-email" class="contact-minitel-label">Email</label>
               <input
                 id="contact-form-email"
                 type="email"
@@ -69,7 +69,7 @@ Contraintes (délai, budget) :`;
             </div>
 
             <div class="contact-minitel-field">
-              <label for="contact-form-phone" class="contact-minitel-label">&gt; TELEPHONE :</label>
+              <label for="contact-form-phone" class="contact-minitel-label">Telephone</label>
               <input
                 id="contact-form-phone"
                 type="tel"
@@ -80,7 +80,7 @@ Contraintes (délai, budget) :`;
             </div>
 
             <div class="contact-minitel-field">
-              <label for="contact-form-organization" class="contact-minitel-label">&gt; STRUCTURE :</label>
+              <label for="contact-form-organization" class="contact-minitel-label">Structure</label>
               <input
                 id="contact-form-organization"
                 type="text"
@@ -91,7 +91,7 @@ Contraintes (délai, budget) :`;
             </div>
 
             <div class="contact-minitel-field">
-              <label for="contact-form-need-type" class="contact-minitel-label">&gt; BESOIN :</label>
+              <label for="contact-form-need-type" class="contact-minitel-label">Type de besoin</label>
               <select id="contact-form-need-type" class="contact-minitel-select" required>
                 <option value="" selected disabled>Choisir le type de besoin</option>
                 <option value="technique">Projet technique</option>
@@ -101,7 +101,7 @@ Contraintes (délai, budget) :`;
             </div>
 
             <div class="contact-minitel-textarea-wrap">
-              <label for="contact-form-message" class="contact-minitel-label">&gt; MESSAGE :</label>
+              <label for="contact-form-message" class="contact-minitel-label">Message</label>
               <textarea
                 id="contact-form-message"
                 class="contact-minitel-textarea"
@@ -124,7 +124,7 @@ Contraintes (délai, budget) :`;
                 id="contact-form-submit"
                 class="contact-minitel-btn contact-minitel-btn--primary"
               >
-                [ENVOI] Envoyer le message
+                Envoyer le message
               </button>
             </div>
             <p
@@ -132,14 +132,14 @@ Contraintes (délai, budget) :`;
               class="contact-minitel-line"
               style="color:var(--accent-warn, #f59e0b);margin-top:0.5rem;display:none"
             >
-              &gt; Erreur d'envoi. Essayez via l'onglet [1] ou par mail direct.
+              Une erreur est survenue. Veuillez reessayer.
             </p>
           </form>
         </div>
 
         <div id="contact-form-success" style="display:none;">
           <p class="contact-minitel-line" style="text-align:center;padding:2rem 0">
-            &gt; MESSAGE ENVOYE ✓
+            Message envoye
           </p>
           <p class="contact-minitel-line contact-minitel-line--dim" style="text-align:center">
             Merci ! Je reviens vers vous sous 48h.
@@ -150,7 +150,7 @@ Contraintes (délai, budget) :`;
               id="contact-form-reset"
               class="contact-minitel-btn"
             >
-              [NOUVEAU] Envoyer un autre message
+              Envoyer un autre message
             </button>
           </div>
         </div>
@@ -158,13 +158,10 @@ Contraintes (délai, budget) :`;
 
       <div class="contact-minitel-footer">
         <p class="contact-minitel-line contact-minitel-line--dim">
-          ─────────────────────────────────────────
-        </p>
-        <p class="contact-minitel-line contact-minitel-line--dim">
           Electronique · automatisme · energie · diagnostic · formation
         </p>
-        <p class="contact-minitel-line">
-          Tous les messages passent par notre CRM sécurisé.
+        <p class="contact-minitel-line contact-minitel-line--dim">
+          Vos donnees sont traitees de maniere securisee.
         </p>
       </div>
     </div>
@@ -224,9 +221,9 @@ Contraintes (délai, budget) :`;
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     formError.style.display = 'none';
-    formError.textContent = "> Erreur d'envoi. Essayez via l'onglet [1] ou par mail direct.";
+    formError.textContent = "Une erreur est survenue. Veuillez reessayer.";
     submitBtn.disabled = true;
-    submitBtn.textContent = '[...] Envoi en cours...';
+    submitBtn.textContent = 'Envoi en cours...';
 
     const payload = {
       name: nameInput.value.trim(),
@@ -261,8 +258,8 @@ Contraintes (délai, budget) :`;
       } else {
         const detail = result?.error?.message || result?.error?.code;
         formError.textContent = detail
-          ? `> ${detail}. Essayez via l'onglet [1] ou par mail direct.`
-          : "> Erreur d'envoi. Essayez via l'onglet [1] ou par mail direct.";
+          ? detail
+          : "Une erreur est survenue. Veuillez reessayer.";
         formError.style.display = '';
         pushTrackingEvent('contact_form_error', {
           destination: CRM_INTAKE_ENDPOINT,
@@ -280,7 +277,7 @@ Contraintes (délai, budget) :`;
     }
 
     submitBtn.disabled = false;
-    submitBtn.textContent = '[ENVOI] Envoyer le message';
+    submitBtn.textContent = 'Envoyer le message';
   });
 
   const resetBtn = document.getElementById('contact-form-reset') as HTMLButtonElement;
