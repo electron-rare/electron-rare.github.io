@@ -224,6 +224,46 @@ const CONTACT_FORM_ENDPOINT = apiBase ? `${apiBase}/api/submit-lead` : '/api/sub
         <p class="contact-minitel-line">
           Mail direct : <a href="mailto:contact@lelectronrare.fr" class="contact-minitel-link">contact@lelectronrare.fr</a>
         </p>
+        <p class="contact-minitel-line">
+          Telephone : <a href="tel:+33625334420" class="contact-minitel-link">+33 6 25 33 44 20</a>
+        </p>
+      </div>
+
+      <div class="contact-minitel-newsletter">
+        <p class="contact-minitel-line contact-minitel-line--dim">
+          ─────────────────────────────────────────
+        </p>
+        <h3 class="contact-minitel-h3">&gt; Notes techniques_</h3>
+        <p class="contact-minitel-line contact-minitel-line--dim">
+          Recevez des retours d'experience concrets sur l'electronique embarquee,
+          le prototypage et les systemes specifiques. Pas de spam, que du technique.
+        </p>
+        <form
+          action="BREVO_FORM_ACTION_URL"
+          method="POST"
+          class="contact-minitel-newsletter-form"
+        >
+          <div class="contact-minitel-newsletter-row">
+            <label for="newsletter-email" class="sr-only">Adresse email</label>
+            <input
+              id="newsletter-email"
+              type="email"
+              name="EMAIL"
+              required
+              class="contact-minitel-input contact-minitel-newsletter-input"
+              placeholder="votre@email.com"
+              autocomplete="email"
+            />
+            <button
+              type="submit"
+              class="contact-minitel-btn contact-minitel-btn--primary contact-minitel-newsletter-btn"
+            >
+              Recevoir les notes techniques
+            </button>
+          </div>
+          <input type="hidden" name="locale" value="fr" />
+          <input type="hidden" name="html_type" value="simple" />
+        </form>
       </div>
     </div>
   </div>
