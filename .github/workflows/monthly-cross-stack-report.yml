@@ -29,7 +29,9 @@ jobs:
           WORKFLOWS_JSON="$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/actions/workflows?per_page=100")"
           RUNS_JSON="$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/actions/runs?per_page=20")"
           LABELS_JSON="$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/labels?per_page=100")"
-          PROTECTION_JSON="$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/branches/main/protection")"
+          PROTECTION_STATUS_AND_BODY="$(curl -sS -w "\n%{http_code}" -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/branches/main/protection")"
+          PROTECTION_HTTP_CODE="$(echo "$PROTECTION_STATUS_AND_BODY" | tail -n1)"
+          PROTECTION_JSON="$(echo "$PROTECTION_STATUS_AND_BODY" | sed '$d')"
 
           EXPECTED_LABELS=(core api web e2e deploy infra docs)
           MISSING_LABELS=()
@@ -39,11 +41,15 @@ jobs:
             fi
           done
 
-          REQ_CHECK=$(echo "$PROTECTION_JSON" | jq -r '.required_status_checks.checks[]?.context // empty' | grep -Fx 'Cross-stack coherence' || true)
-          if [ -n "$REQ_CHECK" ]; then
-            CHECK_STATE="required"
-          else
-            CHECK_STATE="not-required"
+          CHECK_STATE="unknown"
+          if [ "$PROTECTION_HTTP_CODE" = "200" ]; then
+            REQ_CHECK_CHECKS=$(echo "$PROTECTION_JSON" | jq -r '.required_status_checks.checks[]?.context // empty' | grep -Fx 'Cross-stack coherence' || true)
+            REQ_CHECK_CONTEXTS=$(echo "$PROTECTION_JSON" | jq -r '.required_status_checks.contexts[]? // empty' | grep -Fx 'Cross-stack coherence' || true)
+            if [ -n "$REQ_CHECK_CHECKS" ] || [ -n "$REQ_CHECK_CONTEXTS" ]; then
+              CHECK_STATE="required"
+            else
+              CHECK_STATE="not-required"
+            fi
           fi
 
           {
@@ -54,6 +60,9 @@ jobs:
             echo
             echo "## Branch Protection (main)"
             echo "- Cross-stack coherence: $CHECK_STATE"
+            if [ "$CHECK_STATE" = "unknown" ]; then
+              echo "- Note: branch protection endpoint not readable with current token (HTTP $PROTECTION_HTTP_CODE)."
+            fi
             echo
             echo "## Expected Labels"
             if [ ${#MISSING_LABELS[@]} -eq 0 ]; then
