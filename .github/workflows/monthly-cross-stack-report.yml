@@ -1,0 +1,78 @@
+name: Monthly Cross-stack Report
+
+on:
+  schedule:
+    - cron: '10 7 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  monthly-report:
+    name: Monthly report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate report
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          NOW_UTC="$(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          OUT_DIR="artifacts"
+          OUT_FILE="$OUT_DIR/monthly-cross-stack-report-$(date -u +'%Y-%m-%d').md"
+          mkdir -p "$OUT_DIR"
+
+          WORKFLOWS_JSON="$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/actions/workflows?per_page=100")"
+          RUNS_JSON="$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/actions/runs?per_page=20")"
+          LABELS_JSON="$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/labels?per_page=100")"
+          PROTECTION_JSON="$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GH_REPO/branches/main/protection")"
+
+          EXPECTED_LABELS=(core api web e2e deploy infra docs)
+          MISSING_LABELS=()
+          for lbl in "${EXPECTED_LABELS[@]}"; do
+            if ! echo "$LABELS_JSON" | jq -e --arg L "$lbl" '.[] | select(.name == $L)' >/dev/null; then
+              MISSING_LABELS+=("$lbl")
+            fi
+          done
+
+          REQ_CHECK=$(echo "$PROTECTION_JSON" | jq -r '.required_status_checks.checks[]?.context // empty' | grep -Fx 'Cross-stack coherence' || true)
+          if [ -n "$REQ_CHECK" ]; then
+            CHECK_STATE="required"
+          else
+            CHECK_STATE="not-required"
+          fi
+
+          {
+            echo "# Monthly Cross-stack Report"
+            echo
+            echo "Generated: $NOW_UTC"
+            echo "Repository: $GH_REPO"
+            echo
+            echo "## Branch Protection (main)"
+            echo "- Cross-stack coherence: $CHECK_STATE"
+            echo
+            echo "## Expected Labels"
+            if [ ${#MISSING_LABELS[@]} -eq 0 ]; then
+              echo "- All expected labels are present: core, api, web, e2e, deploy, infra, docs"
+            else
+              echo "- Missing labels: ${MISSING_LABELS[*]}"
+            fi
+            echo
+            echo "## Active Workflows"
+            echo "$WORKFLOWS_JSON" | jq -r '.workflows[] | "- \(.name) [\(.state)]"'
+            echo
+            echo "## Latest Runs (Top 10)"
+            echo "$RUNS_JSON" | jq -r '.workflow_runs[:10][] | "- \(.name) | \(.event) | \(.status) | \(.conclusion // "in_progress") | \(.html_url)"'
+          } > "$OUT_FILE"
+
+          cat "$OUT_FILE" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: monthly-cross-stack-report
+          path: artifacts/monthly-cross-stack-report-*.md
