@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import AtomGlitch from '@/components/AtomGlitch';
 import '@/styles/global.css';
 import '@/styles/home-workbench.css';
 import SiteHeader from '@/components/SiteHeader.astro';
@@ -27,8 +28,11 @@ const headerItems = [
   <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
 
   <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
-    <section class="structure-grid structure-grid--hero" data-reveal>
-      <div class="structure-cell structure-cell--hero">
+    <section class="structure-grid structure-grid--hero hero-webgl-wrapper" data-reveal>
+      <div class="hero-webgl-bg">
+        <AtomGlitch client:visible />
+      </div>
+      <div class="structure-cell structure-cell--hero hero-webgl-content">
         <Hero />
       </div>
     </section>
@@ -143,3 +147,24 @@ const headerItems = [
     </div>
   </footer>
 </BaseLayout>
+
+<style>
+  .hero-webgl-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-webgl-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+  .hero-webgl-content {
+    position: relative;
+    z-index: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-webgl-bg { display: none; }
+  }
+</style>
