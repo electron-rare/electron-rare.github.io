@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import AtomGlitch from '@/components/AtomGlitch';
+import WebGLBackground from '@/components/WebGLBackground';
+import { MediaLightbox } from '@/components/WebGLCards';
 import '@/styles/global.css';
 import '@/styles/home-workbench.css';
+import '@/styles/webgl-cards.css';
 import SiteHeader from '@/components/SiteHeader.astro';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
@@ -25,31 +27,37 @@ const headerItems = [
 ---
 
 <BaseLayout>
+  <!-- WebGL background layer — fixed, subtle, always visible -->
+  <WebGLBackground client:load />
+  <!-- Media lightbox (click photos/videos to view full) -->
+  <MediaLightbox client:load />
+
   <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
 
-  <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
-    <section class="structure-grid structure-grid--hero hero-webgl-wrapper" data-reveal>
-      <div class="hero-webgl-bg">
-        <AtomGlitch client:visible />
-      </div>
-      <div class="structure-cell structure-cell--hero hero-webgl-content">
+  <main id="main-content" class="dark-site">
+    <!-- HERO -->
+    <section class="section-dark section-hero webgl-section" id="top">
+      <div class="section-content">
         <Hero />
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--systems" data-reveal>
-      <div class="structure-cell structure-cell--about">
+    <!-- ABOUT -->
+    <section class="section-dark webgl-section" id="a-propos">
+      <div class="section-content webgl-card" style="--card-accent: #5bd1d8">
         <About />
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--cases" data-reveal>
-      <div class="structure-cell structure-cell--cases">
+    <!-- CASE STUDIES -->
+    <section class="section-dark webgl-section">
+      <div class="section-content webgl-card" style="--card-accent: #f1c27a">
         <CaseStudies />
       </div>
     </section>
 
-    <section class="photo-strip" aria-label="Photos de terrain" data-reveal>
+    <!-- PHOTO STRIP -->
+    <section class="photo-strip section-dark" aria-label="Photos de terrain" data-reveal>
       <div class="photo-strip-track">
         <img src={withSiteBase('/assets/photos/pcb-teensy-led-kxkm.webp')} alt="PCB custom Teensy LED — projet spectacle vivant KXKM" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
         <img src={withSiteBase('/assets/photos/platine-automate-cablage.webp')} alt="Câblage automate industriel — intervention terrain" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
@@ -64,7 +72,8 @@ const headerItems = [
       </div>
     </section>
 
-    <section class="video-strip" aria-label="Vidéos de terrain" data-reveal>
+    <!-- VIDEO STRIP -->
+    <section class="video-strip section-dark" aria-label="Vidéos de terrain" data-reveal>
       <div class="video-strip-track">
         <video src={withSiteBase('/assets/videos/video-bench-electronique.mp4')} poster={withSiteBase('/assets/videos/video-bench-electronique-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Bench électronique en action"></video>
         <video src={withSiteBase('/assets/videos/video-test-prototype.mp4')} poster={withSiteBase('/assets/videos/video-test-prototype-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Test de prototype"></video>
@@ -72,36 +81,35 @@ const headerItems = [
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--sprints" data-reveal>
-      <div class="structure-cell structure-cell--sprints">
+    <!-- SPRINTS -->
+    <section class="section-dark webgl-section" id="graphic-sprints-title">
+      <div class="section-content webgl-card" style="--card-accent: #b6d18f">
         <GraphicSprints />
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--faq" data-reveal>
-      <div class="structure-cell structure-cell--faq">
+    <!-- FAQ -->
+    <section class="section-dark webgl-section" id="faq">
+      <div class="section-content webgl-card" style="--card-accent: #5bd1d8">
         <Faq />
       </div>
     </section>
 
-    <section class="structure-grid structure-grid--conversion" data-reveal>
-      <div class="structure-cell structure-cell--contact">
+    <!-- CONTACT -->
+    <section class="section-dark section-contact webgl-section" id="contact">
+      <div class="section-content webgl-card" style="--card-accent: #ff6b35">
         <Contact />
       </div>
     </section>
   </main>
 
-  <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
+  <footer class="dark-footer">
     <div class="site-shell footer-grid footer-grid--enhanced">
       <div class="footer-col footer-col--brand">
         <p class="m-0 footer-title">L'électron rare</p>
         <div class="footer-brand-meta">
-          <p class="mb-0 footer-copy">
-            © 2026 Clément Saillant - systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.
-          </p>
-          <p class="mb-0 footer-copy footer-copy--right">
-            Contact direct : LinkedIn DM ou contact@lelectronrare.fr
-          </p>
+          <p class="mb-0 footer-copy">© 2026 Clément Saillant - systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.</p>
+          <p class="mb-0 footer-copy footer-copy--right">Contact direct : LinkedIn DM ou contact@lelectronrare.fr</p>
         </div>
       </div>
       <nav aria-label="Ressources studio" class="footer-links footer-links--single-rail">
@@ -110,38 +118,9 @@ const headerItems = [
         <a href={formationHref} class="footer-link">Formation</a>
         <a href="#faq" class="footer-link">FAQ</a>
         <a href="#contact" class="footer-link">Contact</a>
-        <a
-          href="https://fr.linkedin.com/in/electron-rare"
-          target="_blank"
-          rel="noopener noreferrer me"
-          {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
-          class="footer-link"
-        >
-          LinkedIn
-        </a>
-        <a
-          href="#contact"
-          class="footer-link"
-        >
-          Contact
-        </a>
-        <a
-          href="https://github.com/electron-rare/"
-          target="_blank"
-          rel="noopener noreferrer me"
-          {...trackAttrs(TRACK_EVENTS.outboundGithubContact, 'github.com')}
-          class="footer-link"
-        >
-          GitHub
-        </a>
-        <a
-          href="https://blog.saillant.cc"
-          target="_blank"
-          rel="noopener noreferrer me"
-          class="footer-link"
-        >
-          Blog technique
-        </a>
+        <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener noreferrer me" {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')} class="footer-link">LinkedIn</a>
+        <a href="https://github.com/electron-rare/" target="_blank" rel="noopener noreferrer me" {...trackAttrs(TRACK_EVENTS.outboundGithubContact, 'github.com')} class="footer-link">GitHub</a>
+        <a href="https://blog.saillant.cc" target="_blank" rel="noopener noreferrer me" class="footer-link">Blog technique</a>
         <a href={mentionsHref} class="footer-link">Mentions légales</a>
       </nav>
     </div>
@@ -149,22 +128,199 @@ const headerItems = [
 </BaseLayout>
 
 <style>
-  .hero-webgl-wrapper {
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-webgl-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.25;
-    pointer-events: none;
-  }
-  .hero-webgl-content {
+  /* ============ DARK TECH THEME ============ */
+  .dark-site {
     position: relative;
     z-index: 1;
+    background: transparent;
+    color: #e0e0e0;
   }
+
+  .section-dark {
+    position: relative;
+    padding: clamp(40px, 8vw, 100px) 0;
+  }
+
+  .section-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .section-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+
+  /* Glass cards for content sections */
+  .section-dark :global(.circuit-board-section),
+  .section-dark :global(.about-card),
+  .section-dark :global(.case-card),
+  .section-dark :global(.sprint-card) {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: #e0e0e0 !important;
+  }
+
+  /* Text overrides for dark */
+  .section-dark :global(h1),
+  .section-dark :global(h2),
+  .section-dark :global(h3),
+  .section-dark :global(.section-title),
+  .section-dark :global(.hero-title-word) {
+    color: #ffffff !important;
+  }
+
+  .section-dark :global(p),
+  .section-dark :global(li),
+  .section-dark :global(.about-bio),
+  .section-dark :global(.case-text),
+  .section-dark :global(.sprint-deliverables) {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .section-dark :global(a) {
+    color: #5bd1d8 !important;
+  }
+
+  .section-dark :global(.hero-slogan-char) {
+    color: rgba(91, 209, 216, 0.8) !important;
+  }
+
+  /* Photo strip dark */
+  .section-dark.photo-strip {
+    padding: clamp(20px, 4vw, 40px) 0;
+  }
+  .section-dark :global(.photo-strip-img) {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    opacity: 0.85;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .section-dark :global(.photo-strip-img:hover) {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  /* Video strip dark */
+  .section-dark :global(.video-strip-clip) {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+  }
+
+  /* FAQ dark */
+  .section-dark :global(.faq-question) {
+    color: #ffffff !important;
+  }
+  .section-dark :global(.faq-answer) {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+  .section-dark :global(details) {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Chips/badges glow */
+  .section-dark :global(.about-chip) {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+  }
+
+  /* Sprint progress bars glow */
+  .section-dark :global(.sprint-progress-fill) {
+    box-shadow: 0 0 12px rgba(91, 209, 216, 0.4);
+  }
+
+  /* CTA buttons */
+  .section-dark :global(.btn-primary),
+  .section-dark :global([data-track]) {
+    background: rgba(91, 209, 216, 0.15) !important;
+    border: 1px solid rgba(91, 209, 216, 0.3) !important;
+    color: #5bd1d8 !important;
+  }
+  .section-dark :global(.btn-primary:hover) {
+    background: rgba(91, 209, 216, 0.25) !important;
+  }
+
+  /* Contact form dark (Minitel) */
+  .section-dark :global(.minitel-body) {
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(16px);
+  }
+  .section-dark :global(.minitel-input),
+  .section-dark :global(.minitel-textarea),
+  .section-dark :global(.minitel-select) {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #e0e0e0 !important;
+  }
+
+  /* Hero background image — dark blend */
+  .section-dark :global(.figma-lab-hero-grid) {
+    position: relative;
+  }
+  .section-dark :global(.hero-panel-image) {
+    opacity: 0.3 !important;
+    mix-blend-mode: luminosity;
+  }
+
+  /* ============ DARK FOOTER ============ */
+  .dark-footer {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 24px 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+  }
+  .dark-footer :global(.footer-title) {
+    color: #ffffff;
+  }
+  .dark-footer :global(.footer-copy) {
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .dark-footer :global(.footer-link) {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+  .dark-footer :global(.footer-link:hover) {
+    color: #5bd1d8 !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .hero-webgl-bg { display: none; }
+    .section-hero { min-height: auto; }
   }
 </style>
+
+<script>
+  // Initialize scroll-triggered webgl-card and webgl-section animations
+  function initScrollAnimations() {
+    const cards = document.querySelectorAll('.webgl-card');
+    const sections = document.querySelectorAll('.webgl-section');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(
+              entry.target.classList.contains('webgl-card')
+                ? 'webgl-card--visible'
+                : 'webgl-section--visible'
+            );
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    cards.forEach((el) => observer.observe(el));
+    sections.forEach((el) => observer.observe(el));
+  }
+
+  // Run on load and on Astro page transitions
+  initScrollAnimations();
+  document.addEventListener('astro:page-load', initScrollAnimations);
+</script>
