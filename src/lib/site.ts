@@ -61,7 +61,10 @@ export const SITE_META = {
   twitterDescription:
     "Électronique, automatisme, énergie, stockage : systèmes spécifiques, mise au point et coordination multi-technique avec les bons partenaires.",
   ogImagePath: 'assets/og-cover.jpg',
-  themeColor: '#ffffff'
+  themeColor: '#5bd1d8',
+  keywords: 'systèmes électroniques spécifiques, conception électronique sur mesure, prototype électronique, PCB KiCad, automatisme industriel, ESP32, STM32, IoT embarqué, formation électronique, énergie stockage batterie, CEM EMC, spectacle vivant DMX, consultant électronique France, IA embarquée, intelligence artificielle électronique',
+  author: 'Clément Saillant',
+  locale: 'fr_FR'
 } as const;
 
 export const SITE_OG_IMAGE_URL = new URL(SITE_META.ogImagePath, PUBLIC_SITE_ROOT_URL).href;

@@ -2,24 +2,145 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AtomGlitch from '@/components/AtomGlitch';
 import '@/styles/global.css';
+import '@/styles/home-workbench.css';
+import SiteHeader from '@/components/SiteHeader.astro';
+import { Hero } from '@/components/sections/Hero';
+import { About } from '@/components/sections/About';
+import { CaseStudies } from '@/components/sections/CaseStudies';
+import { GraphicSprints } from '@/components/sections/GraphicSprints';
+import Contact from '@/components/sections/Contact.astro';
+import Faq from '@/components/sections/Faq.astro';
+import { withSiteBase } from '@/lib/site';
+import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
+
+const LAUNCH_DATE = new Date('2026-05-01T00:00:00+02:00');
+const isLaunched = Date.now() >= LAUNCH_DATE.getTime();
+
+const formationHref = withSiteBase('/formation/');
+const mentionsHref = withSiteBase('/mentions-legales/');
+const headerItems = [
+  { href: '#a-propos', label: 'Approche' },
+  { href: '#graphic-sprints-title', label: 'Missions' },
+  { href: formationHref, label: 'Formation' },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#contact', label: 'Contact', desktopOnly: true }
+];
+
+const title = isLaunched
+  ? "Systèmes électroniques spécifiques | L'électron rare"
+  : "L'Electron Rare — Bientôt";
+const description = isLaunched
+  ? "L'Électron Rare conçoit, met au point et fiabilise des systèmes électroniques spécifiques en électronique, automatisme, énergie et stockage."
+  : "L'Electron Rare arrive. Systèmes électroniques spécifiques, formations, prototypage.";
 ---
 
-<BaseLayout title="L'Electron Rare — Bientôt" description="L'Electron Rare arrive. Systèmes électroniques spécifiques, formations, prototypage.">
+<BaseLayout title={title} description={description}>
+{isLaunched ? (
+  <!-- ============ SITE COMPLET (après 1er mai) ============ -->
+  <Fragment>
+    <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
+
+    <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
+      <!-- Hero avec WebGL en background -->
+      <section class="structure-grid structure-grid--hero hero-webgl-wrapper" data-reveal>
+        <div class="hero-webgl-bg">
+          <AtomGlitch client:visible />
+        </div>
+        <div class="structure-cell structure-cell--hero hero-webgl-content">
+          <Hero />
+        </div>
+      </section>
+
+      <section class="structure-grid structure-grid--systems" data-reveal>
+        <div class="structure-cell structure-cell--about">
+          <About />
+        </div>
+      </section>
+
+      <section class="structure-grid structure-grid--cases" data-reveal>
+        <div class="structure-cell structure-cell--cases">
+          <CaseStudies />
+        </div>
+      </section>
+
+      <section class="photo-strip" aria-label="Photos de terrain" data-reveal>
+        <div class="photo-strip-track">
+          <img src={withSiteBase('/assets/photos/pcb-teensy-led-kxkm.webp')} alt="PCB custom Teensy LED — projet spectacle vivant KXKM" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/platine-automate-cablage.webp')} alt="Câblage automate industriel — intervention terrain" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/bench-bms-batteries-xt60.webp')} alt="Banc de test BMS batteries — prototypage" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/automate-siemens-s7.webp')} alt="Automate Siemens S7 — diagnostic industriel" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/soudure-pcb-composants.webp')} alt="Soudure PCB — formation et prototypage" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/oscilloscope-philips-vintage.webp')} alt="Instrumentation et mesure — oscilloscope" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/rack-cbtc-lon-connecteurs.webp')} alt="Rack CBTC transport — connectique industrielle" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/pcb-embarquee-boitier-test.webp')} alt="Carte embarquée en test — validation prototype" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/armoire-automate-schneider.webp')} alt="Armoire Schneider — automatisme industriel" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+          <img src={withSiteBase('/assets/photos/outillage-atelier-pro.webp')} alt="Atelier professionnel — outillage organisé" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+        </div>
+      </section>
+
+      <section class="video-strip" aria-label="Vidéos de terrain" data-reveal>
+        <div class="video-strip-track">
+          <video src={withSiteBase('/assets/videos/video-bench-electronique.mp4')} poster={withSiteBase('/assets/videos/video-bench-electronique-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Bench électronique en action"></video>
+          <video src={withSiteBase('/assets/videos/video-test-prototype.mp4')} poster={withSiteBase('/assets/videos/video-test-prototype-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Test de prototype"></video>
+          <video src={withSiteBase('/assets/videos/video-instrumentation.mp4')} poster={withSiteBase('/assets/videos/video-instrumentation-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Instrumentation et mesure"></video>
+        </div>
+      </section>
+
+      <section class="structure-grid structure-grid--sprints" data-reveal>
+        <div class="structure-cell structure-cell--sprints">
+          <GraphicSprints />
+        </div>
+      </section>
+
+      <section class="structure-grid structure-grid--faq" data-reveal>
+        <div class="structure-cell structure-cell--faq">
+          <Faq />
+        </div>
+      </section>
+
+      <section class="structure-grid structure-grid--conversion" data-reveal>
+        <div class="structure-cell structure-cell--contact">
+          <Contact />
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
+      <div class="site-shell footer-grid footer-grid--enhanced">
+        <div class="footer-col footer-col--brand">
+          <p class="m-0 footer-title">L'électron rare</p>
+          <div class="footer-brand-meta">
+            <p class="mb-0 footer-copy">© 2026 Clément Saillant - systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.</p>
+            <p class="mb-0 footer-copy footer-copy--right">Contact direct : LinkedIn DM ou contact@lelectronrare.fr</p>
+          </div>
+        </div>
+        <nav aria-label="Ressources studio" class="footer-links footer-links--single-rail">
+          <a href="#a-propos" class="footer-link">Approche</a>
+          <a href="#graphic-sprints-title" class="footer-link">Missions</a>
+          <a href={formationHref} class="footer-link">Formation</a>
+          <a href="#faq" class="footer-link">FAQ</a>
+          <a href="#contact" class="footer-link">Contact</a>
+          <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener noreferrer me" {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')} class="footer-link">LinkedIn</a>
+          <a href="https://github.com/electron-rare/" target="_blank" rel="noopener noreferrer me" {...trackAttrs(TRACK_EVENTS.outboundGithubContact, 'github.com')} class="footer-link">GitHub</a>
+          <a href="https://blog.saillant.cc" target="_blank" rel="noopener noreferrer me" class="footer-link">Blog technique</a>
+          <a href={mentionsHref} class="footer-link">Mentions légales</a>
+        </nav>
+      </div>
+    </footer>
+  </Fragment>
+) : (
+  <!-- ============ COUNTDOWN (avant 1er mai) ============ -->
   <main class="countdown-page">
-    <!-- WebGL background -->
     <div class="webgl-bg">
       <AtomGlitch client:load />
     </div>
 
-    <!-- Overlay content -->
     <div class="overlay">
-      <!-- Top bar -->
       <div class="top-bar">
         <div class="logo-sprite" id="logo-sprite" aria-label="L'Electron Rare — logo animé"></div>
         <span class="brand-mark">L'ELECTRON RARE</span>
       </div>
 
-      <!-- Center — spacer (text is in WebGL) -->
       <div class="center-spacer">
         <div class="tagline-area" id="tagline-bubble" aria-live="polite">
           <span class="tagline-cursor">></span>
@@ -27,15 +148,16 @@ import '@/styles/global.css';
         </div>
       </div>
 
-      <!-- Bottom bar -->
       <div class="bottom-bar">
         <span class="bottom-left">electronique · automatisme · energie</span>
         <span class="bottom-right">mai 2026</span>
       </div>
     </div>
   </main>
+)}
 </BaseLayout>
 
+{!isLaunched && (
 <script>
   const messages = [
     "Charge des condensateurs en cours...",
@@ -75,8 +197,10 @@ import '@/styles/global.css';
   rotateMessage();
   setInterval(rotateMessage, 8000);
 </script>
+)}
 
 <style>
+  /* ============ COUNTDOWN STYLES ============ */
   .countdown-page {
     position: relative;
     min-height: 100vh;
@@ -85,8 +209,6 @@ import '@/styles/global.css';
     font-family: 'Manrope', -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
     color: #fff;
   }
-
-  /* WebGL canvas — full background */
   .webgl-bg {
     position: fixed;
     inset: 0;
@@ -94,8 +216,6 @@ import '@/styles/global.css';
     width: 100vw;
     height: 100vh;
   }
-
-  /* Overlay — full viewport, vertical layout */
   .overlay {
     position: relative;
     z-index: 10;
@@ -107,8 +227,6 @@ import '@/styles/global.css';
     pointer-events: none;
   }
   .overlay > * { pointer-events: auto; }
-
-  /* ===== TOP BAR ===== */
   .top-bar {
     display: flex;
     align-items: center;
@@ -121,7 +239,6 @@ import '@/styles/global.css';
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    transition: opacity 0.3s ease;
     filter: brightness(1.2) drop-shadow(0 0 12px rgba(91, 209, 216, 0.4));
   }
   .brand-mark {
@@ -131,8 +248,6 @@ import '@/styles/global.css';
     color: rgba(255, 255, 255, 0.5);
     text-transform: uppercase;
   }
-
-  /* ===== CENTER SPACER ===== */
   .center-spacer {
     flex: 1;
     display: flex;
@@ -141,8 +256,6 @@ import '@/styles/global.css';
     justify-content: flex-end;
     padding-bottom: clamp(20px, 3vw, 40px);
   }
-
-  /* Tagline — terminal style */
   .tagline-area {
     display: flex;
     align-items: center;
@@ -161,17 +274,12 @@ import '@/styles/global.css';
     color: #5bd1d8;
     animation: blink 1s step-end infinite;
   }
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
+  @keyframes blink { 50% { opacity: 0; } }
   .tagline-text {
     font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
     font-size: clamp(11px, 1.3vw, 14px);
     color: rgba(255, 255, 255, 0.4);
-    font-weight: 400;
   }
-
-  /* ===== BOTTOM BAR ===== */
   .bottom-bar {
     display: flex;
     justify-content: space-between;
@@ -185,23 +293,33 @@ import '@/styles/global.css';
     color: rgba(255, 255, 255, 0.15);
     text-transform: uppercase;
   }
-
-  /* ===== Animations ===== */
   @keyframes fade-in {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @media (max-width: 640px) {
-    .timer-hero { gap: 2px; }
-    .sep { margin: 0; }
-    .bottom-bar { flex-direction: column; align-items: center; gap: 4px; }
+  /* ============ HERO WEBGL (site complet) ============ */
+  .hero-webgl-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-webgl-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+  .hero-webgl-content {
+    position: relative;
+    z-index: 1;
   }
 
+  @media (max-width: 640px) {
+    .bottom-bar { flex-direction: column; align-items: center; gap: 4px; }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .logo-sprite, .title, .timer-hero, .divider,
-    .tagline-area, .subtitle, .overline,
-    .top-bar, .bottom-bar { animation: none; opacity: 1; }
-    .webgl-bg { display: none; }
+    .logo-sprite, .top-bar, .tagline-area, .bottom-bar { animation: none; opacity: 1; }
+    .webgl-bg, .hero-webgl-bg { display: none; }
   }
 </style>

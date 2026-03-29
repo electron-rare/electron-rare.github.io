@@ -38,36 +38,57 @@ const structuredDataJsonLd = JSON.stringify({
       url: CANONICAL_URL,
       name: "L'électron rare",
       inLanguage: 'fr-FR',
-      description: SITE_META.description
+      description: SITE_META.description,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${CANONICAL_URL}?q={search_term_string}`,
+        'query-input': 'required name=search_term_string'
+      }
     },
     {
       '@type': 'Organization',
       '@id': `${CANONICAL_URL}#organization`,
       name: "L'électron rare",
+      legalName: "Clément Saillant — L'Électron Rare",
       url: CANONICAL_URL,
-      logo: new URL('assets/brand/logo-mark.png', CANONICAL_URL).href,
+      logo: {
+        '@type': 'ImageObject',
+        url: new URL('assets/brand/logo-mark.png', CANONICAL_URL).href,
+        width: 512,
+        height: 512
+      },
+      image: new URL('assets/og-cover.jpg', CANONICAL_URL).href,
+      foundingDate: '2024',
+      founder: { '@id': `${CANONICAL_URL}#person` },
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'FR',
+        addressLocality: 'France'
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        email: 'contact@lelectronrare.fr',
+        url: `${CANONICAL_URL}#contact`,
+        availableLanguage: ['fr', 'en']
+      },
       knowsAbout: [
         'systèmes électroniques spécifiques',
         'conception électronique sur mesure',
-        'conception de systèmes électroniques',
         'intégration électronique multi-technique',
-        'systèmes électroniques sur mesure',
         'consulting électronique',
         'formation électronique appliquée',
         'prototype hardware',
         'automatisme industriel',
-        'gestion energie',
-        'stockage energie',
-        'optimisation systeme',
-        'développement IoT',
-        'microcontrôleur',
-        'instrumentation',
-        'télémétrie',
-        'contrôle LED',
-        'PCB KiCad',
-        'conception selon IPC-A-610',
-        'compatibilité électromagnétique CEM',
-        'DMX Art-Net DANTE'
+        'gestion énergie et stockage',
+        'développement IoT et embarqué',
+        'microcontrôleur ESP32 STM32',
+        'instrumentation et télémétrie',
+        'PCB KiCad conception IPC-A-610',
+        'compatibilité électromagnétique CEM EMC',
+        'DMX Art-Net DANTE spectacle vivant',
+        'intelligence artificielle embarquée',
+        'prototypage rapide et petites séries'
       ],
       sameAs: [
         'https://fr.linkedin.com/in/electron-rare',
@@ -81,34 +102,32 @@ const structuredDataJsonLd = JSON.stringify({
       name: 'Clément Saillant',
       alternateName: "L'électron rare",
       url: CANONICAL_URL,
-      jobTitle: 'Concepteur de systemes electroniques specifiques',
-      description:
-        "Concepteur de systemes electroniques specifiques. Diagnostic, conception, mise au point et fiabilisation de projets electroniques, avec mobilisation de partenaires adaptes quand le projet devient multi-technique.",
+      jobTitle: 'Concepteur de systèmes électroniques spécifiques',
+      description: "Concepteur de systèmes électroniques spécifiques. Diagnostic, conception, mise au point et fiabilisation de projets électroniques, avec mobilisation de partenaires adaptés quand le projet devient multi-technique.",
+      hasCredential: {
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: 'BTS',
+        name: 'BTS Systèmes Numériques'
+      },
+      hasOccupation: {
+        '@type': 'Occupation',
+        name: 'Concepteur électronique embarquée',
+        occupationLocation: { '@type': 'Country', name: 'France' },
+        skills: 'PCB design, embedded firmware, industrial automation, energy management, IoT, AI-assisted electronics'
+      },
       knowsAbout: [
-        'specific electronic systems',
-        'electronic systems design',
-        'custom electronics designer',
-        'electronics consultant',
-        'electronics trainer',
-        'electronic systems developer',
-        'IoT developer',
-        'systemes electroniques specifiques',
-        'consulting electronique',
-        'formation electronique',
-        'prototype hardware',
-        'automatisme industriel',
-        'gestion energie',
-        'stockage energie',
-        'optimisation systeme',
-        'microcontroleur',
-        'instrumentation',
-        'PCB design KiCad',
-        'IPC-A-610',
-        'CEM EMC',
-        'DMX Art-Net DANTE'
+        'specific electronic systems', 'electronic systems design', 'custom electronics designer',
+        'electronics consultant', 'electronics trainer', 'IoT developer',
+        'embedded AI', 'ESP32', 'STM32', 'KiCad', 'FreeCAD',
+        'automatisme industriel', 'énergie et stockage',
+        'PCB design', 'IPC-A-610', 'CEM EMC', 'DMX Art-Net DANTE',
+        'spectacle vivant', 'industries créatives'
       ],
-      worksFor: {
-        '@id': `${CANONICAL_URL}#organization`
+      worksFor: { '@id': `${CANONICAL_URL}#organization` },
+      memberOf: {
+        '@type': 'Organization',
+        name: 'KompleX KapharnaüM',
+        url: 'https://www.kfrancetyphon.com'
       },
       sameAs: [
         'https://fr.linkedin.com/in/electron-rare',
@@ -122,9 +141,79 @@ const structuredDataJsonLd = JSON.stringify({
       name: "L'électron rare",
       url: canonical,
       provider: { '@id': `${CANONICAL_URL}#person` },
-      serviceType: ['Systèmes électroniques spécifiques', 'Prototype électronique', 'Instrumentation', 'Automatisme industriel', 'Consulting électronique', 'Formation technique'],
+      serviceType: [
+        'Systèmes électroniques spécifiques',
+        'Prototype électronique',
+        'Instrumentation et contrôle',
+        'Automatisme industriel',
+        'Consulting électronique',
+        'Formation technique',
+        'Énergie et stockage',
+        'Intégration IA embarquée'
+      ],
       areaServed: { '@type': 'Country', name: 'France' },
-      description: 'Conception, mise au point et fiabilisation de systèmes électroniques spécifiques, avec partenaires adaptés pour les projets multi-techniques.'
+      description: 'Conception, mise au point et fiabilisation de systèmes électroniques spécifiques, avec partenaires adaptés pour les projets multi-techniques.',
+      priceRange: '€€',
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Formats de mission',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Diagnostic',
+              description: 'Analyse de faisabilité, identification des risques, plan d\'action — 1 à 2 semaines'
+            }
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Prototype',
+              description: 'Prototype testé, mesures documentées, go/no-go — 4 à 6 semaines'
+            }
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Mission complète',
+              description: 'Livrables phasés, dossier de production, transfert clé en main — 2 à 6 mois'
+            }
+          }
+        ]
+      }
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${CANONICAL_URL}#faq`,
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Quels types de projets électroniques prenez-vous en charge ?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Cartes sur mesure, interfaces capteurs, alimentations, reprise d\'existant, instrumentation, automatisme, dispositifs pour le spectacle vivant, gestion énergie et stockage, et montages multi-techniques avec partenaires.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Travaillez-vous avec des technologies IA embarquée ?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Oui, nous intégrons l\'intelligence artificielle dans les systèmes embarqués : inférence locale sur ESP32/STM32, optimisation de modèles pour edge computing, et assistance IA pour la conception PCB via KiCad et nos outils internes.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Quelle est la durée typique d\'un projet ?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Un diagnostic prend 1 à 2 semaines. Un prototype 4 à 6 semaines. Une mission complète de 2 à 6 mois selon la complexité.'
+          }
+        }
+      ]
     }
   ]
 });
@@ -140,6 +229,11 @@ const structuredDataJsonLd = JSON.stringify({
     <title>{title}</title>
     <meta name="theme-color" content={SITE_META.themeColor} />
     <meta name="description" content={description} />
+    <meta name="keywords" content={SITE_META.keywords} />
+    <meta name="author" content={SITE_META.author} />
+    <meta name="language" content="fr" />
+    <meta name="geo.region" content="FR" />
+    <meta name="geo.placename" content="France" />
     <link rel="icon" type="image/svg+xml" href={withSiteBase('/favicon.svg')} />
     <link rel="icon" type="image/png" sizes="32x32" href={withSiteBase('/favicon-32x32.png')} />
     <link rel="icon" type="image/png" sizes="16x16" href={withSiteBase('/favicon-16x16.png')} />
@@ -149,6 +243,15 @@ const structuredDataJsonLd = JSON.stringify({
     <ClientRouter />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={robotsContent} />
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- AI / LLM crawling directives (SOTA 2026) -->
+    <meta name="ai-content-declaration" content="human-created" />
+    <meta name="generator-assisted" content="Claude Code (Anthropic) — site structure and WebGL; content authored by Clément Saillant" />
+    <link rel="llms" href={withSiteBase('/llms.txt')} type="text/plain" />
+
+    <!-- Speakable (voice search optimization) -->
+    <meta name="speakable" content="true" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />

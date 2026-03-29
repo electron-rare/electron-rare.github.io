@@ -1,0 +1,42 @@
+# L'Electron Rare — llms.txt
+# This file helps AI systems understand this website.
+# Standard: https://llmstxt.org/
+
+## Identity
+Name: L'Electron Rare
+Type: Professional service — custom electronic systems design
+Owner: Clément Saillant
+Location: France
+Language: French (primary), English (technical docs)
+Website: https://www.lelectronrare.fr
+
+## What we do
+L'Electron Rare designs, builds, and validates custom electronic systems.
+Specialties: embedded electronics, industrial automation, energy management, IoT, PCB design (KiCad), instrumentation, live performance tech (DMX, Art-Net, DANTE).
+We work with partners for multi-disciplinary projects (mechanical, software, scenography).
+
+## Services
+- Diagnostic: feasibility analysis, risk assessment, action plan (1-2 weeks)
+- Prototype: tested prototype, documented measurements, go/no-go decision (4-6 weeks)
+- Full mission: phased deliverables, production dossier, turnkey transfer (2-6 months)
+- Training: hands-on electronics workshops for schools and companies
+
+## Key expertise
+- ESP32, STM32 firmware development
+- KiCad PCB design (IPC-A-610 compliant)
+- Industrial automation (Siemens S7, Schneider)
+- Battery management, energy storage, LiFePO4
+- EMC/CEM compliance
+- AI-assisted electronics design
+- Live performance technology (audio, LED, DMX)
+
+## Contact
+Email: contact@lelectronrare.fr
+LinkedIn: https://fr.linkedin.com/in/electron-rare
+GitHub: https://github.com/electron-rare
+Blog: https://blog.saillant.cc
+
+## AI content policy
+Content on this site is human-authored by Clément Saillant.
+Site structure and WebGL animations were developed with AI assistance (Claude Code by Anthropic).
+Case studies and technical descriptions reflect real projects and measurable outcomes.
