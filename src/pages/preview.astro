@@ -130,9 +130,11 @@ const headerItems = [
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="section-dark section-contact webgl-section" id="contact">
-      <div class="section-content webgl-card" style="--card-accent: #ff6b35">
+    <!-- CONTACT — hidden by default, appears as 3D tile on click or end of scroll -->
+    <section class="section-dark section-contact contact-3d-popup" id="contact">
+      <div class="contact-3d-backdrop" id="contact-backdrop"></div>
+      <div class="section-content contact-3d-tile" id="contact-tile">
+        <button class="contact-3d-close" id="contact-close" aria-label="Fermer">✕</button>
         <Contact />
       </div>
     </section>
@@ -325,8 +327,86 @@ const headerItems = [
     color: #5bd1d8 !important;
   }
 
+  /* ============ CONTACT 3D POPUP ============ */
+  .contact-3d-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    padding: 0;
+  }
+
+  .contact-3d-popup.contact-3d-popup--open {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .contact-3d-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .contact-3d-tile {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    width: 90vw;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid rgba(91, 209, 216, 0.15);
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 40px);
+    box-shadow:
+      0 0 40px rgba(91, 209, 216, 0.08),
+      0 24px 80px rgba(0, 0, 0, 0.6);
+    transform: perspective(1200px) rotateY(-15deg) rotateX(5deg) scale(0.85) translateY(40px);
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  }
+
+  .contact-3d-popup--open .contact-3d-tile {
+    transform: perspective(1200px) rotateY(0deg) rotateX(0deg) scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  .contact-3d-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .contact-3d-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    transform: rotate(90deg);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .section-hero { min-height: auto; }
+    .contact-3d-tile { transform: none; }
   }
 </style>
 
@@ -410,9 +490,53 @@ const headerItems = [
   initScrollAnimations();
   setTimeout(initScrollTilt, 2000);
   initCarousels();
+  // Contact 3D popup
+  function initContactPopup() {
+    const popup = document.getElementById('contact');
+    const backdrop = document.getElementById('contact-backdrop');
+    const closeBtn = document.getElementById('contact-close');
+    if (!popup) return;
+
+    function openContact() {
+      popup.classList.add('contact-3d-popup--open');
+    }
+    function closeContact() {
+      popup.classList.remove('contact-3d-popup--open');
+    }
+
+    // Open on any #contact link click
+    document.querySelectorAll('a[href="#contact"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openContact();
+      });
+    });
+
+    // Open at end of scroll (>95%)
+    let endTriggered = false;
+    window.addEventListener('scroll', () => {
+      const el = document.documentElement;
+      const pct = el.scrollTop / (el.scrollHeight - el.clientHeight);
+      if (pct > 0.95 && !endTriggered) {
+        endTriggered = true;
+        openContact();
+      }
+      if (pct < 0.9) endTriggered = false;
+    }, { passive: true });
+
+    // Close
+    backdrop?.addEventListener('click', closeContact);
+    closeBtn?.addEventListener('click', closeContact);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeContact();
+    });
+  }
+
+  initContactPopup();
   document.addEventListener('astro:page-load', () => {
     initScrollAnimations();
     setTimeout(initScrollTilt, 2000);
     initCarousels();
+    initContactPopup();
   });
 </script>
