@@ -56,29 +56,64 @@ const headerItems = [
       </div>
     </section>
 
-    <!-- PHOTO STRIP -->
-    <section class="photo-strip section-dark" aria-label="Photos de terrain" data-reveal>
-      <div class="photo-strip-track">
-        <img src={withSiteBase('/assets/photos/pcb-teensy-led-kxkm.webp')} alt="PCB custom Teensy LED — projet spectacle vivant KXKM" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/platine-automate-cablage.webp')} alt="Câblage automate industriel — intervention terrain" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/bench-bms-batteries-xt60.webp')} alt="Banc de test BMS batteries — prototypage" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/automate-siemens-s7.webp')} alt="Automate Siemens S7 — diagnostic industriel" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/soudure-pcb-composants.webp')} alt="Soudure PCB — formation et prototypage" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/oscilloscope-philips-vintage.webp')} alt="Instrumentation et mesure — oscilloscope" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/rack-cbtc-lon-connecteurs.webp')} alt="Rack CBTC transport — connectique industrielle" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/pcb-embarquee-boitier-test.webp')} alt="Carte embarquée en test — validation prototype" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/armoire-automate-schneider.webp')} alt="Armoire Schneider — automatisme industriel" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
-        <img src={withSiteBase('/assets/photos/outillage-atelier-pro.webp')} alt="Atelier professionnel — outillage organisé" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+    <!-- PHOTO CAROUSEL (atomic orbit) -->
+    <section class="section-dark webgl-section atomic-carousel" aria-label="Photos de terrain">
+      <div class="section-content">
+        <h2 style="color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; text-align: center; margin-bottom: 8px;">Terrain</h2>
       </div>
+      <button class="atomic-carousel-nav atomic-carousel-nav--prev" data-carousel="photos" data-dir="-1" aria-label="Precedent">&#8249;</button>
+      <div class="atomic-carousel-orbit" id="photo-orbit">
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/pcb-teensy-led-kxkm.webp')} alt="PCB custom Teensy LED — projet spectacle vivant KXKM" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/platine-automate-cablage.webp')} alt="Câblage automate industriel" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/bench-bms-batteries-xt60.webp')} alt="Banc de test BMS batteries" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/automate-siemens-s7.webp')} alt="Automate Siemens S7" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/soudure-pcb-composants.webp')} alt="Soudure PCB composants" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/oscilloscope-philips-vintage.webp')} alt="Oscilloscope vintage" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/rack-cbtc-lon-connecteurs.webp')} alt="Rack CBTC connectique" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/pcb-embarquee-boitier-test.webp')} alt="Carte embarquée en test" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/armoire-automate-schneider.webp')} alt="Armoire Schneider" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
+          <img src={withSiteBase('/assets/photos/outillage-atelier-pro.webp')} alt="Atelier professionnel" loading="lazy" decoding="async" class="photo-strip-img" />
+        </div>
+      </div>
+      <button class="atomic-carousel-nav atomic-carousel-nav--next" data-carousel="photos" data-dir="1" aria-label="Suivant">&#8250;</button>
+      <div class="atomic-carousel-track" id="photo-track"></div>
     </section>
 
-    <!-- VIDEO STRIP -->
-    <section class="video-strip section-dark" aria-label="Vidéos de terrain" data-reveal>
-      <div class="video-strip-track">
-        <video src={withSiteBase('/assets/videos/video-bench-electronique.mp4')} poster={withSiteBase('/assets/videos/video-bench-electronique-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Bench électronique en action"></video>
-        <video src={withSiteBase('/assets/videos/video-test-prototype.mp4')} poster={withSiteBase('/assets/videos/video-test-prototype-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Test de prototype"></video>
-        <video src={withSiteBase('/assets/videos/video-instrumentation.mp4')} poster={withSiteBase('/assets/videos/video-instrumentation-poster.webp')} controls muted loop playsinline preload="none" width="320" height="180" class="video-strip-clip" aria-label="Instrumentation et mesure"></video>
+    <!-- VIDEO CAROUSEL (atomic orbit) -->
+    <section class="section-dark webgl-section atomic-carousel" aria-label="Vidéos de terrain">
+      <button class="atomic-carousel-nav atomic-carousel-nav--prev" data-carousel="videos" data-dir="-1" aria-label="Precedent">&#8249;</button>
+      <div class="atomic-carousel-orbit" id="video-orbit">
+        <div class="atomic-carousel-item" style="width: 360px; height: 200px;">
+          <video src={withSiteBase('/assets/videos/video-bench-electronique.mp4')} poster={withSiteBase('/assets/videos/video-bench-electronique-poster.webp')} muted loop playsinline preload="none" class="video-strip-clip" aria-label="Bench électronique"></video>
+        </div>
+        <div class="atomic-carousel-item" style="width: 360px; height: 200px;">
+          <video src={withSiteBase('/assets/videos/video-test-prototype.mp4')} poster={withSiteBase('/assets/videos/video-test-prototype-poster.webp')} muted loop playsinline preload="none" class="video-strip-clip" aria-label="Test prototype"></video>
+        </div>
+        <div class="atomic-carousel-item" style="width: 360px; height: 200px;">
+          <video src={withSiteBase('/assets/videos/video-instrumentation.mp4')} poster={withSiteBase('/assets/videos/video-instrumentation-poster.webp')} muted loop playsinline preload="none" class="video-strip-clip" aria-label="Instrumentation"></video>
+        </div>
       </div>
+      <button class="atomic-carousel-nav atomic-carousel-nav--next" data-carousel="videos" data-dir="1" aria-label="Suivant">&#8250;</button>
+      <div class="atomic-carousel-track" id="video-track"></div>
     </section>
 
     <!-- SPRINTS -->
@@ -320,7 +355,64 @@ const headerItems = [
     sections.forEach((el) => observer.observe(el));
   }
 
+  // 3D tilt on scroll — cards tilt based on their position in viewport
+  function initScrollTilt() {
+    const cards = document.querySelectorAll('.webgl-card--visible');
+    function updateTilt() {
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const center = rect.top + rect.height / 2;
+        const ratio = (center - vh / 2) / (vh / 2); // -1 (top) to 1 (bottom)
+        const rotateX = ratio * -3;
+        const rotateY = ratio * 1.5;
+        (card as HTMLElement).style.transform =
+          `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      requestAnimationFrame(updateTilt);
+    }
+    updateTilt();
+  }
+
+  // Carousel navigation
+  function initCarousels() {
+    document.querySelectorAll('.atomic-carousel-nav').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const dir = parseInt(btn.getAttribute('data-dir') || '1');
+        const carouselType = btn.getAttribute('data-carousel');
+        const orbit = document.getElementById(carouselType === 'photos' ? 'photo-orbit' : 'video-orbit');
+        if (!orbit) return;
+        const itemWidth = orbit.querySelector('.atomic-carousel-item')?.clientWidth || 320;
+        orbit.scrollBy({ left: dir * (itemWidth + 24), behavior: 'smooth' });
+      });
+    });
+
+    // Track position indicator
+    ['photo-orbit', 'video-orbit'].forEach((id) => {
+      const orbit = document.getElementById(id);
+      const track = document.getElementById(id.replace('orbit', 'track'));
+      if (!orbit || !track) return;
+      orbit.addEventListener('scroll', () => {
+        const pct = orbit.scrollLeft / (orbit.scrollWidth - orbit.clientWidth) * 100;
+        track.style.setProperty('--track-position', `${pct}%`);
+      });
+    });
+
+    // Video hover play
+    document.querySelectorAll('.atomic-carousel-item video').forEach((video) => {
+      const v = video as HTMLVideoElement;
+      v.closest('.atomic-carousel-item')?.addEventListener('mouseenter', () => v.play());
+      v.closest('.atomic-carousel-item')?.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
+    });
+  }
+
   // Run on load and on Astro page transitions
   initScrollAnimations();
-  document.addEventListener('astro:page-load', initScrollAnimations);
+  setTimeout(initScrollTilt, 2000);
+  initCarousels();
+  document.addEventListener('astro:page-load', () => {
+    initScrollAnimations();
+    setTimeout(initScrollTilt, 2000);
+    initCarousels();
+  });
 </script>

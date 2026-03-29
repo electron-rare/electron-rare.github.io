@@ -31,3 +31,4 @@ artifacts/previews/
 artifacts/imagegen/
 artifacts/qa-test/*/responsive-v12-pass2/
 artifacts/qa-test/*/deploy-sftp-dryrun.txt
+.env
