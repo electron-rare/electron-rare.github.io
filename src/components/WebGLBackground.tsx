@@ -1,5 +1,6 @@
 import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Text } from '@react-three/drei';
 import { EffectComposer, Bloom, ChromaticAberration, Scanline } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
@@ -324,11 +325,20 @@ function ICComponent({ position, size = [2, 0.3, 1.2], label, color = '#1a1a1a' 
         <circleGeometry args={[0.05, 8]} />
         <meshBasicMaterial color="#e0e0e0" />
       </mesh>
-      {/* Silkscreen label */}
-      <mesh position={[0, size[1] + 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[size[0] * 0.8, 0.15]} />
-        <meshBasicMaterial color={COLORS.silkscreen} transparent opacity={0.4} />
-      </mesh>
+      {/* Silkscreen label on IC body */}
+      <Text
+        position={[0, size[1] + 0.02, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        fontSize={0.12}
+        font="/assets/fonts/manrope-regular.ttf"
+        color="#e8e8d0"
+        anchorX="center"
+        anchorY="middle"
+        material-transparent
+        material-opacity={0.6}
+      >
+        {label}
+      </Text>
       {/* Pins — both sides */}
       {Array.from({ length: pins }).map((_, i) => (
         <group key={`pins-${i}`}>
@@ -435,59 +445,172 @@ function LED({ position, color = '#5bd1d8' }: { position: [number, number, numbe
   );
 }
 
+/* Silkscreen text (PCB printed labels) */
+function Silk({ position, text, size = 0.15, color = '#e8e8d0', opacity = 0.5, rotation = [-Math.PI / 2, 0, 0] as [number, number, number] }: {
+  position: [number, number, number]; text: string; size?: number; color?: string; opacity?: number; rotation?: [number, number, number];
+}) {
+  return (
+    <Text
+      position={position}
+      rotation={rotation}
+      fontSize={size}
+      font="/assets/fonts/manrope-regular.ttf"
+      color={color}
+      anchorX="center"
+      anchorY="middle"
+      material-transparent
+      material-opacity={opacity}
+    >
+      {text}
+    </Text>
+  );
+}
+
+/* Section title — larger, glows when camera is near */
+function SectionLabel({ position, text, subtitle }: { position: [number, number, number]; text: string; subtitle?: string }) {
+  const ref = useRef<THREE.Group>(null);
+
+  useFrame(() => {
+    if (!ref.current) return;
+    const cameraZ = -scrollProgress * 38;
+    const dist = Math.abs(position[2] - cameraZ);
+    const glow = Math.max(0, 1 - dist / 6);
+    ref.current.children.forEach(child => {
+      if ((child as any).material) {
+        (child as any).material.opacity = 0.15 + glow * 0.7;
+      }
+    });
+  });
+
+  return (
+    <group ref={ref}>
+      <Text
+        position={[position[0], position[1] + 0.02, position[2]]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        fontSize={0.35}
+        font="/assets/fonts/manrope-regular.ttf"
+        color="#5bd1d8"
+        anchorX="center"
+        anchorY="middle"
+        material-transparent
+        material-opacity={0.15}
+        letterSpacing={0.1}
+      >
+        {text}
+      </Text>
+      {subtitle && (
+        <Text
+          position={[position[0], position[1] + 0.02, position[2] + 0.55]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          fontSize={0.12}
+          font="/assets/fonts/manrope-regular.ttf"
+          color="#e8e8d0"
+          anchorX="center"
+          anchorY="middle"
+          material-transparent
+          material-opacity={0.1}
+          letterSpacing={0.05}
+        >
+          {subtitle}
+        </Text>
+      )}
+    </group>
+  );
+}
+
 /* All components assembled on the PCB */
 function PCBComponents() {
   return (
     <group>
-      {/* HERO — Main MCU (ESP32 style) */}
-      <ICComponent position={[6, 0, -6]} size={[2.5, 0.35, 1.5]} label="U1 — ESP32" />
+      {/* ── HERO — Main MCU ── */}
+      <SectionLabel position={[6, 0.01, -4]} text="L'ELECTRON RARE" subtitle="Systemes electroniques specifiques" />
+      <ICComponent position={[6, 0, -6]} size={[2.5, 0.35, 1.5]} label="U1 — ESP32-S3" />
+      <Silk position={[4.5, 0.02, -5.2]} text="R1" size={0.08} />
+      <Silk position={[4.5, 0.02, -6.6]} text="R2" size={0.08} />
+      <Silk position={[7.5, 0.02, -4.7]} text="D1" size={0.08} />
+      <Silk position={[7.5, 0.02, -5.7]} text="D2" size={0.08} />
       <LED position={[7.5, 0, -5]} color="#5bd1d8" />
       <LED position={[7.5, 0, -5.5]} color="#30d158" />
       <Resistor position={[4.5, 0, -5.5]} />
       <Resistor position={[4.5, 0, -6.3]} />
 
-      {/* ABOUT — Op-amp + passives */}
-      <ICComponent position={[1, 0, -13]} size={[1.8, 0.25, 0.8]} label="U2 — LM358" color="#222" />
+      {/* ── ABOUT — Approche & expertise ── */}
+      <SectionLabel position={[1, 0.01, -11]} text="APPROCHE" subtitle="Diagnostic · Conception · Mise au point" />
+      <ICComponent position={[1, 0, -13]} size={[1.8, 0.25, 0.8]} label="U2 — LM358N" color="#222" />
+      <Silk position={[3, 0.02, -12.2]} text="C1 100uF" size={0.08} />
+      <Silk position={[-1, 0.02, -13.2]} text="C2 10nF" size={0.08} />
+      <Silk position={[2, 0.02, -14.3]} text="R3 10k" size={0.08} />
+      <Silk position={[0, 0.02, -11.7]} text="R4 4k7" size={0.08} />
       <Capacitor position={[3, 0, -12.5]} radius={0.3} height={0.6} color="#8B4513" />
       <Capacitor position={[-1, 0, -13.5]} radius={0.2} height={0.4} color="#2a4a8a" />
       <Resistor position={[2, 0, -14]} rotation={[0, 0.5, 0]} />
       <Resistor position={[0, 0, -12]} rotation={[0, -0.3, 0]} />
       <LED position={[2.5, 0, -13]} color="#f1c27a" />
+      <Silk position={[2.5, 0.02, -12.7]} text="D3" size={0.08} />
 
-      {/* CASES — Power stage (MOSFET + caps) */}
-      <ICComponent position={[-5, -0.1, -19]} size={[1.5, 0.4, 1]} label="Q1 — IRFZ44" color="#1a1a2a" />
+      {/* ── CASES — Cas concrets ── */}
+      <SectionLabel position={[-5, 0.01, -17]} text="CAS CONCRETS" subtitle="Audio · Industrie · Formation" />
+      <ICComponent position={[-5, -0.1, -19]} size={[1.5, 0.4, 1]} label="Q1 — IRFZ44N" color="#1a1a2a" />
+      <Silk position={[-3, 0.02, -17.7]} text="C3 470uF/35V" size={0.08} />
+      <Silk position={[-7, 0.02, -19.7]} text="C4 220uF/16V" size={0.08} />
       <Capacitor position={[-3, -0.1, -18]} radius={0.4} height={0.8} color="#1a3a1a" />
       <Capacitor position={[-7, -0.1, -20]} radius={0.35} height={0.7} color="#8B4513" />
       <Resistor position={[-4, -0.1, -20]} />
+      <Silk position={[-4, 0.02, -20.3]} text="R5 0R1" size={0.08} />
       <LED position={[-6.5, -0.1, -18.5]} color="#ff6b6b" />
+      <Silk position={[-6.5, 0.02, -18.2]} text="D4 PWR" size={0.08} />
 
-      {/* MEDIA area — Connector */}
-      <ICComponent position={[-2, 0, -23]} size={[2, 0.5, 0.8]} label="J1 — USB-C" color="#333" />
+      {/* ── MEDIA — Photos & videos ── */}
+      <SectionLabel position={[-2, 0.01, -22]} text="TERRAIN" subtitle="Photos · Videos · Realisations" />
+      <ICComponent position={[-2, 0, -23]} size={[2, 0.5, 0.8]} label="J1 — USB-C 3.1" color="#333" />
       <LED position={[-0.5, 0, -23]} color="#5bd1d8" />
       <LED position={[-3.5, 0, -23]} color="#30d158" />
+      <Silk position={[-0.5, 0.02, -22.7]} text="TX" size={0.08} />
+      <Silk position={[-3.5, 0.02, -22.7]} text="RX" size={0.08} />
 
-      {/* SPRINTS — Voltage regulator */}
-      <ICComponent position={[4, 0, -27]} size={[1.2, 0.3, 0.6]} label="U3 — LM7805" color="#1a1a1a" />
+      {/* ── SPRINTS — Missions ── */}
+      <SectionLabel position={[4, 0.01, -25.5]} text="MISSIONS" subtitle="Diagnostic · Prototype · Mission complete" />
+      <ICComponent position={[4, 0, -27]} size={[1.2, 0.3, 0.6]} label="U3 — LM7805CT" color="#1a1a1a" />
+      <Silk position={[2.5, 0.02, -26.2]} text="C5 100nF" size={0.08} />
+      <Silk position={[5.5, 0.02, -27.2]} text="C6 100nF" size={0.08} />
+      <Silk position={[3, 0.02, -28.3]} text="R6 220R" size={0.08} />
       <Capacitor position={[2.5, 0, -26.5]} radius={0.25} height={0.5} color="#2a4a8a" />
       <Capacitor position={[5.5, 0, -27.5]} radius={0.25} height={0.5} color="#2a4a8a" />
       <Resistor position={[3, 0, -28]} rotation={[0, 0.8, 0]} />
       <LED position={[5, 0, -26.5]} color="#b6d18f" />
+      <Silk position={[5, 0.02, -26.2]} text="D5 OK" size={0.08} />
 
-      {/* CONTACT — Big capacitor (energy storage) + indicator */}
+      {/* ── CONTACT — Energy storage ── */}
+      <SectionLabel position={[1, 0.01, -34.5]} text="CONTACT" subtitle="contact@lelectronrare.fr" />
       <Capacitor position={[1, 0, -36]} radius={0.5} height={1} color="#4a2a8a" />
+      <Silk position={[1, 0.02, -35.3]} text="C7 1000uF/25V" size={0.08} />
       <Capacitor position={[-1, 0, -37]} radius={0.4} height={0.8} color="#8B4513" />
+      <Silk position={[-1, 0.02, -36.3]} text="C8 470uF/16V" size={0.08} />
       <LED position={[2.5, 0, -36]} color="#ff6b35" />
+      <Silk position={[2.5, 0.02, -35.7]} text="D6" size={0.08} />
       <LED position={[-0.5, 0, -36]} color="#5bd1d8" />
+      <Silk position={[-0.5, 0.02, -35.7]} text="D7" size={0.08} />
       <Resistor position={[0, 0, -35]} rotation={[0, 1.2, 0]} />
+      <Silk position={[0, 0.02, -34.7]} text="R7 1k" size={0.08} />
 
-      {/* Extra scattered passives for realism */}
+      {/* ── Extra scattered passives ── */}
       <Resistor position={[9, 0, -3]} rotation={[0, 0.7, 0]} />
+      <Silk position={[9, 0.02, -2.7]} text="R8" size={0.06} opacity={0.3} />
       <Resistor position={[7, 0, -10]} rotation={[0, -0.4, 0]} />
+      <Silk position={[7, 0.02, -9.7]} text="R9" size={0.06} opacity={0.3} />
       <Resistor position={[-3, 0, -10]} rotation={[0, 1.1, 0]} />
       <Resistor position={[-8, -0.1, -16]} />
       <Resistor position={[1, 0, -30]} rotation={[0, 0.3, 0]} />
       <Capacitor position={[10, 0, -7]} radius={0.15} height={0.3} />
+      <Silk position={[10, 0.02, -6.7]} text="C9" size={0.06} opacity={0.3} />
       <Capacitor position={[-4, 0, -25]} radius={0.15} height={0.3} />
+      <Silk position={[-4, 0.02, -24.7]} text="C10" size={0.06} opacity={0.3} />
+
+      {/* ── Board title silkscreen ── */}
+      <Silk position={[-8, 0.02, -2]} text="L'ELECTRON RARE" size={0.25} opacity={0.2} />
+      <Silk position={[-8, 0.02, -2.5]} text="REV 2026.1" size={0.1} opacity={0.15} />
+      <Silk position={[10, 0.02, -38]} text="Made in France" size={0.1} opacity={0.15} />
+      <Silk position={[10, 0.02, -38.4]} text="lelectronrare.fr" size={0.08} opacity={0.12} />
     </group>
   );
 }
@@ -534,34 +657,69 @@ function AmbientDust({ count = 200 }) {
   );
 }
 
-/* ---------- Camera that follows the trace path on scroll ---------- */
+/* ---------- Camera with zoom stops at each component ---------- */
+
+// Define zoom stops — camera zooms in when scroll reaches each section
+const ZOOM_STOPS = [
+  { scroll: 0.00, pos: [0, 4, 2], look: [2, 0, -4], fov: 50 },     // Overview start
+  { scroll: 0.10, pos: [6, 1.8, -4], look: [6, 0, -6], fov: 40 },   // HERO — zoom on ESP32
+  { scroll: 0.25, pos: [1, 1.5, -11], look: [1, 0, -13], fov: 42 }, // ABOUT — zoom on LM358
+  { scroll: 0.40, pos: [-5, 1.8, -17], look: [-5, 0, -19], fov: 40 }, // CASES — zoom on MOSFET
+  { scroll: 0.52, pos: [-2, 1.5, -21.5], look: [-2, 0, -23], fov: 42 }, // MEDIA — zoom on USB-C
+  { scroll: 0.65, pos: [4, 1.5, -25], look: [4, 0, -27], fov: 42 },  // SPRINTS — zoom on 7805
+  { scroll: 0.80, pos: [1, 2, -33], look: [1, 0, -36], fov: 45 },    // CONTACT — zoom on caps
+  { scroll: 1.00, pos: [0, 5, -20], look: [0, 0, -20], fov: 55 },    // End — pull out overview
+];
+
 function TraceCamera() {
   const { camera } = useThree();
-  const curve = useMemo(() => createTraceCurve(), []);
-  const smooth = useRef({ progress: 0, mx: 0, my: 0 });
+  const smooth = useRef({ x: 0, y: 0, z: 0, lx: 0, ly: 0, lz: 0, fov: 50 });
 
   useFrame(({ pointer }) => {
-    // Smooth scroll interpolation
-    smooth.current.progress += (scrollProgress - smooth.current.progress) * 0.06;
-    smooth.current.mx += (pointer.x - smooth.current.mx) * 0.04;
-    smooth.current.my += (pointer.y - smooth.current.my) * 0.04;
+    const s = scrollProgress;
 
-    const p = Math.min(0.98, smooth.current.progress);
-    const pos = curve.getPointAt(p);
-    const lookAt = curve.getPointAt(Math.min(0.99, p + 0.03));
+    // Find the two nearest zoom stops
+    let a = ZOOM_STOPS[0], b = ZOOM_STOPS[1];
+    for (let i = 0; i < ZOOM_STOPS.length - 1; i++) {
+      if (s >= ZOOM_STOPS[i].scroll && s <= ZOOM_STOPS[i + 1].scroll) {
+        a = ZOOM_STOPS[i];
+        b = ZOOM_STOPS[i + 1];
+        break;
+      }
+    }
 
-    // Camera slightly above and offset by mouse
-    camera.position.set(
-      pos.x + smooth.current.mx * 1.5,
-      pos.y + 2.5 + smooth.current.my * 0.5,
-      pos.z + 1.5,
-    );
+    // Interpolation factor between stops
+    const range = b.scroll - a.scroll;
+    const t = range > 0 ? (s - a.scroll) / range : 0;
+    // Smooth easing
+    const ease = t * t * (3 - 2 * t); // smoothstep
 
-    camera.lookAt(
-      lookAt.x + smooth.current.mx * 0.3,
-      lookAt.y + 0.2,
-      lookAt.z,
-    );
+    // Interpolate position
+    const tx = a.pos[0] + (b.pos[0] - a.pos[0]) * ease + pointer.x * 0.8;
+    const ty = a.pos[1] + (b.pos[1] - a.pos[1]) * ease + pointer.y * 0.3;
+    const tz = a.pos[2] + (b.pos[2] - a.pos[2]) * ease;
+
+    // Interpolate lookAt
+    const lx = a.look[0] + (b.look[0] - a.look[0]) * ease + pointer.x * 0.2;
+    const ly = a.look[1] + (b.look[1] - a.look[1]) * ease;
+    const lz = a.look[2] + (b.look[2] - a.look[2]) * ease;
+
+    // Smooth camera movement
+    smooth.current.x += (tx - smooth.current.x) * 0.06;
+    smooth.current.y += (ty - smooth.current.y) * 0.06;
+    smooth.current.z += (tz - smooth.current.z) * 0.06;
+    smooth.current.lx += (lx - smooth.current.lx) * 0.06;
+    smooth.current.ly += (ly - smooth.current.ly) * 0.06;
+    smooth.current.lz += (lz - smooth.current.lz) * 0.06;
+
+    camera.position.set(smooth.current.x, smooth.current.y, smooth.current.z);
+    camera.lookAt(smooth.current.lx, smooth.current.ly, smooth.current.lz);
+
+    // Smooth FOV (zoom effect)
+    const targetFov = a.fov + (b.fov - a.fov) * ease;
+    smooth.current.fov += (targetFov - smooth.current.fov) * 0.05;
+    (camera as THREE.PerspectiveCamera).fov = smooth.current.fov;
+    (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
   });
 
   return null;
