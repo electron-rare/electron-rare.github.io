@@ -232,6 +232,75 @@ function Nucleus() {
   );
 }
 
+/* ---------- ER logo (PNG) orbiting close to nucleus ---------- */
+function LogoOrbit({ tilt, speed, radius, color }: {
+  tilt: number[]; speed: number; radius: number; color: string;
+}) {
+  const ref = useRef<THREE.Group>(null);
+  const planeRef = useRef<THREE.Group>(null);
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+  const phase = useMemo(() => Math.random() * Math.PI * 2, []);
+  const eccentricity = 0.35;
+  const threeColor = useMemo(() => new THREE.Color(color), [color]);
+
+  useEffect(() => {
+    new THREE.TextureLoader().load('/assets/brand/logo-mark.png', (tex) => {
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      setTexture(tex);
+    });
+  }, []);
+
+  useFrame(({ clock, camera }) => {
+    if (!ref.current || !planeRef.current) return;
+    const t = clock.getElapsedTime() * speed + phase;
+
+    ref.current.position.set(
+      Math.cos(t) * radius,
+      Math.sin(t) * radius * eccentricity,
+      0,
+    );
+
+    // Billboard — always face camera
+    planeRef.current.quaternion.copy(camera.quaternion);
+  });
+
+  if (!texture) return null;
+
+  return (
+    <group rotation={tilt as [number, number, number]}>
+      <group ref={ref}>
+        <group ref={planeRef}>
+          {/* Logo PNG on a plane */}
+          <mesh>
+            <planeGeometry args={[0.35, 0.35]} />
+            <meshStandardMaterial
+              map={texture}
+              transparent
+              opacity={0.85}
+              emissive={threeColor}
+              emissiveIntensity={0.8}
+              side={THREE.DoubleSide}
+              alphaTest={0.1}
+            />
+          </mesh>
+        </group>
+        {/* Glow sphere behind logo */}
+        <mesh>
+          <sphereGeometry args={[0.15, 8, 8]} />
+          <meshStandardMaterial
+            color={color}
+            emissive={threeColor}
+            emissiveIntensity={1.2}
+            transparent
+            opacity={0.15}
+          />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
 /* ---------- Energy arcs (random lightning) ---------- */
 function EnergyArc({ color }: { color: THREE.Color }) {
   const ref = useRef<THREE.Line>(null);
@@ -442,6 +511,11 @@ function CountdownText() {
         opacity={0.5}
         spread={0.8}
       />
+
+      {/* 3x ER logo orbiting close to nucleus like inner electrons */}
+      <LogoOrbit tilt={[-0.3, 0, 0.1]} speed={0.6} radius={1.2} color="#5bd1d8" />
+      <LogoOrbit tilt={[0.5, 0.2, -0.1]} speed={-0.45} radius={1.0} color="#f1c27a" />
+      <LogoOrbit tilt={[1.2, -0.3, 0.3]} speed={0.35} radius={1.3} color="#b6d18f" />
 
       {/* Countdown timer — spinning ring */}
       <CountdownRing />
