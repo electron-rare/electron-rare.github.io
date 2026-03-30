@@ -593,6 +593,43 @@ function PCBComponents() {
       <Resistor position={[0, 0, -82]} rotation={[0, 1.2, 0]} />
       <Silk position={[0, 0.02, -81.5]} text="R7 1k" size={0.08} />
 
+      {/* ── Transition components between sections ── */}
+
+      {/* Between HERO and ABOUT */}
+      <Capacitor position={[8, 0, -20]} radius={0.2} height={0.4} color="#2a4a8a" />
+      <Silk position={[8, 0.02, -19.5]} text="C11 22pF" size={0.07} opacity={0.25} />
+      <Resistor position={[5, 0, -22]} rotation={[0, 0.6, 0]} />
+      <Silk position={[5, 0.02, -21.5]} text="R10 100k" size={0.07} opacity={0.25} />
+      <LED position={[6.5, 0, -19]} color="#5bd1d8" />
+      <Resistor position={[3, 0, -24]} rotation={[0, -0.3, 0]} />
+      <Capacitor position={[7, 0, -23]} radius={0.15} height={0.3} color="#8B4513" />
+
+      {/* Between ABOUT and CASES */}
+      <ICComponent position={[-2, 0, -36]} size={[1, 0.2, 0.5]} label="U4 — 74HC595" color="#1a1a2a" />
+      <Capacitor position={[-4, 0, -35]} radius={0.18} height={0.35} color="#2a4a8a" />
+      <Resistor position={[1, 0, -37]} rotation={[0, 1, 0]} />
+      <LED position={[0, 0, -36.5]} color="#f1c27a" />
+
+      {/* Between CASES and MEDIA */}
+      <Resistor position={[-6, -0.1, -48]} rotation={[0, 0.5, 0]} />
+      <Capacitor position={[-3, 0, -49]} radius={0.2} height={0.4} color="#1a3a1a" />
+      <Resistor position={[-7, 0, -50]} rotation={[0, -0.7, 0]} />
+      <LED position={[-5, 0, -49.5]} color="#30d158" />
+
+      {/* Between MEDIA and SPRINTS */}
+      <ICComponent position={[0, 0, -60]} size={[0.8, 0.2, 0.4]} label="U5 — AMS1117" color="#222" />
+      <Capacitor position={[2, 0, -59]} radius={0.15} height={0.3} color="#2a4a8a" />
+      <Capacitor position={[-2, 0, -61]} radius={0.15} height={0.3} color="#2a4a8a" />
+      <Resistor position={[3, 0, -61]} rotation={[0, 0.4, 0]} />
+      <LED position={[1, 0, -58]} color="#5bd1d8" />
+
+      {/* Between SPRINTS and CONTACT */}
+      <Resistor position={[6, 0, -73]} rotation={[0, -0.5, 0]} />
+      <Resistor position={[4, 0, -74]} rotation={[0, 0.8, 0]} />
+      <Capacitor position={[7, 0, -75]} radius={0.25} height={0.5} color="#4a2a8a" />
+      <LED position={[3, 0, -76]} color="#ff6b35" />
+      <Capacitor position={[1, 0, -77]} radius={0.2} height={0.4} color="#8B4513" />
+
       {/* ── Extra scattered passives ── */}
       <Resistor position={[12, 0, -7]} rotation={[0, 0.7, 0]} />
       <Silk position={[12, 0.02, -6.5]} text="R8" size={0.06} opacity={0.3} />
