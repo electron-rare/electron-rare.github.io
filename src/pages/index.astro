@@ -152,6 +152,13 @@ const description = isLaunched
         <span class="bottom-left">electronique · automatisme · energie</span>
         <span class="bottom-right">mai 2026</span>
       </div>
+
+      <!-- Cartouche footer -->
+      <div class="cartouche">
+        <p class="cartouche-title">L'électron rare</p>
+        <p class="cartouche-copy">© 2026 Clément Saillant — systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.</p>
+        <p class="cartouche-contact">Contact direct : <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener">LinkedIn DM</a> ou <a href="mailto:contact@lelectronrare.fr">contact@lelectronrare.fr</a></p>
+      </div>
     </div>
   </main>
 )}
@@ -215,6 +222,7 @@ const description = isLaunched
     z-index: 0;
     width: 100vw;
     height: 100vh;
+    pointer-events: auto;
   }
   .overlay {
     position: relative;
@@ -226,7 +234,8 @@ const description = isLaunched
     padding: clamp(20px, 3vw, 40px) clamp(24px, 5vw, 60px);
     pointer-events: none;
   }
-  .overlay > * { pointer-events: auto; }
+  .overlay > * { pointer-events: none; }
+  .overlay a, .overlay .tagline-area { pointer-events: auto; }
   .top-bar {
     display: flex;
     align-items: center;
@@ -296,6 +305,59 @@ const description = isLaunched
   @keyframes fade-in {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ CARTOUCHE FOOTER ============ */
+  .cartouche {
+    position: fixed;
+    bottom: clamp(16px, 2vw, 24px);
+    right: clamp(16px, 2vw, 24px);
+    max-width: 320px;
+    padding: 14px 18px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    pointer-events: auto;
+    animation: fade-in 0.8s 1.5s ease both;
+  }
+  .cartouche-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .cartouche-copy {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.25);
+    margin: 0 0 4px;
+    line-height: 1.4;
+  }
+  .cartouche-contact {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.25);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .cartouche-contact a {
+    color: #5bd1d8;
+    text-decoration: none;
+  }
+  .cartouche-contact a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .cartouche {
+      position: relative;
+      bottom: auto;
+      right: auto;
+      max-width: 100%;
+      margin-top: 12px;
+      text-align: center;
+    }
   }
 
   /* ============ HERO WEBGL (site complet) ============ */
