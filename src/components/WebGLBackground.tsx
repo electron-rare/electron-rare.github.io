@@ -22,24 +22,39 @@ const COLORS = {
   silkscreen: new THREE.Color('#e8e8d0'),
 };
 
-const FONT_URL = '/assets/fonts/manrope-regular.ttf';
+const FONT_URL = '/assets/fonts/orbitron-bold.ttf';
 
 /* ---------- Scroll state ---------- */
 let scrollProgress = 0;
 
-/* ---------- Real PCB Board ---------- */
+/* ---------- Real PCB Board (full 3D with components from FreeCAD) ---------- */
 function RealPCB() {
   let glb: any = null;
-  try { glb = useGLTF('/assets/models3d/pcb-bmu-v2.glb'); } catch {}
+  try { glb = useGLTF('/assets/models3d/bmu-v2-full.glb'); } catch {}
 
   if (!glb?.scene) return null;
 
   return (
     <primitive
       object={glb.scene.clone()}
-      scale={40}
+      scale={8}
       rotation={[-Math.PI / 2, 0, 0]}
-      position={[0, 0, 0]}
+      position={[0, 0.1, 0]}
+    />
+  );
+}
+
+/* ---------- Switch MOSFET board ---------- */
+function SwitchBoard() {
+  let glb: any = null;
+  try { glb = useGLTF('/assets/models3d/bmu-switch-mosfet.glb'); } catch {}
+  if (!glb?.scene) return null;
+  return (
+    <primitive
+      object={glb.scene.clone()}
+      scale={8}
+      rotation={[-Math.PI / 2, 0, 0]}
+      position={[8, 0.1, 3]}
     />
   );
 }
@@ -377,6 +392,7 @@ function PCBScene() {
     <group>
       <Suspense fallback={null}>
         <RealPCB />
+        <SwitchBoard />
         <ComponentCluster />
       </Suspense>
       <CurrentFlow />
@@ -440,7 +456,8 @@ export default function WebGLBackground() {
 }
 
 /* Preload all models */
-useGLTF.preload('/assets/models3d/pcb-bmu-v2.glb');
+useGLTF.preload('/assets/models3d/bmu-v2-full.glb');
+useGLTF.preload('/assets/models3d/bmu-switch-mosfet.glb');
 useGLTF.preload('/assets/models3d/resistor_0603.glb');
 useGLTF.preload('/assets/models3d/capacitor_0805.glb');
 useGLTF.preload('/assets/models3d/inductor_0805.glb');

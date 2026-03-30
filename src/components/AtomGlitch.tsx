@@ -171,6 +171,26 @@ function Nucleus() {
     }
   });
 
+  // Logo refs — 3 copies at different rotations
+  const logo1Ref = useRef<THREE.Group>(null);
+  const logo2Ref = useRef<THREE.Group>(null);
+  const logo3Ref = useRef<THREE.Group>(null);
+
+  useFrame(({ clock, camera }) => {
+    const t = clock.getElapsedTime();
+    // Each logo copy rotates on a different axis
+    if (logo1Ref.current) {
+      logo1Ref.current.rotation.y = t * 0.8;
+      logo1Ref.current.quaternion.copy(camera.quaternion);
+    }
+    if (logo2Ref.current) {
+      logo2Ref.current.rotation.set(t * 0.5, t * 0.3, 0);
+    }
+    if (logo3Ref.current) {
+      logo3Ref.current.rotation.set(0, t * -0.4, t * 0.6);
+    }
+  });
+
   return (
     <group>
       {/* outer energy shell */}
@@ -188,6 +208,26 @@ function Nucleus() {
         <sphereGeometry args={[0.32, 32, 32]} />
         <meshStandardMaterial color="#ffffff" emissive={COLORS.amber} emissiveIntensity={2} metalness={0.6} roughness={0.2} />
       </mesh>
+
+      {/* ER logo — 3 copies at center, different rotations */}
+      <group ref={logo1Ref}>
+        <Text fontSize={0.25} font={FONT_URL} anchorX="center" anchorY="middle" letterSpacing={0.05}>
+          ER
+          <meshStandardMaterial color="#ffffff" emissive="#5bd1d8" emissiveIntensity={1.5} transparent opacity={0.7} />
+        </Text>
+      </group>
+      <group ref={logo2Ref}>
+        <Text fontSize={0.2} font={FONT_URL} anchorX="center" anchorY="middle" letterSpacing={0.05}>
+          ER
+          <meshStandardMaterial color="#ffffff" emissive="#f1c27a" emissiveIntensity={1} transparent opacity={0.35} />
+        </Text>
+      </group>
+      <group ref={logo3Ref}>
+        <Text fontSize={0.18} font={FONT_URL} anchorX="center" anchorY="middle" letterSpacing={0.05}>
+          ER
+          <meshStandardMaterial color="#ffffff" emissive="#b6d18f" emissiveIntensity={0.8} transparent opacity={0.25} />
+        </Text>
+      </group>
     </group>
   );
 }
@@ -233,7 +273,7 @@ function EnergyArc({ color }: { color: THREE.Color }) {
 
 /* ---------- 3D Circular / Orbital text ---------- */
 const LAUNCH = new Date('2026-05-01T00:00:00+02:00').getTime();
-const FONT_URL = '/assets/fonts/manrope-regular.ttf';
+const FONT_URL = '/assets/fonts/orbitron-bold.ttf';
 
 function pad(n: number) { return String(n).padStart(2, '0'); }
 
