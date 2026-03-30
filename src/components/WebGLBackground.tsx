@@ -367,22 +367,6 @@ function ComponentCluster() {
 }
 
 /* ---------- Board title silkscreen ---------- */
-function BoardTitle() {
-  return (
-    <group>
-      <Text position={[-8, 0.2, -6.5]} rotation={[-Math.PI / 2, 0, 0]} fontSize={0.5} font={FONT_URL} color="#e8e8d0" anchorX="left" anchorY="middle" material-transparent material-opacity={0.15} letterSpacing={0.15}>
-        L'ELECTRON RARE
-      </Text>
-      <Text position={[-8, 0.2, -5.8]} rotation={[-Math.PI / 2, 0, 0]} fontSize={0.2} font={FONT_URL} color="#e8e8d0" anchorX="left" anchorY="middle" material-transparent material-opacity={0.1}>
-        REV 2026.1 — BMU v2 — Made in France
-      </Text>
-      <Text position={[6, 0.2, 7]} rotation={[-Math.PI / 2, 0, 0]} fontSize={0.15} font={FONT_URL} color="#e8e8d0" anchorX="right" anchorY="middle" material-transparent material-opacity={0.08}>
-        lelectronrare.fr
-      </Text>
-    </group>
-  );
-}
-
 /* ---------- Light that follows the camera ---------- */
 function CameraLight() {
   const lightRef = useRef<THREE.PointLight>(null);
@@ -463,7 +447,6 @@ function PCBScene() {
       <CurrentFlow />
       <WarmCurrent />
       <AmbientDust />
-      <BoardTitle />
     </group>
   );
 }
