@@ -76,26 +76,58 @@ function GLBComponent({ modelUrl, position, scale = 1, rotation = [0, 0, 0] as [
   );
 }
 
-/* ---------- Section label (silkscreen on board) ---------- */
-function SectionLabel({ position, text, subtitle }: {
-  position: [number, number, number]; text: string; subtitle?: string;
+/* ---------- Section label (silkscreen on board, clickable) ---------- */
+function SectionLabel({ position, text, subtitle, scrollTarget }: {
+  position: [number, number, number]; text: string; subtitle?: string; scrollTarget?: string;
 }) {
   const ref = useRef<THREE.Group>(null);
+  const [hovered, setHovered] = useState(false);
 
-  useFrame(() => {
+  useFrame(({ camera }) => {
     if (!ref.current) return;
-    // Glow based on camera proximity
-    const camPos = new THREE.Vector3();
-    ref.current.getWorldPosition(camPos);
+    const worldPos = new THREE.Vector3();
+    ref.current.getWorldPosition(worldPos);
+    const dist = camera.position.distanceTo(worldPos);
+    const glow = Math.max(0, 1 - dist / 12);
+    // Dynamic opacity based on camera distance
+    ref.current.children.forEach(child => {
+      if ((child as any).material) {
+        (child as any).material.opacity = hovered ? 0.9 : 0.3 + glow * 0.4;
+      }
+    });
   });
 
+  const handleClick = () => {
+    if (!scrollTarget) return;
+    if (scrollTarget === '#contact') {
+      // Open contact popup
+      document.getElementById('contact')?.classList.add('contact-3d-popup--open');
+    } else {
+      const el = document.querySelector(scrollTarget);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <group ref={ref} position={position}>
+    <group
+      ref={ref}
+      position={position}
+      onClick={handleClick}
+      onPointerOver={() => { setHovered(true); document.body.style.cursor = scrollTarget ? 'pointer' : 'default'; }}
+      onPointerOut={() => { setHovered(false); document.body.style.cursor = 'default'; }}
+    >
+      {/* Clickable hit area (invisible plane) */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0.4]}>
+        <planeGeometry args={[text.length * 0.55, 2.5]} />
+        <meshBasicMaterial transparent opacity={0} side={THREE.DoubleSide} />
+      </mesh>
+
+      {/* Main label */}
       <Text
         rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.8}
+        fontSize={hovered ? 0.9 : 0.8}
         font={FONT_URL}
-        color="#5bd1d8"
+        color={hovered ? '#ffffff' : '#5bd1d8'}
         anchorX="center"
         anchorY="middle"
         material-transparent
@@ -103,7 +135,17 @@ function SectionLabel({ position, text, subtitle }: {
         letterSpacing={0.08}
       >
         {text}
+        <meshStandardMaterial
+          color={hovered ? '#ffffff' : '#5bd1d8'}
+          emissive={hovered ? '#5bd1d8' : '#5bd1d8'}
+          emissiveIntensity={hovered ? 1.5 : 0.3}
+          transparent
+          opacity={0.4}
+          side={THREE.DoubleSide}
+        />
       </Text>
+
+      {/* Subtitle */}
       {subtitle && (
         <Text
           position={[0, 0, 1.2]}
@@ -114,11 +156,19 @@ function SectionLabel({ position, text, subtitle }: {
           anchorX="center"
           anchorY="middle"
           material-transparent
-          material-opacity={0.25}
+          material-opacity={hovered ? 0.5 : 0.2}
           letterSpacing={0.04}
         >
           {subtitle}
         </Text>
+      )}
+
+      {/* Hover glow ring */}
+      {hovered && (
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0.4]}>
+          <ringGeometry args={[text.length * 0.25, text.length * 0.28, 32]} />
+          <meshStandardMaterial color="#5bd1d8" emissive="#5bd1d8" emissiveIntensity={2} transparent opacity={0.15} side={THREE.DoubleSide} />
+        </mesh>
       )}
     </group>
   );
@@ -239,7 +289,7 @@ function ComponentCluster() {
   return (
     <group>
       {/* Zone 1 — MCU area (top-right of board) */}
-      <SectionLabel position={[6, 0.5, -2]} text="MCU" subtitle="ESP32 · STM32 · ARM" />
+      <SectionLabel position={[6, 0.5, -2]} text="MCU" subtitle="Approche & expertise" scrollTarget="#a-propos" />
       <GLBComponent modelUrl="/assets/models3d/qfp32.glb" position={[5, 0.3, -2]} scale={S_IC_LG} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[3, 0.3, -1]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/resistor_0603.glb" position={[4, 0.3, 0]} scale={S_RES} rotation={R} />
@@ -250,7 +300,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/led_0603.glb" position={[7.5, 0.3, -2.5]} scale={S_LED} rotation={R} />
 
       {/* Zone 2 — Analog / Op-amp area (left of board) */}
-      <SectionLabel position={[-5, 0.5, -1]} text="ANALOG" subtitle="Instrumentation · Controle" />
+      <SectionLabel position={[-5, 0.5, -1]} text="ANALOG" subtitle="Cas concrets" scrollTarget="#cas-concrets" />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[-5, 0.3, -1]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[-3, 0.3, -2]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/resistor_0603.glb" position={[-4, 0.3, 0]} scale={S_RES} rotation={R} />
@@ -261,7 +311,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/led_0603.glb" position={[-2, 0.3, -1]} scale={S_LED} rotation={R} />
 
       {/* Zone 3 — Power stage (bottom-right) */}
-      <SectionLabel position={[4, 0.5, 4]} text="POWER" subtitle="Energie · Stockage · BMS" />
+      <SectionLabel position={[4, 0.5, 4]} text="POWER" subtitle="Photos & videos terrain" scrollTarget="#photos" />
       <GLBComponent modelUrl="/assets/models3d/qfp32.glb" position={[4, 0.3, 4]} scale={S_IC_LG} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/capacitor_0805.glb" position={[2, 0.3, 3]} scale={S_CAP * 1.5} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/capacitor_0805.glb" position={[6, 0.3, 5]} scale={S_CAP * 1.5} rotation={R} />
@@ -272,7 +322,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/led_0603.glb" position={[1.5, 0.3, 4.5]} scale={S_LED} rotation={R} />
 
       {/* Zone 4 — Communication (bottom-left) */}
-      <SectionLabel position={[-5, 0.5, 4]} text="COM" subtitle="USB · SPI · I2C · UART" />
+      <SectionLabel position={[-5, 0.5, 4]} text="FORMATION" subtitle="Workshops & programmes" scrollTarget="/formation/" />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[-5, 0.3, 4]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[-3, 0.3, 5]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/resistor_0603.glb" position={[-6, 0.3, 3]} scale={S_RES} rotation={R} />
@@ -282,7 +332,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/led_0603.glb" position={[-7, 0.3, 4.5]} scale={S_LED} rotation={R} />
 
       {/* Zone 5 — DSP / Neural (center-top) */}
-      <SectionLabel position={[0, 0.5, -4]} text="MISSIONS" subtitle="Diagnostic · Prototype · Production" />
+      <SectionLabel position={[0, 0.5, -4]} text="MISSIONS" subtitle="Diagnostic · Prototype · Production" scrollTarget="#graphic-sprints-title" />
       <GLBComponent modelUrl="/assets/models3d/qfp32.glb" position={[0, 0.3, -4]} scale={S_IC_LG} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/capacitor_0805.glb" position={[-2, 0.3, -4.5]} scale={S_CAP} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/capacitor_0805.glb" position={[2, 0.3, -3.5]} scale={S_CAP} rotation={R} />
@@ -291,7 +341,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/inductor_0805.glb" position={[0, 0.3, -6]} scale={S_CAP} rotation={R} />
 
       {/* Zone 6 — Contact area (center) */}
-      <SectionLabel position={[0, 0.5, 1]} text="CONTACT" subtitle="contact@lelectronrare.fr" />
+      <SectionLabel position={[0, 0.5, 1]} text="CONTACT" subtitle="Discuter de votre projet" scrollTarget="#contact" />
 
       {/* Scattered passives */}
       {Array.from({ length: 15 }).map((_, i) => (

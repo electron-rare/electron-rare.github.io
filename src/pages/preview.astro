@@ -35,49 +35,8 @@ const headerItems = [
   <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
 
   <main id="main-content" class="dark-site">
-    <!-- HERO — BMU overview with clickable zones -->
-    <section class="section-dark section-hero webgl-section" id="top">
-      <div class="hero-bmu">
-        <div class="hero-bmu-title">
-          <h1 class="hero-bmu-h1">L'<span class="hero-electric">é</span>lectron rare</h1>
-          <p class="hero-bmu-sub">Systèmes électroniques spécifiques, du besoin au livrable fiable</p>
-        </div>
-
-        <nav class="hero-bmu-nav" aria-label="Sections du board">
-          <a href="#a-propos" class="hero-bmu-zone hero-bmu-zone--mcu">
-            <span class="hero-bmu-zone-icon">⬡</span>
-            <span class="hero-bmu-zone-label">MCU</span>
-            <span class="hero-bmu-zone-desc">Approche & expertise</span>
-          </a>
-          <a href="#cas-concrets" class="hero-bmu-zone hero-bmu-zone--analog">
-            <span class="hero-bmu-zone-icon">◈</span>
-            <span class="hero-bmu-zone-label">ANALOG</span>
-            <span class="hero-bmu-zone-desc">Cas concrets</span>
-          </a>
-          <a href="#graphic-sprints-title" class="hero-bmu-zone hero-bmu-zone--mission">
-            <span class="hero-bmu-zone-icon">⎔</span>
-            <span class="hero-bmu-zone-label">MISSIONS</span>
-            <span class="hero-bmu-zone-desc">Diagnostic · Prototype · Production</span>
-          </a>
-          <a href="/formation/" class="hero-bmu-zone hero-bmu-zone--formation">
-            <span class="hero-bmu-zone-icon">△</span>
-            <span class="hero-bmu-zone-label">FORMATION</span>
-            <span class="hero-bmu-zone-desc">Workshops & programmes</span>
-          </a>
-          <a href="#contact" class="hero-bmu-zone hero-bmu-zone--contact">
-            <span class="hero-bmu-zone-icon">⏣</span>
-            <span class="hero-bmu-zone-label">CONTACT</span>
-            <span class="hero-bmu-zone-desc">Discuter de votre projet</span>
-          </a>
-        </nav>
-
-        <div class="hero-bmu-tagline">
-          <span>électronique · automatisme · énergie · stockage</span>
-        </div>
-      </div>
-    </section>
-
-    <div class="pcb-spacer" aria-hidden="true"></div>
+    <!-- No HTML hero — the PCB 3D IS the hero. First spacer = overview of the board -->
+    <div class="pcb-spacer pcb-spacer--hero" id="top" aria-hidden="true"></div>
 
     <!-- ABOUT -->
     <section class="section-dark webgl-section" id="a-propos">
@@ -524,6 +483,9 @@ const headerItems = [
   .pcb-spacer {
     height: 60vh;
     pointer-events: none;
+  }
+  .pcb-spacer--hero {
+    height: 100vh;
   }
 
   /* ============ CONTACT 3D POPUP ============ */
