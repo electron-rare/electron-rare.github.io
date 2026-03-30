@@ -361,28 +361,26 @@ function CameraLight() {
   useFrame(() => {
     if (!lightRef.current) return;
     lightRef.current.position.copy(camera.position);
-    lightRef.current.position.y += 15;
+    lightRef.current.position.y += 0.03;
   });
 
   return (
-    <pointLight ref={lightRef} intensity={0.6} color="#ffffff" distance={200} decay={1.5} />
+    <pointLight ref={lightRef} intensity={0.6} color="#ffffff" distance={0.5} decay={1.5} />
   );
 }
 
 /* ---------- Camera — orbits around PCB, zooms on scroll ---------- */
-// PCB bounds: X[-74,81] Y[-43,63] Z[-17,150] mm. Center ≈ (4, 10, 66).
-// After rotation -π/2 on X, the Y/Z swap: model Y→scene -Z, model Z→scene Y.
-// So in scene coords, board center ≈ (4, 66, -10), extends ~155mm in Y (height).
-const BOARD_CENTER = [4, 66, -10];
+// STEP units = METERS. Board ~0.17m wide, ~0.10m tall. After -π/2 X rotation:
+// model Y→scene -Z, model Z→scene Y. Board center ≈ (0, 0.04, 0).
 const CAMERA_STOPS = [
-  { scroll: 0.00, pos: [0, 250, 120], look: [4, 66, -10] },        // Overview — sees full assembly
-  { scroll: 0.12, pos: [50, 140, 20], look: [40, 80, -10] },       // MCU zone (top-right)
-  { scroll: 0.28, pos: [-40, 140, 20], look: [-30, 80, -10] },     // Analog zone (top-left)
-  { scroll: 0.42, pos: [40, 40, -20], look: [30, 20, -10] },       // Power zone (bottom-right)
-  { scroll: 0.56, pos: [-40, 40, -20], look: [-30, 20, -10] },     // Formation zone (bottom-left)
-  { scroll: 0.70, pos: [0, 120, 40], look: [0, 100, -10] },        // Missions zone (mid)
-  { scroll: 0.85, pos: [4, 80, 5], look: [4, 66, -10] },           // Contact (center close)
-  { scroll: 1.00, pos: [0, 300, 150], look: [4, 66, -10] },        // Pull back
+  { scroll: 0.00, pos: [0, 0.3, 0.2], look: [0, 0.04, 0] },          // Overview
+  { scroll: 0.12, pos: [0.06, 0.12, 0.02], look: [0.04, 0.04, 0] },   // MCU (right)
+  { scroll: 0.28, pos: [-0.06, 0.12, 0.02], look: [-0.04, 0.04, 0] }, // Analog (left)
+  { scroll: 0.42, pos: [0.05, 0.08, -0.03], look: [0.03, 0.04, -0.02] }, // Power
+  { scroll: 0.56, pos: [-0.05, 0.08, -0.03], look: [-0.03, 0.04, -0.02] }, // Formation
+  { scroll: 0.70, pos: [0, 0.15, 0.05], look: [0, 0.06, 0] },        // Missions
+  { scroll: 0.85, pos: [0, 0.08, 0.01], look: [0, 0.04, 0] },        // Contact (close)
+  { scroll: 1.00, pos: [0, 0.4, 0.25], look: [0, 0.04, 0] },         // Pull back
 ];
 
 function OrbitCamera() {
@@ -405,10 +403,10 @@ function OrbitCamera() {
     const t = range > 0 ? (s - a.scroll) / range : 0;
     const ease = t * t * (3 - 2 * t);
 
-    const tx = a.pos[0] + (b.pos[0] - a.pos[0]) * ease + pointer.x * 20;
-    const ty = a.pos[1] + (b.pos[1] - a.pos[1]) * ease + pointer.y * 8;
+    const tx = a.pos[0] + (b.pos[0] - a.pos[0]) * ease + pointer.x * 0.03;
+    const ty = a.pos[1] + (b.pos[1] - a.pos[1]) * ease + pointer.y * 0.01;
     const tz = a.pos[2] + (b.pos[2] - a.pos[2]) * ease;
-    const lx = a.look[0] + (b.look[0] - a.look[0]) * ease + pointer.x * 5;
+    const lx = a.look[0] + (b.look[0] - a.look[0]) * ease + pointer.x * 0.005;
     const ly = a.look[1] + (b.look[1] - a.look[1]) * ease;
     const lz = a.look[2] + (b.look[2] - a.look[2]) * ease;
 
@@ -467,18 +465,18 @@ export default function WebGLBackground() {
       aria-hidden="true"
     >
       <Canvas
-        camera={{ position: [0, 250, 120], fov: 50 }}
+        camera={{ position: [0, 0.3, 0.2], fov: 50 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         style={{ pointerEvents: 'auto' }}
       >
         <color attach="background" args={['#060a06']} />
-        <fog attach="fog" args={['#060a06', 150, 500]} />
+        <fog attach="fog" args={['#060a06', 0.2, 0.8]} />
 
         <ambientLight intensity={0.25} />
-        <directionalLight position={[60, 120, 60]} intensity={0.7} color="#ffffff" />
-        <directionalLight position={[-60, 100, -60]} intensity={0.3} color="#5bd1d8" />
-        <pointLight position={[0, 60, 0]} intensity={0.4} color="#f1c27a" distance={250} />
+        <directionalLight position={[0.1, 0.2, 0.1]} intensity={0.7} color="#ffffff" />
+        <directionalLight position={[-0.1, 0.15, -0.1]} intensity={0.3} color="#5bd1d8" />
+        <pointLight position={[0, 0.1, 0]} intensity={0.4} color="#f1c27a" distance={0.5} />
         <CameraLight />
 
         <OrbitCamera />
