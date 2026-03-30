@@ -6,7 +6,7 @@ import '@/styles/global.css';
 import '@/styles/home-workbench.css';
 import '@/styles/webgl-cards.css';
 import SiteHeader from '@/components/SiteHeader.astro';
-import { Hero } from '@/components/sections/Hero';
+// Hero removed — PCB 3D is the hero
 import { About } from '@/components/sections/About';
 import { CaseStudies } from '@/components/sections/CaseStudies';
 import { GraphicSprints } from '@/components/sections/GraphicSprints';
@@ -36,6 +36,7 @@ const headerItems = [
         <div class="loading-bar-fill" id="loading-bar-fill"></div>
       </div>
       <p class="loading-status" id="loading-status">Chargement du PCB 3D...</p>
+      <a href="/static/" class="loading-static-btn">Version sans 3D →</a>
       <p class="loading-tagline">électronique · automatisme · énergie</p>
     </div>
   </div>
@@ -417,6 +418,22 @@ const headerItems = [
     font-size: 12px;
     color: rgba(255, 255, 255, 0.3);
     margin: 0;
+  }
+  .loading-static-btn {
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+    font-size: 11px;
+    color: rgba(91, 209, 216, 0.6);
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid rgba(91, 209, 216, 0.15);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    pointer-events: auto;
+  }
+  .loading-static-btn:hover {
+    color: #5bd1d8;
+    border-color: rgba(91, 209, 216, 0.4);
+    background: rgba(91, 209, 216, 0.05);
   }
   .loading-tagline {
     font-size: 11px;

@@ -37,7 +37,7 @@ function RealPCB() {
   return (
     <primitive
       object={glb.scene.clone()}
-      scale={0.15}
+      scale={15}
       rotation={[-Math.PI / 2, 0, 0]}
       position={[0, 0, 0]}
     />
