@@ -37,9 +37,9 @@ function RealPCB() {
   return (
     <primitive
       object={glb.scene.clone()}
-      scale={8}
+      scale={120}
       rotation={[-Math.PI / 2, 0, 0]}
-      position={[0, 0.1, 0]}
+      position={[0, 0, 0]}
     />
   );
 }
@@ -52,9 +52,9 @@ function SwitchBoard() {
   return (
     <primitive
       object={glb.scene.clone()}
-      scale={8}
+      scale={120}
       rotation={[-Math.PI / 2, 0, 0]}
-      position={[8, 0.1, 3]}
+      position={[12, 0, 5]}
     />
   );
 }

@@ -42,6 +42,8 @@ const headerItems = [
       </div>
     </section>
 
+    <div class="pcb-spacer" aria-hidden="true"></div>
+
     <!-- ABOUT -->
     <section class="section-dark webgl-section" id="a-propos">
       <div class="section-content webgl-card" style="--card-accent: #5bd1d8">
@@ -49,12 +51,16 @@ const headerItems = [
       </div>
     </section>
 
+    <div class="pcb-spacer" aria-hidden="true"></div>
+
     <!-- CASE STUDIES -->
     <section class="section-dark webgl-section">
       <div class="section-content webgl-card" style="--card-accent: #f1c27a">
         <CaseStudies />
       </div>
     </section>
+
+    <div class="pcb-spacer" aria-hidden="true"></div>
 
     <!-- PHOTO CAROUSEL (atomic orbit) -->
     <section class="section-dark webgl-section atomic-carousel" aria-label="Photos de terrain">
@@ -116,12 +122,16 @@ const headerItems = [
       <div class="atomic-carousel-track" id="video-track"></div>
     </section>
 
+    <div class="pcb-spacer" aria-hidden="true"></div>
+
     <!-- SPRINTS -->
     <section class="section-dark webgl-section" id="graphic-sprints-title">
       <div class="section-content webgl-card" style="--card-accent: #b6d18f">
         <GraphicSprints />
       </div>
     </section>
+
+    <div class="pcb-spacer" aria-hidden="true"></div>
 
     <!-- FAQ -->
     <section class="section-dark webgl-section" id="faq">
@@ -325,6 +335,12 @@ const headerItems = [
   }
   .dark-footer :global(.footer-link:hover) {
     color: #5bd1d8 !important;
+  }
+
+  /* ============ PCB SPACER ============ */
+  .pcb-spacer {
+    height: 60vh;
+    pointer-events: none;
   }
 
   /* ============ CONTACT 3D POPUP ============ */
