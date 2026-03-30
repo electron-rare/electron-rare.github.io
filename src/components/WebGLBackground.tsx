@@ -44,20 +44,6 @@ function RealPCB() {
   );
 }
 
-/* ---------- Switch MOSFET board ---------- */
-function SwitchBoard() {
-  let glb: any = null;
-  try { glb = useGLTF('/assets/models3d/bmu-switch-mosfet.glb'); } catch {}
-  if (!glb?.scene) return null;
-  return (
-    <primitive
-      object={glb.scene.clone()}
-      scale={120}
-      rotation={[-Math.PI / 2, 0, 0]}
-      position={[12, 0, 5]}
-    />
-  );
-}
 
 /* ---------- GLB Component placement ---------- */
 function GLBComponent({ modelUrl, position, scale = 1, rotation = [0, 0, 0] as [number, number, number] }: {
@@ -289,7 +275,7 @@ function ComponentCluster() {
   return (
     <group>
       {/* Zone 1 — MCU area (top-right of board) */}
-      <SectionLabel position={[6, 0.5, -2]} text="MCU" subtitle="Approche & expertise" scrollTarget="#a-propos" />
+      <SectionLabel position={[40, 90, -10]} text="MCU" subtitle="Approche & expertise" scrollTarget="#a-propos" />
       <GLBComponent modelUrl="/assets/models3d/qfp32.glb" position={[5, 0.3, -2]} scale={S_IC_LG} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[3, 0.3, -1]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/resistor_0603.glb" position={[4, 0.3, 0]} scale={S_RES} rotation={R} />
@@ -300,7 +286,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/led_0603.glb" position={[7.5, 0.3, -2.5]} scale={S_LED} rotation={R} />
 
       {/* Zone 2 — Analog / Op-amp area (left of board) */}
-      <SectionLabel position={[-5, 0.5, -1]} text="ANALOG" subtitle="Cas concrets" scrollTarget="#cas-concrets" />
+      <SectionLabel position={[-30, 90, -10]} text="ANALOG" subtitle="Cas concrets" scrollTarget="#cas-concrets" />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[-5, 0.3, -1]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[-3, 0.3, -2]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/resistor_0603.glb" position={[-4, 0.3, 0]} scale={S_RES} rotation={R} />
@@ -311,7 +297,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/led_0603.glb" position={[-2, 0.3, -1]} scale={S_LED} rotation={R} />
 
       {/* Zone 3 — Power stage (bottom-right) */}
-      <SectionLabel position={[4, 0.5, 4]} text="POWER" subtitle="Photos & videos terrain" scrollTarget="#photos" />
+      <SectionLabel position={[40, 30, -10]} text="POWER" subtitle="Photos & videos terrain" scrollTarget="#photos" />
       <GLBComponent modelUrl="/assets/models3d/qfp32.glb" position={[4, 0.3, 4]} scale={S_IC_LG} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/capacitor_0805.glb" position={[2, 0.3, 3]} scale={S_CAP * 1.5} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/capacitor_0805.glb" position={[6, 0.3, 5]} scale={S_CAP * 1.5} rotation={R} />
@@ -322,7 +308,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/led_0603.glb" position={[1.5, 0.3, 4.5]} scale={S_LED} rotation={R} />
 
       {/* Zone 4 — Communication (bottom-left) */}
-      <SectionLabel position={[-5, 0.5, 4]} text="FORMATION" subtitle="Workshops & programmes" scrollTarget="/formation/" />
+      <SectionLabel position={[-30, 30, -10]} text="FORMATION" subtitle="Workshops & programmes" scrollTarget="/formation/" />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[-5, 0.3, 4]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/soic8.glb" position={[-3, 0.3, 5]} scale={S_IC_SM} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/resistor_0603.glb" position={[-6, 0.3, 3]} scale={S_RES} rotation={R} />
@@ -332,7 +318,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/led_0603.glb" position={[-7, 0.3, 4.5]} scale={S_LED} rotation={R} />
 
       {/* Zone 5 — DSP / Neural (center-top) */}
-      <SectionLabel position={[0, 0.5, -4]} text="MISSIONS" subtitle="Diagnostic · Prototype · Production" scrollTarget="#graphic-sprints-title" />
+      <SectionLabel position={[4, 110, -10]} text="MISSIONS" subtitle="Diagnostic · Prototype · Production" scrollTarget="#graphic-sprints-title" />
       <GLBComponent modelUrl="/assets/models3d/qfp32.glb" position={[0, 0.3, -4]} scale={S_IC_LG} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/capacitor_0805.glb" position={[-2, 0.3, -4.5]} scale={S_CAP} rotation={R} />
       <GLBComponent modelUrl="/assets/models3d/capacitor_0805.glb" position={[2, 0.3, -3.5]} scale={S_CAP} rotation={R} />
@@ -341,7 +327,7 @@ function ComponentCluster() {
       <GLBComponent modelUrl="/assets/models3d/inductor_0805.glb" position={[0, 0.3, -6]} scale={S_CAP} rotation={R} />
 
       {/* Zone 6 — Contact area (center) */}
-      <SectionLabel position={[0, 0.5, 1]} text="CONTACT" subtitle="Discuter de votre projet" scrollTarget="#contact" />
+      <SectionLabel position={[4, 66, -10]} text="CONTACT" subtitle="Discuter de votre projet" scrollTarget="#contact" />
 
       {/* Scattered passives */}
       {Array.from({ length: 15 }).map((_, i) => (
@@ -384,16 +370,19 @@ function CameraLight() {
 }
 
 /* ---------- Camera — orbits around PCB, zooms on scroll ---------- */
-// PCB at scale=1 in mm. Board ~80x60mm. Camera needs to be ~200mm away for overview.
+// PCB bounds: X[-74,81] Y[-43,63] Z[-17,150] mm. Center ≈ (4, 10, 66).
+// After rotation -π/2 on X, the Y/Z swap: model Y→scene -Z, model Z→scene Y.
+// So in scene coords, board center ≈ (4, 66, -10), extends ~155mm in Y (height).
+const BOARD_CENTER = [4, 66, -10];
 const CAMERA_STOPS = [
-  { scroll: 0.00, pos: [0, 200, 150], look: [0, 0, 0] },         // Overview — full board
-  { scroll: 0.12, pos: [40, 80, -10], look: [30, 0, -15] },       // MCU zone
-  { scroll: 0.28, pos: [-35, 80, 0], look: [-30, 0, -10] },       // Analog zone
-  { scroll: 0.42, pos: [35, 80, 30], look: [25, 0, 25] },         // Power zone
-  { scroll: 0.56, pos: [-35, 80, 30], look: [-30, 0, 25] },       // Formation zone
-  { scroll: 0.70, pos: [0, 90, -40], look: [0, 0, -30] },         // Missions zone
-  { scroll: 0.85, pos: [0, 50, 10], look: [0, 0, 5] },            // Contact zone (close)
-  { scroll: 1.00, pos: [0, 250, 150], look: [0, 0, 0] },          // Pull back overview
+  { scroll: 0.00, pos: [0, 250, 120], look: [4, 66, -10] },        // Overview — sees full assembly
+  { scroll: 0.12, pos: [50, 140, 20], look: [40, 80, -10] },       // MCU zone (top-right)
+  { scroll: 0.28, pos: [-40, 140, 20], look: [-30, 80, -10] },     // Analog zone (top-left)
+  { scroll: 0.42, pos: [40, 40, -20], look: [30, 20, -10] },       // Power zone (bottom-right)
+  { scroll: 0.56, pos: [-40, 40, -20], look: [-30, 20, -10] },     // Formation zone (bottom-left)
+  { scroll: 0.70, pos: [0, 120, 40], look: [0, 100, -10] },        // Missions zone (mid)
+  { scroll: 0.85, pos: [4, 80, 5], look: [4, 66, -10] },           // Contact (center close)
+  { scroll: 1.00, pos: [0, 300, 150], look: [4, 66, -10] },        // Pull back
 ];
 
 function OrbitCamera() {
@@ -478,7 +467,7 @@ export default function WebGLBackground() {
       aria-hidden="true"
     >
       <Canvas
-        camera={{ position: [0, 200, 150], fov: 50 }}
+        camera={{ position: [0, 250, 120], fov: 50 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         style={{ pointerEvents: 'auto' }}
