@@ -1,0 +1,349 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@/styles/global.css';
+import { About } from '@/components/sections/About';
+import { CaseStudies } from '@/components/sections/CaseStudies';
+import { GraphicSprints } from '@/components/sections/GraphicSprints';
+import Contact from '@/components/sections/Contact.astro';
+import Faq from '@/components/sections/Faq.astro';
+import { withSiteBase } from '@/lib/site';
+import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
+
+const formationHref = withSiteBase('/formation/');
+const mentionsHref = withSiteBase('/mentions-legales/');
+---
+
+<BaseLayout title="L'électron rare — Version accessible" description="Systèmes électroniques spécifiques. Version sans animations 3D, optimisée pour l'accessibilité.">
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+  <header class="static-header" role="banner">
+    <nav aria-label="Navigation principale" class="static-nav">
+      <a href="#top" class="static-brand">L'électron rare</a>
+      <ul class="static-nav-list" role="list">
+        <li><a href="#a-propos">Approche</a></li>
+        <li><a href="#cas-concrets">Cas concrets</a></li>
+        <li><a href="#missions">Missions</a></li>
+        <li><a href={formationHref}>Formation</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact" class="static-cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- HERO -->
+    <section class="static-hero" id="top" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="static-hero-title">
+        Systèmes électroniques spécifiques, du besoin au livrable fiable
+      </h1>
+      <p class="static-hero-sub">
+        L'Électron Rare conçoit, met au point et fiabilise des systèmes électroniques spécifiques
+        en électronique, automatisme, énergie et stockage, avec les partenaires adaptés
+        quand le projet devient multi-technique.
+      </p>
+      <div class="static-hero-actions">
+        <a href="#contact" class="static-btn static-btn--primary">Discuter de votre projet</a>
+        <a href="/preview" class="static-btn static-btn--secondary">Version 3D</a>
+      </div>
+      <p class="static-hero-kicker" aria-hidden="true">électronique · automatisme · énergie · stockage</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="a-propos" class="static-section" aria-labelledby="about-title">
+      <About />
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section id="cas-concrets" class="static-section" aria-labelledby="cases-title">
+      <CaseStudies />
+    </section>
+
+    <!-- PHOTOS -->
+    <section class="static-section static-photos" aria-label="Photos de terrain">
+      <h2 class="static-section-title">Terrain</h2>
+      <div class="static-photo-grid">
+        <img src={withSiteBase('/assets/photos/pcb-teensy-led-kxkm.webp')} alt="PCB custom Teensy LED — KXKM" loading="lazy" width="280" height="190" />
+        <img src={withSiteBase('/assets/photos/automate-siemens-s7.webp')} alt="Automate Siemens S7" loading="lazy" width="280" height="190" />
+        <img src={withSiteBase('/assets/photos/bench-bms-batteries-xt60.webp')} alt="Banc de test BMS batteries" loading="lazy" width="280" height="190" />
+        <img src={withSiteBase('/assets/photos/soudure-pcb-composants.webp')} alt="Soudure PCB composants" loading="lazy" width="280" height="190" />
+        <img src={withSiteBase('/assets/photos/oscilloscope-philips-vintage.webp')} alt="Oscilloscope — instrumentation" loading="lazy" width="280" height="190" />
+        <img src={withSiteBase('/assets/photos/armoire-automate-schneider.webp')} alt="Armoire Schneider — automatisme" loading="lazy" width="280" height="190" />
+      </div>
+    </section>
+
+    <!-- SPRINTS -->
+    <section id="missions" class="static-section" aria-labelledby="sprints-title">
+      <GraphicSprints />
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="static-section" aria-labelledby="faq-title">
+      <Faq />
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="static-section" aria-labelledby="contact-title">
+      <Contact />
+    </section>
+  </main>
+
+  <footer class="static-footer" role="contentinfo">
+    <div class="static-footer-inner">
+      <p class="static-footer-brand">L'électron rare</p>
+      <p class="static-footer-copy">© 2026 Clément Saillant — systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.</p>
+      <p class="static-footer-contact">Contact : <a href="https://fr.linkedin.com/in/electron-rare">LinkedIn</a> · <a href="mailto:contact@lelectronrare.fr">contact@lelectronrare.fr</a></p>
+      <nav aria-label="Liens de pied de page" class="static-footer-links">
+        <a href="#a-propos">Approche</a>
+        <a href="#missions">Missions</a>
+        <a href={formationHref}>Formation</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/electron-rare/">GitHub</a>
+        <a href="https://blog.saillant.cc">Blog</a>
+        <a href={mentionsHref}>Mentions légales</a>
+      </nav>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  /* ============ ACCESSIBLE STATIC VERSION ============ */
+  /* High contrast, no animations, semantic structure */
+
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0071e3;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 0 0 8px 8px;
+    z-index: 1000;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    top: 0;
+  }
+
+  /* Header */
+  .static-header {
+    background: #fff;
+    border-bottom: 2px solid #1d1d1f;
+    padding: 12px clamp(16px, 4vw, 48px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .static-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .static-brand {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1d1d1f;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .static-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .static-nav-list a {
+    display: block;
+    padding: 6px 12px;
+    color: #1d1d1f;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+  }
+  .static-nav-list a:hover,
+  .static-nav-list a:focus {
+    background: #f0f0f0;
+    outline: 2px solid #0071e3;
+    outline-offset: 2px;
+  }
+  .static-cta {
+    background: #0071e3 !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+  }
+
+  /* Hero */
+  .static-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 80px) clamp(16px, 4vw, 48px);
+    text-align: center;
+  }
+  .static-hero-title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    color: #1d1d1f;
+    line-height: 1.15;
+    margin: 0 0 16px;
+  }
+  .static-hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: #6e6e73;
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+  .static-hero-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .static-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: none;
+  }
+  .static-btn--primary {
+    background: #0071e3;
+    color: #fff;
+  }
+  .static-btn--primary:hover,
+  .static-btn--primary:focus {
+    background: #005bb5;
+    outline: 3px solid #0071e3;
+    outline-offset: 2px;
+  }
+  .static-btn--secondary {
+    background: #f5f5f7;
+    color: #1d1d1f;
+    border: 1px solid #d2d2d7;
+  }
+  .static-btn--secondary:hover,
+  .static-btn--secondary:focus {
+    background: #e8e8e8;
+    outline: 3px solid #0071e3;
+    outline-offset: 2px;
+  }
+  .static-hero-kicker {
+    font-size: 12px;
+    color: #aeaeb2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Sections */
+  .static-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(32px, 6vw, 64px) clamp(16px, 4vw, 48px);
+    border-top: 1px solid #e5e5e5;
+  }
+  .static-section-title {
+    font-size: 12px;
+    color: #86868b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 16px;
+    text-align: center;
+  }
+
+  /* Photo grid */
+  .static-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+  }
+  .static-photo-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+  }
+
+  /* Footer */
+  .static-footer {
+    background: #f5f5f7;
+    border-top: 2px solid #1d1d1f;
+    padding: 24px clamp(16px, 4vw, 48px);
+  }
+  .static-footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .static-footer-brand {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1d1d1f;
+    margin: 0 0 4px;
+  }
+  .static-footer-copy {
+    font-size: 12px;
+    color: #86868b;
+    margin: 0 0 4px;
+  }
+  .static-footer-contact {
+    font-size: 13px;
+    color: #6e6e73;
+    margin: 0 0 12px;
+  }
+  .static-footer-contact a {
+    color: #0071e3;
+  }
+  .static-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .static-footer-links a {
+    font-size: 13px;
+    color: #6e6e73;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .static-footer-links a:hover,
+  .static-footer-links a:focus {
+    background: #e5e5e5;
+    outline: 2px solid #0071e3;
+  }
+
+  /* Focus styles — WCAG 2.2 compliant */
+  :focus-visible {
+    outline: 3px solid #0071e3;
+    outline-offset: 2px;
+  }
+
+  /* High contrast mode support */
+  @media (forced-colors: active) {
+    .static-btn--primary {
+      border: 2px solid ButtonText;
+    }
+    .static-header {
+      border-bottom-color: ButtonText;
+    }
+  }
+
+  /* Reduced motion — no animations at all */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  /* Print styles */
+  @media print {
+    .static-header, .static-footer, .static-hero-actions { display: none; }
+    .static-section { border: none; page-break-inside: avoid; }
+  }
+</style>
