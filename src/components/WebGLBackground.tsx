@@ -1,6 +1,6 @@
 import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Text } from '@react-three/drei';
+import { Text, useGLTF } from '@react-three/drei';
 import { EffectComposer, Bloom, ChromaticAberration, Scanline } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
@@ -297,37 +297,41 @@ function Vias() {
 
 /* ---------- 3D Electronic components on PCB ---------- */
 
-/* IC / Microcontroller (black rectangle with pins) */
+/* ---------- GLB Model loaders ---------- */
+
+/* IC — uses SOIC-8 or QFP-32 GLB model */
 function ICComponent({ position, size = [2, 0.3, 1.2], label, color = '#1a1a1a' }: {
   position: [number, number, number]; size?: [number, number, number]; label: string; color?: string;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const pins = Math.floor(size[0] / 0.3);
+  const isLarge = size[0] > 1.5;
+  const modelUrl = isLarge ? '/assets/models3d/qfp32.glb' : '/assets/models3d/soic8.glb';
+
+  let glb: any = null;
+  try { glb = useGLTF(modelUrl); } catch {}
 
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
     const cameraZ = -scrollProgress * 90;
     const dist = Math.abs(position[2] - cameraZ);
     const glow = Math.max(0, 1 - dist / 6);
-    // Subtle float when active
     groupRef.current.position.y = position[1] + glow * Math.sin(clock.getElapsedTime() * 2) * 0.03;
   });
 
+  const scale = isLarge ? 0.4 : 0.25;
+
   return (
     <group ref={groupRef} position={position}>
-      {/* IC body */}
-      <mesh position={[0, size[1] / 2, 0]}>
-        <boxGeometry args={size} />
-        <meshStandardMaterial color={color} roughness={0.6} metalness={0.1} />
-      </mesh>
-      {/* Dot (pin 1 marker) */}
-      <mesh position={[-size[0] / 2 + 0.15, size[1] + 0.01, -size[2] / 2 + 0.15]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[0.05, 8]} />
-        <meshBasicMaterial color="#e0e0e0" />
-      </mesh>
-      {/* Silkscreen label on IC body */}
+      {glb?.scene ? (
+        <primitive object={glb.scene.clone()} scale={scale} rotation={[-Math.PI / 2, 0, 0]} />
+      ) : (
+        <mesh position={[0, size[1] / 2, 0]}>
+          <boxGeometry args={size} />
+          <meshStandardMaterial color={color} roughness={0.6} metalness={0.1} />
+        </mesh>
+      )}
       <Text
-        position={[0, size[1] + 0.02, 0]}
+        position={[0, 0.4, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
         fontSize={0.12}
         font="/assets/fonts/manrope-regular.ttf"
@@ -339,20 +343,6 @@ function ICComponent({ position, size = [2, 0.3, 1.2], label, color = '#1a1a1a' 
       >
         {label}
       </Text>
-      {/* Pins — both sides */}
-      {Array.from({ length: pins }).map((_, i) => (
-        <group key={`pins-${i}`}>
-          <mesh position={[-size[0] / 2 + 0.15 + i * 0.3, 0.05, -size[2] / 2 - 0.08]}>
-            <boxGeometry args={[0.06, 0.02, 0.15]} />
-            <meshStandardMaterial color={COLORS.solder} metalness={0.9} roughness={0.2} />
-          </mesh>
-          <mesh position={[-size[0] / 2 + 0.15 + i * 0.3, 0.05, size[2] / 2 + 0.08]}>
-            <boxGeometry args={[0.06, 0.02, 0.15]} />
-            <meshStandardMaterial color={COLORS.solder} metalness={0.9} roughness={0.2} />
-          </mesh>
-        </group>
-      ))}
-      {/* Solder pads glow */}
       <mesh position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[size[0] + 0.5, size[2] + 0.5]} />
         <meshStandardMaterial color={COLORS.copperBright} transparent opacity={0.04} emissive={COLORS.current} emissiveIntensity={0.2} side={THREE.DoubleSide} />
@@ -361,65 +351,77 @@ function ICComponent({ position, size = [2, 0.3, 1.2], label, color = '#1a1a1a' 
   );
 }
 
-/* Capacitor (cylinder) */
+/* Capacitor — uses capacitor_0805 GLB */
 function Capacitor({ position, radius = 0.25, height = 0.5, color = '#2a4a8a' }: {
   position: [number, number, number]; radius?: number; height?: number; color?: string;
 }) {
-  const ref = useRef<THREE.Mesh>(null);
+  const ref = useRef<THREE.Group>(null);
+  let glb: any = null;
+  try { glb = useGLTF('/assets/models3d/capacitor_0805.glb'); } catch {}
 
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (!ref.current) return;
     const cameraZ = -scrollProgress * 90;
     const dist = Math.abs(position[2] - cameraZ);
     const glow = Math.max(0, 1 - dist / 6);
-    (ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity = glow * 0.5;
+    ref.current.children.forEach(child => {
+      if ((child as any).material) {
+        (child as any).material.emissiveIntensity = glow * 0.5;
+      }
+    });
   });
 
+  const scale = radius * 4;
+
   return (
-    <group position={position}>
-      <mesh ref={ref} position={[0, height / 2, 0]}>
-        <cylinderGeometry args={[radius, radius, height, 16]} />
-        <meshStandardMaterial color={color} roughness={0.4} metalness={0.2} emissive={COLORS.current} emissiveIntensity={0} />
-      </mesh>
-      {/* Top marking */}
-      <mesh position={[0, height + 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[radius * 0.7, 16]} />
-        <meshStandardMaterial color="#333" metalness={0.5} roughness={0.3} />
-      </mesh>
-      {/* Stripe */}
-      <mesh position={[0, height * 0.7, radius + 0.01]}>
-        <planeGeometry args={[radius * 1.2, height * 0.15]} />
-        <meshBasicMaterial color={COLORS.silkscreen} transparent opacity={0.3} />
-      </mesh>
+    <group ref={ref} position={position}>
+      {glb?.scene ? (
+        <primitive object={glb.scene.clone()} scale={scale} rotation={[-Math.PI / 2, 0, 0]} />
+      ) : (
+        <mesh position={[0, height / 2, 0]}>
+          <cylinderGeometry args={[radius, radius, height, 16]} />
+          <meshStandardMaterial color={color} roughness={0.4} metalness={0.2} emissive={COLORS.current} emissiveIntensity={0} />
+        </mesh>
+      )}
     </group>
   );
 }
 
-/* Resistor (small rectangle with color bands) */
+/* Resistor — uses resistor_0603 GLB */
 function Resistor({ position, rotation = [0, 0, 0] }: { position: [number, number, number]; rotation?: [number, number, number] }) {
+  let glb: any = null;
+  try { glb = useGLTF('/assets/models3d/resistor_0603.glb'); } catch {}
+
   return (
     <group position={position} rotation={rotation}>
-      <mesh position={[0, 0.04, 0]}>
-        <boxGeometry args={[0.5, 0.08, 0.2]} />
-        <meshStandardMaterial color="#2a2a2a" roughness={0.7} />
-      </mesh>
-      {/* Solder pads */}
-      <mesh position={[-0.22, 0.02, 0]}>
-        <boxGeometry args={[0.1, 0.04, 0.22]} />
-        <meshStandardMaterial color={COLORS.solder} metalness={0.9} roughness={0.2} />
-      </mesh>
-      <mesh position={[0.22, 0.02, 0]}>
-        <boxGeometry args={[0.1, 0.04, 0.22]} />
-        <meshStandardMaterial color={COLORS.solder} metalness={0.9} roughness={0.2} />
-      </mesh>
+      {glb?.scene ? (
+        <primitive object={glb.scene.clone()} scale={0.3} rotation={[-Math.PI / 2, 0, 0]} />
+      ) : (
+        <>
+          <mesh position={[0, 0.04, 0]}>
+            <boxGeometry args={[0.5, 0.08, 0.2]} />
+            <meshStandardMaterial color="#2a2a2a" roughness={0.7} />
+          </mesh>
+          <mesh position={[-0.22, 0.02, 0]}>
+            <boxGeometry args={[0.1, 0.04, 0.22]} />
+            <meshStandardMaterial color={COLORS.solder} metalness={0.9} roughness={0.2} />
+          </mesh>
+          <mesh position={[0.22, 0.02, 0]}>
+            <boxGeometry args={[0.1, 0.04, 0.22]} />
+            <meshStandardMaterial color={COLORS.solder} metalness={0.9} roughness={0.2} />
+          </mesh>
+        </>
+      )}
     </group>
   );
 }
 
-/* LED (small dome with glow) */
+/* LED — uses led_0603 GLB + glow */
 function LED({ position, color = '#5bd1d8' }: { position: [number, number, number]; color?: string }) {
-  const ref = useRef<THREE.Mesh>(null);
+  const ref = useRef<THREE.Group>(null);
   const threeColor = useMemo(() => new THREE.Color(color), [color]);
+  let glb: any = null;
+  try { glb = useGLTF('/assets/models3d/led_0603.glb'); } catch {}
 
   useFrame(({ clock }) => {
     if (!ref.current) return;
@@ -427,23 +429,32 @@ function LED({ position, color = '#5bd1d8' }: { position: [number, number, numbe
     const cameraZ = -scrollProgress * 90;
     const dist = Math.abs(position[2] - cameraZ);
     const proximity = Math.max(0, 1 - dist / 5);
-    (ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity = proximity * (1.5 + Math.sin(t * 3) * 0.5);
+    // Glow point light near LED
+    const light = ref.current.children.find(c => c.type === 'PointLight') as THREE.PointLight;
+    if (light) light.intensity = proximity * (0.3 + Math.sin(t * 3) * 0.1);
   });
 
   return (
-    <group position={position}>
-      <mesh ref={ref}>
-        <sphereGeometry args={[0.08, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshStandardMaterial color={color} emissive={threeColor} emissiveIntensity={0} transparent opacity={0.9} />
-      </mesh>
-      {/* LED pad */}
-      <mesh position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[0.12, 8]} />
-        <meshStandardMaterial color={COLORS.solder} metalness={0.8} roughness={0.3} />
-      </mesh>
+    <group ref={ref} position={position}>
+      {glb?.scene ? (
+        <primitive object={glb.scene.clone()} scale={0.3} rotation={[-Math.PI / 2, 0, 0]} />
+      ) : (
+        <mesh>
+          <sphereGeometry args={[0.08, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color={color} emissive={threeColor} emissiveIntensity={0.5} transparent opacity={0.9} />
+        </mesh>
+      )}
+      <pointLight color={color} intensity={0} distance={2} decay={2} position={[0, 0.15, 0]} />
     </group>
   );
 }
+
+/* Preload all GLB models */
+useGLTF.preload('/assets/models3d/resistor_0603.glb');
+useGLTF.preload('/assets/models3d/capacitor_0805.glb');
+useGLTF.preload('/assets/models3d/led_0603.glb');
+useGLTF.preload('/assets/models3d/soic8.glb');
+useGLTF.preload('/assets/models3d/qfp32.glb');
 
 /* Silkscreen text (PCB printed labels) */
 function Silk({ position, text, size = 0.15, color = '#e8e8d0', opacity = 0.5, rotation = [-Math.PI / 2, 0, 0] as [number, number, number] }: {
