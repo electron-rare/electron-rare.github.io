@@ -593,42 +593,97 @@ function PCBComponents() {
       <Resistor position={[0, 0, -82]} rotation={[0, 1.2, 0]} />
       <Silk position={[0, 0.02, -81.5]} text="R7 1k" size={0.08} />
 
-      {/* ── Transition components between sections ── */}
+      {/* ── Transition components between sections (~50 total) ── */}
 
-      {/* Between HERO and ABOUT */}
-      <Capacitor position={[8, 0, -20]} radius={0.2} height={0.4} color="#2a4a8a" />
-      <Silk position={[8, 0.02, -19.5]} text="C11 22pF" size={0.07} opacity={0.25} />
-      <Resistor position={[5, 0, -22]} rotation={[0, 0.6, 0]} />
-      <Silk position={[5, 0.02, -21.5]} text="R10 100k" size={0.07} opacity={0.25} />
-      <LED position={[6.5, 0, -19]} color="#5bd1d8" />
-      <Resistor position={[3, 0, -24]} rotation={[0, -0.3, 0]} />
-      <Capacitor position={[7, 0, -23]} radius={0.15} height={0.3} color="#8B4513" />
+      {/* ── HERO → ABOUT : STM32F030 + passives ── */}
+      <ICComponent position={[7, 0, -18]} size={[1.8, 0.3, 1]} label="U6 — STM32F030" color="#1a1a2a" />
+      <Silk position={[7, 0.02, -16.5]} text="ARM Cortex-M0" size={0.08} opacity={0.2} />
+      <Capacitor position={[9, 0, -17]} radius={0.2} height={0.4} color="#2a4a8a" />
+      <Silk position={[9, 0.02, -16.5]} text="C11 100nF" size={0.07} opacity={0.25} />
+      <Capacitor position={[5, 0, -19]} radius={0.15} height={0.3} color="#8B4513" />
+      <Silk position={[5, 0.02, -18.5]} text="C12 22pF" size={0.07} opacity={0.25} />
+      <Resistor position={[8.5, 0, -20]} rotation={[0, 0.3, 0]} />
+      <Silk position={[8.5, 0.02, -19.5]} text="R10 10k" size={0.07} opacity={0.25} />
+      <Resistor position={[4, 0, -21]} rotation={[0, -0.5, 0]} />
+      <Silk position={[4, 0.02, -20.5]} text="R11 4k7" size={0.07} opacity={0.25} />
+      <LED position={[6, 0, -19.5]} color="#5bd1d8" />
+      <Silk position={[6, 0.02, -19]} text="D8 SWD" size={0.07} opacity={0.25} />
+      <Capacitor position={[3, 0, -23]} radius={0.2} height={0.4} color="#2a4a8a" />
+      <Resistor position={[6.5, 0, -22]} rotation={[0, 0.8, 0]} />
+      <Resistor position={[5, 0, -24]} rotation={[0, -0.2, 0]} />
+      <LED position={[8, 0, -23]} color="#30d158" />
 
-      {/* Between ABOUT and CASES */}
-      <ICComponent position={[-2, 0, -36]} size={[1, 0.2, 0.5]} label="U4 — 74HC595" color="#1a1a2a" />
+      {/* ── ABOUT → CASES : 74HC595 + self + résistances ── */}
+      <ICComponent position={[-2, 0, -36]} size={[1.2, 0.2, 0.6]} label="U4 — 74HC595" color="#1a1a2a" />
+      <Silk position={[-2, 0.02, -35]} text="SHIFT REG" size={0.08} opacity={0.2} />
+      {/* Self (inductor) — cylindre avec bandes */}
+      <Capacitor position={[1, 0, -35]} radius={0.22} height={0.25} color="#556b2f" />
+      <Silk position={[1, 0.02, -34.5]} text="L1 10uH" size={0.07} opacity={0.25} />
       <Capacitor position={[-4, 0, -35]} radius={0.18} height={0.35} color="#2a4a8a" />
-      <Resistor position={[1, 0, -37]} rotation={[0, 1, 0]} />
+      <Silk position={[-4, 0.02, -34.5]} text="C13 100nF" size={0.07} opacity={0.25} />
+      <Resistor position={[3, 0, -36]} rotation={[0, 0.6, 0]} />
+      <Silk position={[3, 0.02, -35.5]} text="R12 330R" size={0.07} opacity={0.25} />
+      <Resistor position={[-1, 0, -37.5]} rotation={[0, -0.4, 0]} />
+      <Resistor position={[2, 0, -38]} rotation={[0, 1, 0]} />
       <LED position={[0, 0, -36.5]} color="#f1c27a" />
+      <Silk position={[0, 0.02, -36]} text="D9 LATCH" size={0.07} opacity={0.25} />
+      {/* Self 2 */}
+      <Capacitor position={[-3, 0, -38]} radius={0.2} height={0.2} color="#556b2f" />
+      <Silk position={[-3, 0.02, -37.5]} text="L2 47uH" size={0.07} opacity={0.25} />
 
-      {/* Between CASES and MEDIA */}
-      <Resistor position={[-6, -0.1, -48]} rotation={[0, 0.5, 0]} />
-      <Capacitor position={[-3, 0, -49]} radius={0.2} height={0.4} color="#1a3a1a" />
+      {/* ── CASES → MEDIA : FPGA Xilinx + passives ── */}
+      <ICComponent position={[-5, 0, -49]} size={[2.2, 0.35, 1.5]} label="U7 — XC7A35T" color="#0a0a2a" />
+      <Silk position={[-5, 0.02, -47]} text="FPGA Artix-7" size={0.09} opacity={0.2} />
+      <Capacitor position={[-2, 0, -48]} radius={0.15} height={0.3} color="#2a4a8a" />
+      <Silk position={[-2, 0.02, -47.5]} text="C14 100nF" size={0.07} opacity={0.25} />
+      <Capacitor position={[-8, 0, -48.5]} radius={0.2} height={0.4} color="#1a3a1a" />
+      <Silk position={[-8, 0.02, -48]} text="C15 10uF" size={0.07} opacity={0.25} />
+      <Resistor position={[-3, 0, -50.5]} rotation={[0, 0.5, 0]} />
       <Resistor position={[-7, 0, -50]} rotation={[0, -0.7, 0]} />
-      <LED position={[-5, 0, -49.5]} color="#30d158" />
+      <Resistor position={[-6, 0, -51]} rotation={[0, 0.3, 0]} />
+      <LED position={[-4, 0, -50]} color="#30d158" />
+      <Silk position={[-4, 0.02, -49.5]} text="D10 DONE" size={0.07} opacity={0.25} />
+      <LED position={[-7, 0, -49]} color="#ff6b6b" />
+      <Silk position={[-7, 0.02, -48.5]} text="D11 INIT" size={0.07} opacity={0.25} />
+      <Capacitor position={[-1, 0, -51]} radius={0.12} height={0.25} color="#2a4a8a" />
 
-      {/* Between MEDIA and SPRINTS */}
-      <ICComponent position={[0, 0, -60]} size={[0.8, 0.2, 0.4]} label="U5 — AMS1117" color="#222" />
-      <Capacitor position={[2, 0, -59]} radius={0.15} height={0.3} color="#2a4a8a" />
-      <Capacitor position={[-2, 0, -61]} radius={0.15} height={0.3} color="#2a4a8a" />
-      <Resistor position={[3, 0, -61]} rotation={[0, 0.4, 0]} />
-      <LED position={[1, 0, -58]} color="#5bd1d8" />
+      {/* ── MEDIA → SPRINTS : ARM Neural Unit + découplage ── */}
+      <ICComponent position={[1, 0, -59]} size={[2, 0.3, 1.2]} label="U8 — STM32N6" color="#1a0a1a" />
+      <Silk position={[1, 0.02, -57.5]} text="ARM Neural Unit" size={0.09} opacity={0.2} />
+      <Capacitor position={[4, 0, -58]} radius={0.15} height={0.3} color="#2a4a8a" />
+      <Silk position={[4, 0.02, -57.5]} text="C16 100nF" size={0.07} opacity={0.25} />
+      <Capacitor position={[-2, 0, -60]} radius={0.15} height={0.3} color="#2a4a8a" />
+      <Silk position={[-2, 0.02, -59.5]} text="C17 100nF" size={0.07} opacity={0.25} />
+      <Capacitor position={[3, 0, -61]} radius={0.2} height={0.4} color="#8B4513" />
+      <Silk position={[3, 0.02, -60.5]} text="C18 22uF" size={0.07} opacity={0.25} />
+      <Resistor position={[-1, 0, -61.5]} rotation={[0, 0.4, 0]} />
+      <Resistor position={[4, 0, -61]} rotation={[0, -0.6, 0]} />
+      <LED position={[2.5, 0, -58]} color="#5bd1d8" />
+      <Silk position={[2.5, 0.02, -57.5]} text="D12 NPU" size={0.07} opacity={0.25} />
+      {/* Self */}
+      <Capacitor position={[-1, 0, -58]} radius={0.18} height={0.2} color="#556b2f" />
+      <Silk position={[-1, 0.02, -57.5]} text="L3 4u7" size={0.07} opacity={0.25} />
 
-      {/* Between SPRINTS and CONTACT */}
-      <Resistor position={[6, 0, -73]} rotation={[0, -0.5, 0]} />
-      <Resistor position={[4, 0, -74]} rotation={[0, 0.8, 0]} />
-      <Capacitor position={[7, 0, -75]} radius={0.25} height={0.5} color="#4a2a8a" />
-      <LED position={[3, 0, -76]} color="#ff6b35" />
-      <Capacitor position={[1, 0, -77]} radius={0.2} height={0.4} color="#8B4513" />
+      {/* ── SPRINTS → CONTACT : DSP + condensateurs + LED ── */}
+      <ICComponent position={[5, 0, -74]} size={[1.8, 0.3, 1]} label="U9 — TMS320F" color="#1a1a0a" />
+      <Silk position={[5, 0.02, -72.5]} text="DSP C2000" size={0.09} opacity={0.2} />
+      <Capacitor position={[7.5, 0, -73]} radius={0.25} height={0.5} color="#4a2a8a" />
+      <Silk position={[7.5, 0.02, -72.5]} text="C19 47uF" size={0.07} opacity={0.25} />
+      <Capacitor position={[3, 0, -75]} radius={0.2} height={0.4} color="#8B4513" />
+      <Silk position={[3, 0.02, -74.5]} text="C20 10uF" size={0.07} opacity={0.25} />
+      <Resistor position={[6.5, 0, -75.5]} rotation={[0, -0.5, 0]} />
+      <Silk position={[6.5, 0.02, -75]} text="R13 1k" size={0.07} opacity={0.25} />
+      <Resistor position={[4, 0, -76]} rotation={[0, 0.8, 0]} />
+      <Silk position={[4, 0.02, -75.5]} text="R14 10k" size={0.07} opacity={0.25} />
+      <LED position={[2, 0, -74]} color="#ff6b35" />
+      <Silk position={[2, 0.02, -73.5]} text="D13 PWM" size={0.07} opacity={0.25} />
+      <LED position={[7, 0, -76]} color="#5bd1d8" />
+      <Silk position={[7, 0.02, -75.5]} text="D14 ADC" size={0.07} opacity={0.25} />
+      <Capacitor position={[1, 0, -77]} radius={0.2} height={0.4} color="#2a4a8a" />
+      <Silk position={[1, 0.02, -76.5]} text="C21 100nF" size={0.07} opacity={0.25} />
+      {/* Self */}
+      <Capacitor position={[8, 0, -76.5]} radius={0.18} height={0.2} color="#556b2f" />
+      <Silk position={[8, 0.02, -76]} text="L4 10uH" size={0.07} opacity={0.25} />
 
       {/* ── Extra scattered passives ── */}
       <Resistor position={[12, 0, -7]} rotation={[0, 0.7, 0]} />
