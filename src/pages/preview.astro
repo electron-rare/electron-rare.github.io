@@ -35,10 +35,45 @@ const headerItems = [
   <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
 
   <main id="main-content" class="dark-site">
-    <!-- HERO -->
+    <!-- HERO — BMU overview with clickable zones -->
     <section class="section-dark section-hero webgl-section" id="top">
-      <div class="section-content">
-        <Hero />
+      <div class="hero-bmu">
+        <div class="hero-bmu-title">
+          <h1 class="hero-bmu-h1">L'<span class="hero-electric">é</span>lectron rare</h1>
+          <p class="hero-bmu-sub">Systèmes électroniques spécifiques, du besoin au livrable fiable</p>
+        </div>
+
+        <nav class="hero-bmu-nav" aria-label="Sections du board">
+          <a href="#a-propos" class="hero-bmu-zone hero-bmu-zone--mcu">
+            <span class="hero-bmu-zone-icon">⬡</span>
+            <span class="hero-bmu-zone-label">MCU</span>
+            <span class="hero-bmu-zone-desc">Approche & expertise</span>
+          </a>
+          <a href="#cas-concrets" class="hero-bmu-zone hero-bmu-zone--analog">
+            <span class="hero-bmu-zone-icon">◈</span>
+            <span class="hero-bmu-zone-label">ANALOG</span>
+            <span class="hero-bmu-zone-desc">Cas concrets</span>
+          </a>
+          <a href="#graphic-sprints-title" class="hero-bmu-zone hero-bmu-zone--mission">
+            <span class="hero-bmu-zone-icon">⎔</span>
+            <span class="hero-bmu-zone-label">MISSIONS</span>
+            <span class="hero-bmu-zone-desc">Diagnostic · Prototype · Production</span>
+          </a>
+          <a href="/formation/" class="hero-bmu-zone hero-bmu-zone--formation">
+            <span class="hero-bmu-zone-icon">△</span>
+            <span class="hero-bmu-zone-label">FORMATION</span>
+            <span class="hero-bmu-zone-desc">Workshops & programmes</span>
+          </a>
+          <a href="#contact" class="hero-bmu-zone hero-bmu-zone--contact">
+            <span class="hero-bmu-zone-icon">⏣</span>
+            <span class="hero-bmu-zone-label">CONTACT</span>
+            <span class="hero-bmu-zone-desc">Discuter de votre projet</span>
+          </a>
+        </nav>
+
+        <div class="hero-bmu-tagline">
+          <span>électronique · automatisme · énergie · stockage</span>
+        </div>
       </div>
     </section>
 
@@ -337,6 +372,154 @@ const headerItems = [
     color: #5bd1d8 !important;
   }
 
+  /* ============ HERO BMU ============ */
+  .hero-bmu {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(60px, 10vw, 120px) clamp(20px, 4vw, 48px);
+    gap: clamp(24px, 4vw, 48px);
+  }
+
+  .hero-bmu-title {
+    animation: hero-title-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes hero-title-in {
+    from { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  .hero-bmu-h1 {
+    font-family: 'Manrope', -apple-system, sans-serif;
+    font-size: clamp(36px, 7vw, 72px);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(91, 209, 216, 0.2);
+  }
+  .hero-electric {
+    color: #5bd1d8;
+    text-shadow: 0 0 20px rgba(91, 209, 216, 0.6);
+  }
+
+  .hero-bmu-sub {
+    font-size: clamp(14px, 2vw, 18px);
+    color: rgba(255, 255, 255, 0.4);
+    margin: 12px 0 0;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    max-width: 500px;
+  }
+
+  /* Navigation zones — PCB component style */
+  .hero-bmu-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(10px, 2vw, 20px);
+    max-width: 700px;
+    animation: hero-nav-in 1s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes hero-nav-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-bmu-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: clamp(14px, 2vw, 24px) clamp(18px, 3vw, 32px);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    min-width: 120px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bmu-zone::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--zone-color, #5bd1d8) 0%, transparent 50%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .hero-bmu-zone:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 0 24px rgba(91, 209, 216, 0.1), 0 8px 32px rgba(0, 0, 0, 0.3);
+    border-color: rgba(91, 209, 216, 0.15);
+  }
+  .hero-bmu-zone:hover::before { opacity: 0.5; }
+
+  .hero-bmu-zone--mcu { --zone-color: #5bd1d8; }
+  .hero-bmu-zone--analog { --zone-color: #f1c27a; }
+  .hero-bmu-zone--mission { --zone-color: #b6d18f; }
+  .hero-bmu-zone--formation { --zone-color: #ff9f0a; }
+  .hero-bmu-zone--contact { --zone-color: #ff6b35; }
+
+  .hero-bmu-zone-icon {
+    font-size: 24px;
+    opacity: 0.6;
+    color: var(--zone-color, #5bd1d8);
+    filter: drop-shadow(0 0 6px var(--zone-color, #5bd1d8));
+  }
+
+  .hero-bmu-zone-label {
+    font-family: 'Orbitron', 'Manrope', sans-serif;
+    font-size: clamp(11px, 1.3vw, 14px);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--zone-color, #5bd1d8);
+  }
+
+  .hero-bmu-zone-desc {
+    font-size: clamp(10px, 1vw, 12px);
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 400;
+  }
+
+  .hero-bmu-tagline {
+    animation: hero-tag-in 0.8s 0.6s ease both;
+  }
+  @keyframes hero-tag-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .hero-bmu-tagline span {
+    font-size: clamp(10px, 1.2vw, 13px);
+    color: rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 640px) {
+    .hero-bmu-nav { flex-direction: column; align-items: stretch; }
+    .hero-bmu-zone { flex-direction: row; gap: 12px; text-align: left; }
+  }
+
   /* ============ PCB SPACER ============ */
   .pcb-spacer {
     height: 60vh;
@@ -547,6 +730,17 @@ const headerItems = [
       if (e.key === 'Escape') closeContact();
     });
   }
+
+  // Hero BMU zone smooth scroll
+  document.querySelectorAll('.hero-bmu-zone[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href === '#contact') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
 
   initContactPopup();
   document.addEventListener('astro:page-load', () => {
