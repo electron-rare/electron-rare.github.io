@@ -27,6 +27,19 @@ const headerItems = [
 ---
 
 <BaseLayout>
+  <!-- Loading screen — shows BMU photo while WebGL loads -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-content">
+      <img src="/assets/photos/bmu-assembly.jpg" alt="BMU v2 Assembly" class="loading-bmu-img" />
+      <h1 class="loading-title">L'<span class="loading-electric">é</span>lectron rare</h1>
+      <div class="loading-bar">
+        <div class="loading-bar-fill" id="loading-bar-fill"></div>
+      </div>
+      <p class="loading-status" id="loading-status">Chargement du PCB 3D...</p>
+      <p class="loading-tagline">électronique · automatisme · énergie</p>
+    </div>
+  </div>
+
   <!-- WebGL background layer — fixed, subtle, always visible -->
   <WebGLBackground client:load />
   <!-- Media lightbox (click photos/videos to view full) -->
@@ -329,6 +342,88 @@ const headerItems = [
   }
   .dark-footer :global(.footer-link:hover) {
     color: #5bd1d8 !important;
+  }
+
+  /* ============ LOADING SCREEN ============ */
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease, visibility 1s ease;
+  }
+  .loading-screen.loading-done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding: 24px;
+    animation: loading-fade-in 0.8s ease both;
+  }
+  @keyframes loading-fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .loading-bmu-img {
+    width: clamp(200px, 50vw, 400px);
+    height: auto;
+    border-radius: 16px;
+    border: 1px solid rgba(91, 209, 216, 0.15);
+    box-shadow: 0 0 40px rgba(91, 209, 216, 0.08), 0 12px 40px rgba(0,0,0,0.5);
+    animation: loading-float 4s ease-in-out infinite;
+  }
+  @keyframes loading-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .loading-title {
+    font-family: 'Manrope', -apple-system, sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.03em;
+    text-shadow: 0 0 30px rgba(91, 209, 216, 0.2);
+  }
+  .loading-electric {
+    color: #5bd1d8;
+    text-shadow: 0 0 15px rgba(91, 209, 216, 0.6);
+  }
+  .loading-bar {
+    width: clamp(200px, 40vw, 300px);
+    height: 2px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .loading-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #5bd1d8, #f1c27a);
+    border-radius: 1px;
+    transition: width 0.3s ease;
+  }
+  .loading-status {
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0;
+  }
+  .loading-tagline {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.12);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
   }
 
   /* ============ HERO BMU ============ */
@@ -692,6 +787,45 @@ const headerItems = [
       if (e.key === 'Escape') closeContact();
     });
   }
+
+  // Loading screen — fade out when WebGL canvas renders
+  const loadingMessages = [
+    "Chargement du PCB 3D...",
+    "Initialisation des composants...",
+    "Soudure des connexions...",
+    "Calibration de la caméra...",
+    "Vérification des pistes cuivre...",
+    "Flash du rendu WebGL...",
+  ];
+  let loadMsgIdx = 0;
+  const loadBar = document.getElementById('loading-bar-fill');
+  const loadStatus = document.getElementById('loading-status');
+  const loadScreen = document.getElementById('loading-screen');
+
+  const loadInterval = setInterval(() => {
+    loadMsgIdx = (loadMsgIdx + 1) % loadingMessages.length;
+    if (loadStatus) loadStatus.textContent = loadingMessages[loadMsgIdx];
+    if (loadBar) {
+      const pct = Math.min(90, parseFloat(loadBar.style.width || '0') + 15);
+      loadBar.style.width = pct + '%';
+    }
+  }, 800);
+
+  // Detect when WebGL canvas appears and has rendered
+  function checkWebGLReady() {
+    const canvas = document.querySelector('canvas');
+    if (canvas && canvas.clientWidth > 0) {
+      if (loadBar) loadBar.style.width = '100%';
+      if (loadStatus) loadStatus.textContent = 'PCB prêt.';
+      clearInterval(loadInterval);
+      setTimeout(() => {
+        loadScreen?.classList.add('loading-done');
+      }, 600);
+    } else {
+      requestAnimationFrame(checkWebGLReady);
+    }
+  }
+  requestAnimationFrame(checkWebGLReady);
 
   // Hero BMU zone smooth scroll
   document.querySelectorAll('.hero-bmu-zone[href^="#"]').forEach(link => {
