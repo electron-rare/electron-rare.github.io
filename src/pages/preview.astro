@@ -1,12 +1,8 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import WebGLBackground from '@/components/WebGLBackground';
-import { MediaLightbox } from '@/components/WebGLCards';
 import '@/styles/global.css';
 import '@/styles/home-workbench.css';
-import '@/styles/webgl-cards.css';
 import SiteHeader from '@/components/SiteHeader.astro';
-// Hero removed — PCB 3D is the hero
 import { About } from '@/components/sections/About';
 import { CaseStudies } from '@/components/sections/CaseStudies';
 import { GraphicSprints } from '@/components/sections/GraphicSprints';
@@ -27,7 +23,7 @@ const headerItems = [
 ---
 
 <BaseLayout>
-  <!-- Loading screen — shows BMU photo while WebGL loads -->
+  <!-- Loading screen — BMU photo while WebGL loads -->
   <div class="loading-screen" id="loading-screen">
     <div class="loading-content">
       <img src="/assets/photos/bmu-assembly.jpg" alt="BMU v2 Assembly" class="loading-bmu-img" />
@@ -35,124 +31,67 @@ const headerItems = [
       <div class="loading-bar">
         <div class="loading-bar-fill" id="loading-bar-fill"></div>
       </div>
-      <p class="loading-status" id="loading-status">Chargement du PCB 3D...</p>
+      <p class="loading-status" id="loading-status">Chargement...</p>
       <a href="/static/" class="loading-static-btn">Version sans 3D →</a>
       <p class="loading-tagline">électronique · automatisme · énergie</p>
     </div>
   </div>
 
-  <!-- WebGL background layer — fixed, subtle, always visible -->
-  <WebGLBackground client:load />
-  <!-- Media lightbox (click photos/videos to view full) -->
-  <MediaLightbox client:load />
+  <!-- WebGL background placeholder — NEW WEBGL GOES HERE -->
+  <div id="webgl-container"></div>
 
   <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
 
   <main id="main-content" class="dark-site">
-    <!-- No HTML hero — the PCB 3D IS the hero. First spacer = overview of the board -->
     <div class="pcb-spacer pcb-spacer--hero" id="top" aria-hidden="true"></div>
 
-    <!-- ABOUT -->
-    <section class="section-dark webgl-section" id="a-propos">
-      <div class="section-content webgl-card" style="--card-accent: #5bd1d8">
+    <section class="section-dark" id="a-propos">
+      <div class="section-content">
         <About />
       </div>
     </section>
 
     <div class="pcb-spacer" aria-hidden="true"></div>
 
-    <!-- CASE STUDIES -->
-    <section class="section-dark webgl-section">
-      <div class="section-content webgl-card" style="--card-accent: #f1c27a">
+    <section class="section-dark">
+      <div class="section-content">
         <CaseStudies />
       </div>
     </section>
 
     <div class="pcb-spacer" aria-hidden="true"></div>
 
-    <!-- PHOTO CAROUSEL (atomic orbit) -->
-    <section class="section-dark webgl-section atomic-carousel" aria-label="Photos de terrain">
-      <div class="section-content">
-        <h2 style="color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; text-align: center; margin-bottom: 8px;">Terrain</h2>
+    <section class="photo-strip section-dark" aria-label="Photos de terrain">
+      <div class="photo-strip-track">
+        <img src={withSiteBase('/assets/photos/pcb-teensy-led-kxkm.webp')} alt="PCB custom Teensy LED" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+        <img src={withSiteBase('/assets/photos/platine-automate-cablage.webp')} alt="Câblage automate industriel" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+        <img src={withSiteBase('/assets/photos/bench-bms-batteries-xt60.webp')} alt="Banc de test BMS batteries" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+        <img src={withSiteBase('/assets/photos/automate-siemens-s7.webp')} alt="Automate Siemens S7" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+        <img src={withSiteBase('/assets/photos/soudure-pcb-composants.webp')} alt="Soudure PCB" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
+        <img src={withSiteBase('/assets/photos/oscilloscope-philips-vintage.webp')} alt="Oscilloscope" loading="lazy" decoding="async" width="280" height="190" class="photo-strip-img" />
       </div>
-      <button class="atomic-carousel-nav atomic-carousel-nav--prev" data-carousel="photos" data-dir="-1" aria-label="Precedent">&#8249;</button>
-      <div class="atomic-carousel-orbit" id="photo-orbit">
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/pcb-teensy-led-kxkm.webp')} alt="PCB custom Teensy LED — projet spectacle vivant KXKM" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/platine-automate-cablage.webp')} alt="Câblage automate industriel" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/bench-bms-batteries-xt60.webp')} alt="Banc de test BMS batteries" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/automate-siemens-s7.webp')} alt="Automate Siemens S7" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/soudure-pcb-composants.webp')} alt="Soudure PCB composants" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/oscilloscope-philips-vintage.webp')} alt="Oscilloscope vintage" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/rack-cbtc-lon-connecteurs.webp')} alt="Rack CBTC connectique" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/pcb-embarquee-boitier-test.webp')} alt="Carte embarquée en test" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/armoire-automate-schneider.webp')} alt="Armoire Schneider" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-        <div class="atomic-carousel-item" style="width: 300px; height: 200px;">
-          <img src={withSiteBase('/assets/photos/outillage-atelier-pro.webp')} alt="Atelier professionnel" loading="lazy" decoding="async" class="photo-strip-img" />
-        </div>
-      </div>
-      <button class="atomic-carousel-nav atomic-carousel-nav--next" data-carousel="photos" data-dir="1" aria-label="Suivant">&#8250;</button>
-      <div class="atomic-carousel-track" id="photo-track"></div>
-    </section>
-
-    <!-- VIDEO CAROUSEL (atomic orbit) -->
-    <section class="section-dark webgl-section atomic-carousel" aria-label="Vidéos de terrain">
-      <button class="atomic-carousel-nav atomic-carousel-nav--prev" data-carousel="videos" data-dir="-1" aria-label="Precedent">&#8249;</button>
-      <div class="atomic-carousel-orbit" id="video-orbit">
-        <div class="atomic-carousel-item" style="width: 360px; height: 200px;">
-          <video src={withSiteBase('/assets/videos/video-bench-electronique.mp4')} poster={withSiteBase('/assets/videos/video-bench-electronique-poster.webp')} muted loop playsinline preload="none" class="video-strip-clip" aria-label="Bench électronique"></video>
-        </div>
-        <div class="atomic-carousel-item" style="width: 360px; height: 200px;">
-          <video src={withSiteBase('/assets/videos/video-test-prototype.mp4')} poster={withSiteBase('/assets/videos/video-test-prototype-poster.webp')} muted loop playsinline preload="none" class="video-strip-clip" aria-label="Test prototype"></video>
-        </div>
-        <div class="atomic-carousel-item" style="width: 360px; height: 200px;">
-          <video src={withSiteBase('/assets/videos/video-instrumentation.mp4')} poster={withSiteBase('/assets/videos/video-instrumentation-poster.webp')} muted loop playsinline preload="none" class="video-strip-clip" aria-label="Instrumentation"></video>
-        </div>
-      </div>
-      <button class="atomic-carousel-nav atomic-carousel-nav--next" data-carousel="videos" data-dir="1" aria-label="Suivant">&#8250;</button>
-      <div class="atomic-carousel-track" id="video-track"></div>
     </section>
 
     <div class="pcb-spacer" aria-hidden="true"></div>
 
-    <!-- SPRINTS -->
-    <section class="section-dark webgl-section" id="graphic-sprints-title">
-      <div class="section-content webgl-card" style="--card-accent: #b6d18f">
+    <section class="section-dark" id="graphic-sprints-title">
+      <div class="section-content">
         <GraphicSprints />
       </div>
     </section>
 
     <div class="pcb-spacer" aria-hidden="true"></div>
 
-    <!-- FAQ -->
-    <section class="section-dark webgl-section" id="faq">
-      <div class="section-content webgl-card" style="--card-accent: #5bd1d8">
+    <section class="section-dark" id="faq">
+      <div class="section-content">
         <Faq />
       </div>
     </section>
 
-    <!-- CONTACT — hidden by default, appears as 3D tile on click or end of scroll -->
-    <section class="section-dark section-contact contact-3d-popup" id="contact">
-      <div class="contact-3d-backdrop" id="contact-backdrop"></div>
-      <div class="section-content contact-3d-tile" id="contact-tile">
-        <button class="contact-3d-close" id="contact-close" aria-label="Fermer">✕</button>
+    <div class="pcb-spacer" aria-hidden="true"></div>
+
+    <section class="section-dark" id="contact">
+      <div class="section-content">
         <Contact />
       </div>
     </section>
@@ -163,697 +102,76 @@ const headerItems = [
       <div class="footer-col footer-col--brand">
         <p class="m-0 footer-title">L'électron rare</p>
         <div class="footer-brand-meta">
-          <p class="mb-0 footer-copy">© 2026 Clément Saillant - systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.</p>
-          <p class="mb-0 footer-copy footer-copy--right">Contact direct : LinkedIn DM ou contact@lelectronrare.fr</p>
+          <p class="mb-0 footer-copy">© 2026 Clément Saillant — systèmes électroniques spécifiques, conseil, formation.</p>
+          <p class="mb-0 footer-copy">Contact : <a href="mailto:contact@lelectronrare.fr">contact@lelectronrare.fr</a></p>
         </div>
       </div>
-      <nav aria-label="Ressources studio" class="footer-links footer-links--single-rail">
+      <nav aria-label="Ressources" class="footer-links footer-links--single-rail">
         <a href="#a-propos" class="footer-link">Approche</a>
         <a href="#graphic-sprints-title" class="footer-link">Missions</a>
         <a href={formationHref} class="footer-link">Formation</a>
         <a href="#faq" class="footer-link">FAQ</a>
         <a href="#contact" class="footer-link">Contact</a>
-        <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener noreferrer me" {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')} class="footer-link">LinkedIn</a>
-        <a href="https://github.com/electron-rare/" target="_blank" rel="noopener noreferrer me" {...trackAttrs(TRACK_EVENTS.outboundGithubContact, 'github.com')} class="footer-link">GitHub</a>
-        <a href="https://blog.saillant.cc" target="_blank" rel="noopener noreferrer me" class="footer-link">Blog technique</a>
+        <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+        <a href="https://github.com/electron-rare/" target="_blank" rel="noopener" class="footer-link">GitHub</a>
         <a href={mentionsHref} class="footer-link">Mentions légales</a>
       </nav>
     </div>
   </footer>
 </BaseLayout>
 
-<style>
-  /* ============ DARK TECH THEME ============ */
-  .dark-site {
-    position: relative;
-    z-index: 1;
-    background: transparent;
-    color: #e0e0e0;
-  }
-
-  .section-dark {
-    position: relative;
-    padding: clamp(40px, 8vw, 100px) 0;
-  }
-
-  .section-hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-
-  .section-content {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 clamp(20px, 4vw, 48px);
-  }
-
-  /* Glass cards for content sections */
-  .section-dark :global(.circuit-board-section),
-  .section-dark :global(.about-card),
-  .section-dark :global(.case-card),
-  .section-dark :global(.sprint-card) {
-    background: rgba(255, 255, 255, 0.03) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    color: #e0e0e0 !important;
-  }
-
-  /* Text overrides for dark */
-  .section-dark :global(h1),
-  .section-dark :global(h2),
-  .section-dark :global(h3),
-  .section-dark :global(.section-title),
-  .section-dark :global(.hero-title-word) {
-    color: #ffffff !important;
-  }
-
-  .section-dark :global(p),
-  .section-dark :global(li),
-  .section-dark :global(.about-bio),
-  .section-dark :global(.case-text),
-  .section-dark :global(.sprint-deliverables) {
-    color: rgba(255, 255, 255, 0.7) !important;
-  }
-
-  .section-dark :global(a) {
-    color: #5bd1d8 !important;
-  }
-
-  .section-dark :global(.hero-slogan-char) {
-    color: rgba(91, 209, 216, 0.8) !important;
-  }
-
-  /* Photo strip dark */
-  .section-dark.photo-strip {
-    padding: clamp(20px, 4vw, 40px) 0;
-  }
-  .section-dark :global(.photo-strip-img) {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    opacity: 0.85;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  .section-dark :global(.photo-strip-img:hover) {
-    opacity: 1;
-    transform: scale(1.03);
-  }
-
-  /* Video strip dark */
-  .section-dark :global(.video-strip-clip) {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-  }
-
-  /* FAQ dark */
-  .section-dark :global(.faq-question) {
-    color: #ffffff !important;
-  }
-  .section-dark :global(.faq-answer) {
-    color: rgba(255, 255, 255, 0.6) !important;
-  }
-  .section-dark :global(details) {
-    border-color: rgba(255, 255, 255, 0.08) !important;
-  }
-
-  /* Chips/badges glow */
-  .section-dark :global(.about-chip) {
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-  }
-
-  /* Sprint progress bars glow */
-  .section-dark :global(.sprint-progress-fill) {
-    box-shadow: 0 0 12px rgba(91, 209, 216, 0.4);
-  }
-
-  /* CTA buttons */
-  .section-dark :global(.btn-primary),
-  .section-dark :global([data-track]) {
-    background: rgba(91, 209, 216, 0.15) !important;
-    border: 1px solid rgba(91, 209, 216, 0.3) !important;
-    color: #5bd1d8 !important;
-  }
-  .section-dark :global(.btn-primary:hover) {
-    background: rgba(91, 209, 216, 0.25) !important;
-  }
-
-  /* Contact form dark (Minitel) */
-  .section-dark :global(.minitel-body) {
-    background: rgba(0, 0, 0, 0.6) !important;
-    backdrop-filter: blur(16px);
-  }
-  .section-dark :global(.minitel-input),
-  .section-dark :global(.minitel-textarea),
-  .section-dark :global(.minitel-select) {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    color: #e0e0e0 !important;
-  }
-
-  /* Hero background image — very subtle dark blend */
-  .section-dark :global(.figma-lab-hero-grid) {
-    position: relative;
-  }
-  .section-dark :global(.hero-panel-image) {
-    opacity: 0.1 !important;
-    mix-blend-mode: luminosity;
-  }
-
-  /* ============ DARK FOOTER ============ */
-  .dark-footer {
-    position: relative;
-    z-index: 2;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 24px 0;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(12px);
-  }
-  .dark-footer :global(.footer-title) {
-    color: #ffffff;
-  }
-  .dark-footer :global(.footer-copy) {
-    color: rgba(255, 255, 255, 0.4);
-  }
-  .dark-footer :global(.footer-link) {
-    color: rgba(255, 255, 255, 0.5) !important;
-  }
-  .dark-footer :global(.footer-link:hover) {
-    color: #5bd1d8 !important;
-  }
-
-  /* ============ LOADING SCREEN ============ */
-  .loading-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 1s ease, visibility 1s ease;
-  }
-  .loading-screen.loading-done {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-  .loading-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-    padding: 24px;
-    animation: loading-fade-in 0.8s ease both;
-  }
-  @keyframes loading-fade-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .loading-bmu-img {
-    width: clamp(200px, 50vw, 400px);
-    height: auto;
-    border-radius: 16px;
-    border: 1px solid rgba(91, 209, 216, 0.15);
-    box-shadow: 0 0 40px rgba(91, 209, 216, 0.08), 0 12px 40px rgba(0,0,0,0.5);
-    animation: loading-float 4s ease-in-out infinite;
-  }
-  @keyframes loading-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-  .loading-title {
-    font-family: 'Manrope', -apple-system, sans-serif;
-    font-size: clamp(28px, 5vw, 48px);
-    font-weight: 800;
-    color: #ffffff;
-    margin: 0;
-    letter-spacing: -0.03em;
-    text-shadow: 0 0 30px rgba(91, 209, 216, 0.2);
-  }
-  .loading-electric {
-    color: #5bd1d8;
-    text-shadow: 0 0 15px rgba(91, 209, 216, 0.6);
-  }
-  .loading-bar {
-    width: clamp(200px, 40vw, 300px);
-    height: 2px;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 1px;
-    overflow: hidden;
-  }
-  .loading-bar-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #5bd1d8, #f1c27a);
-    border-radius: 1px;
-    transition: width 0.3s ease;
-  }
-  .loading-status {
-    font-family: 'JetBrains Mono', 'SF Mono', monospace;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.3);
-    margin: 0;
-  }
-  .loading-static-btn {
-    font-family: 'JetBrains Mono', 'SF Mono', monospace;
-    font-size: 11px;
-    color: rgba(91, 209, 216, 0.6);
-    text-decoration: none;
-    padding: 8px 16px;
-    border: 1px solid rgba(91, 209, 216, 0.15);
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    pointer-events: auto;
-  }
-  .loading-static-btn:hover {
-    color: #5bd1d8;
-    border-color: rgba(91, 209, 216, 0.4);
-    background: rgba(91, 209, 216, 0.05);
-  }
-  .loading-tagline {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.12);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin: 0;
-  }
-
-  /* ============ HERO BMU ============ */
-  .hero-bmu {
-    position: relative;
-    z-index: 2;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: clamp(60px, 10vw, 120px) clamp(20px, 4vw, 48px);
-    gap: clamp(24px, 4vw, 48px);
-  }
-
-  .hero-bmu-title {
-    animation: hero-title-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-  @keyframes hero-title-in {
-    from { opacity: 0; transform: translateY(30px); filter: blur(8px); }
-    to { opacity: 1; transform: translateY(0); filter: blur(0); }
-  }
-
-  .hero-bmu-h1 {
-    font-family: 'Manrope', -apple-system, sans-serif;
-    font-size: clamp(36px, 7vw, 72px);
-    font-weight: 800;
-    color: #ffffff;
-    margin: 0;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    text-shadow: 0 0 40px rgba(91, 209, 216, 0.2);
-  }
-  .hero-electric {
-    color: #5bd1d8;
-    text-shadow: 0 0 20px rgba(91, 209, 216, 0.6);
-  }
-
-  .hero-bmu-sub {
-    font-size: clamp(14px, 2vw, 18px);
-    color: rgba(255, 255, 255, 0.4);
-    margin: 12px 0 0;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    max-width: 500px;
-  }
-
-  /* Navigation zones — PCB component style */
-  .hero-bmu-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(10px, 2vw, 20px);
-    max-width: 700px;
-    animation: hero-nav-in 1s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-  @keyframes hero-nav-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-bmu-zone {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    padding: clamp(14px, 2vw, 24px) clamp(18px, 3vw, 32px);
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    text-decoration: none;
-    color: #fff;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    min-width: 120px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bmu-zone::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 16px;
-    padding: 1px;
-    background: linear-gradient(135deg, var(--zone-color, #5bd1d8) 0%, transparent 50%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .hero-bmu-zone:hover {
-    background: rgba(255, 255, 255, 0.06);
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 0 24px rgba(91, 209, 216, 0.1), 0 8px 32px rgba(0, 0, 0, 0.3);
-    border-color: rgba(91, 209, 216, 0.15);
-  }
-  .hero-bmu-zone:hover::before { opacity: 0.5; }
-
-  .hero-bmu-zone--mcu { --zone-color: #5bd1d8; }
-  .hero-bmu-zone--analog { --zone-color: #f1c27a; }
-  .hero-bmu-zone--mission { --zone-color: #b6d18f; }
-  .hero-bmu-zone--formation { --zone-color: #ff9f0a; }
-  .hero-bmu-zone--contact { --zone-color: #ff6b35; }
-
-  .hero-bmu-zone-icon {
-    font-size: 24px;
-    opacity: 0.6;
-    color: var(--zone-color, #5bd1d8);
-    filter: drop-shadow(0 0 6px var(--zone-color, #5bd1d8));
-  }
-
-  .hero-bmu-zone-label {
-    font-family: 'Orbitron', 'Manrope', sans-serif;
-    font-size: clamp(11px, 1.3vw, 14px);
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    color: var(--zone-color, #5bd1d8);
-  }
-
-  .hero-bmu-zone-desc {
-    font-size: clamp(10px, 1vw, 12px);
-    color: rgba(255, 255, 255, 0.35);
-    font-weight: 400;
-  }
-
-  .hero-bmu-tagline {
-    animation: hero-tag-in 0.8s 0.6s ease both;
-  }
-  @keyframes hero-tag-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .hero-bmu-tagline span {
-    font-size: clamp(10px, 1.2vw, 13px);
-    color: rgba(255, 255, 255, 0.15);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 640px) {
-    .hero-bmu-nav { flex-direction: column; align-items: stretch; }
-    .hero-bmu-zone { flex-direction: row; gap: 12px; text-align: left; }
-  }
-
-  /* ============ PCB SPACER ============ */
-  .pcb-spacer {
-    height: 60vh;
-    pointer-events: none;
-  }
-  .pcb-spacer--hero {
-    height: 100vh;
-  }
-
-  /* ============ CONTACT 3D POPUP ============ */
-  .contact-3d-popup {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-    padding: 0;
-  }
-
-  .contact-3d-popup.contact-3d-popup--open {
-    pointer-events: auto;
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .contact-3d-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .contact-3d-tile {
-    position: relative;
-    z-index: 2;
-    max-width: 600px;
-    width: 90vw;
-    max-height: 85vh;
-    overflow-y: auto;
-    background: rgba(10, 10, 10, 0.9);
-    border: 1px solid rgba(91, 209, 216, 0.15);
-    border-radius: 20px;
-    padding: clamp(20px, 4vw, 40px);
-    box-shadow:
-      0 0 40px rgba(91, 209, 216, 0.08),
-      0 24px 80px rgba(0, 0, 0, 0.6);
-    transform: perspective(1200px) rotateY(-15deg) rotateX(5deg) scale(0.85) translateY(40px);
-    opacity: 0;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
-  }
-
-  .contact-3d-popup--open .contact-3d-tile {
-    transform: perspective(1200px) rotateY(0deg) rotateX(0deg) scale(1) translateY(0);
-    opacity: 1;
-  }
-
-  .contact-3d-close {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 16px;
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-  }
-  .contact-3d-close:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
-    transform: rotate(90deg);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .section-hero { min-height: auto; }
-    .contact-3d-tile { transform: none; }
-  }
-</style>
-
 <script>
-  // Initialize scroll-triggered webgl-card and webgl-section animations
-  function initScrollAnimations() {
-    const cards = document.querySelectorAll('.webgl-card');
-    const sections = document.querySelectorAll('.webgl-section');
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(
-              entry.target.classList.contains('webgl-card')
-                ? 'webgl-card--visible'
-                : 'webgl-section--visible'
-            );
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    cards.forEach((el) => observer.observe(el));
-    sections.forEach((el) => observer.observe(el));
-  }
-
-  // 3D tilt on scroll — cards tilt based on their position in viewport
-  function initScrollTilt() {
-    const cards = document.querySelectorAll('.webgl-card--visible');
-    function updateTilt() {
-      cards.forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const center = rect.top + rect.height / 2;
-        const ratio = (center - vh / 2) / (vh / 2); // -1 (top) to 1 (bottom)
-        const rotateX = ratio * -3;
-        const rotateY = ratio * 1.5;
-        (card as HTMLElement).style.transform =
-          `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      });
-      requestAnimationFrame(updateTilt);
-    }
-    updateTilt();
-  }
-
-  // Carousel navigation
-  function initCarousels() {
-    document.querySelectorAll('.atomic-carousel-nav').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const dir = parseInt(btn.getAttribute('data-dir') || '1');
-        const carouselType = btn.getAttribute('data-carousel');
-        const orbit = document.getElementById(carouselType === 'photos' ? 'photo-orbit' : 'video-orbit');
-        if (!orbit) return;
-        const itemWidth = orbit.querySelector('.atomic-carousel-item')?.clientWidth || 320;
-        orbit.scrollBy({ left: dir * (itemWidth + 24), behavior: 'smooth' });
-      });
-    });
-
-    // Track position indicator
-    ['photo-orbit', 'video-orbit'].forEach((id) => {
-      const orbit = document.getElementById(id);
-      const track = document.getElementById(id.replace('orbit', 'track'));
-      if (!orbit || !track) return;
-      orbit.addEventListener('scroll', () => {
-        const pct = orbit.scrollLeft / (orbit.scrollWidth - orbit.clientWidth) * 100;
-        track.style.setProperty('--track-position', `${pct}%`);
-      });
-    });
-
-    // Video hover play
-    document.querySelectorAll('.atomic-carousel-item video').forEach((video) => {
-      const v = video as HTMLVideoElement;
-      v.closest('.atomic-carousel-item')?.addEventListener('mouseenter', () => v.play());
-      v.closest('.atomic-carousel-item')?.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
-    });
-  }
-
-  // Run on load and on Astro page transitions
-  initScrollAnimations();
-  setTimeout(initScrollTilt, 2000);
-  initCarousels();
-  // Contact 3D popup
-  function initContactPopup() {
-    const popup = document.getElementById('contact');
-    const backdrop = document.getElementById('contact-backdrop');
-    const closeBtn = document.getElementById('contact-close');
-    if (!popup) return;
-
-    function openContact() {
-      popup.classList.add('contact-3d-popup--open');
-    }
-    function closeContact() {
-      popup.classList.remove('contact-3d-popup--open');
-    }
-
-    // Open on any #contact link click
-    document.querySelectorAll('a[href="#contact"]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        openContact();
-      });
-    });
-
-    // Open at end of scroll (>95%)
-    let endTriggered = false;
-    window.addEventListener('scroll', () => {
-      const el = document.documentElement;
-      const pct = el.scrollTop / (el.scrollHeight - el.clientHeight);
-      if (pct > 0.95 && !endTriggered) {
-        endTriggered = true;
-        openContact();
-      }
-      if (pct < 0.9) endTriggered = false;
-    }, { passive: true });
-
-    // Close
-    backdrop?.addEventListener('click', closeContact);
-    closeBtn?.addEventListener('click', closeContact);
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeContact();
-    });
-  }
-
-  // Loading screen — fade out when WebGL canvas renders
-  const loadingMessages = [
-    "Chargement du PCB 3D...",
-    "Initialisation des composants...",
-    "Soudure des connexions...",
-    "Calibration de la caméra...",
-    "Vérification des pistes cuivre...",
-    "Flash du rendu WebGL...",
-  ];
-  let loadMsgIdx = 0;
+  // Loading screen — auto-hide after 10s or when ready
+  const loadScreen = document.getElementById('loading-screen');
   const loadBar = document.getElementById('loading-bar-fill');
   const loadStatus = document.getElementById('loading-status');
-  const loadScreen = document.getElementById('loading-screen');
 
-  const loadInterval = setInterval(() => {
-    loadMsgIdx = (loadMsgIdx + 1) % loadingMessages.length;
-    if (loadStatus) loadStatus.textContent = loadingMessages[loadMsgIdx];
-    if (loadBar) {
-      const pct = Math.min(90, parseFloat(loadBar.style.width || '0') + 15);
-      loadBar.style.width = pct + '%';
-    }
-  }, 800);
+  const msgs = ["Chargement...", "Initialisation...", "Préparation du rendu..."];
+  let idx = 0;
+  const interval = setInterval(() => {
+    idx = (idx + 1) % msgs.length;
+    if (loadStatus) loadStatus.textContent = msgs[idx];
+    if (loadBar) loadBar.style.width = Math.min(90, parseFloat(loadBar.style.width || '0') + 20) + '%';
+  }, 1500);
 
-  // Force 10s minimum loading, then fade out
   setTimeout(() => {
     if (loadBar) loadBar.style.width = '100%';
-    if (loadStatus) loadStatus.textContent = 'PCB prêt.';
-    clearInterval(loadInterval);
-    setTimeout(() => {
-      loadScreen?.classList.add('loading-done');
-    }, 600);
+    if (loadStatus) loadStatus.textContent = 'Prêt.';
+    clearInterval(interval);
+    setTimeout(() => loadScreen?.classList.add('loading-done'), 500);
   }, 10000);
-
-  // Hero BMU zone smooth scroll
-  document.querySelectorAll('.hero-bmu-zone[href^="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const href = link.getAttribute('href');
-      if (href === '#contact') return;
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-
-  initContactPopup();
-  document.addEventListener('astro:page-load', () => {
-    initScrollAnimations();
-    setTimeout(initScrollTilt, 2000);
-    initCarousels();
-    initContactPopup();
-  });
 </script>
+
+<style>
+  /* Loading screen */
+  .loading-screen { position:fixed; inset:0; z-index:9999; background:#000; display:flex; align-items:center; justify-content:center; transition:opacity 1s ease, visibility 1s ease; }
+  .loading-screen.loading-done { opacity:0; visibility:hidden; pointer-events:none; }
+  .loading-content { display:flex; flex-direction:column; align-items:center; text-align:center; gap:20px; padding:24px; }
+  .loading-bmu-img { width:clamp(200px,50vw,400px); height:auto; border-radius:16px; border:1px solid rgba(91,209,216,0.15); box-shadow:0 0 40px rgba(91,209,216,0.08); }
+  .loading-title { font-size:clamp(28px,5vw,48px); font-weight:800; color:#fff; margin:0; }
+  .loading-electric { color:#5bd1d8; }
+  .loading-bar { width:clamp(200px,40vw,300px); height:2px; background:rgba(255,255,255,0.06); border-radius:1px; overflow:hidden; }
+  .loading-bar-fill { height:100%; width:0%; background:linear-gradient(90deg,#5bd1d8,#f1c27a); transition:width 0.3s ease; }
+  .loading-status { font-family:monospace; font-size:12px; color:rgba(255,255,255,0.3); margin:0; }
+  .loading-static-btn { font-size:11px; color:rgba(91,209,216,0.6); text-decoration:none; padding:8px 16px; border:1px solid rgba(91,209,216,0.15); border-radius:8px; }
+  .loading-static-btn:hover { color:#5bd1d8; border-color:rgba(91,209,216,0.4); }
+  .loading-tagline { font-size:11px; color:rgba(255,255,255,0.12); letter-spacing:0.1em; text-transform:uppercase; margin:0; }
+
+  /* Dark site base */
+  .dark-site { position:relative; z-index:1; background:transparent; color:#e0e0e0; }
+  .section-dark { padding:clamp(40px,8vw,100px) 0; }
+  .section-content { max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,48px); }
+  .pcb-spacer { height:60vh; }
+  .pcb-spacer--hero { height:100vh; }
+
+  /* Dark overrides */
+  .section-dark :global(h1), .section-dark :global(h2), .section-dark :global(h3) { color:#fff !important; }
+  .section-dark :global(p), .section-dark :global(li) { color:rgba(255,255,255,0.7) !important; }
+  .section-dark :global(a) { color:#5bd1d8 !important; }
+
+  /* Dark footer */
+  .dark-footer { position:relative; z-index:2; border-top:1px solid rgba(255,255,255,0.06); padding:24px 0; background:rgba(0,0,0,0.4); }
+  .dark-footer :global(.footer-title) { color:#fff; }
+  .dark-footer :global(.footer-copy) { color:rgba(255,255,255,0.4); }
+  .dark-footer :global(.footer-link) { color:rgba(255,255,255,0.5) !important; }
+</style>
