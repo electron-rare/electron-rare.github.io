@@ -811,21 +811,15 @@ const headerItems = [
     }
   }, 800);
 
-  // Detect when WebGL canvas appears and has rendered
-  function checkWebGLReady() {
-    const canvas = document.querySelector('canvas');
-    if (canvas && canvas.clientWidth > 0) {
-      if (loadBar) loadBar.style.width = '100%';
-      if (loadStatus) loadStatus.textContent = 'PCB prêt.';
-      clearInterval(loadInterval);
-      setTimeout(() => {
-        loadScreen?.classList.add('loading-done');
-      }, 600);
-    } else {
-      requestAnimationFrame(checkWebGLReady);
-    }
-  }
-  requestAnimationFrame(checkWebGLReady);
+  // Force 10s minimum loading, then fade out
+  setTimeout(() => {
+    if (loadBar) loadBar.style.width = '100%';
+    if (loadStatus) loadStatus.textContent = 'PCB prêt.';
+    clearInterval(loadInterval);
+    setTimeout(() => {
+      loadScreen?.classList.add('loading-done');
+    }, 600);
+  }, 10000);
 
   // Hero BMU zone smooth scroll
   document.querySelectorAll('.hero-bmu-zone[href^="#"]').forEach(link => {
