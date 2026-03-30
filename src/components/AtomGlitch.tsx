@@ -290,7 +290,7 @@ function CircularText({ text, radius, speed, tilt, fontSize, color, emissive, op
 function CountdownRing() {
   const [time, setTime] = useState('');
   const groupRef = useRef<THREE.Group>(null);
-  const radius = 4.2;
+  const radius = 2.5;
 
   useEffect(() => {
     function tick() {
@@ -353,50 +353,50 @@ function CountdownRing() {
 function CountdownText() {
   return (
     <group>
-      {/* "L'electron" — large ring, slow spin */}
+      {/* "L'electron" — tight elliptical orbit, close to nucleus */}
       <CircularText
         text={"L'\u00e9lectron"}
-        radius={3.8}
-        speed={0.15}
-        tilt={[-0.3, 0, 0]}
-        fontSize={0.55}
+        radius={2.0}
+        speed={0.18}
+        tilt={[-0.4, 0, 0]}
+        fontSize={0.45}
         color="#ffffff"
         emissive="#ffffff"
-        spread={0.9}
+        spread={1.2}
       />
 
-      {/* "rare" — opposite tilt, bigger */}
+      {/* "rare" — opposite tilt, close */}
       <CircularText
         text="rare"
-        radius={3.5}
-        speed={-0.2}
-        tilt={[0.5, 0.2, 0]}
-        fontSize={0.85}
+        radius={1.8}
+        speed={-0.22}
+        tilt={[0.6, 0.3, 0]}
+        fontSize={0.7}
         color="#ffffff"
         emissive="#5bd1d8"
-        spread={1.0}
+        spread={1.3}
       />
 
-      {/* Subtitle — wider ring, slow */}
+      {/* Subtitle — medium ring */}
       <CircularText
         text="SYSTEMES  ELECTRONIQUES  SPECIFIQUES"
-        radius={5.2}
-        speed={0.08}
-        tilt={[1.3, 0.2, 0.4]}
-        fontSize={0.11}
+        radius={3.0}
+        speed={0.1}
+        tilt={[1.2, 0.2, 0.3]}
+        fontSize={0.1}
         color="#ffffff"
         emissive="#5bd1d8"
         opacity={0.35}
-        spread={0.7}
+        spread={0.6}
       />
 
-      {/* "LANCEMENT DANS" — small ring */}
+      {/* "LANCEMENT DANS" — small tight ring */}
       <CircularText
         text="LANCEMENT  DANS"
-        radius={3.2}
-        speed={0.25}
-        tilt={[-0.7, -0.3, 0.2]}
-        fontSize={0.1}
+        radius={1.5}
+        speed={0.3}
+        tilt={[-0.8, -0.2, 0.15]}
+        fontSize={0.09}
         color="#5bd1d8"
         emissive="#5bd1d8"
         opacity={0.5}
@@ -409,10 +409,10 @@ function CountdownText() {
       {/* Extra decorative text rings */}
       <CircularText
         text="electronique  automatisme  energie  stockage  prototypage  formation"
-        radius={5.8}
-        speed={-0.05}
-        tilt={[0.8, -0.4, 0.6]}
-        fontSize={0.07}
+        radius={3.5}
+        speed={-0.06}
+        tilt={[0.8, -0.4, 0.5]}
+        fontSize={0.06}
         color="#5bd1d8"
         emissive="#5bd1d8"
         opacity={0.2}
