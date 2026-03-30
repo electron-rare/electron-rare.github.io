@@ -30,14 +30,14 @@ let scrollProgress = 0;
 /* ---------- Real PCB Board (full 3D with components from FreeCAD) ---------- */
 function RealPCB() {
   let glb: any = null;
-  try { glb = useGLTF('/assets/models3d/bmu-v2-full.glb'); } catch {}
+  try { glb = useGLTF('/assets/models3d/bmu-assembly.glb'); } catch {}
 
   if (!glb?.scene) return null;
 
   return (
     <primitive
       object={glb.scene.clone()}
-      scale={120}
+      scale={0.15}
       rotation={[-Math.PI / 2, 0, 0]}
       position={[0, 0, 0]}
     />
@@ -458,7 +458,6 @@ function PCBScene() {
     <group>
       <Suspense fallback={null}>
         <RealPCB />
-        <SwitchBoard />
         <ComponentCluster />
       </Suspense>
       <CurrentFlow />
@@ -523,8 +522,7 @@ export default function WebGLBackground() {
 }
 
 /* Preload all models */
-useGLTF.preload('/assets/models3d/bmu-v2-full.glb');
-useGLTF.preload('/assets/models3d/bmu-switch-mosfet.glb');
+useGLTF.preload('/assets/models3d/bmu-assembly.glb');
 useGLTF.preload('/assets/models3d/resistor_0603.glb');
 useGLTF.preload('/assets/models3d/capacitor_0805.glb');
 useGLTF.preload('/assets/models3d/inductor_0805.glb');
