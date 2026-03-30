@@ -375,25 +375,25 @@ function CameraLight() {
   useFrame(() => {
     if (!lightRef.current) return;
     lightRef.current.position.copy(camera.position);
-    lightRef.current.position.y += 0.01;
+    lightRef.current.position.y += 15;
   });
 
   return (
-    <pointLight ref={lightRef} intensity={0.6} color="#ffffff" distance={0.15} decay={1.5} />
+    <pointLight ref={lightRef} intensity={0.6} color="#ffffff" distance={200} decay={1.5} />
   );
 }
 
 /* ---------- Camera — orbits around PCB, zooms on scroll ---------- */
-// PCB at scale=1 is in mm (~80mm board). Camera distances in mm too.
+// PCB at scale=1 in mm. Board ~80x60mm. Camera needs to be ~200mm away for overview.
 const CAMERA_STOPS = [
-  { scroll: 0.00, pos: [0, 0.15, 0.12], look: [0, 0, 0] },          // Overview — full board
-  { scroll: 0.12, pos: [0.04, 0.06, -0.01], look: [0.03, 0, -0.02] }, // MCU zone (close)
-  { scroll: 0.28, pos: [-0.03, 0.06, 0], look: [-0.03, 0, -0.01] },   // Analog zone
-  { scroll: 0.42, pos: [0.03, 0.06, 0.03], look: [0.02, 0, 0.03] },   // Power zone
-  { scroll: 0.56, pos: [-0.03, 0.06, 0.03], look: [-0.03, 0, 0.03] }, // Formation zone
-  { scroll: 0.70, pos: [0, 0.07, -0.04], look: [0, 0, -0.03] },       // Missions zone
-  { scroll: 0.85, pos: [0, 0.04, 0.01], look: [0, 0, 0.005] },        // Contact zone (close)
-  { scroll: 1.00, pos: [0, 0.18, 0.1], look: [0, 0, 0] },             // Pull back overview
+  { scroll: 0.00, pos: [0, 200, 150], look: [0, 0, 0] },         // Overview — full board
+  { scroll: 0.12, pos: [40, 80, -10], look: [30, 0, -15] },       // MCU zone
+  { scroll: 0.28, pos: [-35, 80, 0], look: [-30, 0, -10] },       // Analog zone
+  { scroll: 0.42, pos: [35, 80, 30], look: [25, 0, 25] },         // Power zone
+  { scroll: 0.56, pos: [-35, 80, 30], look: [-30, 0, 25] },       // Formation zone
+  { scroll: 0.70, pos: [0, 90, -40], look: [0, 0, -30] },         // Missions zone
+  { scroll: 0.85, pos: [0, 50, 10], look: [0, 0, 5] },            // Contact zone (close)
+  { scroll: 1.00, pos: [0, 250, 150], look: [0, 0, 0] },          // Pull back overview
 ];
 
 function OrbitCamera() {
@@ -416,10 +416,10 @@ function OrbitCamera() {
     const t = range > 0 ? (s - a.scroll) / range : 0;
     const ease = t * t * (3 - 2 * t);
 
-    const tx = a.pos[0] + (b.pos[0] - a.pos[0]) * ease + pointer.x * 0.015;
-    const ty = a.pos[1] + (b.pos[1] - a.pos[1]) * ease + pointer.y * 0.005;
+    const tx = a.pos[0] + (b.pos[0] - a.pos[0]) * ease + pointer.x * 20;
+    const ty = a.pos[1] + (b.pos[1] - a.pos[1]) * ease + pointer.y * 8;
     const tz = a.pos[2] + (b.pos[2] - a.pos[2]) * ease;
-    const lx = a.look[0] + (b.look[0] - a.look[0]) * ease + pointer.x * 0.003;
+    const lx = a.look[0] + (b.look[0] - a.look[0]) * ease + pointer.x * 5;
     const ly = a.look[1] + (b.look[1] - a.look[1]) * ease;
     const lz = a.look[2] + (b.look[2] - a.look[2]) * ease;
 
@@ -478,18 +478,18 @@ export default function WebGLBackground() {
       aria-hidden="true"
     >
       <Canvas
-        camera={{ position: [0, 0.15, 0.12], fov: 50 }}
+        camera={{ position: [0, 200, 150], fov: 50 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         style={{ pointerEvents: 'auto' }}
       >
         <color attach="background" args={['#060a06']} />
-        <fog attach="fog" args={['#060a06', 0.1, 0.4]} />
+        <fog attach="fog" args={['#060a06', 150, 500]} />
 
         <ambientLight intensity={0.25} />
-        <directionalLight position={[0.05, 0.1, 0.05]} intensity={0.7} color="#ffffff" />
-        <directionalLight position={[-0.05, 0.08, -0.05]} intensity={0.3} color="#5bd1d8" />
-        <pointLight position={[0, 0.05, 0]} intensity={0.4} color="#f1c27a" distance={0.2} />
+        <directionalLight position={[60, 120, 60]} intensity={0.7} color="#ffffff" />
+        <directionalLight position={[-60, 100, -60]} intensity={0.3} color="#5bd1d8" />
+        <pointLight position={[0, 60, 0]} intensity={0.4} color="#f1c27a" distance={250} />
         <CameraLight />
 
         <OrbitCamera />
