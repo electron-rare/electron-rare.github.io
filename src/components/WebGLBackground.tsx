@@ -34,9 +34,20 @@ function RealPCB() {
 
   if (!glb?.scene) return null;
 
+  // Deep clone with materials preserved
+  const cloned = useMemo(() => {
+    const clone = glb.scene.clone(true);
+    clone.traverse((child: any) => {
+      if (child.isMesh && child.material) {
+        child.material = child.material.clone();
+      }
+    });
+    return clone;
+  }, [glb.scene]);
+
   return (
     <primitive
-      object={glb.scene.clone()}
+      object={cloned}
       scale={1}
       rotation={[-Math.PI / 2, 0, 0]}
       position={[0, 0, 0]}
