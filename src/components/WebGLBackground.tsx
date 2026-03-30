@@ -333,6 +333,22 @@ function BoardTitle() {
   );
 }
 
+/* ---------- Light that follows the camera ---------- */
+function CameraLight() {
+  const lightRef = useRef<THREE.PointLight>(null);
+  const { camera } = useThree();
+
+  useFrame(() => {
+    if (!lightRef.current) return;
+    lightRef.current.position.copy(camera.position);
+    lightRef.current.position.y += 1;
+  });
+
+  return (
+    <pointLight ref={lightRef} intensity={0.6} color="#ffffff" distance={15} decay={1.5} />
+  );
+}
+
 /* ---------- Camera — orbits around PCB, zooms on scroll ---------- */
 const CAMERA_STOPS = [
   { scroll: 0.00, pos: [0, 15, 12], look: [0, 0, 0] },      // Overview — full board
@@ -435,12 +451,13 @@ export default function WebGLBackground() {
         style={{ pointerEvents: 'auto' }}
       >
         <color attach="background" args={['#060a06']} />
-        <fog attach="fog" args={['#060a06', 8, 30]} />
+        <fog attach="fog" args={['#060a06', 12, 40]} />
 
-        <ambientLight intensity={0.1} />
-        <directionalLight position={[5, 10, 5]} intensity={0.4} color="#ffffff" />
-        <directionalLight position={[-5, 8, -5]} intensity={0.15} color="#5bd1d8" />
-        <pointLight position={[0, 3, 0]} intensity={0.2} color="#f1c27a" distance={15} />
+        <ambientLight intensity={0.25} />
+        <directionalLight position={[5, 10, 5]} intensity={0.7} color="#ffffff" />
+        <directionalLight position={[-5, 8, -5]} intensity={0.3} color="#5bd1d8" />
+        <pointLight position={[0, 5, 0]} intensity={0.4} color="#f1c27a" distance={20} />
+        <CameraLight />
 
         <OrbitCamera />
         <PCBScene />
