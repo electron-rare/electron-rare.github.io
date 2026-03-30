@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "build:external": "node scripts/build-astro-external.mjs",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "astro": "astro",
     "typecheck": "astro check",
     "storybook": "storybook dev -p 6006",
@@ -20,9 +20,12 @@
     "preflight:pages": "npm run lab:build && npm run tracking:check && npm run image:budget && npm run storybook:build",
     "deploy:ftp": "bash scripts/deploy-ovh-ftp.sh dist",
     "deploy:web:ftp": "npm run build:external && npm run deploy:ftp",
-    "deploy:web:sftp": "npm run build:external && bash scripts/deploy-ovh-sftp.sh dist"
+    "deploy:web:sftp": "npm run build:external && bash scripts/deploy-ovh-sftp.sh dist",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "12",
     "@astrojs/node": "^9.4.5",
     "@astrojs/react": "^4.4.1",
     "@radix-ui/react-slot": "^1.2.3",
@@ -48,7 +51,8 @@
     "@storybook/react-vite": "^9.1.5",
     "@tailwindcss/vite": "^4.1.13",
     "storybook": "^9.1.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "wrangler": "^4.78.0"
   },
   "overrides": {
     "@astrojs/language-server": {

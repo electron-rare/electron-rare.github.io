@@ -32,3 +32,9 @@ artifacts/imagegen/
 artifacts/qa-test/*/responsive-v12-pass2/
 artifacts/qa-test/*/deploy-sftp-dryrun.txt
 .env
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
