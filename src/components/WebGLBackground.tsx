@@ -30,29 +30,29 @@ let scrollProgress = 0;
 
 /* ---------- PCB Trace path (the main route the camera follows) ---------- */
 const TRACE_POINTS = [
-  // Start — top of board
+  // Start — top of board (wide open)
   new THREE.Vector3(0, 0, 0),
-  new THREE.Vector3(2, 0, -4),
-  new THREE.Vector3(5, 0, -5),
+  new THREE.Vector3(3, 0, -6),
+  new THREE.Vector3(6, 0, -10),
   // First bend (Hero section)
-  new THREE.Vector3(8, 0, -5),
-  new THREE.Vector3(8, 0, -8),
-  // Horizontal run (About)
-  new THREE.Vector3(5, 0, -12),
-  new THREE.Vector3(0, 0, -14),
+  new THREE.Vector3(10, 0, -12),
+  new THREE.Vector3(10, 0, -18),
+  // Long run to About
+  new THREE.Vector3(6, 0, -26),
+  new THREE.Vector3(0, 0, -32),
   // Via + layer change (Cases)
-  new THREE.Vector3(-3, -0.1, -16),
-  new THREE.Vector3(-6, -0.1, -18),
+  new THREE.Vector3(-4, -0.1, -38),
+  new THREE.Vector3(-8, -0.1, -44),
   // Right angle bend (Photos)
-  new THREE.Vector3(-6, -0.1, -22),
-  new THREE.Vector3(-3, 0, -24),
+  new THREE.Vector3(-8, -0.1, -52),
+  new THREE.Vector3(-4, 0, -58),
   // Long straight (Sprints)
-  new THREE.Vector3(2, 0, -26),
-  new THREE.Vector3(6, 0, -28),
+  new THREE.Vector3(3, 0, -64),
+  new THREE.Vector3(8, 0, -70),
   // Final destination (Contact)
-  new THREE.Vector3(6, 0, -32),
-  new THREE.Vector3(3, 0, -35),
-  new THREE.Vector3(0, 0, -38),
+  new THREE.Vector3(8, 0, -78),
+  new THREE.Vector3(4, 0, -84),
+  new THREE.Vector3(0, 0, -90),
 ];
 
 function createTraceCurve() {
@@ -99,20 +99,20 @@ function SecondaryTraces() {
     // Branch traces at various points along the main route
     const branches = [
       // Hero area branches
-      [new THREE.Vector3(3, 0, -4), new THREE.Vector3(3, 0, -2), new THREE.Vector3(5, 0, -1)],
-      [new THREE.Vector3(5, 0, -5), new THREE.Vector3(7, 0, -3), new THREE.Vector3(10, 0, -3)],
+      [new THREE.Vector3(5, 0, -8), new THREE.Vector3(5, 0, -4), new THREE.Vector3(8, 0, -2)],
+      [new THREE.Vector3(7, 0, -11), new THREE.Vector3(10, 0, -7), new THREE.Vector3(13, 0, -6)],
       // About area
-      [new THREE.Vector3(2, 0, -12), new THREE.Vector3(2, 0, -10), new THREE.Vector3(4, 0, -9)],
-      [new THREE.Vector3(-1, 0, -13), new THREE.Vector3(-3, 0, -11), new THREE.Vector3(-5, 0, -11)],
+      [new THREE.Vector3(3, 0, -28), new THREE.Vector3(3, 0, -24), new THREE.Vector3(6, 0, -22)],
+      [new THREE.Vector3(-2, 0, -31), new THREE.Vector3(-5, 0, -27), new THREE.Vector3(-7, 0, -26)],
       // Cases area
-      [new THREE.Vector3(-4, -0.1, -17), new THREE.Vector3(-2, -0.1, -15), new THREE.Vector3(0, -0.1, -15)],
-      [new THREE.Vector3(-6, -0.1, -20), new THREE.Vector3(-8, -0.1, -19), new THREE.Vector3(-10, -0.1, -18)],
+      [new THREE.Vector3(-5, -0.1, -40), new THREE.Vector3(-3, -0.1, -36), new THREE.Vector3(0, -0.1, -35)],
+      [new THREE.Vector3(-8, -0.1, -46), new THREE.Vector3(-11, -0.1, -44), new THREE.Vector3(-13, -0.1, -42)],
       // Sprints area
-      [new THREE.Vector3(4, 0, -27), new THREE.Vector3(4, 0, -25), new THREE.Vector3(6, 0, -24)],
-      [new THREE.Vector3(1, 0, -27), new THREE.Vector3(-1, 0, -25), new THREE.Vector3(-3, 0, -25)],
+      [new THREE.Vector3(6, 0, -65), new THREE.Vector3(6, 0, -61), new THREE.Vector3(9, 0, -59)],
+      [new THREE.Vector3(2, 0, -67), new THREE.Vector3(-1, 0, -63), new THREE.Vector3(-4, 0, -62)],
       // Contact area
-      [new THREE.Vector3(4, 0, -33), new THREE.Vector3(6, 0, -31), new THREE.Vector3(8, 0, -31)],
-      [new THREE.Vector3(1, 0, -36), new THREE.Vector3(-1, 0, -34), new THREE.Vector3(-3, 0, -34)],
+      [new THREE.Vector3(5, 0, -80), new THREE.Vector3(8, 0, -76), new THREE.Vector3(10, 0, -75)],
+      [new THREE.Vector3(1, 0, -85), new THREE.Vector3(-2, 0, -82), new THREE.Vector3(-5, 0, -81)],
     ];
 
     branches.forEach(pts => {
@@ -233,8 +233,8 @@ function Substrate() {
   return (
     <group>
       {/* Main board */}
-      <mesh position={[0, -0.15, -19]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[30, 50]} />
+      <mesh position={[0, -0.15, -45]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[35, 110]} />
         <meshStandardMaterial
           color={COLORS.substrateDark}
           roughness={0.9}
@@ -243,14 +243,14 @@ function Substrate() {
       </mesh>
       {/* Solder mask grid pattern */}
       {Array.from({ length: 20 }).map((_, i) => (
-        <mesh key={`h${i}`} position={[0, -0.14, -2 - i * 2]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[28, 0.01]} />
+        <mesh key={`h${i}`} position={[0, -0.14, -2 - i * 4.5]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[33, 0.01]} />
           <meshBasicMaterial color={COLORS.substrate} transparent opacity={0.15} />
         </mesh>
       ))}
       {Array.from({ length: 14 }).map((_, i) => (
         <mesh key={`v${i}`} position={[-13 + i * 2, -0.14, -19]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[0.01, 46]} />
+          <planeGeometry args={[0.01, 105]} />
           <meshBasicMaterial color={COLORS.substrate} transparent opacity={0.15} />
         </mesh>
       ))}
@@ -261,12 +261,12 @@ function Substrate() {
 /* ---------- Vias (through-hole connections) ---------- */
 function Vias() {
   const positions: [number, number, number][] = [
-    [8, 0, -6], [5, 0, -8], [2, 0, -11],
-    [-2, 0, -15], [-5, 0, -17], [-4, 0, -21],
-    [0, 0, -25], [4, 0, -29], [2, 0, -33],
+    [10, 0, -14], [8, 0, -18], [3, 0, -28],
+    [-3, 0, -36], [-7, 0, -42], [-6, 0, -50],
+    [0, 0, -60], [5, 0, -68], [3, 0, -80],
     // Extra decorative vias
-    [10, 0, -4], [-7, 0, -12], [7, 0, -22],
-    [-8, 0, -27], [8, 0, -35], [-2, 0, -38],
+    [12, 0, -10], [-9, 0, -28], [9, 0, -52],
+    [-10, 0, -65], [10, 0, -82], [-3, 0, -88],
   ];
 
   return (
@@ -306,7 +306,7 @@ function ICComponent({ position, size = [2, 0.3, 1.2], label, color = '#1a1a1a' 
 
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
-    const cameraZ = -scrollProgress * 38;
+    const cameraZ = -scrollProgress * 90;
     const dist = Math.abs(position[2] - cameraZ);
     const glow = Math.max(0, 1 - dist / 6);
     // Subtle float when active
@@ -369,7 +369,7 @@ function Capacitor({ position, radius = 0.25, height = 0.5, color = '#2a4a8a' }:
 
   useFrame(({ clock }) => {
     if (!ref.current) return;
-    const cameraZ = -scrollProgress * 38;
+    const cameraZ = -scrollProgress * 90;
     const dist = Math.abs(position[2] - cameraZ);
     const glow = Math.max(0, 1 - dist / 6);
     (ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity = glow * 0.5;
@@ -424,7 +424,7 @@ function LED({ position, color = '#5bd1d8' }: { position: [number, number, numbe
   useFrame(({ clock }) => {
     if (!ref.current) return;
     const t = clock.getElapsedTime();
-    const cameraZ = -scrollProgress * 38;
+    const cameraZ = -scrollProgress * 90;
     const dist = Math.abs(position[2] - cameraZ);
     const proximity = Math.max(0, 1 - dist / 5);
     (ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity = proximity * (1.5 + Math.sin(t * 3) * 0.5);
@@ -472,7 +472,7 @@ function SectionLabel({ position, text, subtitle }: { position: [number, number,
 
   useFrame(() => {
     if (!ref.current) return;
-    const cameraZ = -scrollProgress * 38;
+    const cameraZ = -scrollProgress * 90;
     const dist = Math.abs(position[2] - cameraZ);
     const glow = Math.max(0, 1 - dist / 6);
     ref.current.children.forEach(child => {
@@ -523,94 +523,94 @@ function PCBComponents() {
   return (
     <group>
       {/* ── HERO — Main MCU ── */}
-      <SectionLabel position={[6, 0.01, -4]} text="L'ELECTRON RARE" subtitle="Systemes electroniques specifiques" />
-      <ICComponent position={[6, 0, -6]} size={[2.5, 0.35, 1.5]} label="U1 — ESP32-S3" />
-      <Silk position={[4.5, 0.02, -5.2]} text="R1" size={0.08} />
-      <Silk position={[4.5, 0.02, -6.6]} text="R2" size={0.08} />
-      <Silk position={[7.5, 0.02, -4.7]} text="D1" size={0.08} />
-      <Silk position={[7.5, 0.02, -5.7]} text="D2" size={0.08} />
-      <LED position={[7.5, 0, -5]} color="#5bd1d8" />
-      <LED position={[7.5, 0, -5.5]} color="#30d158" />
-      <Resistor position={[4.5, 0, -5.5]} />
-      <Resistor position={[4.5, 0, -6.3]} />
+      <SectionLabel position={[10, 0.01, -8]} text="L'ELECTRON RARE" subtitle="Systemes electroniques specifiques" />
+      <ICComponent position={[10, 0, -14]} size={[2.5, 0.35, 1.5]} label="U1 — ESP32-S3" />
+      <Silk position={[8, 0.02, -12.5]} text="R1" size={0.08} />
+      <Silk position={[8, 0.02, -15.5]} text="R2" size={0.08} />
+      <Silk position={[11.5, 0.02, -11]} text="D1" size={0.08} />
+      <Silk position={[11.5, 0.02, -13.5]} text="D2" size={0.08} />
+      <LED position={[11.5, 0, -12]} color="#5bd1d8" />
+      <LED position={[11.5, 0, -13]} color="#30d158" />
+      <Resistor position={[8, 0, -13]} />
+      <Resistor position={[8, 0, -15]} />
 
       {/* ── ABOUT — Approche & expertise ── */}
-      <SectionLabel position={[1, 0.01, -11]} text="APPROCHE" subtitle="Diagnostic · Conception · Mise au point" />
-      <ICComponent position={[1, 0, -13]} size={[1.8, 0.25, 0.8]} label="U2 — LM358N" color="#222" />
-      <Silk position={[3, 0.02, -12.2]} text="C1 100uF" size={0.08} />
-      <Silk position={[-1, 0.02, -13.2]} text="C2 10nF" size={0.08} />
-      <Silk position={[2, 0.02, -14.3]} text="R3 10k" size={0.08} />
-      <Silk position={[0, 0.02, -11.7]} text="R4 4k7" size={0.08} />
-      <Capacitor position={[3, 0, -12.5]} radius={0.3} height={0.6} color="#8B4513" />
-      <Capacitor position={[-1, 0, -13.5]} radius={0.2} height={0.4} color="#2a4a8a" />
-      <Resistor position={[2, 0, -14]} rotation={[0, 0.5, 0]} />
-      <Resistor position={[0, 0, -12]} rotation={[0, -0.3, 0]} />
-      <LED position={[2.5, 0, -13]} color="#f1c27a" />
-      <Silk position={[2.5, 0.02, -12.7]} text="D3" size={0.08} />
+      <SectionLabel position={[1, 0.01, -26]} text="APPROCHE" subtitle="Diagnostic · Conception · Mise au point" />
+      <ICComponent position={[0, 0, -32]} size={[1.8, 0.25, 0.8]} label="U2 — LM358N" color="#222" />
+      <Silk position={[3, 0.02, -30]} text="C1 100uF" size={0.08} />
+      <Silk position={[-2, 0.02, -32]} text="C2 10nF" size={0.08} />
+      <Silk position={[2, 0.02, -34]} text="R3 10k" size={0.08} />
+      <Silk position={[-1, 0.02, -28]} text="R4 4k7" size={0.08} />
+      <Capacitor position={[3, 0, -30.5]} radius={0.3} height={0.6} color="#8B4513" />
+      <Capacitor position={[-2, 0, -33]} radius={0.2} height={0.4} color="#2a4a8a" />
+      <Resistor position={[2, 0, -34]} rotation={[0, 0.5, 0]} />
+      <Resistor position={[-1, 0, -29]} rotation={[0, -0.3, 0]} />
+      <LED position={[2.5, 0, -31]} color="#f1c27a" />
+      <Silk position={[2.5, 0.02, -30.5]} text="D3" size={0.08} />
 
       {/* ── CASES — Cas concrets ── */}
-      <SectionLabel position={[-5, 0.01, -17]} text="CAS CONCRETS" subtitle="Audio · Industrie · Formation" />
-      <ICComponent position={[-5, -0.1, -19]} size={[1.5, 0.4, 1]} label="Q1 — IRFZ44N" color="#1a1a2a" />
-      <Silk position={[-3, 0.02, -17.7]} text="C3 470uF/35V" size={0.08} />
-      <Silk position={[-7, 0.02, -19.7]} text="C4 220uF/16V" size={0.08} />
-      <Capacitor position={[-3, -0.1, -18]} radius={0.4} height={0.8} color="#1a3a1a" />
-      <Capacitor position={[-7, -0.1, -20]} radius={0.35} height={0.7} color="#8B4513" />
-      <Resistor position={[-4, -0.1, -20]} />
-      <Silk position={[-4, 0.02, -20.3]} text="R5 0R1" size={0.08} />
-      <LED position={[-6.5, -0.1, -18.5]} color="#ff6b6b" />
-      <Silk position={[-6.5, 0.02, -18.2]} text="D4 PWR" size={0.08} />
+      <SectionLabel position={[-6, 0.01, -38]} text="CAS CONCRETS" subtitle="Audio · Industrie · Formation" />
+      <ICComponent position={[-8, -0.1, -44]} size={[1.5, 0.4, 1]} label="Q1 — IRFZ44N" color="#1a1a2a" />
+      <Silk position={[-5, 0.02, -40]} text="C3 470uF/35V" size={0.08} />
+      <Silk position={[-10, 0.02, -47]} text="C4 220uF/16V" size={0.08} />
+      <Capacitor position={[-5, -0.1, -42]} radius={0.4} height={0.8} color="#1a3a1a" />
+      <Capacitor position={[-10, -0.1, -47]} radius={0.35} height={0.7} color="#8B4513" />
+      <Resistor position={[-7, -0.1, -47]} />
+      <Silk position={[-7, 0.02, -47.5]} text="R5 0R1" size={0.08} />
+      <LED position={[-9, -0.1, -43]} color="#ff6b6b" />
+      <Silk position={[-9, 0.02, -42.5]} text="D4 PWR" size={0.08} />
 
       {/* ── MEDIA — Photos & videos ── */}
-      <SectionLabel position={[-2, 0.01, -22]} text="TERRAIN" subtitle="Photos · Videos · Realisations" />
-      <ICComponent position={[-2, 0, -23]} size={[2, 0.5, 0.8]} label="J1 — USB-C 3.1" color="#333" />
-      <LED position={[-0.5, 0, -23]} color="#5bd1d8" />
-      <LED position={[-3.5, 0, -23]} color="#30d158" />
-      <Silk position={[-0.5, 0.02, -22.7]} text="TX" size={0.08} />
-      <Silk position={[-3.5, 0.02, -22.7]} text="RX" size={0.08} />
+      <SectionLabel position={[-4, 0.01, -52]} text="TERRAIN" subtitle="Photos · Videos · Realisations" />
+      <ICComponent position={[-4, 0, -56]} size={[2, 0.5, 0.8]} label="J1 — USB-C 3.1" color="#333" />
+      <LED position={[-2, 0, -56]} color="#5bd1d8" />
+      <LED position={[-6, 0, -56]} color="#30d158" />
+      <Silk position={[-2, 0.02, -55.5]} text="TX" size={0.08} />
+      <Silk position={[-6, 0.02, -55.5]} text="RX" size={0.08} />
 
       {/* ── SPRINTS — Missions ── */}
-      <SectionLabel position={[4, 0.01, -25.5]} text="MISSIONS" subtitle="Diagnostic · Prototype · Mission complete" />
-      <ICComponent position={[4, 0, -27]} size={[1.2, 0.3, 0.6]} label="U3 — LM7805CT" color="#1a1a1a" />
-      <Silk position={[2.5, 0.02, -26.2]} text="C5 100nF" size={0.08} />
-      <Silk position={[5.5, 0.02, -27.2]} text="C6 100nF" size={0.08} />
-      <Silk position={[3, 0.02, -28.3]} text="R6 220R" size={0.08} />
-      <Capacitor position={[2.5, 0, -26.5]} radius={0.25} height={0.5} color="#2a4a8a" />
-      <Capacitor position={[5.5, 0, -27.5]} radius={0.25} height={0.5} color="#2a4a8a" />
-      <Resistor position={[3, 0, -28]} rotation={[0, 0.8, 0]} />
-      <LED position={[5, 0, -26.5]} color="#b6d18f" />
-      <Silk position={[5, 0.02, -26.2]} text="D5 OK" size={0.08} />
+      <SectionLabel position={[5, 0.01, -62]} text="MISSIONS" subtitle="Diagnostic · Prototype · Mission complete" />
+      <ICComponent position={[6, 0, -68]} size={[1.2, 0.3, 0.6]} label="U3 — LM7805CT" color="#1a1a1a" />
+      <Silk position={[4, 0.02, -66]} text="C5 100nF" size={0.08} />
+      <Silk position={[8, 0.02, -69]} text="C6 100nF" size={0.08} />
+      <Silk position={[5, 0.02, -71]} text="R6 220R" size={0.08} />
+      <Capacitor position={[4, 0, -66.5]} radius={0.25} height={0.5} color="#2a4a8a" />
+      <Capacitor position={[8, 0, -69.5]} radius={0.25} height={0.5} color="#2a4a8a" />
+      <Resistor position={[5, 0, -71]} rotation={[0, 0.8, 0]} />
+      <LED position={[7, 0, -66]} color="#b6d18f" />
+      <Silk position={[7, 0.02, -65.5]} text="D5 OK" size={0.08} />
 
       {/* ── CONTACT — Energy storage ── */}
-      <SectionLabel position={[1, 0.01, -34.5]} text="CONTACT" subtitle="contact@lelectronrare.fr" />
-      <Capacitor position={[1, 0, -36]} radius={0.5} height={1} color="#4a2a8a" />
-      <Silk position={[1, 0.02, -35.3]} text="C7 1000uF/25V" size={0.08} />
-      <Capacitor position={[-1, 0, -37]} radius={0.4} height={0.8} color="#8B4513" />
-      <Silk position={[-1, 0.02, -36.3]} text="C8 470uF/16V" size={0.08} />
-      <LED position={[2.5, 0, -36]} color="#ff6b35" />
-      <Silk position={[2.5, 0.02, -35.7]} text="D6" size={0.08} />
-      <LED position={[-0.5, 0, -36]} color="#5bd1d8" />
-      <Silk position={[-0.5, 0.02, -35.7]} text="D7" size={0.08} />
-      <Resistor position={[0, 0, -35]} rotation={[0, 1.2, 0]} />
-      <Silk position={[0, 0.02, -34.7]} text="R7 1k" size={0.08} />
+      <SectionLabel position={[2, 0.01, -80]} text="CONTACT" subtitle="contact@lelectronrare.fr" />
+      <Capacitor position={[2, 0, -84]} radius={0.5} height={1} color="#4a2a8a" />
+      <Silk position={[2, 0.02, -83]} text="C7 1000uF/25V" size={0.08} />
+      <Capacitor position={[-1, 0, -86]} radius={0.4} height={0.8} color="#8B4513" />
+      <Silk position={[-1, 0.02, -85]} text="C8 470uF/16V" size={0.08} />
+      <LED position={[4, 0, -84]} color="#ff6b35" />
+      <Silk position={[4, 0.02, -83.5]} text="D6" size={0.08} />
+      <LED position={[-0.5, 0, -84]} color="#5bd1d8" />
+      <Silk position={[-0.5, 0.02, -83.5]} text="D7" size={0.08} />
+      <Resistor position={[0, 0, -82]} rotation={[0, 1.2, 0]} />
+      <Silk position={[0, 0.02, -81.5]} text="R7 1k" size={0.08} />
 
       {/* ── Extra scattered passives ── */}
-      <Resistor position={[9, 0, -3]} rotation={[0, 0.7, 0]} />
-      <Silk position={[9, 0.02, -2.7]} text="R8" size={0.06} opacity={0.3} />
-      <Resistor position={[7, 0, -10]} rotation={[0, -0.4, 0]} />
-      <Silk position={[7, 0.02, -9.7]} text="R9" size={0.06} opacity={0.3} />
-      <Resistor position={[-3, 0, -10]} rotation={[0, 1.1, 0]} />
-      <Resistor position={[-8, -0.1, -16]} />
-      <Resistor position={[1, 0, -30]} rotation={[0, 0.3, 0]} />
-      <Capacitor position={[10, 0, -7]} radius={0.15} height={0.3} />
-      <Silk position={[10, 0.02, -6.7]} text="C9" size={0.06} opacity={0.3} />
-      <Capacitor position={[-4, 0, -25]} radius={0.15} height={0.3} />
-      <Silk position={[-4, 0.02, -24.7]} text="C10" size={0.06} opacity={0.3} />
+      <Resistor position={[12, 0, -7]} rotation={[0, 0.7, 0]} />
+      <Silk position={[12, 0.02, -6.5]} text="R8" size={0.06} opacity={0.3} />
+      <Resistor position={[9, 0, -22]} rotation={[0, -0.4, 0]} />
+      <Silk position={[9, 0.02, -21.5]} text="R9" size={0.06} opacity={0.3} />
+      <Resistor position={[-4, 0, -24]} rotation={[0, 1.1, 0]} />
+      <Resistor position={[-10, -0.1, -36]} />
+      <Resistor position={[2, 0, -72]} rotation={[0, 0.3, 0]} />
+      <Capacitor position={[13, 0, -16]} radius={0.15} height={0.3} />
+      <Silk position={[13, 0.02, -15.5]} text="C9" size={0.06} opacity={0.3} />
+      <Capacitor position={[-5, 0, -60]} radius={0.15} height={0.3} />
+      <Silk position={[-5, 0.02, -59.5]} text="C10" size={0.06} opacity={0.3} />
 
       {/* ── Board title silkscreen ── */}
-      <Silk position={[-8, 0.02, -2]} text="L'ELECTRON RARE" size={0.25} opacity={0.2} />
-      <Silk position={[-8, 0.02, -2.5]} text="REV 2026.1" size={0.1} opacity={0.15} />
-      <Silk position={[10, 0.02, -38]} text="Made in France" size={0.1} opacity={0.15} />
-      <Silk position={[10, 0.02, -38.4]} text="lelectronrare.fr" size={0.08} opacity={0.12} />
+      <Silk position={[-10, 0.02, -3]} text="L'ELECTRON RARE" size={0.25} opacity={0.2} />
+      <Silk position={[-10, 0.02, -4]} text="REV 2026.1" size={0.1} opacity={0.15} />
+      <Silk position={[12, 0.02, -88]} text="Made in France" size={0.1} opacity={0.15} />
+      <Silk position={[12, 0.02, -89]} text="lelectronrare.fr" size={0.08} opacity={0.12} />
     </group>
   );
 }
@@ -661,14 +661,14 @@ function AmbientDust({ count = 200 }) {
 
 // Define zoom stops — camera zooms in when scroll reaches each section
 const ZOOM_STOPS = [
-  { scroll: 0.00, pos: [0, 4, 2], look: [2, 0, -4], fov: 50 },     // Overview start
-  { scroll: 0.10, pos: [6, 1.8, -4], look: [6, 0, -6], fov: 40 },   // HERO — zoom on ESP32
-  { scroll: 0.25, pos: [1, 1.5, -11], look: [1, 0, -13], fov: 42 }, // ABOUT — zoom on LM358
-  { scroll: 0.40, pos: [-5, 1.8, -17], look: [-5, 0, -19], fov: 40 }, // CASES — zoom on MOSFET
-  { scroll: 0.52, pos: [-2, 1.5, -21.5], look: [-2, 0, -23], fov: 42 }, // MEDIA — zoom on USB-C
-  { scroll: 0.65, pos: [4, 1.5, -25], look: [4, 0, -27], fov: 42 },  // SPRINTS — zoom on 7805
-  { scroll: 0.80, pos: [1, 2, -33], look: [1, 0, -36], fov: 45 },    // CONTACT — zoom on caps
-  { scroll: 1.00, pos: [0, 5, -20], look: [0, 0, -20], fov: 55 },    // End — pull out overview
+  { scroll: 0.00, pos: [0, 6, 4], look: [3, 0, -8], fov: 55 },       // Overview start
+  { scroll: 0.08, pos: [10, 2.5, -10], look: [10, 0, -14], fov: 38 }, // HERO — zoom on ESP32
+  { scroll: 0.22, pos: [0, 2.2, -28], look: [0, 0, -32], fov: 40 },   // ABOUT — zoom on LM358
+  { scroll: 0.36, pos: [-7, 2.5, -40], look: [-8, 0, -44], fov: 38 }, // CASES — zoom on MOSFET
+  { scroll: 0.48, pos: [-4, 2, -52], look: [-4, 0, -56], fov: 40 },   // MEDIA — zoom on USB-C
+  { scroll: 0.62, pos: [5, 2.2, -64], look: [6, 0, -68], fov: 40 },   // SPRINTS — zoom on 7805
+  { scroll: 0.78, pos: [2, 2.5, -80], look: [2, 0, -84], fov: 42 },   // CONTACT — zoom on caps
+  { scroll: 1.00, pos: [0, 8, -45], look: [0, 0, -45], fov: 60 },     // End — pull out overview
 ];
 
 function TraceCamera() {
