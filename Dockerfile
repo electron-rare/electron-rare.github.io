@@ -4,7 +4,7 @@ WORKDIR /app
 FROM base AS deps
 COPY package.json package-lock.json ./
 COPY apps/lab-interactif/package.json apps/lab-interactif/package-lock.json ./apps/lab-interactif/
-RUN npm ci && npm ci --prefix apps/lab-interactif
+RUN npm install --no-audit --no-fund && npm install --no-audit --no-fund --prefix apps/lab-interactif
 
 FROM base AS build
 ARG PUBLIC_SITE_URL=https://www.lelectronrare.fr

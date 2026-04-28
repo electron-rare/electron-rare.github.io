@@ -1,26 +1,16 @@
 import type { APIRoute } from 'astro';
+import nodemailer from 'nodemailer';
 
-interface LeadSubmission {
+interface ContactSubmission {
   name: string;
   email: string;
   phone?: string;
   organization?: string;
+  needType?: string;
+  message?: string;
   sourceChannel?: string;
   sourceDetail?: string;
   pagePath?: string;
-  needType?: string;
-}
-
-interface FrappePayload {
-  first_name: string;
-  last_name?: string;
-  email: string;
-  mobile_no?: string;
-  organization?: string;
-  custom_source_channel: string;
-  custom_source_detail?: string;
-  custom_need_type: string;
-  custom_segment: string;
 }
 
 // Strict email validation (RFC 5322 simplified)
@@ -41,7 +31,6 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-// Allowed origins for CORS
 const ALLOWED_ORIGINS = new Set([
   'https://www.lelectronrare.fr',
   'https://lelectronrare.fr',
@@ -57,10 +46,13 @@ function corsHeaders(origin: string | null): Record<string, string> {
   return headers;
 }
 
+function escapeHtml(s: string): string {
+  return String(s).replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;' }[c] as string));
+}
+
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   const origin = request.headers.get('origin');
 
-  // CORS check — reject unknown origins (allow null for same-origin)
   if (origin && !ALLOWED_ORIGINS.has(origin)) {
     return new Response(JSON.stringify({ error: 'forbidden' }), {
       status: 403,
@@ -68,7 +60,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
   }
 
-  // Rate limiting
   const ip = clientAddress || request.headers.get('x-forwarded-for') || 'unknown';
   if (isRateLimited(ip)) {
     return new Response(JSON.stringify({ error: 'too many requests' }), {
@@ -77,20 +68,22 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
   }
 
-  const FRAPPE_URL = import.meta.env.FRAPPE_URL || process.env.FRAPPE_URL;
-  const FRAPPE_API_KEY = import.meta.env.FRAPPE_API_KEY || process.env.FRAPPE_API_KEY;
-  const FRAPPE_API_SECRET = import.meta.env.FRAPPE_API_SECRET || process.env.FRAPPE_API_SECRET;
-  const CRM_FALLBACK_URL = import.meta.env.CRM_FALLBACK_URL || process.env.CRM_FALLBACK_URL;
+  const SMTP_HOST = process.env.SMTP_HOST;
+  const SMTP_PORT = Number(process.env.SMTP_PORT || '587');
+  const SMTP_USER = process.env.SMTP_USER;
+  const SMTP_PASS = process.env.SMTP_PASS;
+  const MAIL_FROM = process.env.MAIL_FROM || SMTP_USER || '';
+  const MAIL_TO = process.env.MAIL_TO || 'contact@lelectronrare.fr';
 
-  if (!FRAPPE_URL || !FRAPPE_API_KEY || !FRAPPE_API_SECRET) {
-    console.error('[submit-lead] Missing Frappe env vars');
+  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
+    console.error('[submit-lead] Missing SMTP env vars (SMTP_HOST/SMTP_USER/SMTP_PASS)');
     return new Response(JSON.stringify({ error: 'server misconfigured' }), {
       status: 500,
       headers: corsHeaders(origin),
     });
   }
 
-  let body: LeadSubmission;
+  let body: ContactSubmission;
   try {
     body = await request.json();
   } catch {
@@ -100,9 +93,13 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
   }
 
-  // Validate required fields
   const name = typeof body.name === 'string' ? body.name.trim() : '';
   const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+  const phone = typeof body.phone === 'string' ? body.phone.trim() : '';
+  const organization = typeof body.organization === 'string' ? body.organization.trim() : '';
+  const needType = typeof body.needType === 'string' ? body.needType.trim() : '';
+  const message = typeof body.message === 'string' ? body.message.trim() : '';
+  const pagePath = typeof body.pagePath === 'string' ? body.pagePath.trim() : '';
 
   if (!name || name.length < 2 || name.length > 200) {
     return new Response(JSON.stringify({ error: 'name must be 2-200 characters' }), {
@@ -110,108 +107,76 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       headers: corsHeaders(origin),
     });
   }
-
   if (!email || !EMAIL_RE.test(email)) {
     return new Response(JSON.stringify({ error: 'valid email required' }), {
       status: 400,
       headers: corsHeaders(origin),
     });
   }
-
-  // Split full name into first/last
-  const nameParts = name.split(/\s+/);
-  const firstName = nameParts[0];
-  const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : undefined;
-
-  const sourceChannel = body.sourceChannel || 'site';
-  const needType = body.needType || 'technique';
-
-  const segment =
-    needType === 'formation'
-      ? 'formation'
-      : sourceChannel === 'fat' || sourceChannel === 'hemisphere'
-        ? 'culture'
-        : 'industrie';
-
-  const frappePayload: FrappePayload = {
-    first_name: firstName,
-    email,
-    custom_source_channel: sourceChannel,
-    custom_need_type: needType,
-    custom_segment: segment,
-  };
-
-  if (lastName) frappePayload.last_name = lastName;
-  if (body.phone) frappePayload.mobile_no = body.phone;
-  if (body.organization) frappePayload.organization = body.organization;
-  if (body.sourceDetail || body.pagePath) {
-    frappePayload.custom_source_detail = body.sourceDetail || body.pagePath;
+  if (message.length > 5000) {
+    return new Response(JSON.stringify({ error: 'message too long (max 5000)' }), {
+      status: 400,
+      headers: corsHeaders(origin),
+    });
   }
 
-  console.info('[submit-lead] Submitting lead', { email, sourceChannel, needType, segment });
+  const subject = `[lelectronrare] ${needType || 'demande'} — ${name}`;
 
-  const FRAPPE_HOST = import.meta.env.FRAPPE_HOST_HEADER || process.env.FRAPPE_HOST_HEADER || '';
+  const text = `Nouveau message depuis lelectronrare.fr
+
+Nom        : ${name}
+Email      : ${email}
+Téléphone  : ${phone || '-'}
+Organisation: ${organization || '-'}
+Type       : ${needType || '-'}
+Page       : ${pagePath || '-'}
+IP         : ${ip}
+
+Message :
+${message || '(vide)'}
+`;
+
+  const html = `<!DOCTYPE html><html><body style="font-family:system-ui,-apple-system,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#222;">
+  <h2 style="color:#5bd1d8;border-bottom:1px solid #eee;padding-bottom:8px;">Nouveau message — lelectronrare.fr</h2>
+  <table style="border-collapse:collapse;width:100%;font-size:14px;">
+    <tr><td style="padding:6px;"><b>Nom</b></td><td style="padding:6px;">${escapeHtml(name)}</td></tr>
+    <tr><td style="padding:6px;"><b>Email</b></td><td style="padding:6px;"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
+    <tr><td style="padding:6px;"><b>Téléphone</b></td><td style="padding:6px;">${escapeHtml(phone || '-')}</td></tr>
+    <tr><td style="padding:6px;"><b>Organisation</b></td><td style="padding:6px;">${escapeHtml(organization || '-')}</td></tr>
+    <tr><td style="padding:6px;"><b>Type</b></td><td style="padding:6px;">${escapeHtml(needType || '-')}</td></tr>
+    <tr><td style="padding:6px;color:#999;font-size:11px;"><b>IP</b></td><td style="padding:6px;color:#999;font-size:11px;">${escapeHtml(ip)}</td></tr>
+  </table>
+  <h3 style="margin-top:20px;font-size:14px;color:#666;">Message</h3>
+  <pre style="background:#f5f5f5;padding:12px;border-radius:6px;white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.5;">${escapeHtml(message || '(vide)')}</pre>
+  <p style="margin-top:20px;font-size:11px;color:#aaa;">Pour répondre, utilise simplement Reply — l'adresse du visiteur est en Reply-To.</p>
+</body></html>`;
 
   try {
-    const frappeHeaders: Record<string, string> = {
-      'Content-Type': 'application/json',
-      Authorization: `token ${FRAPPE_API_KEY}:${FRAPPE_API_SECRET}`,
-    };
-    if (FRAPPE_HOST) frappeHeaders['Host'] = FRAPPE_HOST;
-
-    const resp = await fetch(`${FRAPPE_URL}/api/resource/CRM Lead`, {
-      method: 'POST',
-      headers: frappeHeaders,
-      body: JSON.stringify(frappePayload),
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      secure: SMTP_PORT === 465,
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
     });
 
-    if (!resp.ok) {
-      // Log status only — never log response body (may contain secrets)
-      console.error('[submit-lead] Frappe returned', resp.status);
+    await transporter.sendMail({
+      from: MAIL_FROM,
+      to: MAIL_TO,
+      replyTo: `${name.replace(/[<>"]/g, '')} <${email}>`,
+      subject,
+      text,
+      html,
+    });
 
-      // Dual-write fallback
-      if (CRM_FALLBACK_URL) {
-        console.info('[submit-lead] Attempting CRM fallback');
-        try {
-          const fallbackResp = await fetch(`${CRM_FALLBACK_URL}/api/intake/lead`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name,
-              email,
-              phone: body.phone,
-              organization: body.organization,
-              sourceChannel,
-              needType,
-            }),
-          });
-          if (fallbackResp.ok) {
-            return new Response(JSON.stringify({ ok: true, via: 'fallback' }), {
-              status: 201,
-              headers: corsHeaders(origin),
-            });
-          }
-          console.error('[submit-lead] Fallback returned', fallbackResp.status);
-        } catch {
-          console.error('[submit-lead] Fallback network error');
-        }
-      }
-
-      return new Response(JSON.stringify({ error: 'submission failed' }), {
-        status: 502,
-        headers: corsHeaders(origin),
-      });
-    }
-
-    console.info('[submit-lead] Lead created');
+    console.info('[submit-lead] Mail sent', { needType, hasOrg: !!organization });
     return new Response(JSON.stringify({ ok: true }), {
       status: 201,
       headers: corsHeaders(origin),
     });
-  } catch {
-    console.error('[submit-lead] Network error');
-    return new Response(JSON.stringify({ error: 'internal error' }), {
-      status: 500,
+  } catch (err) {
+    console.error('[submit-lead] SMTP error', err instanceof Error ? err.message : 'unknown');
+    return new Response(JSON.stringify({ error: 'send failed' }), {
+      status: 502,
       headers: corsHeaders(origin),
     });
   }

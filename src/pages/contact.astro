@@ -149,7 +149,7 @@ Contraintes (délai, budget) :"></textarea>
 
       const data = Object.fromEntries(new FormData(form));
       try {
-        const res = await fetch('https://api.lelectronrare.fr/api/submit-lead', {
+        const res = await fetch('/api/submit-lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),

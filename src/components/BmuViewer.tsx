@@ -516,7 +516,10 @@ function Assembly({ scrollRef, onSection }: {
       {CARDS_DEF.map((card, i) => (
         <group key={i}
           ref={(el) => { if (el) cardsRef.current[i] = el; }}
-          position={card.position} rotation={card.rotation}>
+          position={card.position} rotation={card.rotation}
+          onClick={(e) => { e.stopPropagation(); window.location.href = '/contact/'; }}
+          onPointerOver={(e) => { e.stopPropagation(); document.body.style.cursor = 'pointer'; }}
+          onPointerOut={() => { document.body.style.cursor = ''; }}>
           <CardModel file={card.file} />
           {/* Tuiles 3D plaquées sur les faces */}
           {PCB_LABELS.filter(l => l.cardIndex === i).map((label, li) => (

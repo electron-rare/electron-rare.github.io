@@ -33,6 +33,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "motion": "^12.23.24",
+    "nodemailer": "^6.9.16",
     "postprocessing": "^6.39.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "@types/nodemailer": "^6.4.16",
     "@storybook/addon-a11y": "^9.1.5",
     "@storybook/addon-docs": "^9.1.5",
     "@storybook/addon-onboarding": "^9.1.5",
