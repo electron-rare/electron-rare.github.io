@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro';
-import nodemailer from 'nodemailer';
 
 interface ContactSubmission {
   name: string;
@@ -68,20 +67,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
   }
 
-  const SMTP_HOST = process.env.SMTP_HOST;
-  const SMTP_PORT = Number(process.env.SMTP_PORT || '587');
-  const SMTP_USER = process.env.SMTP_USER;
-  const SMTP_PASS = process.env.SMTP_PASS;
-  const MAIL_FROM = process.env.MAIL_FROM || SMTP_USER || '';
+  const MAIL_API_URL = process.env.MAIL_API_URL || 'http://mail-api:3200/api/mail/send';
+  const MAIL_FROM = process.env.MAIL_FROM || 'contact@lelectronrare.fr';
   const MAIL_TO = process.env.MAIL_TO || 'contact@lelectronrare.fr';
-
-  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
-    console.error('[submit-lead] Missing SMTP env vars (SMTP_HOST/SMTP_USER/SMTP_PASS)');
-    return new Response(JSON.stringify({ error: 'server misconfigured' }), {
-      status: 500,
-      headers: corsHeaders(origin),
-    });
-  }
 
   let body: ContactSubmission;
   try {
@@ -124,13 +112,13 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   const text = `Nouveau message depuis lelectronrare.fr
 
-Nom        : ${name}
-Email      : ${email}
-Téléphone  : ${phone || '-'}
+Nom         : ${name}
+Email       : ${email}
+Téléphone   : ${phone || '-'}
 Organisation: ${organization || '-'}
-Type       : ${needType || '-'}
-Page       : ${pagePath || '-'}
-IP         : ${ip}
+Type        : ${needType || '-'}
+Page        : ${pagePath || '-'}
+IP          : ${ip}
 
 Message :
 ${message || '(vide)'}
@@ -148,34 +136,39 @@ ${message || '(vide)'}
   </table>
   <h3 style="margin-top:20px;font-size:14px;color:#666;">Message</h3>
   <pre style="background:#f5f5f5;padding:12px;border-radius:6px;white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.5;">${escapeHtml(message || '(vide)')}</pre>
-  <p style="margin-top:20px;font-size:11px;color:#aaa;">Pour répondre, utilise simplement Reply — l'adresse du visiteur est en Reply-To.</p>
+  <p style="margin-top:20px;font-size:11px;color:#aaa;">Reply-To pointe vers l'email du visiteur — répondre directement.</p>
 </body></html>`;
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: SMTP_PORT,
-      secure: SMTP_PORT === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
+    const resp = await fetch(MAIL_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: MAIL_FROM,
+        to: MAIL_TO,
+        subject,
+        text,
+        html,
+        replyTo: `${name.replace(/[<>"]/g, '')} <${email}>`,
+      }),
     });
 
-    await transporter.sendMail({
-      from: MAIL_FROM,
-      to: MAIL_TO,
-      replyTo: `${name.replace(/[<>"]/g, '')} <${email}>`,
-      subject,
-      text,
-      html,
-    });
+    if (!resp.ok) {
+      console.error('[submit-lead] mail-api returned', resp.status);
+      return new Response(JSON.stringify({ error: 'send failed' }), {
+        status: 502,
+        headers: corsHeaders(origin),
+      });
+    }
 
-    console.info('[submit-lead] Mail sent', { needType, hasOrg: !!organization });
+    console.info('[submit-lead] Mail relayed via mail-api', { needType, hasOrg: !!organization });
     return new Response(JSON.stringify({ ok: true }), {
       status: 201,
       headers: corsHeaders(origin),
     });
   } catch (err) {
-    console.error('[submit-lead] SMTP error', err instanceof Error ? err.message : 'unknown');
-    return new Response(JSON.stringify({ error: 'send failed' }), {
+    console.error('[submit-lead] mail-api unreachable', err instanceof Error ? err.message : 'unknown');
+    return new Response(JSON.stringify({ error: 'mail service unreachable' }), {
       status: 502,
       headers: corsHeaders(origin),
     });
