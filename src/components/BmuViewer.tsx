@@ -155,13 +155,13 @@ const PCB_LABELS: PcbLabel[] = [
   { section: 'exp-consulting', cardIndex: 0, localOffset: [0.3, 0.005, -0.45],
     title: 'Consulting & Formation', sub: 'Audit · Transfert · Pédagogie · Projet' },
   // 6-9. CAS — les 4 tuiles visibles en même temps, sous l image/video sur la face bottom des mosfets
-  { section: 'cas', cardIndex: 2, localOffset: [0.0, 0.0, -0.7],
+  { section: 'cas', cardIndex: 2, localOffset: [0.0, 0.5, 0.0],
     title: 'Industries créatives', sub: 'Audio embarqué · Batterie LiFePO4 · KXKM' },
-  { section: 'cas', cardIndex: 3, localOffset: [0.0, 0.0, -0.7],
+  { section: 'cas', cardIndex: 3, localOffset: [0.0, 0.5, 0.0],
     title: 'Industrie', sub: 'Production V3.2 · KXKM ESP32 → STM32F070' },
-  { section: 'cas', cardIndex: 4, localOffset: [0.0, 0.0, -0.7],
+  { section: 'cas', cardIndex: 4, localOffset: [0.0, 0.5, 0.0],
     title: 'Formation', sub: 'PCB · KiCad · µC' },
-  { section: 'cas', cardIndex: 5, localOffset: [0.0, 0.0, -0.7],
+  { section: 'cas', cardIndex: 5, localOffset: [0.0, 0.5, 0.0],
     title: 'Service', sub: 'Mise en service · Maintenance · Support terrain' },
   // 9. Conception — Mosfet #1 (card 2)
   { section: 'formats', cardIndex: 2, localOffset: [0.0, 0.005, 0.0],
@@ -276,8 +276,8 @@ function PcbVideoMesh({ offset, src, visible }: {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const texRef = useRef<THREE.VideoTexture | null>(null);
 
-  // Plane size in 4:3 landscape; covers center of the mosfet bottom face
-  const planeW = 1.9, planeH = planeW / MEDIA_ASPECT;
+  // Plane size in 4:3 landscape, sized to leave vertical room for caption tile below
+  const planeW = 1.2, planeH = planeW / MEDIA_ASPECT;
 
   useEffect(() => {
     const video = document.createElement('video');
@@ -353,7 +353,7 @@ function PcbCarouselMesh({ offset, visible }: {
   const textures = useRef<THREE.Texture[]>([]);
   const [idx, setIdx] = useState(0);
   const autoTimer = useRef(0);
-  const planeW = 1.9, planeH = planeW / MEDIA_ASPECT;
+  const planeW = 1.2, planeH = planeW / MEDIA_ASPECT;
 
   useEffect(() => {
     const loader = new THREE.TextureLoader();
