@@ -194,33 +194,33 @@ function PcbTile({ offset, title, sub, visible, section, href }: {
 
   const content = (
     <div style={{
-      minWidth: isBig ? '340px' : '260px',
-      padding: isBig ? '24px 36px' : '14px 24px',
+      minWidth: isBig ? '680px' : '520px',
+      padding: isBig ? '48px 72px' : '28px 48px',
       textAlign: 'center',
       background: isClickable ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.55)',
-      border: isClickable ? '2px solid #5bd1d8' : '1.5px solid rgba(255,255,255,0.4)',
-      borderRadius: isClickable ? '12px' : '8px',
-      backdropFilter: 'blur(4px)',
+      border: isClickable ? '4px solid #5bd1d8' : '3px solid rgba(255,255,255,0.4)',
+      borderRadius: isClickable ? '24px' : '16px',
       cursor: isClickable ? 'pointer' : 'default',
+      transform: 'translate3d(0,0,0)',
     }}>
       <div style={{
-        fontSize: isBig ? '24px' : '18px',
+        fontSize: isBig ? '48px' : '36px',
         fontWeight: 800,
         color: isClickable ? '#5bd1d8' : '#fff',
         letterSpacing: '0.05em', textTransform: 'uppercase',
         fontFamily: "'Courier New', monospace",
       }}>{title}</div>
       {sub && <div style={{
-        fontSize: isBig ? '14px' : '12px',
+        fontSize: isBig ? '28px' : '24px',
         color: 'rgba(255,255,255,0.55)',
-        marginTop: isBig ? '10px' : '6px',
+        marginTop: isBig ? '20px' : '12px',
         fontFamily: "'Courier New', monospace", letterSpacing: '0.03em',
       }}>{sub}</div>}
     </div>
   );
 
   return (
-    <Html position={offset} center distanceFactor={isBig ? 0.4 : 0.8}
+    <Html position={offset} center distanceFactor={isBig ? 0.2 : 0.4}
       style={{
         opacity: visible ? 1 : 0,
         transition: 'opacity 0.5s',
@@ -501,7 +501,7 @@ function Assembly({ scrollRef, onSection }: {
 
     const camPos = target.clone().add(offset);
 
-    camera.position.lerp(camPos, Math.min(1, delta * 2));
+    camera.position.lerp(camPos, Math.min(1, delta * 1));
     camera.lookAt(target);
 
     // Update section
@@ -572,7 +572,7 @@ export function BmuViewer() {
   return (
     <div style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'auto' }}>
       <Canvas gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-        dpr={[1, 1.5]} camera={{ fov: 35, near: 0.01, far: 50 }}
+        dpr={[1, 2]} camera={{ fov: 35, near: 0.01, far: 50 }}
         style={{ background: 'transparent', pointerEvents: 'auto', touchAction: 'pan-y' }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 8, 5]} intensity={2.2} color="#ffffff" />
