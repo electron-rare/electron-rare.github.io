@@ -93,7 +93,8 @@ import { BmuViewer } from '@/components/BmuViewer';
     /* Formats */
     .ov-formats { bottom: clamp(30px, 5vh, 60px); left: 50%; transform: translateX(-50%); display: flex; gap: 12px; max-width: 820px; width: 92vw; }
     .ov-formats.on { transform: translateX(-50%); }
-    .fmt { flex: 1; padding: 14px 16px; border-radius: 8px; background: rgba(6,8,11,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    .fmt { flex: 1; padding: 14px 16px; border-radius: 8px; background: rgba(6,8,11,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); text-align: center; text-decoration: none; color: inherit; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
+    .fmt:hover { background: rgba(6,8,11,0.85); border-color: rgba(255,255,255,0.18); transform: translateY(-2px); }
     .fmt-t { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
     .fmt-d { font-size: 10px; color: rgba(255,255,255,0.35); }
 
@@ -190,18 +191,18 @@ import { BmuViewer } from '@/components/BmuViewer';
 
   <!-- FORMATS -->
   <div class="ov ov-formats" data-sec="formats">
-    <div class="fmt">
+    <a class="fmt" href="/conception/">
       <p class="fmt-t" style="color:#5bd1d8">Conception</p>
       <p class="fmt-d">Schéma · PCB · Firmware · Validation</p>
-    </div>
-    <div class="fmt">
+    </a>
+    <a class="fmt" href="/formation/">
       <p class="fmt-t" style="color:#a78bfa">Formation</p>
       <p class="fmt-d">PCB · KiCad · µC · Soudure</p>
-    </div>
-    <div class="fmt">
+    </a>
+    <a class="fmt" href="/consulting/">
       <p class="fmt-t" style="color:#f59e0b">Consulting</p>
       <p class="fmt-d">Audit · Diagnostic · Transfert</p>
-    </div>
+    </a>
   </div>
 
   <!-- CONFIANCE -->
