@@ -1,0 +1,508 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@/styles/global.css';
+import '@/styles/home-workbench.css';
+import SiteHeader from '@/components/SiteHeader.astro';
+import { Hero } from '@/components/sections/Hero';
+import { About } from '@/components/sections/About';
+import { CaseStudies } from '@/components/sections/CaseStudies';
+import { GraphicSprints } from '@/components/sections/GraphicSprints';
+import Contact from '@/components/sections/Contact.astro';
+import Faq from '@/components/sections/Faq.astro';
+import { withSiteBase } from '@/lib/site';
+import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
+
+const LAUNCH_DATE = new Date('2026-05-01T00:00:00+02:00');
+const isLaunched = Date.now() >= LAUNCH_DATE.getTime();
+
+const formationHref = withSiteBase('/formation/');
+const mentionsHref = withSiteBase('/mentions-legales/');
+const headerItems = [
+  { href: '#a-propos', label: 'Approche' },
+  { href: '#graphic-sprints-title', label: 'Missions' },
+  { href: formationHref, label: 'Formation' },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#contact', label: 'Contact', desktopOnly: true }
+];
+
+const title = isLaunched
+  ? "Systèmes électroniques spécifiques | L'électron rare"
+  : "L'Electron Rare — Bientôt";
+const description = isLaunched
+  ? "Conception, mise au point et fiabilisation de systèmes électroniques spécifiques."
+  : "L'Electron Rare arrive. Systèmes électroniques spécifiques, formations, prototypage.";
+---
+
+<BaseLayout title={title} description={description}>
+{isLaunched ? (
+  <Fragment>
+    <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
+    <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
+      <section class="structure-grid structure-grid--hero" data-reveal>
+        <div class="structure-cell structure-cell--hero">
+          <Hero />
+        </div>
+      </section>
+      <section class="structure-grid structure-grid--systems" data-reveal>
+        <div class="structure-cell structure-cell--about">
+          <About />
+        </div>
+      </section>
+      <section class="structure-grid structure-grid--cases" data-reveal>
+        <div class="structure-cell structure-cell--cases">
+          <CaseStudies />
+        </div>
+      </section>
+      <section class="structure-grid structure-grid--sprints" data-reveal>
+        <div class="structure-cell structure-cell--sprints">
+          <GraphicSprints />
+        </div>
+      </section>
+      <section class="structure-grid structure-grid--faq" data-reveal>
+        <div class="structure-cell structure-cell--faq">
+          <Faq />
+        </div>
+      </section>
+      <section class="structure-grid structure-grid--conversion" data-reveal>
+        <div class="structure-cell structure-cell--contact">
+          <Contact />
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
+      <div class="site-shell footer-grid footer-grid--enhanced">
+        <div class="footer-col footer-col--brand">
+          <p class="m-0 footer-title">L'électron rare</p>
+          <p class="mb-0 footer-copy">© 2026 Clément Saillant</p>
+        </div>
+        <nav aria-label="Ressources" class="footer-links footer-links--single-rail">
+          <a href="#a-propos" class="footer-link">Approche</a>
+          <a href="#graphic-sprints-title" class="footer-link">Missions</a>
+          <a href={formationHref} class="footer-link">Formation</a>
+          <a href="#faq" class="footer-link">FAQ</a>
+          <a href="#contact" class="footer-link">Contact</a>
+          <a href={mentionsHref} class="footer-link">Mentions légales</a>
+        </nav>
+      </div>
+    </footer>
+  </Fragment>
+) : (
+  <!-- COUNTDOWN — random WebGL or CSS -->
+  <main class="countdown-page">
+    <!-- BG A: WebGL shader (PCB traces) -->
+    <div class="countdown-bg" id="bg-webgl">
+      <div class="webgl-bg" id="webgl-countdown"></div>
+    </div>
+
+    <!-- BG B: Pure CSS circuit board -->
+    <div class="countdown-bg" id="bg-css">
+      <div class="css-circuit">
+        <div class="circuit-grid">
+          <!-- Horizontal traces -->
+          <div class="trace trace-h trace-h1"><span class="pulse"></span></div>
+          <div class="trace trace-h trace-h2"><span class="pulse"></span></div>
+          <div class="trace trace-h trace-h3"><span class="pulse"></span></div>
+          <div class="trace trace-h trace-h4"><span class="pulse"></span></div>
+          <div class="trace trace-h trace-h5"><span class="pulse"></span></div>
+          <div class="trace trace-h trace-h6"><span class="pulse"></span></div>
+          <!-- Vertical traces -->
+          <div class="trace trace-v trace-v1"><span class="pulse"></span></div>
+          <div class="trace trace-v trace-v2"><span class="pulse"></span></div>
+          <div class="trace trace-v trace-v3"><span class="pulse"></span></div>
+          <div class="trace trace-v trace-v4"><span class="pulse"></span></div>
+          <div class="trace trace-v trace-v5"><span class="pulse"></span></div>
+          <div class="trace trace-v trace-v6"><span class="pulse"></span></div>
+          <!-- Nodes (intersections) -->
+          <div class="node node-1"></div>
+          <div class="node node-2"></div>
+          <div class="node node-3"></div>
+          <div class="node node-4"></div>
+          <div class="node node-5"></div>
+          <div class="node node-6"></div>
+          <div class="node node-7"></div>
+          <div class="node node-8"></div>
+          <div class="node node-9"></div>
+          <div class="node node-10"></div>
+          <div class="node node-11"></div>
+          <div class="node node-12"></div>
+          <!-- IC chips -->
+          <div class="ic ic-1">
+            <span class="ic-label">MCU</span>
+            <div class="ic-pins ic-pins-l"></div>
+            <div class="ic-pins ic-pins-r"></div>
+          </div>
+          <div class="ic ic-2">
+            <span class="ic-label">FPGA</span>
+            <div class="ic-pins ic-pins-l"></div>
+            <div class="ic-pins ic-pins-r"></div>
+          </div>
+          <div class="ic ic-3">
+            <span class="ic-label">PWR</span>
+            <div class="ic-pins ic-pins-l"></div>
+            <div class="ic-pins ic-pins-r"></div>
+          </div>
+          <!-- SMD components -->
+          <div class="smd smd-1"></div>
+          <div class="smd smd-2"></div>
+          <div class="smd smd-3"></div>
+          <div class="smd smd-4"></div>
+          <div class="smd smd-5"></div>
+          <div class="smd smd-6"></div>
+          <div class="smd smd-7"></div>
+          <div class="smd smd-8"></div>
+          <!-- Vias -->
+          <div class="via via-1"></div>
+          <div class="via via-2"></div>
+          <div class="via via-3"></div>
+          <div class="via via-4"></div>
+          <div class="via via-5"></div>
+          <div class="via via-6"></div>
+        </div>
+        <!-- Scanline sweep -->
+        <div class="scanline"></div>
+        <!-- Vignette -->
+        <div class="css-vignette"></div>
+      </div>
+    </div>
+
+    <div class="overlay">
+      <div class="top-bar">
+        <div class="logo-sprite" id="logo-sprite" aria-label="L'Electron Rare"></div>
+        <span class="brand-mark">L'ELECTRON RARE</span>
+      </div>
+
+      <div class="center-spacer">
+        <div class="countdown-hero-text" id="hero-text">
+          <h1 class="hero-title">
+            <span class="hero-line hero-line-1">Systèmes</span>
+            <span class="hero-line hero-line-2">électroniques</span>
+            <span class="hero-line hero-line-3">spécifiques</span>
+          </h1>
+          <div class="hero-divider"></div>
+          <p class="hero-sub">Conception · Mise au point · Fiabilisation</p>
+        </div>
+        <div class="tagline-area" id="tagline-bubble" aria-live="polite">
+          <span class="tagline-cursor">></span>
+          <span class="tagline-text" id="tagline"></span>
+        </div>
+      </div>
+
+      <div class="bottom-bar">
+        <span class="bottom-left">electronique · automatisme · energie</span>
+        <span class="bottom-right">mai 2026</span>
+      </div>
+
+      <div class="cartouche">
+        <p class="cartouche-title">L'électron rare</p>
+        <p class="cartouche-copy">© 2026 Clément Saillant — systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.</p>
+        <p class="cartouche-contact">Contact : <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener">LinkedIn</a> · <a href="mailto:contact@lelectronrare.fr">contact@lelectronrare.fr</a></p>
+      </div>
+    </div>
+  </main>
+)}
+</BaseLayout>
+
+{!isLaunched && (
+<script>
+  // ── Random mode pick ──
+  const useWebGL = Math.random() < 0.5;
+  const bgWebGL = document.getElementById('bg-webgl');
+  const bgCSS = document.getElementById('bg-css');
+  if (useWebGL) { bgCSS?.remove(); }
+  else { bgWebGL?.remove(); }
+  document.body.dataset.mode = useWebGL ? 'webgl' : 'css';
+
+  // ── Hero text reveal ──
+  const heroText = document.getElementById('hero-text');
+  if (heroText) {
+    setTimeout(() => heroText.classList.add('revealed'), 300);
+  }
+
+  // ── Tagline rotation ──
+  const messages = [
+    "Charge des condensateurs en cours...",
+    "Calibration de l'oscilloscope...",
+    "Soudure des derniers composants...",
+    "Vérification de la BOM...",
+    "Flash du firmware en cours...",
+    "Mesure de continuité... bip.",
+    "Routage des dernières pistes...",
+    "Test de la chaîne d'alimentation...",
+    "Programmation du bootloader...",
+    "Revue de schéma en cours...",
+    "Placement des composants CMS...",
+    "Passage au four de refusion...",
+    "Debug JTAG en cours...",
+    "Vérification du plan de masse...",
+    "Analyse du spectre RF..."
+  ];
+  let msgIndex = Math.floor(Math.random() * messages.length);
+
+  function rotateMessage() {
+    const bubble = document.getElementById('tagline-bubble');
+    const el = document.getElementById('tagline');
+    if (!bubble || !el) return;
+    bubble.style.opacity = '0';
+    bubble.style.transform = 'translateY(4px)';
+    setTimeout(() => {
+      el.textContent = messages[msgIndex];
+      bubble.style.opacity = '1';
+      bubble.style.transform = 'translateY(0)';
+      msgIndex = (msgIndex + 1) % messages.length;
+    }, 400);
+  }
+
+  const sprite = document.getElementById('logo-sprite');
+  if (sprite) sprite.style.backgroundImage = 'url(/assets/brand/logo-mark.png)';
+
+  rotateMessage();
+  setInterval(rotateMessage, 8000);
+
+  // ── WebGL shader (only if picked) ──
+  if (useWebGL) {
+  (function () {
+    var c = document.getElementById('webgl-countdown');
+    if (!c) return;
+    var cvs = document.createElement('canvas');
+    cvs.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;';
+    c.appendChild(cvs);
+    var gl = cvs.getContext('webgl') || cvs.getContext('experimental-webgl');
+    if (!gl) { cvs.remove(); return; }
+
+    function mk(type, src) {
+      var s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        console.warn('WebGL shader error:', gl.getShaderInfoLog(s));
+        return null;
+      }
+      return s;
+    }
+
+    var vs = mk(gl.VERTEX_SHADER, 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}');
+    var fs = mk(gl.FRAGMENT_SHADER, [
+      'precision mediump float;',
+      'uniform float T;uniform vec2 R;',
+      'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5);}',
+      'float h1(float n){return fract(sin(n)*43758.5);}',
+      'void main(){',
+      '  vec2 uv=gl_FragCoord.xy/R;',
+      '  float t=T*.22;',
+      '  vec3 col=vec3(0.),cy=vec3(.357,.82,.847),wh=vec3(.7,.97,1.);',
+      '  float S=18.;',
+      '  vec2 g=fract(uv*S),cell=floor(uv*S);',
+      '  float lw=.03;',
+      '  float hH=h(cell),hV=h(cell.yx+7.3);',
+      '  float tH=smoothstep(lw,0.,abs(g.y-.5))*step(.38,hH);',
+      '  float tV=smoothstep(lw,0.,abs(g.x-.5))*step(.38,hV);',
+      '  float tr=max(tH,tV);',
+      '  col+=cy*tr*.2;',
+      '  float nd=smoothstep(.11,.01,length(g-.5));',
+      '  col+=cy*nd*step(.38,hH)*step(.38,hV)*.8;',
+      '  for(int i=0;i<8;i++){',
+      '    float fi=float(i),sp=.3+h1(fi*7.31)*.5,ph=h1(fi*3.17+9.);',
+      '    float rw=floor(h1(fi*5.71+1.)*S);',
+      '    float rm=step(0.,.499-abs(uv.y*S-rw-.5));',
+      '    if(rm>.0){',
+      '      float px=fract(t*sp+ph);',
+      '      float pi=smoothstep(.06,.0,abs(uv.x-px));',
+      '      float pl=smoothstep(lw*.5,.0,abs(g.y-.5));',
+      '      col+=wh*pi*pl*step(.38,h(vec2(floor(uv.x*S),rw)))*rm*2.5;',
+      '    }',
+      '    float cl=floor(h1(fi*4.13+11.)*S);',
+      '    float cm=step(0.,.499-abs(uv.x*S-cl-.5));',
+      '    if(cm>.0){',
+      '      float py=fract(t*sp*.75+ph+.5);',
+      '      float pi2=smoothstep(.06,.0,abs(uv.y-py));',
+      '      float pl2=smoothstep(lw*.5,.0,abs(g.x-.5));',
+      '      col+=wh*pi2*pl2*step(.38,h(vec2(cl,floor(uv.y*S))+7.3))*cm*2.5;',
+      '    }',
+      '  }',
+      '  col+=cy*tr*(sin(t*6.28)*.5+.5)*.05;',
+      '  col=1.-exp(-col*1.8);',
+      '  float v=length((uv-.5)*vec2(1.4,1.));',
+      '  col*=1.-smoothstep(.35,1.1,v);',
+      '  col*=.94+.06*sin(gl_FragCoord.y*3.14159);',
+      '  gl_FragColor=vec4(col,1.);',
+      '}'
+    ].join('\n'));
+
+    if (!vs || !fs) return;
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      console.warn('WebGL link error:', gl.getProgramInfoLog(prog));
+      return;
+    }
+    gl.useProgram(prog);
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+    var ap = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(ap);
+    gl.vertexAttribPointer(ap, 2, gl.FLOAT, false, 0, 0);
+
+    var uT = gl.getUniformLocation(prog, 'T');
+    var uR = gl.getUniformLocation(prog, 'R');
+
+    function resize() {
+      cvs.width = Math.round(cvs.offsetWidth * (window.devicePixelRatio || 1));
+      cvs.height = Math.round(cvs.offsetHeight * (window.devicePixelRatio || 1));
+      gl.viewport(0, 0, cvs.width, cvs.height);
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    var t0 = performance.now();
+    function frame() {
+      gl.uniform1f(uT, (performance.now() - t0) * .001);
+      gl.uniform2f(uR, cvs.width, cvs.height);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      requestAnimationFrame(frame);
+    }
+    frame();
+  })();
+  }
+
+  // ── CSS mode: animate random node blinks ──
+  if (!useWebGL) {
+    const nodes = document.querySelectorAll('.node');
+    function blinkNodes() {
+      nodes.forEach(n => {
+        if (Math.random() < 0.3) {
+          n.classList.add('node-active');
+          setTimeout(() => n.classList.remove('node-active'), 600 + Math.random() * 1200);
+        }
+      });
+    }
+    blinkNodes();
+    setInterval(blinkNodes, 2000);
+  }
+</script>
+)}
+
+<style>
+  /* ── Base countdown ── */
+  .countdown-page { position:relative; min-height:100vh; overflow:hidden; background:#000; color:#fff; font-family:'Manrope',-apple-system,sans-serif; }
+  .countdown-bg { position:fixed; inset:0; z-index:0; width:100vw; height:100vh; }
+  .webgl-bg { position:absolute; inset:0; width:100%; height:100%; }
+  .overlay { position:relative; z-index:10; min-height:100vh; display:flex; flex-direction:column; justify-content:space-between; padding:clamp(20px,3vw,40px) clamp(24px,5vw,60px); pointer-events:none; }
+  .overlay > * { pointer-events:none; }
+  .overlay a { pointer-events:auto; }
+
+  /* ── Top bar ── */
+  .top-bar { display:flex; align-items:center; gap:16px; }
+  .logo-sprite { width:48px; height:48px; background-size:contain; background-repeat:no-repeat; filter:brightness(1.2) drop-shadow(0 0 12px rgba(91,209,216,0.4)); }
+  .brand-mark { font-size:11px; font-weight:600; letter-spacing:0.25em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+
+  /* ── Hero text ── */
+  .center-spacer { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px; }
+  .countdown-hero-text { text-align:center; opacity:0; transform:translateY(20px); transition:opacity 1.2s ease, transform 1.2s ease; }
+  .countdown-hero-text.revealed { opacity:1; transform:translateY(0); }
+  .hero-title { margin:0; line-height:1.1; }
+  .hero-line { display:block; font-weight:800; letter-spacing:-0.03em; color:rgba(255,255,255,0.85); }
+  .hero-line-1 { font-size:clamp(32px,5vw,64px); opacity:0; animation:fadeUp 0.8s ease 0.4s forwards; }
+  .hero-line-2 { font-size:clamp(36px,6vw,72px); color:#5bd1d8; opacity:0; animation:fadeUp 0.8s ease 0.7s forwards; }
+  .hero-line-3 { font-size:clamp(32px,5vw,64px); opacity:0; animation:fadeUp 0.8s ease 1.0s forwards; }
+  .hero-divider { width:60px; height:2px; margin:16px auto; background:linear-gradient(90deg,transparent,#5bd1d8,transparent); opacity:0; animation:fadeUp 0.6s ease 1.3s forwards; }
+  .hero-sub { font-size:clamp(12px,1.4vw,16px); color:rgba(255,255,255,0.35); letter-spacing:0.15em; text-transform:uppercase; margin:0; opacity:0; animation:fadeUp 0.6s ease 1.5s forwards; }
+  @keyframes fadeUp { to { opacity:1; transform:translateY(0); } from { opacity:0; transform:translateY(12px); } }
+
+  /* ── Tagline ── */
+  .tagline-area { display:flex; align-items:center; gap:8px; padding:10px 20px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:8px; transition:opacity 0.4s ease, transform 0.4s ease; pointer-events:auto; }
+  .tagline-cursor { font-family:monospace; font-size:14px; color:#5bd1d8; animation:blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity:0; } }
+  .tagline-text { font-family:monospace; font-size:clamp(11px,1.3vw,14px); color:rgba(255,255,255,0.4); }
+
+  /* ── Bottom bar ── */
+  .bottom-bar { display:flex; justify-content:space-between; align-items:flex-end; }
+  .bottom-left, .bottom-right { font-size:clamp(10px,1.1vw,12px); color:rgba(255,255,255,0.15); letter-spacing:0.08em; text-transform:uppercase; }
+
+  /* ── Cartouche ── */
+  .cartouche { position:fixed; bottom:clamp(16px,2vw,24px); right:clamp(16px,2vw,24px); max-width:320px; padding:14px 18px; background:rgba(0,0,0,0.5); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.06); border-radius:12px; pointer-events:auto; }
+  .cartouche-title { font-size:13px; font-weight:700; color:rgba(255,255,255,0.6); margin:0 0 6px; }
+  .cartouche-copy { font-size:9px; color:rgba(255,255,255,0.25); margin:0 0 4px; line-height:1.4; }
+  .cartouche-contact { font-size:9px; color:rgba(255,255,255,0.25); margin:0; }
+  .cartouche-contact a { color:#5bd1d8; text-decoration:none; }
+
+  /* ── CSS Circuit Board Background ── */
+  .css-circuit { position:absolute; inset:0; background:#020a0d; overflow:hidden; }
+  .circuit-grid { position:absolute; inset:5%; }
+
+  /* Traces */
+  .trace { position:absolute; background:rgba(91,209,216,0.08); }
+  .trace-h { height:1px; left:0; right:0; }
+  .trace-v { width:1px; top:0; bottom:0; }
+  .trace-h1 { top:8%; } .trace-h2 { top:22%; } .trace-h3 { top:38%; }
+  .trace-h4 { top:55%; } .trace-h5 { top:72%; } .trace-h6 { top:88%; }
+  .trace-v1 { left:10%; } .trace-v2 { left:25%; } .trace-v3 { left:42%; }
+  .trace-v4 { left:58%; } .trace-v5 { left:75%; } .trace-v6 { left:90%; }
+
+  /* Pulse on traces */
+  .trace .pulse { position:absolute; border-radius:50%; }
+  .trace-h .pulse { width:40px; height:3px; top:-1px; background:linear-gradient(90deg,transparent,#5bd1d8,transparent); animation:pulseH 4s linear infinite; }
+  .trace-v .pulse { width:3px; height:40px; left:-1px; background:linear-gradient(180deg,transparent,#5bd1d8,transparent); animation:pulseV 5s linear infinite; }
+  .trace-h1 .pulse { animation-delay:0s; } .trace-h2 .pulse { animation-delay:0.7s; } .trace-h3 .pulse { animation-delay:1.4s; }
+  .trace-h4 .pulse { animation-delay:2.1s; } .trace-h5 .pulse { animation-delay:0.3s; } .trace-h6 .pulse { animation-delay:1.8s; }
+  .trace-v1 .pulse { animation-delay:0.5s; } .trace-v2 .pulse { animation-delay:1.2s; } .trace-v3 .pulse { animation-delay:2.5s; }
+  .trace-v4 .pulse { animation-delay:0.9s; } .trace-v5 .pulse { animation-delay:1.7s; } .trace-v6 .pulse { animation-delay:3.1s; }
+  @keyframes pulseH { 0% { left:-40px; } 100% { left:100%; } }
+  @keyframes pulseV { 0% { top:-40px; } 100% { top:100%; } }
+
+  /* Nodes */
+  .node { position:absolute; width:6px; height:6px; border-radius:50%; background:rgba(91,209,216,0.15); border:1px solid rgba(91,209,216,0.2); transition:all 0.6s ease; }
+  .node-active { background:#5bd1d8; box-shadow:0 0 12px rgba(91,209,216,0.6), 0 0 24px rgba(91,209,216,0.3); }
+  .node-1 { top:8%; left:10%; } .node-2 { top:8%; left:42%; } .node-3 { top:8%; left:75%; }
+  .node-4 { top:22%; left:25%; } .node-5 { top:38%; left:58%; } .node-6 { top:38%; left:90%; }
+  .node-7 { top:55%; left:10%; } .node-8 { top:55%; left:42%; } .node-9 { top:72%; left:25%; }
+  .node-10 { top:72%; left:75%; } .node-11 { top:88%; left:42%; } .node-12 { top:88%; left:58%; }
+
+  /* IC chips */
+  .ic { position:absolute; background:rgba(91,209,216,0.04); border:1px solid rgba(91,209,216,0.12); border-radius:2px; display:flex; align-items:center; justify-content:center; }
+  .ic-label { font-family:monospace; font-size:8px; color:rgba(91,209,216,0.4); letter-spacing:0.1em; }
+  .ic-pins { position:absolute; }
+  .ic-pins-l { left:-4px; top:20%; bottom:20%; width:4px; border-right:1px solid rgba(91,209,216,0.15); background:repeating-linear-gradient(180deg,transparent,transparent 3px,rgba(91,209,216,0.1) 3px,rgba(91,209,216,0.1) 5px); }
+  .ic-pins-r { right:-4px; top:20%; bottom:20%; width:4px; border-left:1px solid rgba(91,209,216,0.15); background:repeating-linear-gradient(180deg,transparent,transparent 3px,rgba(91,209,216,0.1) 3px,rgba(91,209,216,0.1) 5px); }
+  .ic-1 { width:60px; height:36px; top:18%; left:55%; }
+  .ic-2 { width:50px; height:30px; top:50%; left:20%; }
+  .ic-3 { width:44px; height:24px; top:78%; left:68%; }
+
+  /* SMD resistors/caps */
+  .smd { position:absolute; width:12px; height:5px; background:rgba(241,194,122,0.08); border:1px solid rgba(241,194,122,0.15); border-radius:1px; }
+  .smd-1 { top:12%; left:32%; } .smd-2 { top:15%; left:65%; transform:rotate(90deg); }
+  .smd-3 { top:30%; left:15%; } .smd-4 { top:45%; left:80%; transform:rotate(90deg); }
+  .smd-5 { top:60%; left:48%; } .smd-6 { top:65%; left:35%; transform:rotate(90deg); }
+  .smd-7 { top:82%; left:52%; } .smd-8 { top:35%; left:72%; }
+
+  /* Vias */
+  .via { position:absolute; width:8px; height:8px; border-radius:50%; border:1px solid rgba(91,209,216,0.2); background:radial-gradient(circle,rgba(91,209,216,0.15) 30%,transparent 70%); }
+  .via::after { content:''; position:absolute; inset:2px; border-radius:50%; background:rgba(91,209,216,0.1); }
+  .via-1 { top:14%; left:48%; } .via-2 { top:28%; left:82%; } .via-3 { top:42%; left:18%; }
+  .via-4 { top:62%; left:62%; } .via-5 { top:76%; left:38%; } .via-6 { top:85%; left:85%; }
+
+  /* Scanline sweep */
+  .scanline { position:absolute; inset:0; background:linear-gradient(180deg,transparent 0%,transparent 48%,rgba(91,209,216,0.03) 50%,transparent 52%,transparent 100%); background-size:100% 200%; animation:scanline 8s linear infinite; pointer-events:none; }
+  @keyframes scanline { 0% { background-position:0 0; } 100% { background-position:0 100%; } }
+
+  /* CSS vignette */
+  .css-vignette { position:absolute; inset:0; background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.7) 100%); pointer-events:none; }
+
+  /* ── Mobile ── */
+  @media (max-width:640px) {
+    .bottom-bar { flex-direction:column; align-items:center; gap:4px; }
+    .cartouche { position:relative; bottom:auto; right:auto; max-width:100%; margin-top:12px; text-align:center; }
+    .hero-line-1, .hero-line-3 { font-size:28px; }
+    .hero-line-2 { font-size:32px; }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .trace .pulse, .scanline { animation:none !important; }
+    .hero-line-1, .hero-line-2, .hero-line-3, .hero-divider, .hero-sub { animation:none !important; opacity:1 !important; }
+    .countdown-hero-text { opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+</style>

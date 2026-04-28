@@ -1,370 +1,171 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import '@/styles/global.css';
-import '@/styles/home-workbench.css';
-import SiteHeader from '@/components/SiteHeader.astro';
-import { withSiteBase } from '@/lib/site';
-import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
-
-const title = "Formation électronique appliquée | L'électron rare";
-const description = "Formations sur mesure : électronique, automatisme, énergie, stockage, PCB, instrumentation, IoT et optimisation. 1 jour, 3 jours ou programme dédié. Écoles, entreprises.";
-const homeHref = withSiteBase('/');
-const homeAboutHref = withSiteBase('/#a-propos');
-const homeMissionsHref = withSiteBase('/#graphic-sprints-title');
-const formationHref = withSiteBase('/formation/');
-const contactHref = withSiteBase('/#contact');
-const mentionsHref = withSiteBase('/mentions-legales/');
-const headerItems = [
-  { href: homeAboutHref, label: 'Approche' },
-  { href: homeMissionsHref, label: 'Missions' },
-  { href: formationHref, label: 'Formation', current: true },
-  { href: contactHref, label: 'Contact', desktopOnly: true }
-];
 ---
 
-<BaseLayout title={title} description={description} ogDescription="Formations sur mesure en électronique, automatisme, énergie, stockage, PCB, instrumentation et IoT. 1 jour, 3 jours ou programme dédié. Écoles, entreprises, centres de formation.">
-  <SiteHeader brandHref={homeHref} items={headerItems} quickHref={contactHref} />
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formation électronique appliquée | L'électron rare</title>
+  <meta name="description" content="Formations sur mesure : électronique, automatisme, énergie, PCB, instrumentation, IoT. 1 jour, 3 jours ou programme dédié. Écoles, entreprises." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: #06080b; color: #fff; }
+    body { background: #06080b; min-height: 100vh; font-family: 'Courier New', monospace; }
+    .site-hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(20px, 3vw, 40px); background: rgba(6,8,11,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .hdr-left { display: flex; align-items: center; gap: 10px; }
+    .hdr-left a { text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .hdr-logo { width: 36px; height: auto; filter: drop-shadow(0 0 12px rgba(91,209,216,0.3)); }
+    .hdr-name { font-size: 16px; font-weight: 800; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; }
+    .hdr-nav { display: flex; align-items: center; gap: 8px; }
+    .hdr-link { padding: 8px 16px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600; text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+    .hdr-link:hover { color: #5bd1d8; }
+    .hdr-link.active { color: #f59e0b; }
+    .hdr-cta { padding: 8px 20px; border-radius: 6px; background: rgba(91,209,216,0.15); border: 1px solid rgba(91,209,216,0.3); color: #5bd1d8; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.05em; }
+    .burger { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; padding: 8px; }
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(6,8,11,0.95); backdrop-filter: blur(16px); flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.8); text-decoration: none; letter-spacing: 0.05em; padding: 12px 24px; }
+    .mobile-menu a:hover { color: #5bd1d8; }
+    .mobile-menu .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; }
+    @media (max-width: 768px) { .hdr-nav { display: none; } .burger { display: block; } }
+    .content { max-width: 800px; margin: 0 auto; padding: 120px 24px 80px; }
+    h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; color: #f59e0b; margin-bottom: 16px; letter-spacing: -0.02em; }
+    h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 48px 0 16px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; }
+    h3 { font-size: 14px; font-weight: 700; color: #f59e0b; margin: 28px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+    p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 12px; }
+    .lead { font-size: 15px; color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+    .card-t { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .card-desc { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 8px; }
+    .card-meta { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+    .subjects { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 700px) { .subjects, .grid { grid-template-columns: 1fr; } }
+    .subject { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 16px; }
+    .subject-t { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .subject-d { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .audience { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 32px; }
+    .audience-chip { font-size: 11px; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.55); }
+    .format-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    @media (max-width: 700px) { .format-grid { grid-template-columns: 1fr; } }
+    .format { text-align: center; padding: 24px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+    .format-dur { font-size: 24px; font-weight: 800; color: #f59e0b; margin-bottom: 4px; }
+    .format-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .format-desc { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .cta-box { margin-top: 48px; text-align: center; }
+    .cta-btn { display: inline-block; padding: 14px 32px; border-radius: 8px; background: #f59e0b; color: #06080b; font-weight: 700; font-size: 14px; text-decoration: none; letter-spacing: 0.04em; }
+    .cta-btn:hover { background: #fbbf24; }
+    .info { margin-top: 40px; font-size: 11px; color: rgba(255,255,255,0.25); line-height: 1.8; }
+    .footer { text-align: center; padding: 40px 24px; font-size: 10px; color: rgba(255,255,255,0.15); }
+  </style>
+</head>
+<body>
+  <header class="site-hdr">
+    <div class="hdr-left"><a href="/"><img src="/assets/brand/logo-mark.svg" alt="" class="hdr-logo" /><span class="hdr-name">L'électron rare</span></a></div>
+    <nav class="hdr-nav">
+      <a href="/conception/" class="hdr-link">Conception</a>
+      <a href="/formation/" class="hdr-link active">Formation</a>
+      <a href="/consulting/" class="hdr-link">Consulting</a>
+      <a href="/contact/" class="hdr-cta">Contact</a>
+    </nav>
+    <button class="burger" id="burger-btn" aria-label="Menu">☰</button>
+  </header>
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="close-btn" id="close-menu">✕</button>
+    <a href="/">Accueil</a><a href="/conception/">Conception</a><a href="/formation/">Formation</a><a href="/consulting/">Consulting</a><a href="/contact/">Contact</a>
+  </div>
+  <script>document.getElementById('burger-btn')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.add('open'));document.getElementById('close-menu')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.remove('open'));</script>
 
-  <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
-
-    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-4" data-reveal>
-      <div class="circuit-title-row">
-        <span class="circuit-node" aria-hidden="true"></span>
-        <h1 class="m-0 text-3xl md:text-4xl">Formation électronique appliquée</h1>
-        <span class="circuit-pinline" aria-hidden="true"></span>
+  <main class="content">
+    <h1>Formation électronique appliquée</h1>
+    <p class="lead">Des formations pratiques, ancrées dans le terrain. Chaque programme est construit sur mesure à partir de votre contexte réel : vos projets, vos équipes, vos contraintes.</p>
+    <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;margin-bottom:32px;">
+      <span style="font-size:24px;">🏅</span>
+      <div>
+        <p style="font-size:13px;color:#f59e0b;font-weight:700;margin:0;">Formations finançables OPCO / Afdas</p>
+        <p style="font-size:11px;color:rgba(255,255,255,0.4);margin:4px 0 0;">Intervention possible via un organisme partenaire certifié Qualiopi.</p>
       </div>
+    </div>
 
-      <p class="section-lead mb-0 mt-3">
-        Des formations pratiques, ancrées dans le terrain, pour monter en compétences sur l'électronique, l'automatisme, l'énergie, le stockage, la conception PCB, l'instrumentation, l'IoT et l'optimisation d'usage.
-      </p>
-      <p class="mb-0 mt-3 studio-muted">
-        Chaque formation est construite sur mesure à partir de votre contexte réel : vos projets, vos équipes, vos contraintes. Pas de slides génériques — du bench, du schéma et du livrable.
-      </p>
-    </section>
+    <div class="audience">
+      <span class="audience-chip">Entreprises industrielles</span>
+      <span class="audience-chip">Écoles et universités</span>
+      <span class="audience-chip">Centres de formation</span>
+      <span class="audience-chip">Studios créatifs</span>
+    </div>
 
-    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
-      <div class="circuit-title-row">
-        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
-        <h2 class="m-0 text-2xl md:text-3xl">Publics cibles</h2>
-        <span class="circuit-pinline" aria-hidden="true"></span>
+    <h2>Formats</h2>
+    <div class="format-grid">
+      <div class="format">
+        <p class="format-dur">1 jour</p>
+        <p class="format-name">Initiation</p>
+        <p class="format-desc">Fondamentaux, démos live, TP sur matériel réel, support PDF</p>
       </div>
-
-      <div class="mt-4 rounded-xl border border-[color:var(--line)] p-3">
-        <ul class="m-0 grid grid-cols-1 gap-2 p-0">
-          <li class="list-none studio-chip studio-chip--cyan">
-            <strong>Entreprises industrielles</strong> — équipes R&D, bureaux d'études, techniciens de maintenance qui veulent concevoir, diagnostiquer ou fiabiliser des systèmes électroniques dans leurs produits ou process.
-          </li>
-          <li class="list-none studio-chip studio-chip--vio">
-            <strong>Écoles et universités</strong> — BTS, IUT, grandes écoles : TP encadrés, projets tutorés, modules spécialisés en systèmes électroniques, PCB et prototypage.
-          </li>
-          <li class="list-none studio-chip studio-chip--pink">
-            <strong>Centres de formation</strong> — organismes souhaitant intégrer des modules électronique, instrumentation, énergie, stockage, IoT ou automatisme à leur catalogue.
-          </li>
-          <li class="list-none studio-chip studio-chip--emerald">
-            <strong>Studios créatifs et compagnies</strong> — équipes techniques du spectacle vivant, de l'événementiel ou des arts numériques qui veulent gagner en autonomie.
-          </li>
-        </ul>
+      <div class="format">
+        <p class="format-dur">3 jours</p>
+        <p class="format-name">Approfondissement</p>
+        <p class="format-desc">Projet fil rouge, prototype fonctionnel, documentation technique</p>
       </div>
-    </section>
-
-    <section class="mt-5" data-reveal>
-      <div class="graphic-sprints-panel graphic-sprints-panel--routing">
-        <div class="graphic-sprints-head">
-          <p class="graphic-sprints-kicker">Formats</p>
-          <h2 class="graphic-sprints-title">Trois formats, un principe : le concret d'abord</h2>
-          <p class="graphic-sprints-copy">
-            Chaque format inclut un support de cours, des exercices pratiques sur matériel réel et un livrable que les participants repartent avec.
-          </p>
-        </div>
-
-        <div class="graphic-sprints-grid">
-          <article class="graphic-sprint-card" style="--sprint-progress-target: 33%">
-            <header class="graphic-sprint-card-head">
-              <p class="graphic-sprint-status graphic-sprint-status--trace">Initiation</p>
-              <p class="graphic-sprint-window">1 jour (7h)</p>
-            </header>
-            <h3 class="graphic-sprint-title">Découverte</h3>
-            <p class="graphic-sprint-objective">
-              Comprendre les fondamentaux d'un domaine technique. Idéal pour une première prise en main ou une mise à niveau rapide.
-            </p>
-            <div class="graphic-sprint-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33">
-              <span class="graphic-sprint-progress-fill"></span>
-            </div>
-            <ul class="graphic-sprint-deliverables">
-              <li>Théorie appliquée + démos live</li>
-              <li>TP sur matériel réel</li>
-              <li>Support de cours PDF</li>
-            </ul>
-          </article>
-
-          <article class="graphic-sprint-card" style="--sprint-progress-target: 66%">
-            <header class="graphic-sprint-card-head">
-              <p class="graphic-sprint-status graphic-sprint-status--bench">Approfondissement</p>
-              <p class="graphic-sprint-window">3 jours (21h)</p>
-            </header>
-            <h3 class="graphic-sprint-title">Pratique</h3>
-            <p class="graphic-sprint-objective">
-              Maîtriser un sujet de bout en bout avec un projet fil rouge. Les participants repartent avec un prototype fonctionnel.
-            </p>
-            <div class="graphic-sprint-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66">
-              <span class="graphic-sprint-progress-fill"></span>
-            </div>
-            <ul class="graphic-sprint-deliverables">
-              <li>Projet fil rouge réalisé</li>
-              <li>Prototype fonctionnel</li>
-              <li>Documentation technique complète</li>
-            </ul>
-          </article>
-
-          <article class="graphic-sprint-card" style="--sprint-progress-target: 100%">
-            <header class="graphic-sprint-card-head">
-              <p class="graphic-sprint-status graphic-sprint-status--run">Sur mesure</p>
-              <p class="graphic-sprint-window">Durée adaptée</p>
-            </header>
-            <h3 class="graphic-sprint-title">Programme dédié</h3>
-            <p class="graphic-sprint-objective">
-              Formation construite intégralement autour de votre projet, vos équipements et vos objectifs. Accompagnement post-formation inclus.
-            </p>
-            <div class="graphic-sprint-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
-              <span class="graphic-sprint-progress-fill"></span>
-            </div>
-            <ul class="graphic-sprint-deliverables">
-              <li>Programme sur mesure</li>
-              <li>Matériel adapté à votre contexte</li>
-              <li>Suivi post-formation</li>
-            </ul>
-          </article>
-        </div>
+      <div class="format">
+        <p class="format-dur">Sur mesure</p>
+        <p class="format-name">Programme dédié</p>
+        <p class="format-desc">Autour de votre projet, vos équipements, suivi post-formation</p>
       </div>
-    </section>
+    </div>
 
-    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
-      <div class="circuit-title-row">
-        <span class="circuit-node" aria-hidden="true"></span>
-        <h2 class="m-0 text-2xl md:text-3xl">Sujets de formation</h2>
-        <span class="circuit-pinline" aria-hidden="true"></span>
-      </div>
+    <h2>Sujets</h2>
+    <div class="subjects">
+      <div class="subject"><p class="subject-t">Systèmes électroniques et embarqués</p><p class="subject-d">Architecture matérielle, µC (STM32, ESP32, Teensy), alimentation, debug bench, IPC-A-610, CEM.</p></div>
+      <div class="subject"><p class="subject-t">Conception PCB</p><p class="subject-d">KiCad, routage, stackup, DRC/ERC, Gerber, BOM, pick & place.</p></div>
+      <div class="subject"><p class="subject-t">IoT et protocoles</p><p class="subject-d">Capteurs, MQTT, WiFi, BLE, LoRa, TinyML, du capteur au dashboard.</p></div>
+      <div class="subject"><p class="subject-t">Énergie et stockage</p><p class="subject-d">Batterie, BMS, télémétrie, supervision, optimisation d'exploitation.</p></div>
+      <div class="subject"><p class="subject-t">Automatisme industriel</p><p class="subject-d">Siemens S7, Schneider, câblage armoires, variateurs, IEC 60204-1.</p></div>
+      <div class="subject"><p class="subject-t">Contrôle LED et scénographie</p><p class="subject-d">DMX, Art-Net, DANTE, pilotage LED, intégration spectacle.</p></div>
+      <div class="subject"><p class="subject-t">Firmware et programmation</p><p class="subject-d">C/C++ embarqué, Python, debug série, interruptions, RTOS.</p></div>
+      <div class="subject"><p class="subject-t">Workflows agentiques et IA</p><p class="subject-d">Agents IA, génération de code, revue automatisée, documentation assistée.</p></div>
+    </div>
 
-      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">Systèmes électroniques et embarqués</h3>
-          <p class="mt-2 mb-0 studio-muted">
-            Architecture matérielle, microcontrôleurs (STM32, ESP32, Teensy), alimentation, lecture de datasheet, debug sur bench. Conformité IPC-A-610 et CEM.
-          </p>
-        </article>
+    <h2>Catalogue</h2>
 
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">Conception PCB</h3>
-          <p class="mt-2 mb-0 studio-muted">
-            De la schématique au routage avec KiCad. Règles de design, stackup, vérification DRC/ERC, préparation des fichiers de fabrication (Gerber, BOM, pick & place).
-          </p>
-        </article>
+    <h3>Initiations — Tous publics</h3>
+    <div class="grid">
+      <div class="card"><p class="card-t">Mes Premiers Circuits</p><p class="card-desc">Breadboard, soudure, badge lumineux. Zéro prérequis.</p><p class="card-meta">1 jour · 420€ · 6-8 pers.</p></div>
+      <div class="card"><p class="card-t">Arduino Pour Tous</p><p class="card-desc">Capteurs, LED, moteurs. Kit Arduino à emporter.</p><p class="card-meta">1 jour · 450€ · 6-8 pers.</p></div>
+      <div class="card"><p class="card-t">Lumière et Son</p><p class="card-desc">LED NeoPixel, DMX512, audio interactif. Kit inclus.</p><p class="card-meta">1 jour · 480€ · 6-8 pers.</p></div>
+      <div class="card"><p class="card-t">KiCad Découverte</p><p class="card-desc">Du breadboard au PCB. Commandez votre carte chez JLCPCB.</p><p class="card-meta">1 jour · 420€ · 6-8 pers.</p></div>
+    </div>
 
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">IoT et protocoles</h3>
-          <p class="mt-2 mb-0 studio-muted">
-            Capteurs, télémétrie, protocoles terrain (MQTT, HTTP, VE.Direct), connectivité (WiFi, BLE, LoRa), TinyML et IA embarquée. Du capteur au dashboard.
-          </p>
-        </article>
+    <h3>Créatif & Artistes</h3>
+    <div class="grid">
+      <div class="card"><p class="card-t">Créer son Contrôleur MIDI</p><p class="card-desc">Teensy, potentiomètres, capteurs → instrument MIDI USB.</p><p class="card-meta">1 jour · 450€ · Variante 3h : 220€</p></div>
+      <div class="card"><p class="card-t">Programmation Embarquée pour Artistes</p><p class="card-desc">ESP32, capteurs, DMX, Art-Net, OSC → installations interactives.</p><p class="card-meta">1 jour · 480€ · Variante 3h : 240€</p></div>
+      <div class="card"><p class="card-t">IA pour la Création Artistique</p><p class="card-desc">Stable Diffusion, ComfyUI, Ollama. Image, son, vidéo, performance live.</p><p class="card-meta">1 jour · 500€ · Variante 3h : 250€</p></div>
+    </div>
 
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">Énergie, stockage et optimisation</h3>
-          <p class="mt-2 mb-0 studio-muted">
-            Batterie, BMS, télémétrie, supervision, pilotage de charges, logique d'optimisation et amélioration d'exploitation. De la mesure au système mieux réglé.
-          </p>
-        </article>
+    <h3>Pro — Avancé</h3>
+    <div class="grid">
+      <div class="card"><p class="card-t">KiCad — Conception PCB</p><p class="card-desc">KiCad 9/10, routage avancé, impédance, DFM, fabrication JLCPCB.</p><p class="card-meta">2 jours · 1 550€ · 6 pers. max</p></div>
+      <div class="card"><p class="card-t">Dispositifs Culturels</p><p class="card-desc">LED, DMX512, Art-Net, autonomie batteries, intégration terrain spectacle.</p><p class="card-meta">1 jour · 775€ · Finançable Afdas/OPCO</p></div>
+    </div>
 
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">Automatisme industriel</h3>
-          <p class="mt-2 mb-0 studio-muted">
-            Automates Siemens (S7) et Schneider, câblage d'armoires, variateurs, mise en service. Conformité IEC 60204-1, IEC 61439, NFC 13-200. Lecture de schémas électriques industriels.
-          </p>
-        </article>
+    <h3>Enfants & Jeunes</h3>
+    <div class="grid">
+      <div class="card"><p class="card-t">Premiers Circuits (8-10 ans)</p><p class="card-desc">micro:bit, programmation par blocs, LED, capteurs.</p><p class="card-meta">3 demi-journées · 50€/demi-journée</p></div>
+      <div class="card"><p class="card-t">Maker Junior (10-13 ans)</p><p class="card-desc">Arduino, première soudure, capteurs, projet personnel.</p><p class="card-meta">5 demi-journées · 50€/demi-journée</p></div>
+      <div class="card"><p class="card-t">Electro Lab (13-16 ans)</p><p class="card-desc">ESP32, KiCad, conception et fabrication de vrai PCB.</p><p class="card-meta">8 sessions · 299€ hors frais de fabrication</p></div>
+      <div class="card"><p class="card-t">Atelier Parent-Enfant</p><p class="card-desc">3h de découverte en duo. Montage, soudure, LED.</p><p class="card-meta">3h · 59€/binôme · À partir de 8 ans</p></div>
+    </div>
 
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">Contrôle LED et scénographie</h3>
-          <p class="mt-2 mb-0 studio-muted">
-            Protocoles DMX, Art-Net, DANTE. Pilotage LED, topologies multi-cartes, intégration dans des dispositifs scéniques et événementiels.
-          </p>
-        </article>
+    <div class="cta-box">
+      <a href="/contact/?from=formation" class="cta-btn">Demander un programme</a>
+    </div>
 
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">Firmware et programmation</h3>
-          <p class="mt-2 mb-0 studio-muted">
-            C/C++ embarqué, Python pour l'instrumentation, debug série, gestion mémoire, interruptions, RTOS. Du code qui tourne sur le terrain.
-          </p>
-        </article>
-
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h3 class="m-0 text-lg font-semibold">Workflows agentiques et IA appliquée</h3>
-          <p class="mt-2 mb-0 studio-muted">
-            Intégrer l'IA et les agents autonomes dans vos flux de travail : génération de code embarqué, revue automatisée, documentation technique, analyse de datasheets et tests assistés par IA. Productivité et qualité augmentées.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
-      <div class="circuit-title-row">
-        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
-        <h2 class="m-0 text-2xl md:text-3xl">Catalogue des formations</h2>
-        <span class="circuit-pinline" aria-hidden="true"></span>
-      </div>
-
-      <p class="section-lead mb-0 mt-3">14 modules prêts à l'emploi. Chaque formation est disponible en inter-entreprises (Lyon) ou intra/sur site (toute la France).</p>
-
-      <h3 class="mt-4 mb-2 text-lg font-semibold" style="color:var(--electric)">Initiations — Tous publics</h3>
-      <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Mes Premiers Circuits</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Breadboard, soudure, badge lumineux. Zéro prérequis.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 420€</strong> · 6-8 pers.</p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Arduino Pour Tous</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Capteurs, LED, moteurs. Kit Arduino à emporter.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 450€</strong> · 6-8 pers.</p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Lumière et Son</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">LED NeoPixel, DMX512, audio interactif. Kit LED+son inclus.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 480€</strong> · 6-8 pers.</p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">KiCad Découverte</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Du breadboard au PCB. Commandez votre carte chez JLCPCB.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 420€</strong> · 6-8 pers.</p>
-        </article>
-      </div>
-
-      <h3 class="mt-4 mb-2 text-lg font-semibold" style="color:var(--trace-magenta)">Créatif & Artistes</h3>
-      <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Créer son Contrôleur MIDI</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Teensy, potentiomètres, capteurs → instrument MIDI USB personnalisé.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 450€</strong> · Variante 3h : 220€</p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Programmation Embarquée pour Artistes</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">ESP32, capteurs, DMX, Art-Net, OSC → installations interactives.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 480€</strong> · Variante 3h : 240€</p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">IA pour la Création Artistique</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Stable Diffusion, ComfyUI, Ollama. Image, son, vidéo, performance live.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 500€</strong> · Variante 3h : 250€</p>
-        </article>
-      </div>
-
-      <h3 class="mt-4 mb-2 text-lg font-semibold" style="color:var(--accent)">Pro — Avancé</h3>
-      <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">KiCad — Conception PCB</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">KiCad 9/10, routage avancé, impedance, DFM, fabrication JLCPCB.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>2 jours · 1 550€</strong> · 6 pers. max</p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Dispositifs Culturels</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">LED, DMX512, Art-Net, autonomie batteries, intégration terrain spectacle.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>1 jour · 775€</strong> · Finançable Afdas/OPCO</p>
-        </article>
-      </div>
-
-      <h3 class="mt-4 mb-2 text-lg font-semibold" style="color:var(--trace-green)">Enfants & Jeunes</h3>
-      <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Premiers Circuits (8-10 ans)</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">micro:bit, programmation par blocs, LED, capteurs.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>3 demi-journées · 89€</strong></p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Maker Junior (10-13 ans)</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">Arduino, première soudure, capteurs, projet personnel.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>5 demi-journées · 149€</strong></p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Electro Lab (13-16 ans)</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">ESP32, KiCad, conception et fabrication de vrai PCB.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>8 sessions · 299€</strong></p>
-        </article>
-        <article class="rounded-xl border border-[color:var(--line)] p-4">
-          <h4 class="m-0 text-base font-semibold">Atelier Parent-Enfant</h4>
-          <p class="mt-1 mb-1 studio-muted" style="font-size:0.85rem">3h de découverte en duo. Montage, soudure, LED.</p>
-          <p class="m-0" style="font-size:0.8rem"><strong>3h · 59€/binôme</strong> · À partir de 8 ans</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="circuit-board rounded-2xl p-5 md:p-6 mt-5" data-reveal>
-      <div class="circuit-title-row">
-        <span class="circuit-node circuit-node--magenta" aria-hidden="true"></span>
-        <h2 class="m-0 text-2xl md:text-3xl">Demander un programme</h2>
-        <span class="circuit-pinline" aria-hidden="true"></span>
-      </div>
-
-      <p class="section-lead mb-0 mt-3">
-        Décrivez votre besoin en quelques lignes. Je vous propose un programme adapté sous 48h.
-      </p>
-      <p class="mb-0 mt-3 studio-muted">
-        Précisez le public, le niveau, le sujet visé et le format souhaité. Même une idée vague suffit pour démarrer.
-      </p>
-
-      <div class="mt-4 flex flex-wrap gap-3">
-        <a
-          href="mailto:contact@lelectronrare.fr?subject=Demande%20de%20formation&body=Bonjour%20Cl%C3%A9ment%2C%0A%0AJe%20suis%20int%C3%A9ress%C3%A9%20par%20une%20formation.%0A%0AContexte%20(entreprise%2C%20%C3%A9cole%2C%20centre%20de%20formation)%20%3A%0ASujet%20vis%C3%A9%20%3A%0APublic%20concern%C3%A9%20%3A%0AFormat%20souhait%C3%A9%20(dur%C3%A9e%2C%20pr%C3%A9sentiel%2Fdistanciel)%20%3A"
-          class="figma-lab-pill figma-lab-pill--primary"
-          {...trackAttrs(TRACK_EVENTS.outboundEmailContact, 'mailto:contact@lelectronrare.fr')}
-        >
-          Envoyer par mail
-        </a>
-        <a
-          href="https://rdv.saillant.cc/clement/formation"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="figma-lab-pill figma-lab-pill--secondary"
-        >
-          Réserver un échange 30 min
-        </a>
-        <a
-          href="https://fr.linkedin.com/in/electron-rare"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="figma-lab-pill figma-lab-pill--secondary"
-          {...trackAttrs(TRACK_EVENTS.outboundLinkedinContact, 'linkedin.com')}
-        >
-          Contacter sur LinkedIn
-        </a>
-      </div>
-
-      <ul aria-label="Repères" class="mb-0 mt-4 pl-5 studio-muted">
-        <li>Intervention en présentiel (France entière) ou en distanciel</li>
-        <li>Matériel de TP fourni ou adapté à votre parc existant</li>
-        <li>Convention de formation et programme détaillé sur demande</li>
-        <li>Intervention possible via un organisme certifié Qualiopi pour le financement OPCO</li>
-        <li>Assuré RC Pro · NDA sur demande</li>
-      </ul>
-    </section>
-
+    <p class="info">
+      Intervention en présentiel (France entière) ou en distanciel · Matériel de TP fourni · Convention de formation sur demande · Financement OPCO possible via organisme Qualiopi · Assuré RC Pro · NDA sur demande
+    </p>
   </main>
 
-  <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
-    <div class="site-shell footer-grid footer-grid--enhanced">
-      <div class="footer-col footer-col--brand">
-        <p class="m-0 footer-title">L'électron rare</p>
-        <div class="footer-brand-meta">
-          <p class="mb-0 footer-copy">
-            © 2026 Clément Saillant - systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.
-          </p>
-        </div>
-      </div>
-      <nav aria-label="Ressources" class="footer-links footer-links--single-rail">
-        <a href={homeHref} class="footer-link">Accueil</a>
-        <a href={formationHref} class="footer-link">Formation</a>
-        <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener noreferrer me" class="footer-link">LinkedIn</a>
-        <a href="mailto:contact@lelectronrare.fr" class="footer-link">contact@lelectronrare.fr</a>
-        <a href="https://github.com/electron-rare/" target="_blank" rel="noopener noreferrer me" class="footer-link">GitHub</a>
-        <a href={mentionsHref} class="footer-link">Mentions légales</a>
-      </nav>
-    </div>
-  </footer>
-</BaseLayout>
+  <div class="footer">© 2026 Clément Saillant — L'électron rare · <a href="https://blog.saillant.cc" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">Blog</a> · <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">LinkedIn</a> · <a href="https://github.com/electron-rare/" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">GitHub</a></div>
+</body>
+</html>

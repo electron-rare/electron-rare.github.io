@@ -1,0 +1,135 @@
+---
+---
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conception électronique | L'électron rare</title>
+  <meta name="description" content="Conception de systèmes électroniques spécifiques : schéma, PCB, firmware, prototypage et validation. Du diagnostic à la mission complète." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: #06080b; color: #fff; }
+    body { background: #06080b; min-height: 100vh; font-family: 'Courier New', monospace; }
+    .site-hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(20px, 3vw, 40px); background: rgba(6,8,11,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .hdr-left { display: flex; align-items: center; gap: 10px; }
+    .hdr-left a { text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .hdr-logo { width: 36px; height: auto; filter: drop-shadow(0 0 12px rgba(91,209,216,0.3)); }
+    .hdr-name { font-size: 16px; font-weight: 800; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; }
+    .hdr-nav { display: flex; align-items: center; gap: 8px; }
+    .hdr-link { padding: 8px 16px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600; text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+    .hdr-link:hover { color: #5bd1d8; }
+    .hdr-link.active { color: #5bd1d8; }
+    .hdr-cta { padding: 8px 20px; border-radius: 6px; background: rgba(91,209,216,0.15); border: 1px solid rgba(91,209,216,0.3); color: #5bd1d8; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.05em; }
+    .burger { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; padding: 8px; }
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(6,8,11,0.95); backdrop-filter: blur(16px); flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.8); text-decoration: none; letter-spacing: 0.05em; padding: 12px 24px; }
+    .mobile-menu a:hover { color: #5bd1d8; }
+    .mobile-menu .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; }
+    @media (max-width: 768px) {
+      .hdr-nav { display: none; }
+      .burger { display: block; }
+    }
+    .content { max-width: 800px; margin: 0 auto; padding: 120px 24px 80px; }
+    h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; color: #5bd1d8; margin-bottom: 24px; letter-spacing: -0.02em; }
+    h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 40px 0 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+    p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 16px; }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+    .card-t { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .card-pct { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+    .card-time { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+    .card-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; margin-bottom: 12px; }
+    .card-del { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .cta-box { margin-top: 48px; text-align: center; }
+    .cta-btn { display: inline-block; padding: 14px 32px; border-radius: 8px; background: #5bd1d8; color: #06080b; font-weight: 700; font-size: 14px; text-decoration: none; letter-spacing: 0.04em; }
+    .cta-btn:hover { background: #7de0e6; }
+    .footer { text-align: center; padding: 40px 24px; font-size: 10px; color: rgba(255,255,255,0.15); }
+  </style>
+</head>
+<body>
+  <header class="site-hdr">
+    <div class="hdr-left"><a href="/"><img src="/assets/brand/logo-mark.svg" alt="" class="hdr-logo" /><span class="hdr-name">L'électron rare</span></a></div>
+    <nav class="hdr-nav">
+      <a href="/conception/" class="hdr-link active">Conception</a>
+      <a href="/formation/" class="hdr-link">Formation</a>
+      <a href="/consulting/" class="hdr-link">Consulting</a>
+      <a href="/contact/" class="hdr-cta">Contact</a>
+    </nav>
+    <button class="burger" id="burger-btn" aria-label="Menu">☰</button>
+  </header>
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="close-btn" id="close-menu">✕</button>
+    <a href="/">Accueil</a>
+    <a href="/conception/">Conception</a>
+    <a href="/formation/">Formation</a>
+    <a href="/consulting/">Consulting</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <script>
+    document.getElementById('burger-btn')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.add('open'));
+    document.getElementById('close-menu')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.remove('open'));
+  </script>
+
+  <main class="content">
+    <h1>Conception électronique</h1>
+    <p>L'Électron Rare conçoit, met au point et fiabilise des systèmes électroniques spécifiques, des automatismes et des ensembles liés à l'énergie, au stockage et à l'optimisation terrain.</p>
+
+    <h2>Formats de mission</h2>
+
+    <div class="card">
+      <p class="card-pct" style="color:#5bd1d8">28%</p>
+      <p class="card-t">Diagnostic</p>
+      <p class="card-time">1 à 2 semaines</p>
+      <p class="card-desc">Analyser votre besoin, identifier les sous-systèmes critiques et livrer une carte de faisabilité.</p>
+      <p class="card-del">Livrables : analyse de faisabilité · risques identifiés · plan d'action</p>
+    </div>
+
+    <div class="card">
+      <p class="card-pct" style="color:#a78bfa">55%</p>
+      <p class="card-t">Prototype</p>
+      <p class="card-time">4 à 6 semaines</p>
+      <p class="card-desc">Concevoir et tester un prototype fonctionnel : schéma, PCB, firmware, mesures et validation.</p>
+      <p class="card-del">Livrables : prototype testé · mesures documentées · go/no-go argumenté</p>
+    </div>
+
+    <div class="card">
+      <p class="card-pct" style="color:#f59e0b">100%</p>
+      <p class="card-t">Mission complète</p>
+      <p class="card-time">2 à 6 mois</p>
+      <p class="card-desc">Développement complet jusqu'au produit industrialisable : itérations, tests terrain, documentation et transfert.</p>
+      <p class="card-del">Livrables : livrables par lot · dossier de production · transfert clé en main</p>
+    </div>
+
+    <h2>Cas concrets</h2>
+
+    <div class="card">
+      <p class="card-t" style="color:#5bd1d8">Battery Parallelator — KXKM</p>
+      <p class="card-desc">Système de gestion parallèle de 4 batteries LiFePO4 pour le spectacle vivant. Conception complète KiCad : carte BMU, 4 cartes Mosfet Switch, carte I2C Repeater. Firmware ESP32, supervision I2C, protection thermique.</p>
+      <p class="card-del" style="color:#5bd1d8;">→ 8h autonomie · OTA · 0 panne sur 2 saisons</p>
+    </div>
+
+    <div class="card">
+      <p class="card-t" style="color:#a78bfa">HypnoLED — Contrôle LED embarqué</p>
+      <p class="card-desc">Carte de contrôle LED haute densité pour installations scéniques. Architecture multi-cartes, protocole DMX/Art-Net, topologie bus, alimentation distribuée. PCB 4 couches KiCad.</p>
+      <p class="card-del" style="color:#a78bfa;">→ 512 canaux DMX · Latence &lt;1ms · Déployé en tournée</p>
+    </div>
+
+    <div class="card">
+      <p class="card-t" style="color:#34d399">Télémétrie ESP32 — Monitoring énergie</p>
+      <p class="card-desc">Système de supervision terrain avec ESP32 : mesure courant/tension, transmission MQTT, dashboard temps réel. Capteurs INA226, connectivité WiFi, boîtier IP65.</p>
+      <p class="card-del" style="color:#34d399;">→ Autonomie 6 mois sur batterie · Dashboard Grafana</p>
+    </div>
+
+    <h2>Domaines d'intervention</h2>
+    <p>Électronique spécifique · Instrumentation et automatisme · Énergie et stockage · Dispositifs pour le réel · Montages multi-techniques avec partenaires.</p>
+
+    <div class="cta-box">
+      <a href="/contact/?from=conception" class="cta-btn">Discuter de votre projet</a>
+    </div>
+  </main>
+
+  <div class="footer">© 2026 Clément Saillant — L'électron rare · <a href="https://blog.saillant.cc" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">Blog</a> · <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">LinkedIn</a> · <a href="https://github.com/electron-rare/" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">GitHub</a></div>
+</body>
+</html>

@@ -1,11 +1,14 @@
 import type { APIRoute } from 'astro';
 import { CANONICAL_URL, PUBLIC_SITE_ROOT_URL, SITE_IS_SUBPATH_BUILD } from '../lib/site';
 
+export const prerender = false;
+
 export const GET: APIRoute = () => {
-  const sitemapRootUrl = SITE_IS_SUBPATH_BUILD ? PUBLIC_SITE_ROOT_URL : CANONICAL_URL;
+  const sitemapRootUrl = process.env.PUBLIC_SITE_URL || CANONICAL_URL;
   const pages = [
     { path: '', priority: '1.0', changefreq: 'weekly' },
     { path: 'formation/', priority: '0.9', changefreq: 'monthly' },
+    { path: 'preview/', priority: '0.8', changefreq: 'weekly' },
     { path: 'mentions-legales/', priority: '0.3', changefreq: 'yearly' }
   ];
 

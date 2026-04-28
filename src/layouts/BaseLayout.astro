@@ -321,7 +321,7 @@ const structuredDataJsonLd = JSON.stringify({
         var uiAllowed = { a: 1, b: 1 };
         var uiSprint = uiRaw.toLowerCase().trim() in uiAllowed ? uiRaw.toLowerCase().trim() : 'b';
 
-        root.setAttribute('data-da-variant', 'v12');
+        root.setAttribute('data-da-variant', 'classic');
         root.setAttribute('data-ui-sprint', uiSprint);
       })();
     </script>
@@ -344,7 +344,7 @@ const structuredDataJsonLd = JSON.stringify({
 
     <script is:inline>
       (function () {
-        var daVariant = document.documentElement.getAttribute('data-da-variant') || 'v12';
+        var daVariant = document.documentElement.getAttribute('data-da-variant') || 'classic';
         var pagePath = window.location.pathname || '/';
         var pageTitle = document.title || '';
 

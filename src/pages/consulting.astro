@@ -1,0 +1,118 @@
+---
+---
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consulting technique | L'électron rare</title>
+  <meta name="description" content="Consulting en systèmes électroniques : audit, diagnostic, transfert de compétences, accompagnement technique terrain." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: #06080b; color: #fff; }
+    body { background: #06080b; min-height: 100vh; font-family: 'Courier New', monospace; }
+    .site-hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(20px, 3vw, 40px); background: rgba(6,8,11,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .hdr-left { display: flex; align-items: center; gap: 10px; }
+    .hdr-left a { text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .hdr-logo { width: 36px; height: auto; filter: drop-shadow(0 0 12px rgba(91,209,216,0.3)); }
+    .hdr-name { font-size: 16px; font-weight: 800; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; }
+    .hdr-nav { display: flex; align-items: center; gap: 8px; }
+    .hdr-link { padding: 8px 16px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600; text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+    .hdr-link:hover { color: #5bd1d8; }
+    .hdr-link.active { color: #5bd1d8; }
+    .hdr-cta { padding: 8px 20px; border-radius: 6px; background: rgba(91,209,216,0.15); border: 1px solid rgba(91,209,216,0.3); color: #5bd1d8; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.05em; }
+    .burger { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; padding: 8px; }
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(6,8,11,0.95); backdrop-filter: blur(16px); flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.8); text-decoration: none; letter-spacing: 0.05em; padding: 12px 24px; }
+    .mobile-menu a:hover { color: #5bd1d8; }
+    .mobile-menu .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; }
+    @media (max-width: 768px) { .hdr-nav { display: none; } .burger { display: block; } }
+    .content { max-width: 800px; margin: 0 auto; padding: 120px 24px 80px; }
+    h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; color: #a78bfa; margin-bottom: 24px; letter-spacing: -0.02em; }
+    h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 40px 0 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+    p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 16px; }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+    .card-t { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .card-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .chip { display: inline-block; font-size: 11px; padding: 4px 12px; border-radius: 20px; border: 1px solid; margin: 4px 4px 4px 0; letter-spacing: 0.04em; }
+    .families { margin: 20px 0 32px; }
+    .cta-box { margin-top: 48px; text-align: center; }
+    .cta-btn { display: inline-block; padding: 14px 32px; border-radius: 8px; background: #a78bfa; color: #06080b; font-weight: 700; font-size: 14px; text-decoration: none; letter-spacing: 0.04em; }
+    .cta-btn:hover { background: #c4b5fd; }
+    .footer { text-align: center; padding: 40px 24px; font-size: 10px; color: rgba(255,255,255,0.15); }
+  </style>
+</head>
+<body>
+  <header class="site-hdr">
+    <div class="hdr-left"><a href="/"><img src="/assets/brand/logo-mark.svg" alt="" class="hdr-logo" /><span class="hdr-name">L'électron rare</span></a></div>
+    <nav class="hdr-nav">
+      <a href="/conception/" class="hdr-link">Conception</a>
+      <a href="/formation/" class="hdr-link">Formation</a>
+      <a href="/consulting/" class="hdr-link active">Consulting</a>
+      <a href="/contact/" class="hdr-cta">Contact</a>
+    </nav>
+    <button class="burger" id="burger-btn" aria-label="Menu">☰</button>
+  </header>
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="close-btn" id="close-menu">✕</button>
+    <a href="/">Accueil</a><a href="/conception/">Conception</a><a href="/formation/">Formation</a><a href="/consulting/">Consulting</a><a href="/contact/">Contact</a>
+  </div>
+  <script>document.getElementById('burger-btn')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.add('open'));document.getElementById('close-menu')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.remove('open'));</script>
+
+  <main class="content">
+    <h1>Consulting technique</h1>
+    <p>Je suis Clément Saillant, fondateur de L'électron rare. Mon rôle n'est pas de vendre "un peu d'embarqué" en plus, mais de rendre possible le bon système pour le besoin réel : électronique, automatisme, énergie, stockage, optimisation, diagnostic, prototype, reprise d'existant ou fiabilisation.</p>
+
+    <h2>Familles d'intervention</h2>
+    <div class="families">
+      <span class="chip" style="color:#5bd1d8;border-color:#5bd1d833">Électronique spécifique</span>
+      <span class="chip" style="color:#a78bfa;border-color:#a78bfa33">Instrumentation & Automatisme</span>
+      <span class="chip" style="color:#f472b6;border-color:#f472b633">Dispositifs pour le réel</span>
+      <span class="chip" style="color:#34d399;border-color:#34d39933">Énergie & Stockage</span>
+      <span class="chip" style="color:#fbbf24;border-color:#fbbf2433">Multi-techniques & Partenaires</span>
+    </div>
+
+    <div class="card">
+      <p class="card-t">Audit & Diagnostic</p>
+      <p class="card-desc">Analyse de l'existant, identification des points critiques, recommandations chiffrées. Diagnostic terrain sur site industriel, automate, variateur, instrumentation.</p>
+    </div>
+
+    <div class="card">
+      <p class="card-t">Accompagnement technique</p>
+      <p class="card-desc">Pilotage de sous-traitance, revue de conception, validation de prototypes, suivi de production. Mobilisation de partenaires spécialisés quand le projet devient multi-technique.</p>
+    </div>
+
+    <div class="card">
+      <p class="card-t">Transfert & Documentation</p>
+      <p class="card-desc">Rédaction de dossiers techniques, procédures de maintenance, documentation de production. Transfert de compétences vers l'équipe interne.</p>
+    </div>
+
+    <h2>Cas concret</h2>
+    <div class="card">
+      <p class="card-t">Mise en production et correction V3.2 KXKM</p>
+      <p class="card-desc">Mise en production du hardware ESP32, correction des bugs V3.2, passage STM32F030. Tests terrain, validation embarquée, documentation technique.</p>
+      <p class="card-desc" style="color:#a78bfa;margin-top:8px;">→ Production V3.2 livrée · Migration STM32F030 validée</p>
+    </div>
+
+    <h2>À propos</h2>
+    <div class="card">
+      <p class="card-t">Clément Saillant — 10 ans d'expérience</p>
+      <p class="card-desc">Cyborg en systèmes électroniques, j'interviens depuis 10 ans sur des projets allant du spectacle vivant à l'industrie automatisée, en passant par l'énergie et la formation. Contributeur open-source (KiCad, KXKM), ambassadeur IA appliquée à l'électronique.</p>
+      <p class="card-desc">Secteurs : industries créatives, ferroviaire, automatisme industriel, éducation, énergie/stockage.</p>
+    </div>
+
+    <div class="cta-box">
+      <a href="/contact/?from=consulting" class="cta-btn">Discuter de votre besoin</a>
+    </div>
+  </main>
+
+  <div class="footer">
+    © 2026 Clément Saillant — L'électron rare ·
+    <a href="https://blog.saillant.cc" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">Blog</a> ·
+    <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">LinkedIn</a> ·
+    <a href="https://github.com/electron-rare/" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">GitHub</a>
+  </div>
+</body>
+</html>

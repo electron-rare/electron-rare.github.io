@@ -1,0 +1,170 @@
+---
+---
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | L'électron rare</title>
+  <meta name="description" content="Parlons de votre projet électronique. Premier échange sans engagement." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: #06080b; color: #fff; }
+    body { background: #06080b; min-height: 100vh; font-family: 'Courier New', monospace; }
+    .site-hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(20px, 3vw, 40px); background: rgba(6,8,11,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .hdr-left { display: flex; align-items: center; gap: 10px; }
+    .hdr-left a { text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .hdr-logo { width: 36px; height: auto; filter: drop-shadow(0 0 12px rgba(91,209,216,0.3)); }
+    .hdr-name { font-size: 16px; font-weight: 800; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; }
+    .hdr-nav { display: flex; align-items: center; gap: 8px; }
+    .hdr-link { padding: 8px 16px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600; text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+    .hdr-link:hover { color: #5bd1d8; }
+    .hdr-cta { padding: 8px 20px; border-radius: 6px; background: rgba(91,209,216,0.15); border: 1px solid rgba(91,209,216,0.3); color: #5bd1d8; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.05em; }
+    .hdr-cta.active { background: rgba(91,209,216,0.25); }
+    .burger { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; padding: 8px; }
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(6,8,11,0.95); backdrop-filter: blur(16px); flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.8); text-decoration: none; letter-spacing: 0.05em; padding: 12px 24px; }
+    .mobile-menu .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; }
+    @media (max-width: 768px) { .hdr-nav { display: none; } .burger { display: block; } }
+    .content { max-width: 600px; margin: 0 auto; padding: 120px 24px 80px; }
+    h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; color: #5bd1d8; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 40px; }
+    label { display: block; font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; margin-top: 20px; }
+    input, select, textarea { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #fff; font-family: 'Courier New', monospace; font-size: 14px; outline: none; transition: border-color 0.2s; }
+    input:focus, select:focus, textarea:focus { border-color: #5bd1d8; }
+    select { appearance: none; cursor: pointer; }
+    select option { background: #06080b; color: #fff; }
+    textarea { resize: vertical; min-height: 160px; }
+    .consent { display: flex; align-items: flex-start; gap: 10px; margin-top: 20px; font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .consent input { width: auto; }
+    .submit { display: block; width: 100%; margin-top: 28px; padding: 14px; border: none; border-radius: 8px; background: #5bd1d8; color: #06080b; font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.04em; transition: background 0.2s; }
+    .submit:hover { background: #7de0e6; }
+    .submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .success { display: none; text-align: center; padding: 40px 0; }
+    .success h2 { font-size: 24px; color: #5bd1d8; margin-bottom: 12px; }
+    .success p { font-size: 14px; color: rgba(255,255,255,0.5); }
+    .error { display: none; color: #f66; font-size: 12px; margin-top: 12px; }
+    .alt { margin-top: 40px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+    .alt a { color: #5bd1d8; text-decoration: none; }
+    .footer { text-align: center; padding: 40px 24px; font-size: 10px; color: rgba(255,255,255,0.15); }
+  </style>
+</head>
+<body>
+  <header class="site-hdr">
+    <div class="hdr-left"><a href="/"><img src="/assets/brand/logo-mark.svg" alt="" class="hdr-logo" /><span class="hdr-name">L'électron rare</span></a></div>
+    <nav class="hdr-nav">
+      <a href="/conception/" class="hdr-link">Conception</a>
+      <a href="/formation/" class="hdr-link">Formation</a>
+      <a href="/consulting/" class="hdr-link">Consulting</a>
+      <a href="/contact/" class="hdr-cta active">Contact</a>
+    </nav>
+    <button class="burger" id="burger-btn" aria-label="Menu">☰</button>
+  </header>
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="close-btn" id="close-menu">✕</button>
+    <a href="/">Accueil</a><a href="/conception/">Conception</a><a href="/formation/">Formation</a><a href="/consulting/">Consulting</a><a href="/contact/">Contact</a>
+  </div>
+  <script>document.getElementById('burger-btn')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.add('open'));document.getElementById('close-menu')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.remove('open'));</script>
+
+  <main class="content">
+    <h1>Parlons de votre projet</h1>
+    <p class="sub">Décrivez votre besoin en quelques lignes — premier échange sans engagement.</p>
+
+    <form id="contact-form">
+      <label for="name">Nom *</label>
+      <input type="text" id="name" name="name" required placeholder="Votre nom" />
+
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email" required placeholder="votre@email.com" />
+
+      <label for="phone">Téléphone</label>
+      <input type="tel" id="phone" name="phone" placeholder="06 00 00 00 00" />
+
+      <label for="org">Organisation</label>
+      <input type="text" id="org" name="organization" placeholder="Entreprise / École / Association" />
+
+      <label for="need">Type de besoin *</label>
+      <select id="need" name="needType" required>
+        <option value="">Choisir...</option>
+        <option value="conception">Projet technique / Conception</option>
+        <option value="formation">Formation</option>
+        <option value="consulting">Consulting / Audit</option>
+        <option value="mixte">Projet mixte</option>
+      </select>
+
+      <script>
+        // Préremplir selon la page d'origine (?from=conception|formation|consulting)
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get('from');
+        if (from) {
+          const sel = document.getElementById('need');
+          if (sel) sel.value = from;
+        }
+      </script>
+
+      <label for="message">Message *</label>
+      <textarea id="message" name="message" required placeholder="Bonjour Clément,
+
+J'ai un projet / besoin autour d'un système électronique spécifique.
+
+Contexte :
+Ce que j'attends :
+Contraintes (délai, budget) :"></textarea>
+
+      <div class="consent">
+        <input type="checkbox" id="consent" required />
+        <label for="consent" style="margin:0;text-transform:none;font-size:11px;">J'accepte que mes données soient utilisées pour répondre à ma demande. Aucune donnée n'est transmise à des tiers.</label>
+      </div>
+
+      <button type="submit" class="submit" id="submit-btn">Envoyer le message</button>
+      <p class="error" id="error-msg"></p>
+    </form>
+
+    <div class="success" id="success-msg">
+      <h2>Merci !</h2>
+      <p>Je reviens vers vous sous 48h.</p>
+    </div>
+
+    <div class="alt">
+      <p>Ou directement : <a href="mailto:contact@lelectronrare.fr">contact@lelectronrare.fr</a></p>
+      <p style="margin-top:8px;"><a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/electron-rare/" target="_blank" rel="noopener">GitHub</a></p>
+    </div>
+  </main>
+
+  <div class="footer">© 2026 Clément Saillant — L'électron rare · <a href="https://blog.saillant.cc" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">Blog</a> · <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">LinkedIn</a> · <a href="https://github.com/electron-rare/" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.3);">GitHub</a></div>
+
+  <script>
+    const form = document.getElementById('contact-form');
+    const btn = document.getElementById('submit-btn');
+    const errEl = document.getElementById('error-msg');
+    const successEl = document.getElementById('success-msg');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Envoi...';
+      errEl.style.display = 'none';
+
+      const data = Object.fromEntries(new FormData(form));
+      try {
+        const res = await fetch('https://api.lelectronrare.fr/api/submit-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error('Erreur serveur');
+        form.style.display = 'none';
+        successEl.style.display = 'block';
+        if (typeof gtag === 'function') gtag('event', 'contact_form_submit', { need_type: data.needType });
+      } catch (err) {
+        errEl.textContent = 'Erreur lors de l\'envoi. Essayez par email : contact@lelectronrare.fr';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Envoyer le message';
+      }
+    });
+  </script>
+</body>
+</html>

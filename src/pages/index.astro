@@ -1,188 +1,381 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import '@/styles/global.css';
-import '@/styles/home-workbench.css';
-import SiteHeader from '@/components/SiteHeader.astro';
-import { Hero } from '@/components/sections/Hero';
-import { About } from '@/components/sections/About';
-import { CaseStudies } from '@/components/sections/CaseStudies';
-import { GraphicSprints } from '@/components/sections/GraphicSprints';
-import Contact from '@/components/sections/Contact.astro';
-import Faq from '@/components/sections/Faq.astro';
-import { withSiteBase } from '@/lib/site';
-import { TRACK_EVENTS, trackAttrs } from '@/lib/tracking';
-
-const LAUNCH_DATE = new Date('2026-05-01T00:00:00+02:00');
-const isLaunched = Date.now() >= LAUNCH_DATE.getTime();
-
-const formationHref = withSiteBase('/formation/');
-const mentionsHref = withSiteBase('/mentions-legales/');
-const headerItems = [
-  { href: '#a-propos', label: 'Approche' },
-  { href: '#graphic-sprints-title', label: 'Missions' },
-  { href: formationHref, label: 'Formation' },
-  { href: '#faq', label: 'FAQ' },
-  { href: '#contact', label: 'Contact', desktopOnly: true }
-];
-
-const title = isLaunched
-  ? "Systèmes électroniques spécifiques | L'électron rare"
-  : "L'Electron Rare — Bientôt";
-const description = isLaunched
-  ? "Conception, mise au point et fiabilisation de systèmes électroniques spécifiques."
-  : "L'Electron Rare arrive. Systèmes électroniques spécifiques, formations, prototypage.";
+import { BmuViewer } from '@/components/BmuViewer';
 ---
 
-<BaseLayout title={title} description={description}>
-{isLaunched ? (
-  <Fragment>
-    <SiteHeader brandHref="#top" items={headerItems} quickHref="#contact" />
-    <main id="main-content" class="site-shell studio-structure pb-12 pt-3">
-      <section class="structure-grid structure-grid--hero" data-reveal>
-        <div class="structure-cell structure-cell--hero">
-          <Hero />
-        </div>
-      </section>
-      <section class="structure-grid structure-grid--systems" data-reveal>
-        <div class="structure-cell structure-cell--about">
-          <About />
-        </div>
-      </section>
-      <section class="structure-grid structure-grid--cases" data-reveal>
-        <div class="structure-cell structure-cell--cases">
-          <CaseStudies />
-        </div>
-      </section>
-      <section class="structure-grid structure-grid--sprints" data-reveal>
-        <div class="structure-cell structure-cell--sprints">
-          <GraphicSprints />
-        </div>
-      </section>
-      <section class="structure-grid structure-grid--faq" data-reveal>
-        <div class="structure-cell structure-cell--faq">
-          <Faq />
-        </div>
-      </section>
-      <section class="structure-grid structure-grid--conversion" data-reveal>
-        <div class="structure-cell structure-cell--contact">
-          <Contact />
-        </div>
-      </section>
-    </main>
-    <footer class="site-footer border-t border-[var(--line)] py-6 text-sm text-[var(--text-muted)]">
-      <div class="site-shell footer-grid footer-grid--enhanced">
-        <div class="footer-col footer-col--brand">
-          <p class="m-0 footer-title">L'électron rare</p>
-          <p class="mb-0 footer-copy">© 2026 Clément Saillant</p>
-        </div>
-        <nav aria-label="Ressources" class="footer-links footer-links--single-rail">
-          <a href="#a-propos" class="footer-link">Approche</a>
-          <a href="#graphic-sprints-title" class="footer-link">Missions</a>
-          <a href={formationHref} class="footer-link">Formation</a>
-          <a href="#faq" class="footer-link">FAQ</a>
-          <a href="#contact" class="footer-link">Contact</a>
-          <a href={mentionsHref} class="footer-link">Mentions légales</a>
-        </nav>
-      </div>
-    </footer>
-  </Fragment>
-) : (
-  <!-- COUNTDOWN — WebGL placeholder -->
-  <main class="countdown-page">
-    <!-- WebGL goes here -->
-    <div class="webgl-bg" id="webgl-countdown"></div>
-
-    <div class="overlay">
-      <div class="top-bar">
-        <div class="logo-sprite" id="logo-sprite" aria-label="L'Electron Rare"></div>
-        <span class="brand-mark">L'ELECTRON RARE</span>
-      </div>
-
-      <div class="center-spacer">
-        <div class="tagline-area" id="tagline-bubble" aria-live="polite">
-          <span class="tagline-cursor">></span>
-          <span class="tagline-text" id="tagline"></span>
-        </div>
-      </div>
-
-      <div class="bottom-bar">
-        <span class="bottom-left">electronique · automatisme · energie</span>
-        <span class="bottom-right">mai 2026</span>
-      </div>
-
-      <div class="cartouche">
-        <p class="cartouche-title">L'électron rare</p>
-        <p class="cartouche-copy">© 2026 Clément Saillant — systèmes électroniques spécifiques, conseil, formation — industrie, culture et projets multi-techniques.</p>
-        <p class="cartouche-contact">Contact : <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener">LinkedIn</a> · <a href="mailto:contact@lelectronrare.fr">contact@lelectronrare.fr</a></p>
-      </div>
-    </div>
-  </main>
-)}
-</BaseLayout>
-
-{!isLaunched && (
-<script>
-  const messages = [
-    "Charge des condensateurs en cours...",
-    "Calibration de l'oscilloscope...",
-    "Soudure des derniers composants...",
-    "Vérification de la BOM...",
-    "Flash du firmware en cours...",
-    "Mesure de continuité... bip.",
-    "Routage des dernières pistes...",
-    "Test de la chaîne d'alimentation...",
-    "Programmation du bootloader...",
-    "Revue de schéma en cours...",
-    "Placement des composants CMS...",
-    "Passage au four de refusion...",
-    "Debug JTAG en cours...",
-    "Vérification du plan de masse...",
-    "Analyse du spectre RF..."
-  ];
-  let msgIndex = Math.floor(Math.random() * messages.length);
-
-  function rotateMessage() {
-    const bubble = document.getElementById('tagline-bubble');
-    const el = document.getElementById('tagline');
-    if (!bubble || !el) return;
-    bubble.style.opacity = '0';
-    bubble.style.transform = 'translateY(4px)';
-    setTimeout(() => {
-      el.textContent = messages[msgIndex];
-      bubble.style.opacity = '1';
-      bubble.style.transform = 'translateY(0)';
-      msgIndex = (msgIndex + 1) % messages.length;
-    }, 400);
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'électron rare — Systèmes électroniques spécifiques</title>
+  <meta name="description" content="Conception, mise au point et fiabilisation de systèmes électroniques spécifiques, automatismes et ensembles liés à l'énergie. Consulting et formation PCB, KiCad, µC." />
+  <meta property="og:title" content="L'électron rare — Systèmes électroniques spécifiques" />
+  <meta property="og:description" content="Conception, mise au point et fiabilisation de systèmes électroniques spécifiques. Consulting et formation." />
+  <meta property="og:image" content="https://www.lelectronrare.fr/assets/og-cover.jpg" />
+  <meta property="og:url" content="https://www.lelectronrare.fr/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="L'électron rare" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="L'électron rare — Systèmes électroniques spécifiques" />
+  <meta name="twitter:description" content="Conception, mise au point et fiabilisation de systèmes électroniques spécifiques." />
+  <meta name="twitter:image" content="https://www.lelectronrare.fr/assets/og-cover.jpg" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="/assets/models3d/bmu_v2.glb" as="fetch" crossorigin />
+  <link rel="preload" href="/assets/models3d/i2c_repeater.glb" as="fetch" crossorigin />
+  <link rel="preload" href="/assets/models3d/mosfet_switch.glb" as="fetch" crossorigin />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "L'électron rare",
+    "description": "Conception, mise au point et fiabilisation de systèmes électroniques spécifiques, automatismes et ensembles liés à l'énergie.",
+    "url": "https://www.lelectronrare.fr",
+    "email": "contact@lelectronrare.fr",
+    "founder": { "@type": "Person", "name": "Clément Saillant" },
+    "areaServed": "France",
+    "serviceType": ["Conception électronique", "Formation PCB et embarqué", "Consulting technique", "Automatisme industriel"],
+    "sameAs": ["https://fr.linkedin.com/in/electron-rare", "https://github.com/electron-rare/"]
   }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: #06080b; color: #fff; overflow-x: hidden; }
+    body { background: #06080b; min-height: 100vh; font-family: 'Courier New', monospace; }
+    .scroll-track { height: 1000vh; position: relative; z-index: 1; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
-  const sprite = document.getElementById('logo-sprite');
-  if (sprite) sprite.style.backgroundImage = 'url(/assets/brand/logo-mark.png)';
+    /* Loader */
+    .loader { position: fixed; inset: 0; z-index: 9999; background: #06080b; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; transition: opacity 0.8s ease, visibility 0.8s ease; }
+    .loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-logo { width: clamp(60px, 8vw, 100px); height: auto; filter: drop-shadow(0 0 20px rgba(91,209,216,0.3)); }
+    .loader-name { font-size: clamp(20px, 2.5vw, 32px); font-weight: 800; color: rgba(255,255,255,0.8); letter-spacing: 0.06em; }
+    .loader-bar { width: clamp(180px, 30vw, 280px); height: 2px; background: rgba(255,255,255,0.06); border-radius: 1px; overflow: hidden; }
+    .loader-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #5bd1d8, #a78bfa); transition: width 0.3s ease; }
+    .loader-status { font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.12em; text-transform: uppercase; }
+    .loader-tagline { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; margin-bottom: 20px; }
+    .loader-actions { margin-top: 24px; }
+    .loader-skip { display: inline-block; padding: 10px 24px; border: 1px solid rgba(91,209,216,0.3); border-radius: 8px; color: rgba(91,209,216,0.7); font-size: 12px; text-decoration: none; letter-spacing: 0.04em; transition: all 0.2s; }
+    .loader-skip:hover { border-color: #5bd1d8; color: #5bd1d8; background: rgba(91,209,216,0.08); }
+    .loader-a11y { margin-top: 20px; font-size: 10px; color: rgba(255,255,255,0.15); }
+    .loader-a11y a { color: rgba(255,255,255,0.25); text-decoration: none; }
+    .loader-a11y a:hover { color: #5bd1d8; }
 
-  rotateMessage();
-  setInterval(rotateMessage, 8000);
-</script>
-)}
+    .ov { position: fixed; z-index: 3; pointer-events: none; opacity: 0; transform: translateY(6px); transition: opacity 0.5s, transform 0.5s; }
+    .ov.on { opacity: 1; transform: translateY(0); }
 
-<style>
-  .countdown-page { position:relative; min-height:100vh; overflow:hidden; background:#000; color:#fff; font-family:'Manrope',-apple-system,sans-serif; }
-  .webgl-bg { position:fixed; inset:0; z-index:0; width:100vw; height:100vh; pointer-events:auto; }
-  .overlay { position:relative; z-index:10; min-height:100vh; display:flex; flex-direction:column; justify-content:space-between; padding:clamp(20px,3vw,40px) clamp(24px,5vw,60px); pointer-events:none; }
-  .overlay > * { pointer-events:none; }
-  .overlay a { pointer-events:auto; }
-  .top-bar { display:flex; align-items:center; gap:16px; }
-  .logo-sprite { width:48px; height:48px; background-size:contain; background-repeat:no-repeat; filter:brightness(1.2) drop-shadow(0 0 12px rgba(91,209,216,0.4)); }
-  .brand-mark { font-size:11px; font-weight:600; letter-spacing:0.25em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
-  .center-spacer { flex:1; display:flex; align-items:center; justify-content:center; }
-  .tagline-area { display:flex; align-items:center; gap:8px; padding:10px 20px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:8px; transition:opacity 0.4s ease, transform 0.4s ease; pointer-events:auto; }
-  .tagline-cursor { font-family:monospace; font-size:14px; color:#5bd1d8; animation:blink 1s step-end infinite; }
-  @keyframes blink { 50% { opacity:0; } }
-  .tagline-text { font-family:monospace; font-size:clamp(11px,1.3vw,14px); color:rgba(255,255,255,0.4); }
-  .bottom-bar { display:flex; justify-content:space-between; align-items:flex-end; }
-  .bottom-left, .bottom-right { font-size:clamp(10px,1.1vw,12px); color:rgba(255,255,255,0.15); letter-spacing:0.08em; text-transform:uppercase; }
-  .cartouche { position:fixed; bottom:clamp(16px,2vw,24px); right:clamp(16px,2vw,24px); max-width:320px; padding:14px 18px; background:rgba(0,0,0,0.5); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.06); border-radius:12px; pointer-events:auto; }
-  .cartouche-title { font-size:13px; font-weight:700; color:rgba(255,255,255,0.6); margin:0 0 6px; }
-  .cartouche-copy { font-size:9px; color:rgba(255,255,255,0.25); margin:0 0 4px; line-height:1.4; }
-  .cartouche-contact { font-size:9px; color:rgba(255,255,255,0.25); margin:0; }
-  .cartouche-contact a { color:#5bd1d8; text-decoration:none; }
-  @media (max-width:640px) { .bottom-bar{flex-direction:column;align-items:center;gap:4px;} .cartouche{position:relative;bottom:auto;right:auto;max-width:100%;margin-top:12px;text-align:center;} }
-</style>
+    /* Hero */
+    .ov-hero { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+    .hero-bottom { display: flex; flex-direction: column; align-items: center; padding-bottom: clamp(60px, 10vh, 120px); }
+    .hero-t { text-align: center; margin: 0; line-height: 1.1; }
+    .hl1,.hl3 { display: block; font-size: clamp(28px, 4.5vw, 56px); font-weight: 800; color: rgba(255,255,255,0.85); letter-spacing: -0.02em; }
+    .hl2 { display: block; font-size: clamp(32px, 5.5vw, 64px); font-weight: 800; color: #5bd1d8; letter-spacing: -0.02em; }
+    .hero-s { font-size: clamp(11px, 1.2vw, 15px); color: rgba(255,255,255,0.3); letter-spacing: 0.15em; text-transform: uppercase; margin: 16px 0 0; }
+    .hero-s2 { font-size: clamp(10px, 1vw, 13px); color: rgba(255,255,255,0.2); letter-spacing: 0.12em; text-transform: uppercase; margin: 8px 0 0; }
+
+    /* Header */
+    .site-hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(20px, 3vw, 40px); pointer-events: none; }
+    .hdr-left { display: flex; align-items: center; gap: 10px; pointer-events: auto; }
+    .hdr-logo { width: 36px; height: auto; filter: drop-shadow(0 0 12px rgba(91,209,216,0.3)); }
+    .hdr-name { font-size: 16px; font-weight: 800; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; }
+    .hdr-nav { display: flex; align-items: center; gap: 8px; pointer-events: auto; }
+    .hdr-link { padding: 8px 16px; color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600; text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+    .hdr-link:hover { color: #5bd1d8; }
+    .hdr-social { font-weight: 800; font-size: 11px; text-transform: uppercase; padding: 8px 10px; opacity: 0.5; }
+    .hdr-social:hover { opacity: 1; }
+    .hdr-cta { padding: 8px 20px; border-radius: 6px; background: rgba(91,209,216,0.15); border: 1px solid rgba(91,209,216,0.3); color: #5bd1d8; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.05em; transition: background 0.2s; }
+    .hdr-cta:hover { background: rgba(91,209,216,0.25); }
+    .burger { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; padding: 8px; pointer-events: auto; }
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(6,8,11,0.95); backdrop-filter: blur(16px); flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.8); text-decoration: none; letter-spacing: 0.05em; padding: 12px 24px; }
+    .mobile-menu .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; }
+    @media (max-width: 768px) { .hdr-nav { display: none; } .burger { display: block; } }
+
+    /* Formats */
+    .ov-formats { bottom: clamp(30px, 5vh, 60px); left: 50%; transform: translateX(-50%); display: flex; gap: 12px; max-width: 820px; width: 92vw; }
+    .ov-formats.on { transform: translateX(-50%); }
+    .fmt { flex: 1; padding: 14px 16px; border-radius: 8px; background: rgba(6,8,11,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    .fmt-t { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+    .fmt-d { font-size: 10px; color: rgba(255,255,255,0.35); }
+
+    /* Progress */
+    .prog { position: fixed; top: 0; left: 0; height: 2px; z-index: 5; background: linear-gradient(90deg, #5bd1d8, #a78bfa, #f59e0b); width: 0%; }
+    .inf { position: fixed; bottom: 10px; right: 14px; z-index: 4; font-size: 8px; color: rgba(255,255,255,0.1); letter-spacing: 0.06em; }
+
+    /* Dots */
+    .dots { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: 14px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.1); transition: background 0.3s, transform 0.3s, border-color 0.3s; cursor: pointer; pointer-events: auto; position: relative; }
+    .dot.on { background: #5bd1d8; border-color: #5bd1d8; transform: scale(1.3); box-shadow: 0 0 10px rgba(91,209,216,0.4); }
+    .dot:hover { background: rgba(91,209,216,0.5); border-color: rgba(91,209,216,0.5); }
+    .dot[data-l]:not([data-l=""])::after { content: attr(data-l); position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+    .dot[data-l]:not([data-l=""]):hover::after { opacity: 1; }
+
+    /* Trust */
+    .trust { position: fixed; bottom: 12px; left: clamp(16px, 3vw, 40px); z-index: 3; pointer-events: none; }
+    .trust-k { font-size: 9px; color: rgba(255,255,255,0.2); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+    .trust-names { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
+
+    @media (max-width: 768px) {
+      .ov-formats { flex-direction: column; gap: 6px; }
+      .trust { display: none; }
+    }
+  </style>
+</head>
+<body data-da-variant="preview">
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <img src="/assets/brand/logo-mark.svg" alt="L'électron rare" class="loader-logo" />
+    <p class="loader-name">L'électron rare</p>
+    <p class="loader-tagline">Systèmes électroniques spécifiques</p>
+    <div class="loader-bar"><div class="loader-fill" id="loader-fill"></div></div>
+    <p class="loader-status" id="loader-status">Chargement des modèles 3D...</p>
+    <div class="loader-actions">
+      <a href="/conception/" class="loader-skip">Accéder au site sans 3D →</a>
+    </div>
+    <p class="loader-a11y">Version accessible : <a href="/conception/">Conception</a> · <a href="/formation/">Formation</a> · <a href="/consulting/">Consulting</a> · <a href="/contact/">Contact</a></p>
+  </div>
+
+  <BmuViewer client:load />
+  <div class="prog" id="prog"></div>
+
+  <div class="dots" id="dots">
+    <div class="dot on" data-s="hero" data-p="0.03" data-l="Hero"></div>
+    <div class="dot" data-s="hero-to-exp" data-p="0.09" data-l=""></div>
+    <div class="dot" data-s="exp-elec" data-p="0.14" data-l="Élec"></div>
+    <div class="dot" data-s="exp-auto" data-p="0.18" data-l="Auto"></div>
+    <div class="dot" data-s="exp-energie" data-p="0.22" data-l="Énergie"></div>
+    <div class="dot" data-s="exp-dispositifs" data-p="0.255" data-l="Dispositifs"></div>
+    <div class="dot" data-s="exp-consulting" data-p="0.285" data-l="Consulting"></div>
+    <div class="dot" data-s="eclate-recul" data-p="0.31" data-l=""></div>
+    <div class="dot" data-s="eclate-sep" data-p="0.34" data-l=""></div>
+    <div class="dot" data-s="eclate-plat" data-p="0.36" data-l=""></div>
+    <div class="dot" data-s="cas" data-p="0.53" data-l="Cas concrets"></div>
+    <div class="dot" data-s="media" data-p="0.70" data-l="Médias"></div>
+    <div class="dot" data-s="formats" data-p="0.85" data-l="Services"></div>
+    <div class="dot" data-s="contact" data-p="0.95" data-l="Contact"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-hdr">
+    <div class="hdr-left">
+      <img src="/assets/brand/logo-mark.svg" alt="" class="hdr-logo" />
+      <span class="hdr-name">L'électron rare</span>
+    </div>
+    <nav class="hdr-nav">
+      <a href="/conception/" class="hdr-link">Conception</a>
+      <a href="/formation/" class="hdr-link">Formation</a>
+      <a href="/consulting/" class="hdr-link">Consulting</a>
+      <a href="https://fr.linkedin.com/in/electron-rare" target="_blank" rel="noopener" class="hdr-link hdr-social" title="LinkedIn">in</a>
+      <a href="https://github.com/electron-rare/" target="_blank" rel="noopener" class="hdr-link hdr-social" title="GitHub">gh</a>
+      <a href="/contact/" class="hdr-cta">Contact</a>
+    </nav>
+    <button class="burger" id="burger-btn" aria-label="Menu">☰</button>
+  </header>
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="close-btn" id="close-menu">✕</button>
+    <a href="/">Accueil</a><a href="/conception/">Conception</a><a href="/formation/">Formation</a><a href="/consulting/">Consulting</a><a href="/contact/">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="ov ov-hero on" data-sec="hero">
+    <div class="hero-bottom">
+      <h1 class="hero-t">
+        <span class="hl1">Systèmes</span>
+        <span class="hl2">électroniques</span>
+        <span class="hl3">spécifiques</span>
+      </h1>
+      <p class="hero-s">électronique · automatisme · énergie</p>
+      <p class="hero-s2">Conception · Mise au point · Fiabilisation · Consulting · Formation</p>
+    </div>
+  </div>
+
+  <!-- FORMATS -->
+  <div class="ov ov-formats" data-sec="formats">
+    <div class="fmt">
+      <p class="fmt-t" style="color:#5bd1d8">Conception</p>
+      <p class="fmt-d">Schéma · PCB · Firmware · Validation</p>
+    </div>
+    <div class="fmt">
+      <p class="fmt-t" style="color:#a78bfa">Formation</p>
+      <p class="fmt-d">PCB · KiCad · µC · Soudure</p>
+    </div>
+    <div class="fmt">
+      <p class="fmt-t" style="color:#f59e0b">Consulting</p>
+      <p class="fmt-d">Audit · Diagnostic · Transfert</p>
+    </div>
+  </div>
+
+  <!-- CONFIANCE -->
+  <div class="trust" id="trust">
+    <p class="trust-k">Ils m'ont fait confiance</p>
+    <p class="trust-names">KXKM · Spectacle vivant · Secteur ferroviaire · Industrie automatisée · Écoles d'art numérique</p>
+  </div>
+
+  <div class="scroll-track"></div>
+
+  <!-- SEO: texte indexable caché -->
+  <div class="sr-only" aria-hidden="false">
+    <h1>L'électron rare — Systèmes électroniques spécifiques</h1>
+    <p>Conception, mise au point et fiabilisation de systèmes électroniques spécifiques, automatismes et ensembles liés à l'énergie, au stockage et à l'optimisation terrain.</p>
+    <h2>Domaines d'expertise</h2>
+    <ul>
+      <li>Électronique spécifique : cartes, interfaces, capteurs, alimentation</li>
+      <li>Instrumentation et automatisme : bancs, automates, variateurs, protocoles terrain</li>
+      <li>Énergie et stockage : batterie, conversion, supervision, télémétrie</li>
+      <li>Dispositifs pour le réel : audio, LED, scène, robustesse terrain</li>
+      <li>Consulting et formation : audit, transfert, pédagogie, projet</li>
+    </ul>
+    <h2>Cas concrets</h2>
+    <ul>
+      <li>Industries créatives : système audio embarqué sur batterie pour le spectacle (KXKM)</li>
+      <li>Industrie : diagnostic et remise en service d'une ligne automatisée</li>
+      <li>Formation : formation PCB et embarqué pour une école d'art numérique</li>
+    </ul>
+    <h2>Services</h2>
+    <ul>
+      <li>Conception : schéma, PCB, firmware, validation</li>
+      <li>Formation : PCB, KiCad, microcontrôleurs, soudure</li>
+      <li>Consulting : audit, diagnostic, transfert</li>
+    </ul>
+    <h2>Ils m'ont fait confiance</h2>
+    <p>KXKM (spectacle vivant), secteur ferroviaire, industrie automatisée, écoles d'art numérique.</p>
+    <h2>À propos</h2>
+    <p>Clément Saillant — 10 ans d'expérience en systèmes électroniques. Contributeur open-source KiCad et KXKM. Ambassadeur IA appliquée à l'électronique.</p>
+    <p>Contact : <a href="/contact/">Parlons de votre projet</a> — contact@lelectronrare.fr · <a href="https://blog.saillant.cc">Blog technique</a></p>
+  </div>
+
+  <noscript>
+    <div style="position:fixed;inset:0;z-index:9999;background:#06080b;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-family:monospace;text-align:center;padding:40px;">
+      <img src="/assets/photos/bmu-assembly.jpg" alt="BMU v2 Assembly" style="width:clamp(200px,50vw,500px);border-radius:12px;margin-bottom:20px;" />
+      <h1 style="font-size:24px;">L'électron rare</h1>
+      <p style="color:rgba(255,255,255,0.5);margin:12px 0;">Systèmes électroniques spécifiques</p>
+      <a href="https://www.lelectronrare.fr/" style="color:#5bd1d8;margin-top:16px;">Accéder au site →</a>
+    </div>
+  </noscript>
+
+  <div class="inf">L'électron rare · Clément Saillant</div>
+
+  <!-- GTM for A/B tracking -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!=='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5SLM67QF');
+  </script>
+
+  <script>
+    const prog = document.getElementById('prog');
+    const dots = [...document.querySelectorAll('.dot')];
+    const overlays = [...document.querySelectorAll('.ov')];
+    const RANGES = [
+      ['hero',0,0.10],['hero-to-exp',0.10,0.16],
+      ['exp-elec',0.16,0.20],['exp-auto',0.20,0.24],['exp-energie',0.24,0.28],
+      ['exp-dispositifs',0.28,0.31],['exp-consulting',0.31,0.34],
+      ['eclate-recul',0.34,0.36],['eclate-sep',0.36,0.39],['eclate-plat',0.39,0.41],
+      ['cas',0.41,0.65],
+      ['media',0.65,0.81],['formats',0.81,0.91],['contact',0.91,1.0],
+    ];
+    function update() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const t = max > 0 ? window.scrollY / max : 0;
+      if (prog) prog.style.width = (t*100)+'%';
+      let active = 'hero';
+      for (const [id,s,e] of RANGES) { if (t>=s&&t<=e){active=id;break;} }
+      overlays.forEach(el => el.classList.toggle('on', el.getAttribute('data-sec')===active));
+      dots.forEach(d => d.classList.toggle('on', d.getAttribute('data-s')===active));
+    }
+    window.addEventListener('scroll', update, {passive:true});
+    update();
+
+    // Dots cliquables
+    dots.forEach(d => {
+      d.addEventListener('click', () => {
+        const p = parseFloat(d.getAttribute('data-p') || '0');
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo({ top: Math.round(max * p), behavior: 'smooth' });
+      });
+    });
+
+    // GA4 tracking
+    document.querySelectorAll('a[href]').forEach(a => {
+      a.addEventListener('click', () => {
+        const label = a.textContent?.trim() || a.getAttribute('href') || '';
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'click', event_category: 'navigation', event_label: label, da_variant: 'preview', page_path: '/preview/' });
+      });
+    });
+
+    // Burger menu
+    document.getElementById('burger-btn')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.add('open'));
+    document.getElementById('close-menu')?.addEventListener('click',()=>document.getElementById('mobile-menu')?.classList.remove('open'));
+
+    // Preloader — télécharge les assets en arrière-plan avec progression réelle
+    const loader = document.getElementById('loader');
+    const loaderFill = document.getElementById('loader-fill');
+    const loaderStatus = document.getElementById('loader-status');
+
+    const ASSETS = [
+      { url: '/assets/models3d/bmu_v2.glb', label: 'Carte BMU principale', size: 5500000 },
+      { url: '/assets/models3d/i2c_repeater.glb', label: 'Carte I2C Repeater', size: 1800000 },
+      { url: '/assets/models3d/mosfet_switch.glb', label: 'Cartes Mosfet Switch', size: 1500000 },
+    ];
+    const TOTAL_SIZE = ASSETS.reduce((s, a) => s + a.size, 0);
+
+    let loadedBytes = 0;
+    let allDone = false;
+
+    function updateProgress(bytes, label) {
+      loadedBytes += bytes;
+      const pct = Math.min(85, Math.round(loadedBytes / TOTAL_SIZE * 85));
+      if (loaderFill) loaderFill.style.width = pct + '%';
+      if (loaderStatus) loaderStatus.textContent = label;
+    }
+
+    async function preloadAsset(asset) {
+      try {
+        const res = await fetch(asset.url);
+        const reader = res.body?.getReader();
+        if (!reader) { updateProgress(asset.size, asset.label); return; }
+        let received = 0;
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          received += value.length;
+          updateProgress(value.length, asset.label);
+        }
+      } catch (e) {
+        updateProgress(asset.size, asset.label + ' (cache)');
+      }
+    }
+
+    function hideLoader() {
+      if (allDone) return;
+      allDone = true;
+      if (loaderFill) loaderFill.style.width = '100%';
+      if (loaderStatus) loaderStatus.textContent = 'Prêt';
+      setTimeout(() => { if (loader) loader.classList.add('done'); }, 400);
+    }
+
+    // Phase 1 : preload les GLB en streaming
+    (async () => {
+      if (loaderStatus) loaderStatus.textContent = 'Téléchargement des modèles 3D...';
+      for (const asset of ASSETS) {
+        await preloadAsset(asset);
+      }
+      if (loaderStatus) loaderStatus.textContent = 'Initialisation WebGL...';
+      if (loaderFill) loaderFill.style.width = '90%';
+
+      // Phase 2 : attendre le canvas Three.js
+      const checkCanvas = setInterval(() => {
+        const cvs = document.querySelector('canvas');
+        if (cvs && cvs.width > 0) {
+          clearInterval(checkCanvas);
+          if (loaderFill) loaderFill.style.width = '95%';
+          if (loaderStatus) loaderStatus.textContent = 'Compilation shaders...';
+          setTimeout(hideLoader, 600);
+        }
+      }, 150);
+    })();
+
+    // Fallback 15s max
+    setTimeout(hideLoader, 15000);
+  </script>
+</body>
+</html>
