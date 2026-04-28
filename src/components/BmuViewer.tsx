@@ -109,18 +109,18 @@ const SECTIONS: Section[] = [
   // 4. CAS — recul caméra, vue des 4 mosfets, tuiles + médias visibles
   { id: 'cas', start: 0.41, end: 0.65,
     camOffset: [0.5, -0.5, -3.0], camOffsetEnd: [-0.5, -0.3, -2.5], focus: null, explode: 1 },
-  // 7a. MEDIA — vidéo 1, caméra de l'autre côté (Z négatif)
+  // 7a. MEDIA — vidéo 1, caméra de l'autre côté (Z négatif), zoom serré
   { id: 'media', start: 0.65, end: 0.69,
-    camOffset: [0.2, 0.0, -1.0], camOffsetEnd: [0.0, 0.0, -0.8], focus: 2, explode: 1 },
+    camOffset: [0.12, 0.0, -0.6], camOffsetEnd: [0.0, 0.0, -0.5], focus: 2, explode: 1 },
   // 7b. MEDIA — vidéo 2
   { id: 'media', start: 0.69, end: 0.73,
-    camOffset: [0.2, 0.0, -1.0], camOffsetEnd: [-0.1, 0.0, -0.8], focus: 3, explode: 1 },
+    camOffset: [0.12, 0.0, -0.6], camOffsetEnd: [-0.06, 0.0, -0.5], focus: 3, explode: 1 },
   // 7c. MEDIA — vidéo 3
   { id: 'media', start: 0.73, end: 0.77,
-    camOffset: [-0.1, 0.0, -1.0], camOffsetEnd: [-0.3, 0.0, -0.8], focus: 4, explode: 1 },
+    camOffset: [-0.06, 0.0, -0.6], camOffsetEnd: [-0.18, 0.0, -0.5], focus: 4, explode: 1 },
   // 7d. MEDIA — carrousel photos
   { id: 'media', start: 0.77, end: 0.81,
-    camOffset: [-0.2, 0.0, -1.0], camOffsetEnd: [0.1, 0.0, -0.8], focus: 5, explode: 1 },
+    camOffset: [-0.12, 0.0, -0.6], camOffsetEnd: [0.06, 0.0, -0.5], focus: 5, explode: 1 },
   // 8. FORMATS
   { id: 'formats', start: 0.81, end: 0.91,
     camOffset: [2.4, 3.0, 4.0], camOffsetEnd: [1.6, 2.4, 3.0], focus: null, explode: 1, explodeEnd: 0 },
