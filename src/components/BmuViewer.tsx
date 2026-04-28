@@ -248,6 +248,26 @@ function CardModel({ file }: { file: string }) {
   return <primitive object={cloned} />;
 }
 
+/* ── Cover-fit helper: crop centered to target aspect (like CSS object-fit:cover) ── */
+function applyCoverFit(texture: THREE.Texture, targetAspect: number) {
+  const img = texture.image as (HTMLImageElement | HTMLVideoElement | { width: number; height: number; videoWidth?: number; videoHeight?: number } | undefined);
+  if (!img) return;
+  const w = (img as HTMLVideoElement).videoWidth || (img as HTMLImageElement).width;
+  const h = (img as HTMLVideoElement).videoHeight || (img as HTMLImageElement).height;
+  if (!w || !h) return;
+  const sourceAspect = w / h;
+  if (sourceAspect > targetAspect) {
+    texture.repeat.set(targetAspect / sourceAspect, 1);
+    texture.offset.set((1 - targetAspect / sourceAspect) / 2, 0);
+  } else {
+    texture.repeat.set(1, sourceAspect / targetAspect);
+    texture.offset.set(0, (1 - sourceAspect / targetAspect) / 2);
+  }
+  texture.needsUpdate = true;
+}
+
+const MEDIA_ASPECT = 4 / 3;
+
 /* ── Video plane on PCB bottom (real 3D mesh with VideoTexture) ── */
 function PcbVideoMesh({ offset, src, visible }: {
   offset: [number, number, number]; src: string; visible: boolean;
@@ -256,9 +276,8 @@ function PcbVideoMesh({ offset, src, visible }: {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const texRef = useRef<THREE.VideoTexture | null>(null);
 
-  // Mosfet card local space: ~0.38 x 0.86 (XZ), Y = thickness
-  // Plane size: cover most of the bottom face
-  const planeW = 1.9, planeH = 4.275;
+  // Plane size in 4:3 landscape; covers center of the mosfet bottom face
+  const planeW = 1.9, planeH = planeW / MEDIA_ASPECT;
 
   useEffect(() => {
     const video = document.createElement('video');
@@ -276,7 +295,10 @@ function PcbVideoMesh({ offset, src, visible }: {
     tex.colorSpace = THREE.SRGBColorSpace;
     texRef.current = tex;
 
-    return () => { video.pause(); video.src = ''; tex.dispose(); };
+    const onMeta = () => applyCoverFit(tex, MEDIA_ASPECT);
+    video.addEventListener('loadedmetadata', onMeta);
+
+    return () => { video.removeEventListener('loadedmetadata', onMeta); video.pause(); video.src = ''; tex.dispose(); };
   }, [src]);
 
   useEffect(() => {
@@ -331,12 +353,16 @@ function PcbCarouselMesh({ offset, visible }: {
   const textures = useRef<THREE.Texture[]>([]);
   const [idx, setIdx] = useState(0);
   const autoTimer = useRef(0);
-  const planeW = 1.9, planeH = 4.275;
+  const planeW = 1.9, planeH = planeW / MEDIA_ASPECT;
 
   useEffect(() => {
     const loader = new THREE.TextureLoader();
     textures.current = CAROUSEL_PHOTOS.map(url => {
-      const t = loader.load(url);
+      const t = loader.load(url, (loaded) => {
+        loaded.colorSpace = THREE.SRGBColorSpace;
+        loaded.minFilter = THREE.LinearFilter;
+        applyCoverFit(loaded, MEDIA_ASPECT);
+      });
       t.colorSpace = THREE.SRGBColorSpace;
       t.minFilter = THREE.LinearFilter;
       return t;
