@@ -570,10 +570,10 @@ export function BmuViewer() {
   }, []);
 
   return (
-    <div style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'none' }}>
+    <div style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'auto' }}>
       <Canvas gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         dpr={[1, 1.5]} camera={{ fov: 35, near: 0.01, far: 50 }}
-        style={{ background: 'transparent', pointerEvents: 'none' }}>
+        style={{ background: 'transparent', pointerEvents: 'auto', touchAction: 'pan-y' }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 8, 5]} intensity={2.2} color="#ffffff" />
         <directionalLight position={[-3, 4, -2]} intensity={0.9} color="#5bd1d8" />
