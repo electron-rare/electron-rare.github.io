@@ -21,12 +21,17 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Typecheck (non-blocking — repo has known debt)
-        continue-on-error: true
+      - name: Typecheck
         run: npm run typecheck
 
       - name: Build
         run: npm run build
+
+      - name: Tracking check
+        run: npm run tracking:check
+
+      - name: Image budget
+        run: npm run image:budget
 
       - name: Notify ntfy on failure
         if: failure()
