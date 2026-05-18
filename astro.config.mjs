@@ -3,6 +3,8 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
+import cloudflare from "@astrojs/cloudflare";
+
 const normalizeUrl = (value) => (value.endsWith('/') ? value : `${value}/`);
 const rawSiteUrl = process.env.PUBLIC_SITE_URL || process.env.EXTERNAL_SITE_URL || 'https://electron-rare.github.io/';
 const siteUrl = normalizeUrl(rawSiteUrl);
@@ -13,7 +15,7 @@ export default defineConfig({
   site: siteUrl,
   base: basePath,
   output: 'server',
-  adapter: node({ mode: 'standalone' }),
+  adapter: cloudflare(),
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()]
