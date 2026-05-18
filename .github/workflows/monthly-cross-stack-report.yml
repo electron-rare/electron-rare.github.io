@@ -41,14 +41,16 @@ jobs:
             fi
           done
 
-          CHECK_STATE="unknown"
+          REQUIRED_CHECKS_LIST="(unknown)"
           if [ "$PROTECTION_HTTP_CODE" = "200" ]; then
-            REQ_CHECK_CHECKS=$(echo "$PROTECTION_JSON" | jq -r '.required_status_checks.checks[]?.context // empty' | grep -Fx 'Cross-stack coherence' || true)
-            REQ_CHECK_CONTEXTS=$(echo "$PROTECTION_JSON" | jq -r '.required_status_checks.contexts[]? // empty' | grep -Fx 'Cross-stack coherence' || true)
-            if [ -n "$REQ_CHECK_CHECKS" ] || [ -n "$REQ_CHECK_CONTEXTS" ]; then
-              CHECK_STATE="required"
-            else
-              CHECK_STATE="not-required"
+            REQUIRED_CHECKS_LIST="$(echo "$PROTECTION_JSON" | jq -r '
+              [
+                (.required_status_checks.contexts // [])[],
+                (.required_status_checks.checks // [])[].context
+              ] | unique | .[]
+            ' 2>/dev/null || true)"
+            if [ -z "$REQUIRED_CHECKS_LIST" ]; then
+              REQUIRED_CHECKS_LIST="(none)"
             fi
           fi
 
@@ -58,10 +60,15 @@ jobs:
             echo "Generated: $NOW_UTC"
             echo "Repository: $GH_REPO"
             echo
-            echo "## Branch Protection (main)"
-            echo "- Cross-stack coherence: $CHECK_STATE"
-            if [ "$CHECK_STATE" = "unknown" ]; then
+            echo "## Branch Protection (main) — Required Status Checks"
+            if [ "$PROTECTION_HTTP_CODE" != "200" ]; then
               echo "- Note: branch protection endpoint not readable with current token (HTTP $PROTECTION_HTTP_CODE)."
+            elif [ "$REQUIRED_CHECKS_LIST" = "(none)" ]; then
+              echo "- No required status checks configured."
+            else
+              echo "$REQUIRED_CHECKS_LIST" | while IFS= read -r ctx; do
+                [ -n "$ctx" ] && echo "- $ctx"
+              done
             fi
             echo
             echo "## Expected Labels"
